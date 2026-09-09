@@ -1,0 +1,204 @@
+{
+  "number": 5,
+  "slug": "session-05",
+  "title": "Network Optimization II: Flows, Paths & Supply Chain Design",
+  "subtitle": "Shortest paths, max flow, and min-cost flow — the models behind Amazon's regionalized network and Microsoft's Edelman-winning fulfillment engine",
+  "duration": "120 Minutes",
+  "icon": "trending-up",
+  "tags": ["Supply Chain", "Network Design", "Max Flow"],
+  "objectives": [
+    {
+      "title": "Formulate the three classic flow models",
+      "description": "Write shortest path, maximum flow, and minimum-cost flow problems as linear programs on a network, and recognize which real business questions map to each."
+    },
+    {
+      "title": "Design a supply chain network end to end",
+      "description": "Combine facility choices, arc capacities, and transportation costs into a single network design model that decides where product flows and why."
+    },
+    {
+      "title": "Connect flow models to billion-dollar operations",
+      "description": "Explain how Amazon's regionalization and Microsoft's Intelligent Fulfillment Service turned textbook network optimization into measurable cost-to-serve and cycle-time wins."
+    },
+    {
+      "title": "Build and solve networks in gurobipy",
+      "description": "Implement node-balance constraints, capacity bounds, and flow costs cleanly in code, and read the solution as a routing plan a logistics manager could execute."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Opening Story: Amazon Regionalizes, Microsoft Wins the Edelman",
+      "duration": "20 minutes",
+      "description": "Two of the biggest supply chain analytics stories of the decade — and both are network flow problems at heart.",
+      "bulletPoints": [
+        "Amazon 'Regionalize and Scale' (2025 Edelman finalist): splitting the US into regional networks cut cost-to-serve by $0.45 per item in 2023",
+        "Microsoft Intelligent Fulfillment Service (2026 Edelman WINNER): cloud hardware fulfillment cycle times cut in half, tens to hundreds of millions of dollars in annual savings",
+        "The common thread: nodes, arcs, capacities, and costs — the same math you will write tonight"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Shortest Path & Max Flow",
+      "duration": "20 minutes",
+      "description": "The two foundational flow models, formulated as LPs and interpreted as business questions.",
+      "bulletPoints": [
+        "Shortest path: cheapest route from source to sink — one unit of flow, minimize arc costs",
+        "Max flow: how much can this network carry? Capacities become the binding constraints",
+        "Bottleneck reading: the max-flow / min-cut insight tells you exactly where to invest capacity"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Min-Cost Flow: The Workhorse Model",
+      "duration": "15 minutes",
+      "description": "One formulation that generalizes almost everything: supplies, demands, capacities, and per-unit costs on a single network.",
+      "bulletPoints": [
+        "Node balance constraints: flow in minus flow out equals supply or demand",
+        "Transportation, transshipment, and assignment as special cases of min-cost flow",
+        "Integrality for free: why network LPs return whole-number flows without integer variables"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch, refill, and think about where the bottleneck arc in your own company's network might be.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:10 PM",
+      "title": "Hands-On: DC Location + Routing in gurobipy",
+      "duration": "25 minutes",
+      "description": "In teams, build a mini supply chain network design model: pick distribution centers and route flow from plants to customer regions at minimum total cost.",
+      "bulletPoints": [
+        "Define plants, candidate DCs, and demand regions as nodes; lanes as capacitated arcs",
+        "Add flow variables, node-balance constraints, and lane capacities in gurobipy",
+        "Solve, then stress-test: what happens when a lane's capacity drops 40%?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:10 PM - 9:30 PM",
+      "title": "Supply Chain Network Design at Scale",
+      "duration": "20 minutes",
+      "description": "From tonight's toy network to Amazon-scale: what changes, what doesn't, and how practitioners handle it.",
+      "bulletPoints": [
+        "Regionalization as a network design decision: shorter arcs, higher in-region fulfillment rates",
+        "Microsoft's IFS pattern: optimization embedded in daily operations, not a one-off study",
+        "Scaling levers: aggregation, decomposition, and GPU-accelerated solvers like NVIDIA cuOpt"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Wrap-Up & Homework #4 Launch",
+      "duration": "10 minutes",
+      "description": "Key takeaways, a preview of integer optimization, and your min-cost flow assignment.",
+      "bulletPoints": [
+        "Recap: three flow models, one node-balance idea",
+        "Homework #4 walkthrough: a min-cost flow model from scratch",
+        "Next week: when yes/no decisions enter the model, everything changes"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Microsoft Cloud Supply Chain — 2026 Edelman Winner",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/Microsoft-Cloud-Supply-Chain",
+      "description": "The INFORMS success story behind tonight's headline: how the Intelligent Fulfillment Service halved fulfillment cycle times and saves tens to hundreds of millions of dollars annually.",
+      "icon": "award",
+      "badge": "Case Story",
+      "badgeType": "reference",
+      "linkText": "Read the story"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Modeling Examples",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "Runnable Colab-friendly notebooks including supply network design and transportation models — ideal templates for Homework #4.",
+      "icon": "code",
+      "badge": "Notebooks",
+      "badgeType": "code",
+      "linkText": "Open the notebooks"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "A library of real deployments — including the Amazon regionalization work — showing what network optimization delivers in production.",
+      "icon": "search",
+      "badge": "Library",
+      "badgeType": "reference",
+      "linkText": "Browse stories"
+    },
+    {
+      "title": "NVIDIA cuOpt",
+      "url": "https://github.com/NVIDIA/cuopt",
+      "description": "Open-source GPU-accelerated optimization for routing and LP — a glimpse of how massive network models get solved fast.",
+      "icon": "zap",
+      "badge": "Solver",
+      "badgeType": "tool",
+      "linkText": "View on GitHub"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "network",
+      "title": "Mini Network Design: Pick the DCs, Route the Flow",
+      "description": "Your team is the supply chain analytics group for a mid-size retailer. Two plants, three candidate distribution centers, four demand regions. Build a min-cost flow model in gurobipy that routes product through the network and reveals which DC lanes carry the load.",
+      "steps": [
+        {
+          "title": "Sketch the network",
+          "description": "Draw nodes for plants, DCs, and regions. Label supplies, demands, lane costs, and capacities before writing any code — the picture is the formulation."
+        },
+        {
+          "title": "Code the flow variables and balance constraints",
+          "description": "One continuous variable per arc; at every DC, flow in must equal flow out; plants ship at most their supply, regions receive exactly their demand."
+        },
+        {
+          "title": "Solve and interpret",
+          "description": "Run the model, then translate the solution into plain English: which lanes are used, which DC dominates, and what the marginal cost of one more unit of regional demand is."
+        },
+        {
+          "title": "Stress-test the network",
+          "description": "Cut one lane's capacity by 40% and re-solve. How does the flow re-route, and what does total cost do? This is regionalization analysis in miniature."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nplants = {\"P1\": 500, \"P2\": 400}          # supply\nregions = {\"R1\": 200, \"R2\": 250, \"R3\": 180, \"R4\": 220}  # demand\ndcs = [\"DC_A\", \"DC_B\", \"DC_C\"]\n\n# (from, to): (unit cost, capacity)\nlanes = {\n    (\"P1\", \"DC_A\"): (4, 400), (\"P1\", \"DC_B\"): (6, 300),\n    (\"P2\", \"DC_B\"): (5, 350), (\"P2\", \"DC_C\"): (4, 300),\n    (\"DC_A\", \"R1\"): (3, 250), (\"DC_A\", \"R2\"): (5, 250),\n    (\"DC_B\", \"R2\"): (4, 300), (\"DC_B\", \"R3\"): (3, 250),\n    (\"DC_C\", \"R3\"): (5, 200), (\"DC_C\", \"R4\"): (2, 250),\n}\n\nm = gp.Model(\"network_design\")\nflow = m.addVars(lanes.keys(), name=\"flow\",\n                 ub=[lanes[a][1] for a in lanes])\n\nm.setObjective(gp.quicksum(lanes[a][0] * flow[a] for a in lanes), GRB.MINIMIZE)\n\nfor p, s in plants.items():\n    m.addConstr(flow.sum(p, \"*\") <= s, name=f\"supply_{p}\")\nfor d in dcs:\n    m.addConstr(flow.sum(\"*\", d) == flow.sum(d, \"*\"), name=f\"balance_{d}\")\nfor r, dem in regions.items():\n    m.addConstr(flow.sum(\"*\", r) == dem, name=f\"demand_{r}\")\n\nm.optimize()\nfor a in lanes:\n    if flow[a].X > 1e-6:\n        print(f\"{a[0]} -> {a[1]}: {flow[a].X:.0f} units\")\nprint(f\"Total cost: ${m.ObjVal:,.0f}\")"
+      },
+      "discussionNote": "Amazon's regionalization win came from exactly this logic at continental scale: shorten the arcs between inventory and customers and the cost-to-serve falls — $0.45 per item across billions of items. Where in your team's solution did flow travel 'too far,' and what candidate node would you add to fix it?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "network",
+      "text": "Shortest path, max flow, and min-cost flow are one family: node-balance constraints plus arc capacities. Master the min-cost flow template and you can model most physical supply chains."
+    },
+    {
+      "icon": "award",
+      "text": "This math wins at the highest level — Amazon's regionalization cut US cost-to-serve $0.45/item, and Microsoft's Intelligent Fulfillment Service won the 2026 Edelman by halving fulfillment cycle times."
+    },
+    {
+      "icon": "target",
+      "text": "The solution is only half the value. Which lanes bind, where the min cut sits, and how flow re-routes under stress — that is the analysis executives actually pay for."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #4",
+      "text": "Build a min-cost flow model in gurobipy for the provided three-echelon distribution network (2 plants, 3 cross-docks, 5 demand zones). Formulate node-balance and capacity constraints, solve, and report: (1) the optimal flow plan and total cost, (2) the two most binding lane capacities with their shadow prices, and (3) a one-paragraph memo recommending which single lane to expand and why. Submit your Colab notebook link before Session 6."
+    }
+  ],
+  "nextSession": {
+    "title": "Integer Optimization I: The Power of Yes/No Decisions",
+    "description": "Continuous flows are elegant — but real strategy is lumpy. Open the warehouse or don't. Pay the fixed cost or don't. Next week binary variables enter the model, and we see why one vtype change makes optimization exponentially harder and vastly more powerful.",
+    "tags": ["Integer Programming", "Binary Variables", "Fixed Costs"],
+    "slug": "session-06"
+  }
+}

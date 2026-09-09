@@ -1,0 +1,207 @@
+{
+  "number": 12,
+  "slug": "session-12",
+  "title": "Reinforcement Learning & the AI Frontier of Prescriptive Analytics",
+  "subtitle": "Agents that learn to decide — from Q-learning intuition to RL running live on a million SKUs, plus LLM copilots that write your models",
+  "duration": "120 Minutes",
+  "icon": "bot",
+  "tags": ["Reinforcement Learning", "LLM Copilots", "Frontier"],
+  "objectives": [
+    {
+      "title": "Build Q-learning intuition",
+      "description": "Understand states, actions, rewards, and the Q-table well enough to explain how an agent learns an ordering policy from trial and error — no forecasting model required."
+    },
+    {
+      "title": "Study RL that is actually deployed",
+      "description": "Ground the hype in numbers: Alibaba's DeepStock running live on 100% of over 1 million SKU-warehouse pairs, Amazon's deep RL across 10,000+ SKUs, and DoorDash's multi-agent RL dispatch."
+    },
+    {
+      "title": "Meet the LLM optimization copilots",
+      "description": "See how OptiMUS and Gurobi AI Modeling turn natural-language business problems into working solver code — and what that means for your career as the person who checks the model."
+    },
+    {
+      "title": "Assemble the modern prescriptive stack",
+      "description": "Synthesize the whole course — LP, IP, networks, MDPs, deep learning, RL — into one coherent toolkit, and know which tool to reach for when."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 7:55 PM",
+      "title": "Opening: The Model That Never Forecasts",
+      "duration": "15 minutes",
+      "description": "Last week we predicted, then decided. Tonight's twist: reinforcement learning collapses the two stages into one — an agent that learns good decisions directly from experience and reward.",
+      "bulletPoints": [
+        "From predict-then-optimize to learn-to-act: what changes and why it matters",
+        "The MDP frame you already know from earlier sessions, now with learning",
+        "Tonight's arc: intuition, deployed proof, LLM copilots, then the whole course in one picture"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:55 PM - 8:15 PM",
+      "title": "Q-Learning in Plain English",
+      "duration": "20 minutes",
+      "description": "The single most teachable RL algorithm: keep a table of how good each action is in each state, act, observe the reward, and nudge the table toward the truth. Repeat until wise.",
+      "bulletPoints": [
+        "States, actions, rewards — the inventory manager's day as an MDP",
+        "The Q-table as an evolving cheat sheet of decision quality",
+        "Exploration vs. exploitation: why the agent must sometimes order 'wrong' on purpose",
+        "The update rule in one line, and what the learning rate and discount factor really mean"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:15 PM - 8:35 PM",
+      "title": "Deployed RL: The Numbers Behind the Stories",
+      "duration": "20 minutes",
+      "description": "RL is not a lab curiosity anymore — it is running supply chains tonight. Three deployed systems, with scale and stakes attached.",
+      "bulletPoints": [
+        "Alibaba DeepStock: RL live on 100% of 1M+ SKU-warehouse pairs since October 2025",
+        "Amazon Deep Inventory Management: deep RL making replenishment decisions across 10,000+ SKUs",
+        "DoorDash: multi-agent RL dispatching drivers to orders in real time",
+        "The pattern: massive repeated decisions, fast feedback, simulators to train in safely"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Breathe — the second half brings LLM copilots, a hands-on RL lab, and the course finale synthesis.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:00 PM",
+      "title": "LLMs as Optimization Copilots",
+      "duration": "15 minutes",
+      "description": "The newest layer of the stack: language models that read a business problem in English and draft the optimization model for you. Your job shifts from typing constraints to judging them.",
+      "bulletPoints": [
+        "OptiMUS (ICML 2024): natural language in, formulated and solved MILP out",
+        "Gurobi AI Modeling: prompt-to-gurobipy workflows from the solver company itself",
+        "Microsoft won the 2026 Edelman Award by combining ML, optimization, and agentic AI — the stack is the story",
+        "The new scarce skill: knowing when the copilot's model is wrong"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:00 PM - 9:25 PM",
+      "title": "Lab: Teach an Agent to Run the Stockroom",
+      "duration": "25 minutes",
+      "description": "In Colab, build a tiny Gymnasium inventory environment and watch a Q-learning agent go from ordering at random to discovering a sensible base-stock-style policy — with zero demand forecasts.",
+      "bulletPoints": [
+        "Define the environment: inventory state, order actions, profit-minus-holding-cost reward",
+        "Run the Q-learning loop and watch average reward climb",
+        "Inspect the learned Q-table: what policy did the agent invent?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:25 PM - 9:40 PM",
+      "title": "Course Synthesis: The Modern Prescriptive Stack",
+      "duration": "15 minutes",
+      "description": "Zoom out on the whole semester: LP to IP to networks to MDPs to deep learning to RL is not six topics — it is one toolkit, and you now own all of it. Final project briefing closes the night.",
+      "bulletPoints": [
+        "One map: which tool for which decision, from deterministic to sequential-under-uncertainty",
+        "How the pieces compose: forecasts feed solvers, solvers seed simulators, RL closes the loop",
+        "Final project prep: presentation format, the dollars-quantified requirement, and next week's run of show"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Alibaba DeepStock — RL Inventory at Full Scale",
+      "url": "https://arxiv.org/pdf/2603.19621",
+      "description": "The deployment paper behind tonight's headline number: reinforcement learning live on 100% of more than one million SKU-warehouse pairs since October 2025.",
+      "icon": "file-text",
+      "badge": "Paper",
+      "badgeType": "reference",
+      "linkText": "Read the paper"
+    },
+    {
+      "title": "Amazon Deep Inventory Management",
+      "url": "https://arxiv.org/abs/2210.03137",
+      "description": "How Amazon put deep reinforcement learning to work on replenishment decisions across 10,000+ SKUs — a landmark in RL leaving the lab.",
+      "icon": "database",
+      "badge": "Paper",
+      "badgeType": "reference",
+      "linkText": "Read the paper"
+    },
+    {
+      "title": "OptiMUS — LLMs That Formulate Optimization Models (ICML 2024)",
+      "url": "https://arxiv.org/abs/2402.10172",
+      "description": "An agent that reads a natural-language problem description and produces a formulated, solved MILP. The blueprint for optimization copilots.",
+      "icon": "sparkles",
+      "badge": "Paper",
+      "badgeType": "reference",
+      "linkText": "Read the paper"
+    },
+    {
+      "title": "Gurobi AI Modeling",
+      "url": "https://github.com/Gurobi/gurobi-ai-modeling",
+      "description": "Gurobi's own resources for prompting LLMs to write correct gurobipy models — try it on your final project formulation, then verify every constraint.",
+      "icon": "github",
+      "badge": "Tool",
+      "badgeType": "tool",
+      "linkText": "Explore the repo"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "bot",
+      "title": "Q-Learning the Stockroom: An Agent Learns to Order",
+      "description": "Build a miniature inventory world with Gymnasium and let a Q-learning agent loose in it. Starting from pure randomness, the agent discovers an ordering policy purely from reward — the same core loop that Alibaba and Amazon run at planetary scale.",
+      "steps": [
+        {
+          "title": "Build the environment",
+          "description": "Create a small Gymnasium env: state is on-hand inventory (0-20), actions are order quantities (0-10), reward is sales revenue minus ordering and holding costs, demand arrives randomly each day."
+        },
+        {
+          "title": "Run the learning loop",
+          "description": "Train for 5,000 simulated days with epsilon-greedy exploration, updating the Q-table after every step and decaying exploration over time."
+        },
+        {
+          "title": "Watch the policy emerge",
+          "description": "Plot average reward per 100 episodes — the climb is the learning. Then read the greedy policy off the Q-table row by row."
+        },
+        {
+          "title": "Stress-test the agent",
+          "description": "Change the demand distribution or holding cost, retrain, and see the policy adapt — no reformulation, no new forecast, just new experience."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import numpy as np\nimport gymnasium as gym\n\nenv = TinyInventoryEnv()          # states: inventory 0-20, actions: order 0-10\nQ = np.zeros((21, 11))            # the agent's cheat sheet\nalpha, gamma, eps = 0.1, 0.95, 1.0\n\nfor episode in range(5000):\n    s, _ = env.reset()\n    done = False\n    while not done:\n        a = env.action_space.sample() if np.random.rand() < eps \\\n            else int(np.argmax(Q[s]))\n        s2, r, done, trunc, _ = env.step(a)\n        # one-line Q-learning update: nudge toward reward + future value\n        Q[s, a] += alpha * (r + gamma * np.max(Q[s2]) - Q[s, a])\n        s = s2\n    eps = max(0.05, eps * 0.999)  # explore less as we grow wise\n\npolicy = np.argmax(Q, axis=1)\nprint(\"Learned ordering policy by inventory level:\", policy)"
+      },
+      "discussionNote": "Look at the learned policy together: the agent typically orders a lot when inventory is low and nothing when shelves are full — it has rediscovered base-stock logic no one taught it. Discuss: for which decisions in your own company is there enough repetition and feedback for this loop to work, and where would letting an agent explore be unacceptable?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "bot",
+      "text": "Reinforcement learning collapses predict-then-optimize into learn-to-act — and it is already running live on millions of real inventory decisions at Alibaba, Amazon, and DoorDash."
+    },
+    {
+      "icon": "sparkles",
+      "text": "LLM copilots like OptiMUS and Gurobi AI Modeling now draft optimization models from plain English. Your edge is no longer typing the model — it is judging it."
+    },
+    {
+      "icon": "network",
+      "text": "LP, IP, networks, MDPs, deep learning, and RL are one stack, not six topics. Microsoft's 2026 Edelman win came from combining them — and now you can too."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #10",
+      "text": "Final project prep: lock your presentation for next week. Finalize your model and results, quantify the business impact in dollars, and build a 10-minute slide deck telling the full story — real problem, data, model, solution, recommendation. Do one timed rehearsal as a team, upload your deck and Colab notebook by Tuesday, December 15 at 11:59 PM, and come ready to present. Every team member speaks."
+    }
+  ],
+  "nextSession": {
+    "title": "Final Project Presentations: Your Optimization Story",
+    "description": "Finals week is demo night. Teams present end-to-end prescriptive analytics projects — real problem to model to dollars — the class votes on the Edelman of ISOM-839, and we chart where your optimization career goes next.",
+    "tags": ["Final Projects", "Presentations", "Celebration"],
+    "slug": "session-13"
+  }
+}

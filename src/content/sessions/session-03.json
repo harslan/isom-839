@@ -1,0 +1,204 @@
+{
+  "number": 3,
+  "slug": "session-03",
+  "title": "Linear Optimization II: Sensitivity, Duality & What-If Thinking",
+  "subtitle": "The solution is the beginning, not the end — shadow prices, reduced costs, and the economics hiding inside every solved LP",
+  "duration": "120 Minutes",
+  "icon": "search",
+  "tags": ["Sensitivity Analysis", "Shadow Prices", "Duality"],
+  "objectives": [
+    {
+      "title": "Price your scarce resources with shadow prices",
+      "description": "Answer the question every operations leader asks — 'what would I pay for one more machine-hour?' — directly from solver output."
+    },
+    {
+      "title": "Interpret reduced costs and ranging reports",
+      "description": "Use reduced costs to judge why a product is out of the plan, and RHS/objective ranging to know exactly how far the numbers can drift before the answer changes."
+    },
+    {
+      "title": "Explain duality in managerial language",
+      "description": "See every LP's mirror image: allocating resources versus pricing them, and why the two problems always agree at the optimum."
+    },
+    {
+      "title": "Verify models you didn't build",
+      "description": "In a world where AI drafts your optimization models in seconds, use sensitivity analysis as the human sanity check that catches wrong units, absurd valuations, and broken constraints."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Opening Hook: The Overtime Offer",
+      "duration": "20 minutes",
+      "description": "Your furniture shop from last week is back, and a supplier offers overtime carpentry hours at $15 each. Take the deal? Everyone votes before we solve. Then we reveal that the LP already computed the answer — the shadow price — the moment it solved. Plus: Homework #1 debrief on the blending problem.",
+      "bulletPoints": [
+        "A solved LP contains a full economic report card, not just a plan",
+        "Shadow price = the objective's gain from one more unit of a resource",
+        "Homework #1 debrief: the blending formulations that worked and the ratio traps that didn't"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Shadow Prices: The Economics of Scarcity",
+      "duration": "20 minutes",
+      "description": "The marginal value of every constraint, computed for free. We work through binding constraints with positive shadow prices, slack constraints worth exactly zero, and the golden rule: pay less than the shadow price, profit; pay more, walk away.",
+      "bulletPoints": [
+        "Binding constraint → positive shadow price; slack constraint → zero",
+        "Shadow prices are marginal — valid only within the RHS range",
+        "Refineries and airlines negotiate real contracts off these numbers daily"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Reduced Costs & Ranging: How Far Can the Numbers Drift?",
+      "duration": "15 minutes",
+      "description": "Why is a product at zero in the optimal plan, and what would its margin need to be to earn its way in? That's the reduced cost. Then objective and RHS ranging: the intervals within which your answer — or your shadow prices — stay valid.",
+      "bulletPoints": [
+        "Reduced cost = the margin improvement needed before a zero-valued variable enters the plan",
+        "Objective ranging: how much can a price move before the plan changes?",
+        "RHS ranging: the window where each shadow price still holds"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Ten minutes to recharge before we open the hood on the dual problem.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:05 PM",
+      "title": "Duality for Managers",
+      "duration": "20 minutes",
+      "description": "Every LP has a twin. The primal allocates resources to maximize profit; the dual prices those resources to minimize their total valuation — and at the optimum the two objectives are equal. No theorem-proving: we build the dual of the production-mix problem and discover the dual variables are the shadow prices we already met.",
+      "bulletPoints": [
+        "Primal: 'what should we make?' Dual: 'what are our resources worth?'",
+        "Strong duality: optimal profit equals the optimal valuation of resources",
+        "The dual is how economists, auctioneers, and transfer-pricing teams think"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:05 PM - 9:30 PM",
+      "title": "Hands-On Lab: Pi, RC, and Managerial What-Ifs",
+      "duration": "25 minutes",
+      "description": "Colab time. We solve an expanded production model, pull Pi (shadow prices), RC (reduced costs), and the ranging attributes from gurobipy, and race through a rapid-fire round of what-if questions — answering each from the sensitivity report without re-solving.",
+      "bulletPoints": [
+        "constr.Pi, var.RC, SARHSLow/SARHSUp, SAObjLow/SAObjUp",
+        "Answer five manager questions using only the sensitivity report",
+        "Then re-solve to verify — and find the one question ranging can't answer"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Why AI Makes This Skill More Valuable, Not Less",
+      "duration": "10 minutes",
+      "description": "LLMs can now draft a gurobipy model from a paragraph in seconds — which means wrong models get built faster than ever. Sensitivity analysis is your lie detector: a shadow price of $4,000 per labor-hour or a maxed-out resource valued at zero screams 'check the formulation.' Homework #2 briefing.",
+      "bulletPoints": [
+        "AI generates models; humans must still certify them",
+        "Absurd shadow prices are the fastest way to catch unit errors and bad constraints",
+        "Homework #2: a sensitivity memo to a fictional COO — analytics in executive English"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Gurobi Jupyter Notebook Models",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "Several notebooks in this library print and interpret full sensitivity output — ideal worked examples for Homework #2.",
+      "icon": "code",
+      "badge": "Code Library",
+      "badgeType": "code",
+      "linkText": "Browse notebooks"
+    },
+    {
+      "title": "MIT OCW: The Analytics Edge",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/",
+      "description": "MIT's optimization units include sensitivity analysis walkthroughs with business framing that mirrors tonight's session.",
+      "icon": "presentation",
+      "badge": "Deep Dive",
+      "badgeType": "reference",
+      "linkText": "Open the course"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "Real deployments with real dollar figures — airlines, hospitals, energy firms. Notice how many wins came from what-if analysis, not just the first solution.",
+      "icon": "trending-up",
+      "badge": "Case Studies",
+      "badgeType": "reference",
+      "linkText": "Read the stories"
+    },
+    {
+      "title": "Python Optimization Rosetta Stone",
+      "url": "https://www.solvermax.com/blog/python-optimization-rosetta-stone",
+      "description": "The same model written in gurobipy, PuLP, Pyomo, and more — side by side. Great for translating tonight's Pi/RC calls to your fallback stack.",
+      "icon": "file-text",
+      "badge": "Reference",
+      "badgeType": "reference",
+      "linkText": "Compare libraries"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "search",
+      "title": "The Sensitivity Interrogation",
+      "description": "Solve the expanded three-product furniture model, extract the full sensitivity report from gurobipy, and answer a rapid-fire set of managerial what-ifs — without re-solving the model.",
+      "steps": [
+        {
+          "title": "Solve and extract the report",
+          "description": "Run the model, then loop over constraints for Pi and slack, and over variables for RC and objective ranging. Print it as a clean table."
+        },
+        {
+          "title": "Answer the what-ifs",
+          "description": "Overtime carpentry at $15/hour — buy it? A bookshelf line with $40 margin sits at zero — what margin would flip it in? Desk profit drops 10% — does the plan change?"
+        },
+        {
+          "title": "Verify by re-solving",
+          "description": "Change the data, re-solve, and confirm the sensitivity report predicted every outcome — until you push a RHS past its ranging limit and watch the prediction break."
+        },
+        {
+          "title": "Audit an AI-drafted model",
+          "description": "Inspect a provided LLM-generated model whose sensitivity report contains one absurd number. Find it, diagnose the formulation bug behind it, and fix it."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model(\"furniture_expanded\")\ndesks = m.addVar(name=\"desks\")\nchairs = m.addVar(name=\"chairs\")\nshelves = m.addVar(name=\"shelves\")\n\nm.setObjective(70*desks + 50*chairs + 40*shelves, GRB.MAXIMIZE)\nm.addConstr(4*desks + 3*chairs + 2*shelves <= 240, \"carpentry\")\nm.addConstr(2*desks + 1*chairs + 1*shelves <= 100, \"finishing\")\nm.optimize()\n\nprint(\"--- Shadow prices (Pi) ---\")\nfor c in m.getConstrs():\n    print(f\"{c.ConstrName}: ${c.Pi:.2f}/hour  \"\n          f\"(valid RHS range {c.SARHSLow:.0f}-{c.SARHSUp:.0f})\")\n\nprint(\"--- Reduced costs (RC) ---\")\nfor v in m.getVars():\n    print(f\"{v.VarName}: x={v.X:.0f}, RC={v.RC:.2f}, \"\n          f\"obj range {v.SAObjLow:.0f} to {v.SAObjUp:.0f}\")"
+      },
+      "discussionNote": "Shelves carry a negative reduced cost: at a $40 margin they simply cannot outbid desks and chairs for scarce hours. If an AI assistant confidently added shelves to the plan anyway, the RC value is your one-line proof it's wrong. That is the pattern for the AI era — the machine drafts, the sensitivity report testifies, and you deliver the verdict."
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "trending-up",
+      "text": "A solved LP is an economic X-ray: shadow prices value every scarce resource, reduced costs explain every excluded option, and ranging tells you exactly when to stop trusting both."
+    },
+    {
+      "icon": "brain",
+      "text": "Duality is the deep idea — allocating resources and pricing resources are the same problem viewed from opposite sides, and they always agree at the optimum."
+    },
+    {
+      "icon": "shield",
+      "text": "When AI writes the model, sensitivity analysis is your verification layer. An absurd shadow price is the smoke detector for a broken formulation."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #2",
+      "text": "The COO Memo: you are the analytics lead at Meridian Manufacturing. Solve the provided three-product, three-resource LP in gurobipy, then write a one-page memo to your fictional COO answering: (1) which resource to expand first and the maximum price per unit worth paying, (2) whether the discontinued product line deserves a second look and at what margin, (3) how robust the plan is if the top product's price falls 15%. Every claim must cite a specific Pi, RC, or ranging value — but the memo itself must be written in plain executive English with zero jargon. Submit the notebook plus the memo before Session 4."
+    }
+  ],
+  "nextSession": {
+    "title": "Network Optimization I: Transportation, Transshipment & Assignment",
+    "description": "Optimization goes geographic: plants, warehouses, and delivery routes as networks. Featuring India's Anna Chakra — a 2026 Edelman finalist feeding 810 million people — and the beautiful reason network LPs hand you integer answers for free.",
+    "tags": ["Networks", "Transportation", "Assignment"],
+    "slug": "session-04"
+  }
+}

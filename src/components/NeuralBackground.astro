@@ -1,0 +1,100 @@
+---
+---
+
+<div class="neural-bg fixed top-0 left-0 w-full h-full -z-10 opacity-40 pointer-events-none">
+  <canvas id="neuralCanvas" class="w-full h-full"></canvas>
+</div>
+
+<script is:inline>
+  (function() {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let animId = null;
+    let lastTime = 0;
+    const FPS = 30;
+    const frameInterval = 1000 / FPS;
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = w + 'px';
+      canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const nodes = [];
+    const numNodes = 50;
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+
+    for (let i = 0; i < numNodes; i++) {
+      nodes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 1
+      });
+    }
+
+    function animate(timestamp) {
+      animId = requestAnimationFrame(animate);
+
+      if (timestamp - lastTime < frameInterval) return;
+      lastTime = timestamp;
+
+      const cw = window.innerWidth;
+      const ch = window.innerHeight;
+
+      ctx.clearRect(0, 0, cw, ch);
+
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i];
+        node.x += node.vx;
+        node.y += node.vy;
+        if (node.x < 0 || node.x > cw) node.vx *= -1;
+        if (node.y < 0 || node.y > ch) node.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+        ctx.fill();
+      }
+
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 22500) {
+            const dist = Math.sqrt(distSq);
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = 'rgba(136, 85, 255, ' + (0.2 * (1 - dist / 150)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    animId = requestAnimationFrame(animate);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (animId) { cancelAnimationFrame(animId); animId = null; }
+      } else {
+        if (!animId) { lastTime = 0; animId = requestAnimationFrame(animate); }
+      }
+    });
+  })();
+</script>

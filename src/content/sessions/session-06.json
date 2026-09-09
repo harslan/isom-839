@@ -1,0 +1,204 @@
+{
+  "number": 6,
+  "slug": "session-06",
+  "title": "Integer Optimization I: The Power of Yes/No Decisions",
+  "subtitle": "Binary variables, fixed costs, and big-M logic — how one line of code lets your model make strategic decisions, and why that makes it exponentially harder to solve",
+  "duration": "120 Minutes",
+  "icon": "check",
+  "tags": ["Integer Programming", "Binary Variables", "Fixed Costs"],
+  "objectives": [
+    {
+      "title": "Model decisions, not just quantities",
+      "description": "Use binary variables to encode yes/no choices — open a facility, launch a product, sign a contract — inside an otherwise linear model."
+    },
+    {
+      "title": "Master fixed-charge and logical constraints",
+      "description": "Link binary and continuous variables with big-M fixed-charge constraints, and translate either/or and if-then business rules into linear inequalities."
+    },
+    {
+      "title": "Build intuition for branch & bound",
+      "description": "Explain how solvers search the tree of yes/no combinations, why LP relaxations give bounds, and what the MIP gap in the Gurobi log actually means."
+    },
+    {
+      "title": "Respect the computational cliff",
+      "description": "Understand why integer programming is exponentially harder than LP, and why formulation quality — especially tight big-M values — decides whether your model solves in seconds or never."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Opening: The $50 Million Question LP Cannot Answer",
+      "duration": "20 minutes",
+      "description": "Last week we routed flow through a network we took as given. Tonight we decide what the network IS — and that requires a new kind of variable.",
+      "bulletPoints": [
+        "Why 'build 0.37 of a warehouse' is nonsense: fractional answers fail for strategic decisions",
+        "Homework #4 debrief: the lanes you wished you could open or close — now you can",
+        "The one-line change: vtype=GRB.BINARY, and what it buys (and costs) you"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Binary Variables & the Fixed-Charge Trick",
+      "duration": "20 minutes",
+      "description": "The single most useful modeling pattern in prescriptive analytics: pay a fixed cost only if you use the capacity.",
+      "bulletPoints": [
+        "y = 1 if we open it, 0 if not: fixed costs enter the objective as f*y",
+        "The linking constraint x <= M*y: no shipping through a warehouse that doesn't exist",
+        "Choosing M: why 'just use a million' wrecks performance and how to pick a tight bound"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Logic as Algebra: Either/Or and If-Then",
+      "duration": "15 minutes",
+      "description": "Business rules become linear constraints once you have binaries to switch them on and off.",
+      "bulletPoints": [
+        "Either/or constraints: at least one of two conditions must hold, big-M relaxes the other",
+        "If-then: 'if we enter Europe, we must open at least two DCs there' becomes a linear inequality in binaries",
+        "Selection logic: at most k of n, mutually exclusive options, prerequisite chains"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Ten minutes. When you return: why your laptop can solve some 10,000-variable IPs in seconds and choke on some 50-variable ones.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:05 PM",
+      "title": "Branch & Bound: How the Solver Thinks",
+      "duration": "20 minutes",
+      "description": "Inside the search tree: relax, bound, branch, prune. This is why IP is exponentially harder than LP — and why it still works in practice.",
+      "bulletPoints": [
+        "2^n combinations: 50 binary variables means over a quadrillion-quadrillion possible plans — enumeration is hopeless",
+        "LP relaxation as an optimistic bound; branching on fractional binaries; pruning dominated subtrees",
+        "Reading the Gurobi log live: incumbent, best bound, and the MIP gap converging"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:05 PM - 9:30 PM",
+      "title": "Hands-On: Facility Location with Fixed Opening Costs",
+      "duration": "25 minutes",
+      "description": "Teams build the classic capacitated facility location model in gurobipy: which warehouses to open, and which customers each one serves.",
+      "bulletPoints": [
+        "Binary open/close decisions plus continuous shipment variables",
+        "Fixed-charge linking constraints tie the two together",
+        "Compare the IP solution to its LP relaxation: see the fractional-warehouse absurdity firsthand"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Wrap-Up & Homework #5 Launch",
+      "duration": "10 minutes",
+      "description": "Takeaways, the project-selection knapsack assignment, and a preview of scheduling models and the midterm case.",
+      "bulletPoints": [
+        "Recap: binaries for decisions, big-M for linking, branch & bound under the hood",
+        "Homework #5: capital budgeting as a knapsack — pick the project portfolio",
+        "Next week: set covering, workforce scheduling, CP-SAT, and the midterm case launch"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Gurobi Jupyter Notebook Modeling Examples",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "The facility location and knapsack notebooks here are direct templates for tonight's activity and Homework #5 — runnable in Colab.",
+      "icon": "code",
+      "badge": "Notebooks",
+      "badgeType": "code",
+      "linkText": "Open the notebooks"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "Search 'facility location' and 'network design' — nearly every major supply chain win in this library has binary open/close decisions at its core.",
+      "icon": "search",
+      "badge": "Library",
+      "badgeType": "reference",
+      "linkText": "Browse stories"
+    },
+    {
+      "title": "Franz Edelman Award",
+      "url": "https://www.informs.org/Recognizing-Excellence/INFORMS-Prizes/Franz-Edelman-Award",
+      "description": "The 'Super Bowl of analytics.' Skim past winners and count how many hinge on integer decisions — plants, hubs, gates, crews.",
+      "icon": "award",
+      "badge": "Awards",
+      "badgeType": "reference",
+      "linkText": "Meet the winners"
+    },
+    {
+      "title": "Google OR-Tools",
+      "url": "https://github.com/google/or-tools",
+      "description": "Install this before Session 7 — we move to the CP-SAT solver for scheduling, a different and powerful way to handle discrete decisions.",
+      "icon": "wrench",
+      "badge": "Install Ahead",
+      "badgeType": "tool",
+      "linkText": "View on GitHub"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "box",
+      "title": "Facility Location: Which Warehouses Do We Open?",
+      "description": "Five candidate warehouses, each with a hefty fixed opening cost and limited capacity. Eight customer zones with known demand. Your team decides which warehouses to open and how to serve every customer at minimum total cost — fixed plus variable.",
+      "steps": [
+        {
+          "title": "Declare the two variable families",
+          "description": "Binary y[w] = 1 if warehouse w opens; continuous x[w,c] = units shipped from w to customer c. Strategic and operational decisions living in one model."
+        },
+        {
+          "title": "Write the fixed-charge link",
+          "description": "Total shipments out of w cannot exceed capacity[w] * y[w]. Closed warehouse, zero flow — and note the M here is the capacity, not an arbitrary huge number."
+        },
+        {
+          "title": "Solve and read the log",
+          "description": "Watch branch & bound work: incumbent solutions, the best bound, the gap closing to 0%. Which warehouses opened, and does the geography make sense?"
+        },
+        {
+          "title": "Relax and compare",
+          "description": "Change vtype to continuous and re-solve. The LP happily opens 0.42 of a warehouse and beats your IP cost — an answer that is cheaper and impossible. That gap is the price of reality."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nwh = [\"W1\", \"W2\", \"W3\", \"W4\", \"W5\"]\nfixed = {\"W1\": 120000, \"W2\": 95000, \"W3\": 150000, \"W4\": 80000, \"W5\": 110000}\ncap = {\"W1\": 900, \"W2\": 700, \"W3\": 1100, \"W4\": 500, \"W5\": 800}\ncust = {\"C1\": 240, \"C2\": 180, \"C3\": 310, \"C4\": 150,\n        \"C5\": 220, \"C6\": 270, \"C7\": 130, \"C8\": 200}\n# ship_cost[w, c] provided in the class data cell\n\nm = gp.Model(\"facility_location\")\ny = m.addVars(wh, vtype=GRB.BINARY, name=\"open\")\nx = m.addVars(wh, cust.keys(), name=\"ship\")\n\nm.setObjective(\n    gp.quicksum(fixed[w] * y[w] for w in wh)\n    + gp.quicksum(ship_cost[w, c] * x[w, c] for w in wh for c in cust),\n    GRB.MINIMIZE)\n\n# Fixed-charge link: no flow through a closed warehouse\nfor w in wh:\n    m.addConstr(x.sum(w, \"*\") <= cap[w] * y[w], name=f\"link_{w}\")\n# Meet every customer's demand\nfor c, d in cust.items():\n    m.addConstr(x.sum(\"*\", c) == d, name=f\"demand_{c}\")\n\nm.optimize()\nopened = [w for w in wh if y[w].X > 0.5]\nprint(f\"Open: {opened}  |  Total cost: ${m.ObjVal:,.0f}\")"
+      },
+      "discussionNote": "Notice that the linking constraint used capacity as the big-M — the tightest valid value. Loose M values make the LP relaxation weak, the branch & bound tree explodes, and 'the same model' can go from 2 seconds to 2 hours. In IP, formulation quality is not style — it is performance. Where else tonight could a rule of thumb ('just make M huge') quietly sabotage you?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "check",
+      "text": "Binary variables turn optimization from a calculator into a strategist: open/close, launch/kill, in/out. One vtype change moves you from allocating quantities to making decisions."
+    },
+    {
+      "icon": "wrench",
+      "text": "Fixed-charge constraints (x <= M*y) and big-M logic are the modeling patterns behind either/or and if-then rules — and tight M values are the difference between models that solve and models that stall."
+    },
+    {
+      "icon": "brain",
+      "text": "IP is exponentially harder than LP — 2^n combinations — but branch & bound prunes intelligently using LP relaxation bounds. Trust the MIP gap, not your enumeration instincts."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #5",
+      "text": "Project-selection knapsack: your division has $10M of capital and 12 candidate projects, each with an investment cost, an expected NPV, and staffing needs (data file provided). Build a binary IP in gurobipy that maximizes total NPV subject to the budget and at most 60 staff-months, with two logical rules: Project 7 requires Project 3 (if-then), and Projects 5 and 9 are mutually exclusive (either/or). Report the chosen portfolio, then re-solve with an $8M budget and write 3-4 sentences on which projects fell out and what that says about their bang-for-buck. Colab link due before Session 7."
+    }
+  ],
+  "nextSession": {
+    "title": "Integer Optimization II: Scheduling, Location & the Midterm Case",
+    "description": "Binary variables meet the workforce: set covering, shift scheduling, and knapsack patterns — plus a new solver, Google's CP-SAT, built for exactly these problems. And the big one: the midterm case launches. Teams get a retail replenishment optimization challenge inspired by ECCO's Edelman-finalist system.",
+    "tags": ["Scheduling", "CP-SAT", "Midterm Case"],
+    "slug": "session-07"
+  }
+}

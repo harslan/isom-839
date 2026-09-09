@@ -1,0 +1,364 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientText from '../components/GradientText.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/Icon.astro';
+
+const problemIdeas = [
+  {
+    domain: 'Operations & Supply Chain',
+    examples: [
+      'A distribution network redesign for a company you know — which DCs to open, how to route product, what it saves',
+      'A production planning model that decides what to make, when, and on which line, under real capacity constraints',
+    ],
+  },
+  {
+    domain: 'Workforce & Scheduling',
+    examples: [
+      'A staff scheduling model for a restaurant, clinic, or campus office that meets coverage at minimum cost',
+      'A course or room timetabling model with CP-SAT that respects real conflicts and preferences',
+    ],
+  },
+  {
+    domain: 'Finance & Investment',
+    examples: [
+      'A portfolio optimization with real market data — efficient frontier, cardinality limits, or ESG constraints',
+      'A capital budgeting model: which projects to fund this year under budget and dependency constraints',
+    ],
+  },
+  {
+    domain: 'Marketing & Pricing',
+    examples: [
+      'A marketing budget allocation across channels using response curves and a Markov attribution model',
+      'A revenue-optimizing pricing model for a product line with a demand curve you estimate from data',
+    ],
+  },
+  {
+    domain: 'Retail & Inventory',
+    examples: [
+      'An order-quantity policy for a real product line: newsvendor with demand you forecast, or a small MDP',
+      'A store replenishment model in the spirit of the ECCO Shoes Edelman case — when and how much to reorder',
+    ],
+  },
+  {
+    domain: 'Logistics & Routing',
+    examples: [
+      'A delivery routing model for a local business — which stops, which order, which vehicle',
+      'A carbon-aware scheduling model: shift flexible workloads to greener hours, like Google does with LP',
+    ],
+  },
+  {
+    domain: 'Sports & Entertainment',
+    examples: [
+      'A lineup or pacing optimization in the spirit of USA Cycling\'s Olympic gold "Project 4:05"',
+      'A tournament, league, or event schedule that minimizes travel or maximizes fairness',
+    ],
+  },
+  {
+    domain: 'Public Sector & Nonprofit',
+    examples: [
+      'A food bank or donation allocation model — Anna Chakra in miniature: fairness plus cost',
+      'A volunteer-to-shift assignment model for an organization you actually work with',
+    ],
+  },
+];
+
+const deliverables = [
+  {
+    icon: 'code',
+    title: 'Working model',
+    description: 'A Colab notebook where your optimization model runs end-to-end: data in, formulation, solve, and a readable answer out. gurobipy, CVXPY, or OR-Tools — your pick.',
+  },
+  {
+    icon: 'file-text',
+    title: 'Decision memo',
+    description: 'A 2-page memo to a named decision-maker: the problem, the model in plain English, the recommended decision, the money, and the sensitivity story. No math notation required.',
+  },
+  {
+    icon: 'presentation',
+    title: 'Final presentation',
+    description: 'An 8-10 minute presentation on Dec 16: your optimization story, told the way Edelman finalists tell theirs — problem, model, decision, impact.',
+  },
+];
+
+const briefPrompts = [
+  {
+    label: 'The decision',
+    description: 'In 1-2 sentences: what decision does your model make, and who owns that decision today?',
+  },
+  {
+    label: 'The model',
+    description: 'Decision variables, objective, and constraints — described in business English, with the formulation in the notebook.',
+  },
+  {
+    label: 'The answer',
+    description: 'What does the optimal solution say to do? How different is it from the status quo or the intuitive answer?',
+  },
+  {
+    label: 'The money',
+    description: 'Quantify the value: dollars saved, revenue gained, hours freed, emissions cut. Estimated honestly.',
+  },
+  {
+    label: 'The sensitivity',
+    description: 'Which assumption matters most? Show at least one what-if: how the recommendation changes when the world changes.',
+  },
+];
+
+const startResources = [
+  {
+    icon: 'target',
+    title: 'Session 2 — Formulation',
+    description: 'The three-ingredient grammar: decision variables, objective, constraints. Every project starts here.',
+    href: '/sessions/session-02',
+  },
+  {
+    icon: 'search',
+    title: 'Session 3 — Sensitivity',
+    description: 'Shadow prices and what-if analysis — the section of your memo that impresses executives most.',
+    href: '/sessions/session-03',
+  },
+  {
+    icon: 'network',
+    title: 'Sessions 4-5 — Networks',
+    description: 'Transportation, assignment, flows, and supply chain design patterns for logistics projects.',
+    href: '/sessions/session-04',
+  },
+  {
+    icon: 'check',
+    title: 'Sessions 6-7 — Integer models',
+    description: 'Yes/no decisions: facility location, project selection, scheduling with binary variables and CP-SAT.',
+    href: '/sessions/session-06',
+  },
+  {
+    icon: 'trending-up',
+    title: 'Session 8 — Nonlinear',
+    description: 'Portfolio optimization and pricing curves with CVXPY for finance and marketing projects.',
+    href: '/sessions/session-08',
+  },
+  {
+    icon: 'brain',
+    title: 'Sessions 11-12 — The AI frontier',
+    description: 'Predict-then-optimize and RL — if your project combines forecasting with decisions, start here.',
+    href: '/sessions/session-11',
+  },
+];
+
+const faqs = [
+  {
+    question: 'Does my project need real data?',
+    answer: 'Real or realistic. Real data from your employer or a public dataset is ideal. If you can\'t get it, construct realistic data and say so honestly in your memo — the modeling and the sensitivity analysis are what\'s graded, and a well-built model on constructed data beats a shallow model on real data.',
+  },
+  {
+    question: 'How big does the model have to be?',
+    answer: 'Big enough that the answer isn\'t obvious by inspection — usually that means tens to hundreds of decision variables, not two. Small enough that you fully understand every constraint. A tight, well-explained model with a real sensitivity story beats a sprawling one you can\'t defend.',
+  },
+  {
+    question: 'Can I use AI tools like ChatGPT, Claude, or Gurobi AI Modeling?',
+    answer: 'Yes — encouraged, exactly the way professionals use them. Disclose what you used, and be ready to defend every constraint in your model. In the presentation you will be asked "why is this constraint here?" and "what happens if I relax that one?" — the AI won\'t be standing next to you.',
+  },
+  {
+    question: 'Team or solo?',
+    answer: 'Teams of 2-3 preferred, solo allowed. Teams are expected to show correspondingly more depth — richer data, a bigger model, or a stronger validation story.',
+  },
+  {
+    question: 'What makes an A project?',
+    answer: 'The same things that win Edelman Awards, scaled down: a decision someone actually owns, a model that captures the real trade-offs, an answer that would change what they do, a dollar figure attached, and a sensitivity story that shows you know which assumptions carry the weight.',
+  },
+  {
+    question: 'When are things due?',
+    answer: 'Project proposal (one paragraph: the decision, the owner, the data plan) is due Nov 4 on Canvas. Notebook and memo are due Dec 15 at 11:59 PM. Presentations are in class Dec 16.',
+  },
+];
+---
+
+<BaseLayout title="ISOM 839 | Final Project — Your Optimization Story">
+  <!-- Hero -->
+  <section class="py-24 px-8 max-w-[1100px] mx-auto">
+    <div class="font-mono text-[0.75rem] text-accent-cyan tracking-[3px] uppercase mb-6">
+      ISOM 839 &middot; Final Project
+    </div>
+    <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-extrabold leading-tight mb-6">
+      Your <GradientText>Optimization Story</GradientText>
+    </h1>
+    <p class="text-text-secondary text-xl max-w-[800px] mb-10 leading-relaxed">
+      Pick a real decision. Model it. Solve it. Tell the story with numbers. Present <strong class="text-text-primary">Dec 16 in class</strong>.
+    </p>
+
+    <!-- Quick facts -->
+    <div class="grid md:grid-cols-4 gap-4 mb-12">
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Format</div>
+        <div class="text-sm text-text-primary leading-snug">Team of 2-3 (solo allowed)</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Deliverables</div>
+        <div class="text-sm text-text-primary leading-snug">Notebook + decision memo + talk</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Proposal Due</div>
+        <div class="text-sm text-text-primary leading-snug">Wed Nov 4 &middot; Canvas</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Presentations</div>
+        <div class="text-sm text-text-primary leading-snug">Wed Dec 16 &middot; in class</div>
+      </div>
+    </div>
+
+    <div class="bg-gradient-to-br from-accent-cyan/10 to-accent-purple/10 border border-accent-cyan/30 rounded-2xl p-8">
+      <div class="flex items-start gap-4">
+        <Icon name="rocket" class="w-8 h-8 text-accent-cyan shrink-0 mt-1" />
+        <div>
+          <h2 class="text-xl font-bold mb-3">The brief, in one paragraph</h2>
+          <p class="text-text-secondary leading-relaxed">
+            Find <strong class="text-text-primary">one real decision</strong> that an organization — your employer, a business you know, a nonprofit, a team — makes today by intuition or spreadsheet. Build <strong class="text-text-primary">one optimization model</strong> that makes it better: variables, objective, constraints, solved in Python. Then translate the solution back into business language: <strong class="text-text-primary">what to do, what it's worth, and which assumptions matter</strong>. That translation — model to decision to dollars — is the skill this course exists to teach.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The shape of a great project -->
+  <section class="py-12 px-8 max-w-[1100px] mx-auto">
+    <SectionHeader number="01" label="The Standard" title="Think Like an Edelman Finalist" description="Every great prescriptive analytics story has the same five beats. Your project will hit all five, in miniature." />
+    <div class="grid md:grid-cols-5 gap-4 fade-in">
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+        <Icon name="target" class="w-6 h-6 text-accent-cyan mb-3" />
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Beat 1</div>
+        <div class="font-bold mb-2">A real decision</div>
+        <p class="text-text-secondary text-sm leading-relaxed">Owned by a real person or organization, made badly (or blindly) today.</p>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+        <Icon name="layout" class="w-6 h-6 text-accent-cyan mb-3" />
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Beat 2</div>
+        <div class="font-bold mb-2">An honest model</div>
+        <p class="text-text-secondary text-sm leading-relaxed">Variables, objective, constraints that capture the trade-offs that actually bind.</p>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+        <Icon name="zap" class="w-6 h-6 text-accent-cyan mb-3" />
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Beat 3</div>
+        <div class="font-bold mb-2">A solved answer</div>
+        <p class="text-text-secondary text-sm leading-relaxed">A provably optimal (or demonstrably strong) solution from an industrial solver.</p>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+        <Icon name="trending-up" class="w-6 h-6 text-accent-cyan mb-3" />
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Beat 4</div>
+        <div class="font-bold mb-2">A dollar figure</div>
+        <p class="text-text-secondary text-sm leading-relaxed">The gap between today's decision and the optimal one, quantified honestly.</p>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+        <Icon name="search" class="w-6 h-6 text-accent-cyan mb-3" />
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Beat 5</div>
+        <div class="font-bold mb-2">A sensitivity story</div>
+        <p class="text-text-secondary text-sm leading-relaxed">Which assumptions carry the weight, and how the answer moves when they do.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section class="py-12 px-8 max-w-[1100px] mx-auto">
+    <SectionHeader number="02" label="Deliverables" title="What to Submit" description="Three things: notebook and memo on Canvas by Dec 15 at 11:59 PM, presentation in class Dec 16." />
+    <div class="grid md:grid-cols-3 gap-6 mb-10">
+      {deliverables.map((d) => (
+        <div class="bg-bg-card border border-border-subtle rounded-2xl p-8 fade-in">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center mb-4">
+            <Icon name={d.icon} class="w-6 h-6 text-accent-cyan" />
+          </div>
+          <h3 class="font-bold text-lg mb-3">{d.title}</h3>
+          <p class="text-text-secondary text-sm leading-relaxed">{d.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- Memo structure callout -->
+    <div class="bg-bg-card border border-border-subtle rounded-2xl p-8 fade-in">
+      <h3 class="font-bold text-lg mb-2 flex items-center gap-2">
+        <Icon name="file-text" class="w-5 h-5 text-accent-purple" />
+        The decision memo, structured
+      </h3>
+      <p class="text-text-secondary text-sm mb-6 leading-relaxed">
+        Five labeled sections, about a paragraph each, written to a named decision-maker. Plain business English — the math lives in the notebook.
+      </p>
+      <ul class="space-y-4">
+        {briefPrompts.map((p) => (
+          <li class="flex gap-4 pl-2 border-l-2 border-accent-cyan/40">
+            <div class="flex-1">
+              <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-1">{p.label}</div>
+              <div class="text-sm text-text-secondary leading-relaxed">{p.description}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Suggested Problems -->
+  <section class="py-12 px-8 max-w-[1100px] mx-auto">
+    <SectionHeader number="03" label="Project Ideas" title="Eight Domains to Adapt" description="Starting points, not assignments — the best projects come from decisions you have actually watched someone struggle with." />
+    <div class="grid md:grid-cols-2 gap-6">
+      {problemIdeas.map((cat) => (
+        <div class="bg-bg-card border border-border-subtle rounded-2xl p-6 fade-in">
+          <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-3">{cat.domain}</div>
+          <ul class="space-y-3">
+            {cat.examples.map((ex) => (
+              <li class="flex gap-3 text-sm text-text-secondary leading-relaxed">
+                <Icon name="sparkles" class="w-4 h-4 text-accent-purple shrink-0 mt-0.5" />
+                <span>{ex}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Starter Resources -->
+  <section class="py-12 px-8 max-w-[1100px] mx-auto">
+    <SectionHeader number="04" label="Starter Resources" title="Where to Begin" description="Each session gives you a reusable modeling pattern. Match your project domain to its session and start from that notebook." />
+    <div class="grid md:grid-cols-2 gap-4">
+      {startResources.map((r) => (
+        <a href={r.href} class="flex gap-4 bg-bg-card border border-border-subtle rounded-xl p-6 transition-all duration-300 no-underline hover:border-accent-cyan/30 hover:translate-x-1 fade-in">
+          <div class="w-10 h-10 rounded-lg bg-bg-tertiary/50 flex items-center justify-center shrink-0">
+            <Icon name={r.icon} class="w-5 h-5 text-accent-cyan" />
+          </div>
+          <div class="flex-1">
+            <div class="font-semibold mb-1 text-text-primary">{r.title}</div>
+            <div class="text-sm text-text-secondary leading-relaxed">{r.description}</div>
+          </div>
+          <Icon name="chevron-right" class="w-4 h-4 text-text-muted shrink-0 self-center" />
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-12 px-8 max-w-[900px] mx-auto">
+    <SectionHeader number="05" label="FAQ" title="Common Questions" />
+    <div class="space-y-4">
+      {faqs.map((faq) => (
+        <details class="group bg-bg-card border border-border-subtle rounded-xl overflow-hidden fade-in">
+          <summary class="flex items-center justify-between gap-4 p-6 cursor-pointer list-none hover:bg-bg-tertiary/30 transition-colors">
+            <span class="font-semibold text-text-primary">{faq.question}</span>
+            <Icon name="chevron-right" class="w-5 h-5 text-accent-cyan transition-transform duration-300 group-open:rotate-90 shrink-0" />
+          </summary>
+          <div class="px-6 pb-6 text-text-secondary leading-relaxed">
+            {faq.answer}
+          </div>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final reminder -->
+  <section class="py-24 px-8 max-w-[900px] mx-auto">
+    <div class="bg-gradient-to-br from-accent-cyan/5 to-accent-purple/5 border border-border-subtle rounded-2xl p-10 text-center">
+      <Icon name="award" class="w-12 h-12 text-accent-cyan mx-auto mb-6" />
+      <h2 class="text-2xl font-bold mb-4">The Edelman of ISOM-839</h2>
+      <p class="text-text-secondary leading-relaxed max-w-[600px] mx-auto mb-8">
+        On the last night of class, after all presentations, the class votes for the project that best tells the story this field is built on: a real decision, made measurably better by a model. Documented Edelman finalist impact has passed $431 billion. Your project is your first entry in that tradition.
+      </p>
+      <div class="font-mono text-sm text-accent-cyan tracking-[2px]">
+        Proposal Nov 4 &middot; Notebook + Memo Dec 15 &middot; Presentations Dec 16
+      </div>
+    </div>
+  </section>
+</BaseLayout>

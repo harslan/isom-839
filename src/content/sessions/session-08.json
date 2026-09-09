@@ -1,0 +1,209 @@
+{
+  "number": 8,
+  "slug": "session-08",
+  "title": "Nonlinear Optimization: Portfolios, Pricing & Curves",
+  "subtitle": "When the world stops being linear — risk that grows with the square of exposure, revenue that bends as prices rise — you need a new toolkit. Tonight: convexity, Markowitz, and the efficient frontier.",
+  "duration": "120 Minutes",
+  "icon": "trending-up",
+  "tags": ["Nonlinear", "Portfolio Optimization", "CVXPY"],
+  "objectives": [
+    {
+      "title": "Distinguish convex from nonconvex problems",
+      "description": "Develop the single most valuable instinct in optimization: recognizing when a problem has one global valley (convex — solvable at scale) versus a mountain range of local traps (nonconvex — hard). This distinction decides which tool you reach for."
+    },
+    {
+      "title": "Build a Markowitz portfolio optimizer",
+      "description": "Formulate the mean-variance portfolio problem — the 1952 model that won Harry Markowitz a Nobel Prize and still underpins trillions of dollars at BlackRock, Vanguard, and every robo-advisor — and solve it with CVXPY on real stock data."
+    },
+    {
+      "title": "Trace and interpret the efficient frontier",
+      "description": "Sweep the risk-return tradeoff to generate the efficient frontier, and learn to read it the way a portfolio manager does: which portfolios are dominated, where diversification pays, and why the curve bends."
+    },
+    {
+      "title": "Optimize prices on a demand curve",
+      "description": "Model price-demand relationships and see why revenue = price × demand(price) is a quadratic — meaning pricing is inherently a nonlinear optimization problem, from airline seats to Uber surge to your Homework #6."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "The World Is Curved: Why Linear Isn't Enough",
+      "duration": "20 minutes",
+      "description": "Three business stories where straight lines fail. Portfolio risk grows with the square of your exposure. Doubling ad spend doesn't double conversions. Raising prices 10% doesn't raise revenue 10%. Linear programming ruled our earlier sessions — tonight we meet the problems it can't touch.",
+      "bulletPoints": [
+        "Opening story: how a robo-advisor rebalances $100B in client portfolios every night — and why the math behind it is quadratic, not linear",
+        "Diminishing returns everywhere: marketing spend, server capacity, crop yield",
+        "Risk is nonlinear: variance, correlation, and why 'spreading your bets' has actual math behind it",
+        "Preview of tonight: convexity → Markowitz → efficient frontier → pricing curves"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Convex vs. Nonconvex: The Great Divide",
+      "duration": "20 minutes",
+      "description": "The intuition that separates easy nonlinear problems from nightmares. A convex problem is a single smooth bowl — roll a marble anywhere and it finds the bottom. A nonconvex problem is a mountain range at night — you can find a valley, but is it THE valley?",
+      "bulletPoints": [
+        "Bowls vs. mountain ranges: local minima, global minima, and why solvers get trapped",
+        "The convexity checklist: quadratic risk (convex), log utility (convex), fixed charges and if-then logic (nonconvex)",
+        "Why every solver vendor cares: convex QPs solve in milliseconds at massive scale; general nonconvex is NP-hard",
+        "Industry milestone: Gurobi 13 (November 2025) shipped a nonlinear barrier method — even the MIP giants now solve smooth nonlinear programs natively"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Markowitz 1952: The Nobel Prize on a Napkin",
+      "duration": "15 minutes",
+      "description": "The mean-variance model, derived live. Decision variables: portfolio weights. Objective: minimize variance w'Σw. Constraints: hit a target return, weights sum to 1. Twenty-five lines of math that created modern finance.",
+      "bulletPoints": [
+        "Expected return is linear in weights; risk (variance) is quadratic — enter the covariance matrix Σ",
+        "Diversification quantified: two 30%-volatility stocks with 0.2 correlation make a portfolio far calmer than either alone",
+        "The formulation: minimize w'Σw subject to μ'w ≥ r_target, weights sum to 1, no shorting",
+        "Real-world extensions the pros add: position limits, sector caps, transaction costs, cardinality"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch, coffee, and load up Colab — real market data is coming in the second half.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:00 PM",
+      "title": "CVXPY: Speaking Convex Optimization in Python",
+      "duration": "15 minutes",
+      "description": "Meet CVXPY — the open-source modeling language born at Stanford that lets you write optimization problems the way you write math. Variables, objectives, constraints, .solve(). It verifies convexity for you and refuses to run problems it can't guarantee.",
+      "bulletPoints": [
+        "cp.Variable, cp.Minimize, cp.quad_form — the vocabulary of tonight's lab",
+        "Disciplined Convex Programming: CVXPY as your convexity spell-checker",
+        "CVXPY vs. gurobipy: when to use which (convex modeling elegance vs. MIP horsepower)",
+        "Live demo: a 3-stock toy portfolio solved in 8 lines"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:00 PM - 9:30 PM",
+      "title": "Lab: Build the Efficient Frontier with Real Stock Data",
+      "duration": "30 minutes",
+      "description": "Hands-on activity. Pull two years of real prices for AAPL, MSFT, JPM, XOM, and JNJ via yfinance, estimate returns and covariance, then sweep target returns in CVXPY to trace your own efficient frontier — the same curve on every wealth-management pitch deck.",
+      "bulletPoints": [
+        "Download real market data with yfinance in Colab",
+        "Compute mean returns and the covariance matrix with numpy/pandas",
+        "Solve the Markowitz QP across 30 target returns; plot risk vs. return",
+        "Find your minimum-variance portfolio and interpret the weights — what did the optimizer decide about big tech vs. energy vs. healthcare?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Pricing Curves & Homework #6 Setup",
+      "duration": "10 minutes",
+      "description": "The second great nonlinear problem in business: pricing. If demand falls linearly with price, revenue = p × (a − b·p) is a downward parabola — and finding the peak is a one-variable nonlinear optimization. Uber, airlines, and Amazon solve versions of this millions of times a day.",
+      "bulletPoints": [
+        "The revenue parabola: why there's always a sweet-spot price, and it's rarely the highest one",
+        "Homework #6 walkthrough: revenue-maximizing pricing with a linear demand curve",
+        "Next week: Markov chains and customer journeys — and your MIDTERM CASE is due"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "CVXPY Documentation",
+      "url": "https://www.cvxpy.org/",
+      "description": "The official home of CVXPY — tutorials, the full atoms library, and worked examples including portfolio optimization. Your primary reference for tonight's lab and beyond.",
+      "icon": "code",
+      "badge": "Essential",
+      "badgeType": "tool",
+      "linkText": "Open CVXPY docs"
+    },
+    {
+      "title": "yfinance on GitHub",
+      "url": "https://github.com/ranaroussi/yfinance",
+      "description": "The open-source Python library we use to pull real historical stock prices from Yahoo Finance — one pip install, one line of code, two years of market data.",
+      "icon": "github",
+      "badge": "Lab Tool",
+      "badgeType": "code",
+      "linkText": "View on GitHub"
+    },
+    {
+      "title": "Gurobi 13: Nonlinear Optimization Release",
+      "url": "https://www.gurobi.com/whats-new-gurobi-13-0/",
+      "description": "In November 2025, Gurobi 13 added a nonlinear barrier method — a landmark signal that nonlinear programming has gone fully mainstream in commercial solvers. Skim what's now possible.",
+      "icon": "rocket",
+      "badge": "Industry News",
+      "badgeType": "reference",
+      "linkText": "Read the release notes"
+    },
+    {
+      "title": "CVXPY Quadratic Program Example",
+      "url": "https://www.cvxpy.org/examples/basic/quadratic_program.html",
+      "description": "Official CVXPY quadratic programming walkthrough — the template pattern behind our Markowitz lab. Great to keep open in a second tab while you work.",
+      "icon": "file-text",
+      "badge": "Walkthrough",
+      "badgeType": "interactive",
+      "linkText": "Open the example"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "trending-up",
+      "title": "The Efficient Frontier, Built From Scratch",
+      "description": "Pull real market data for five stocks, estimate the return-and-risk statistics, and trace the efficient frontier by solving a family of Markowitz problems in CVXPY. By the end you'll have produced — with your own code — the most famous chart in finance.",
+      "steps": [
+        {
+          "title": "Get real data",
+          "description": "Use yfinance to download two years of closing prices for AAPL, MSFT, JPM, XOM, and JNJ. Compute daily returns with pandas."
+        },
+        {
+          "title": "Estimate the statistics",
+          "description": "Annualize mean returns (×252) and build the covariance matrix Σ. Inspect the correlations — which pairs move together, and which give you free diversification?"
+        },
+        {
+          "title": "Formulate and sweep",
+          "description": "In CVXPY, minimize w'Σw subject to a target return, weights summing to 1, and no shorting. Loop over 30 target returns to trace the frontier."
+        },
+        {
+          "title": "Plot and interpret",
+          "description": "Plot volatility vs. return for the frontier and mark each individual stock. Every single stock should sit below the curve — that vertical gap is the measurable value of diversification."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import yfinance as yf\nimport numpy as np\nimport cvxpy as cp\n\ntickers = [\"AAPL\", \"MSFT\", \"JPM\", \"XOM\", \"JNJ\"]\nprices = yf.download(tickers, period=\"2y\")[\"Close\"]\nrets = prices.pct_change().dropna()\n\nmu = rets.mean().values * 252          # annualized expected returns\nSigma = rets.cov().values * 252        # annualized covariance matrix\nn = len(tickers)\n\nw = cp.Variable(n)\ntarget = cp.Parameter(nonneg=True)\nprob = cp.Problem(\n    cp.Minimize(cp.quad_form(w, Sigma)),\n    [mu @ w >= target, cp.sum(w) == 1, w >= 0],\n)\n\nfrontier = []\nfor r in np.linspace(mu.min(), mu.max(), 30):\n    target.value = r\n    prob.solve()\n    frontier.append((np.sqrt(prob.value), r))   # (risk, return)\n\nrisk, ret = zip(*frontier)\nprint(f\"Minimum-variance portfolio volatility: {min(risk):.1%}\")"
+      },
+      "discussionNote": "Look at your minimum-variance portfolio's weights. Did the optimizer concentrate in the 'boring' stocks or spread evenly? Now imagine you manage $10B: what real-world constraints (liquidity, sector caps, turnover limits, ESG mandates) would you add before trusting these weights — and which of those additions would break convexity?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "brain",
+      "text": "Convexity is the dividing line of optimization: convex problems (one bowl) solve reliably at massive scale; nonconvex problems (mountain ranges) can trap any solver in a local valley. Learn to spot the difference before you formulate."
+    },
+    {
+      "icon": "trending-up",
+      "text": "Markowitz mean-variance optimization turns 'don't put all your eggs in one basket' into a quadratic program — and the efficient frontier shows exactly which portfolios are worth holding and which are dominated."
+    },
+    {
+      "icon": "zap",
+      "text": "Pricing is a nonlinear problem in disguise: revenue = price × demand(price) curves, peaks, and falls. The revenue-maximizing price is an optimization answer, not a gut feeling."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #6",
+      "text": "Build a revenue-maximizing pricing model. A product faces a linear demand curve: demand(p) = a − b·p (you'll be given a and b, estimated from historical sales). Formulate revenue R(p) = p·(a − b·p), solve for the optimal price analytically AND with CVXPY, then extend the model with a unit cost c to maximize profit instead. Deliver a Colab notebook with your formulation, both solutions, a plot of the revenue curve with the optimum marked, and a short paragraph: how does the optimal price change as b (price sensitivity) rises, and what does that mean for a manager? Due before Session 9."
+    }
+  ],
+  "nextSession": {
+    "title": "Markov Chains: Modeling Customer Journeys",
+    "description": "From optimizing decisions to modeling behavior over time: states, transition matrices, steady states, customer lifetime value, and marketing attribution — plus how Google's PageRank is secretly a Markov chain. MIDTERM CASE DUE: teams present 5-minute results briefings.",
+    "tags": ["Markov Chains", "Customer Analytics", "Attribution"],
+    "slug": "session-09"
+  }
+}

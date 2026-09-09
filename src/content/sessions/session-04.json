@@ -1,0 +1,204 @@
+{
+  "number": 4,
+  "slug": "session-04",
+  "title": "Network Optimization I: Transportation, Transshipment & Assignment",
+  "subtitle": "Plants, warehouses, and people as nodes and arcs — the model family that moves the world's goods and staffs its teams",
+  "duration": "120 Minutes",
+  "icon": "network",
+  "tags": ["Networks", "Transportation", "Assignment"],
+  "objectives": [
+    {
+      "title": "Formulate transportation models",
+      "description": "Model shipping from supply nodes to demand nodes at minimum cost, with supply, demand, and route-capacity constraints."
+    },
+    {
+      "title": "Extend to transshipment networks",
+      "description": "Add intermediate hubs with flow-balance constraints — what flows in must flow out — to model real multi-echelon supply chains."
+    },
+    {
+      "title": "Solve assignment problems",
+      "description": "Match workers to shifts, consultants to projects, or machines to jobs as a special network where everything comes out 0-or-1."
+    },
+    {
+      "title": "Explain integrality for free",
+      "description": "Articulate why network LPs with integer supplies and demands return whole-number answers without integer programming — and why that matters at national scale."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Story Hook: Anna Chakra Feeds 810 Million People",
+      "duration": "20 minutes",
+      "description": "India's Public Distribution System moves food grains to over 810 million people — the largest food security program on Earth. Anna Chakra, a 2026 Franz Edelman Award finalist, optimized its distribution network: roughly ₹2.5 billion in annual savings and a 35% cut in transport emissions. Under the hood? The exact transportation and transshipment models we build tonight.",
+      "bulletPoints": [
+        "810M+ beneficiaries, thousands of depots and fair-price shops — one network model",
+        "₹2.5B saved annually and 35% lower emissions from optimized routing",
+        "Same math as your homework, scaled to a nation — that's the power of network structure"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "The Transportation Model",
+      "duration": "20 minutes",
+      "description": "The classic: m plants, n warehouses, a cost per unit on every lane. Decision variables become a shipment matrix; constraints split cleanly into supply rows and demand columns. We formulate a three-plant, four-warehouse example together and handle the unbalanced case.",
+      "bulletPoints": [
+        "One variable per lane: x[plant, warehouse]",
+        "Supply constraints cap each row; demand constraints fill each column",
+        "Unbalanced networks: dummy nodes or inequality constraints"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Transshipment: Adding the Middle of the Supply Chain",
+      "duration": "15 minutes",
+      "description": "Real supply chains route through cross-docks and distribution centers. One new idea unlocks it all: the flow-balance constraint. Inflow equals outflow at every intermediate node, and suddenly you're modeling Amazon-style multi-echelon networks.",
+      "bulletPoints": [
+        "Three node types: sources, sinks, and pure pass-through hubs",
+        "Flow balance: sum(in) - sum(out) = net supply at every node",
+        "Hubs can consolidate freight and cut total cost — the model finds when"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Breathe. When we return: why the solver hands you integers without being asked.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:00 PM",
+      "title": "Integer Answers for Free: The Magic of Network Structure",
+      "duration": "15 minutes",
+      "description": "Ship 3.7 trucks? Never happens. Network constraint matrices are totally unimodular, so every corner point of the feasible region is integer whenever supplies and demands are whole numbers. The LP relaxation IS the integer answer — no branch-and-bound, no extra compute, even at Anna Chakra scale.",
+      "bulletPoints": [
+        "Total unimodularity → integer corner points, stated managerially not proved",
+        "Integer supplies and demands in → integer shipments out, guaranteed",
+        "This is why national-scale networks solve in seconds, not days"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:00 PM - 9:25 PM",
+      "title": "Hands-On Lab: Multi-Plant Shipping Network in gurobipy",
+      "duration": "25 minutes",
+      "description": "Colab time. We build a three-plant, four-warehouse distribution network using dictionary-indexed variables and gurobipy's quicksum — the pattern that scales from a toy problem to ten thousand lanes without changing a line of logic.",
+      "bulletPoints": [
+        "addVars over a cost dictionary: the professional pattern for network models",
+        "Generator expressions for supply and demand constraints",
+        "Read the optimal lane plan and spot which routes the model refuses to use"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:25 PM - 9:40 PM",
+      "title": "Assignment Problems + Homework #3 Briefing",
+      "duration": "15 minutes",
+      "description": "The assignment problem is a transportation model where every supply and demand equals one: consultants to projects, nurses to shifts, TAs to sections. Integrality-for-free means the LP returns clean 0/1 matchings. We sketch the formulation and brief Homework #3 — your own staffing model.",
+      "bulletPoints": [
+        "Assignment = transportation with all supplies and demands equal to 1",
+        "Each person gets one job, each job gets one person — two constraint families",
+        "Homework #3: an assignment-based staffing model, formulated and solved by you"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "INFORMS 2026 Edelman Finalists Announcement",
+      "url": "https://www.informs.org/News-Room/INFORMS-Releases/Awards-Releases/INFORMS-Names-Six-Finalists-for-the-2026-Franz-Edelman-Award-the-World-s-Leading-Honor-in-Analytics-Operations-Research-and-Management-Science",
+      "description": "The official announcement featuring Anna Chakra and Google among six finalists for analytics' most prestigious prize. Read what world-class O.R. impact looks like.",
+      "icon": "award",
+      "badge": "Featured Story",
+      "badgeType": "reference",
+      "linkText": "Meet the finalists"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Models",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "Includes supply-network design and workforce assignment notebooks that extend tonight's lab — study the dictionary-indexed patterns closely.",
+      "icon": "code",
+      "badge": "Code Library",
+      "badgeType": "code",
+      "linkText": "Browse notebooks"
+    },
+    {
+      "title": "HiGHS Open-Source Solver",
+      "url": "https://highs.dev/",
+      "description": "The high-performance open-source solver behind our PuLP fallback. Network LPs are its sweet spot — free forever, no license required.",
+      "icon": "zap",
+      "badge": "Fallback",
+      "badgeType": "tool",
+      "linkText": "Explore HiGHS"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "Search 'transportation' and 'supply chain' for documented network-optimization wins with named companies and audited savings figures.",
+      "icon": "trending-up",
+      "badge": "Case Studies",
+      "badgeType": "reference",
+      "linkText": "Read the stories"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "network",
+      "title": "Multi-Plant Shipping Network",
+      "description": "Northeast Beverages runs three bottling plants supplying four regional warehouses. Build the minimum-cost shipping plan in gurobipy using the dictionary-indexed pattern, then confirm the integrality-for-free promise with your own eyes.",
+      "steps": [
+        {
+          "title": "Draw the network first",
+          "description": "Sketch nodes and arcs on paper: three supply nodes, four demand nodes, twelve lanes with per-case costs. Label supplies and demands and check total supply covers total demand."
+        },
+        {
+          "title": "Build with dictionary-indexed variables",
+          "description": "Define the cost data as a dictionary keyed by (plant, warehouse), create variables with addVars, and write the objective with ship.prod(cost) — no hand-typed variable lists."
+        },
+        {
+          "title": "Add supply and demand constraints",
+          "description": "Use generator expressions: each plant ships at most its capacity, each warehouse receives exactly its demand. Solve and print the nonzero lanes."
+        },
+        {
+          "title": "Verify integrality, then break it",
+          "description": "Confirm every shipment is a whole number even though variables are continuous. Then change one warehouse demand to 150.5 and re-solve to see exactly where the guarantee comes from."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nplants = {\"Boston\": 300, \"Hartford\": 260, \"Albany\": 240}\ndemand = {\"Portland\": 180, \"Worcester\": 220, \"Providence\": 190, \"Springfield\": 160}\n\ncost = {  # $ per case shipped\n    (\"Boston\", \"Portland\"): 4, (\"Boston\", \"Worcester\"): 2,\n    (\"Boston\", \"Providence\"): 3, (\"Boston\", \"Springfield\"): 5,\n    (\"Hartford\", \"Portland\"): 7, (\"Hartford\", \"Worcester\"): 3,\n    (\"Hartford\", \"Providence\"): 2, (\"Hartford\", \"Springfield\"): 2,\n    (\"Albany\", \"Portland\"): 8, (\"Albany\", \"Worcester\"): 5,\n    (\"Albany\", \"Providence\"): 6, (\"Albany\", \"Springfield\"): 3,\n}\n\nm = gp.Model(\"shipping_network\")\nship = m.addVars(cost.keys(), name=\"ship\")\n\nm.setObjective(ship.prod(cost), GRB.MINIMIZE)\nm.addConstrs((ship.sum(p, \"*\") <= plants[p] for p in plants), \"supply\")\nm.addConstrs((ship.sum(\"*\", w) == demand[w] for w in demand), \"demand\")\nm.optimize()\n\nprint(f\"Total shipping cost: ${m.ObjVal:,.0f}\")\nfor (p, w), v in ship.items():\n    if v.X > 0.5:\n        print(f\"  {p} -> {w}: {v.X:.0f} cases\")"
+      },
+      "discussionNote": "Notice what the model did NOT do: several lanes carry zero cases because cheaper routes absorbed the flow. And every shipment came out a whole number even though we never declared integer variables — network structure did it for us. Now scale this mental model up: Anna Chakra is this same skeleton with thousands of nodes, and the integrality guarantee is part of why a nation-scale problem stays computationally cheap."
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "network",
+      "text": "Transportation, transshipment, and assignment are one family: nodes, arcs, costs, and flow balance. Learn the skeleton once and you can model supply chains from a beverage distributor to India's 810-million-person food network."
+    },
+    {
+      "icon": "sparkles",
+      "text": "Network LPs give integer answers for free — total unimodularity means whole-number supplies and demands guarantee whole-number shipments, no integer programming required."
+    },
+    {
+      "icon": "trending-up",
+      "text": "This is the highest-ROI model family in operations research: Anna Chakra's ₹2.5B annual savings and 35% emissions cut came from exactly the formulations you wrote tonight."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #3",
+      "text": "The Staffing Matchmaker: a Boston consulting firm must assign six consultants to six client projects for the fall engagement cycle. You are given a 6x6 fit-score matrix (skills, industry experience, client history). Formulate the assignment problem to maximize total fit, solve it in gurobipy with continuous variables, and verify the solution is a clean 0/1 matching. Then add one real-world twist — one consultant is unavailable for one client, or one project needs two consultants — re-solve, and write a short paragraph on how the assignments shifted. Submit your Colab notebook before Session 5."
+    }
+  ],
+  "nextSession": {
+    "title": "Network Optimization II: Flows, Paths & Supply Chain Design",
+    "description": "We go deeper into the network toolbox: shortest paths, maximum flows, and minimum-cost flow models — then combine them to design supply chains end to end, deciding not just how to ship but which facilities should exist at all.",
+    "tags": ["Network Flows", "Shortest Path", "Supply Chain Design"],
+    "slug": "session-05"
+  }
+}

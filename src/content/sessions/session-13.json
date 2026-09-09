@@ -1,0 +1,169 @@
+{
+  "number": 13,
+  "slug": "session-13",
+  "title": "Final Project Presentations: Your Optimization Story",
+  "subtitle": "Finals week, demo night — real problems, real models, real dollars, and the Edelman of ISOM-839",
+  "duration": "120 Minutes",
+  "icon": "award",
+  "tags": ["Final Projects", "Presentations", "Celebration"],
+  "objectives": [
+    {
+      "title": "Tell a complete optimization story",
+      "description": "Present an end-to-end prescriptive project — real problem, data, model, solution, and a business recommendation with the dollar impact quantified — in ten tight minutes."
+    },
+    {
+      "title": "Evaluate like an Edelman judge",
+      "description": "Assess classmates' projects on problem framing, modeling craft, and business impact, then cast your vote for the Edelman of ISOM-839."
+    },
+    {
+      "title": "Chart your next move",
+      "description": "Leave with a concrete post-course path: a free Gurobi Young Professionals license, INFORMS and the Edelman archive, and a job market where operations research analyst roles are projected to grow 12%."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 7:50 PM",
+      "title": "Welcome to Demo Night",
+      "duration": "10 minutes",
+      "description": "Run of show, presentation order draw, and the judging criteria for the class vote. Fourteen weeks ago these were word problems — tonight they are decision systems with dollar signs.",
+      "bulletPoints": [
+        "Format: 10 minutes per team — 8 to present, 2 for questions",
+        "Scoring dimensions: problem framing, modeling craft, quantified business impact",
+        "Every project must answer one question: how much money does this decision make or save?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:50 PM - 8:35 PM",
+      "title": "Presentations — Round One",
+      "duration": "45 minutes",
+      "description": "The first four teams take the floor. Ten minutes each: the real problem, the data, the model, the solution, and the recommendation an executive could act on tomorrow.",
+      "bulletPoints": [
+        "Teams 1 through 4, ten minutes each with hard stops",
+        "Audience scores each team on the shared rubric between talks",
+        "Live demos encouraged — Colab notebooks ready, solvers warmed up"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Halftime. Compare notes, refill coffee, and let round-one teams exhale.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:15 PM",
+      "title": "Presentations — Round Two",
+      "duration": "30 minutes",
+      "description": "The final three teams present. Same rules, same stakes: a real decision, a working model, and a bottom line in dollars.",
+      "bulletPoints": [
+        "Teams 5 through 7, ten minutes each with hard stops",
+        "Final rubric scores submitted as each team closes",
+        "Q&A pushes on the sensitivity question: what happens when the world shifts?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:15 PM - 9:30 PM",
+      "title": "The Edelman of ISOM-839: Awards & Retrospective",
+      "duration": "15 minutes",
+      "description": "The class votes for the best project of the semester — our own Franz Edelman Award — followed by a rapid-fire retrospective on what fourteen weeks of prescriptive analytics actually changed.",
+      "bulletPoints": [
+        "Ballots in: the Edelman of ISOM-839 goes to one team",
+        "Lightning retrospective: the model, moment, or mistake that taught you the most",
+        "From Session 1's first LP to tonight's decision systems — the distance traveled"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Where To Next: Your Optimization Career",
+      "duration": "10 minutes",
+      "description": "The course ends; the toolkit doesn't. Concrete next steps to keep solving — licenses, communities, and a job market that wants exactly what you just learned.",
+      "bulletPoints": [
+        "Gurobi Young Professionals: a free full license for your first years in industry",
+        "INFORMS membership and the Edelman Award archive — watch how the pros tell optimization stories",
+        "The market: BLS projects 12% growth for operations research analysts; decision scientists average around $156K",
+        "Final word: you already know how to find the best decision — now go make some"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Gurobi Young Professionals License",
+      "url": "https://www.gurobi.com/academia/young-professionals-license/",
+      "description": "A free, full-featured Gurobi license for recent graduates entering industry — keep every model from this course running after graduation. Apply before you leave campus.",
+      "icon": "rocket",
+      "badge": "Free License",
+      "badgeType": "tool",
+      "linkText": "Claim your license"
+    },
+    {
+      "title": "INFORMS Franz Edelman Award",
+      "url": "https://www.informs.org/Recognizing-Excellence/INFORMS-Prizes/Franz-Edelman-Award",
+      "description": "The Super Bowl of applied analytics. Watch finalist videos to see how the best teams on Earth — including 2026 winner Microsoft — turn optimization into billions of dollars of impact.",
+      "icon": "award",
+      "badge": "Videos",
+      "badgeType": "video",
+      "linkText": "Watch the finalists"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Models",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "Your permanent reference library of worked optimization models across industries — the fastest way to bootstrap your first on-the-job model.",
+      "icon": "github",
+      "badge": "Code",
+      "badgeType": "code",
+      "linkText": "Keep building"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "users",
+      "title": "Judge, Vote, Crown: The Edelman of ISOM-839",
+      "description": "You are the judging panel tonight. Score every presentation on a shared rubric, then cast a final ballot for the semester's best project — and, in true course fashion, let a few lines of Python tally the decision.",
+      "steps": [
+        {
+          "title": "Score each presentation",
+          "description": "Rate every team 1-5 on three dimensions as they present: problem framing (is it a real decision?), modeling craft (is the model right-sized and sound?), and business impact (are the dollars credible?)."
+        },
+        {
+          "title": "Ask one hard question",
+          "description": "Each student asks at least one question during Q&A across the night — the sensitivity, feasibility, or deployment question an executive would ask."
+        },
+        {
+          "title": "Cast your ballot",
+          "description": "Submit one vote for the project you would fund tomorrow if it were your budget. You may not vote for your own team."
+        },
+        {
+          "title": "Crown the winner",
+          "description": "We tally the ballots live on screen and award the Edelman of ISOM-839 — bragging rights in perpetuity."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "from collections import Counter\n\n# One last decision model for the road: aggregate the class ballots\nballots = [\"Team 3\", \"Team 1\", \"Team 3\", \"Team 6\", \"Team 3\", \"Team 1\", ...]\n\ntally = Counter(ballots)\nfor team, votes in tally.most_common():\n    print(f\"{team}: {'#' * votes}  ({votes} votes)\")\n\nwinner, count = tally.most_common(1)[0]\nprint(f\"\\nThe Edelman of ISOM-839 goes to... {winner}!\")"
+      },
+      "discussionNote": "After the crown is placed, close the loop: notice that every winning presentation led with the decision and the dollars, not the algorithm. That is the discipline to carry into every analytics job — executives fund decisions, not models."
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "award",
+      "text": "You just did the whole thing: real problem, real data, real model, real recommendation, real dollars. That end-to-end arc is the rarest skill in analytics — and now it is yours."
+    },
+    {
+      "icon": "trending-up",
+      "text": "The market is waiting: BLS projects 12% growth for operations research analysts, and decision scientists average around $156K. Your free Gurobi Young Professionals license keeps the toolkit in your hands."
+    },
+    {
+      "icon": "sparkles",
+      "text": "From the first LP in Session 1 to RL and LLM copilots at the frontier — you no longer just analyze what happened. You prescribe what to do next. Congratulations."
+    }
+  ],
+  "homework": []
+}

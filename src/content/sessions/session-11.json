@@ -1,0 +1,197 @@
+{
+  "number": 11,
+  "slug": "session-11",
+  "title": "Deep Learning Meets Optimization: Predict, Then Decide",
+  "subtitle": "Neural networks for decision-makers — and why the best forecast is not always the best decision",
+  "duration": "120 Minutes",
+  "icon": "brain",
+  "tags": ["Deep Learning", "Predict-then-Optimize", "Decision-Focused Learning"],
+  "objectives": [
+    {
+      "title": "Understand neural networks as decision inputs",
+      "description": "Build a working mental model of what a neural network actually does — layers, weights, loss, gradient descent — in the 30 minutes a decision-maker needs, not the semester a researcher needs."
+    },
+    {
+      "title": "Build a predict-then-optimize pipeline",
+      "description": "Connect a PyTorch demand forecast to a gurobipy newsvendor model, turning a prediction into a concrete inventory order with dollars attached."
+    },
+    {
+      "title": "Grasp decision-focused learning",
+      "description": "Internalize the key insight from the Mandi et al. (JAIR 2024) survey: the model with the best RMSE is often not the model that makes the best decisions — and learn to measure decision regret instead."
+    },
+    {
+      "title": "Choose the right loss for the business",
+      "description": "Decide when to train for prediction accuracy versus downstream decision quality, and articulate the trade-off to a non-technical executive."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 7:50 PM",
+      "title": "Opening Story: The Forecast That Lied",
+      "duration": "10 minutes",
+      "description": "Two demand models. Model A has the better RMSE. Model B makes the company more money. How is that possible? Tonight's session lives inside that question.",
+      "bulletPoints": [
+        "A retailer's demand forecast feeds an ordering decision worth millions",
+        "Prediction error and decision error are not the same thing",
+        "Preview: we build the whole predict-then-decide pipeline live tonight"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:50 PM - 8:20 PM",
+      "title": "Neural Networks in 30 Minutes",
+      "duration": "30 minutes",
+      "description": "Everything a decision-maker needs to know about deep learning, stripped of mystique: a neural network is a flexible function approximator trained by gradient descent on a loss you choose.",
+      "bulletPoints": [
+        "Neurons, layers, activations — a stack of weighted sums with bends in them",
+        "Loss functions and gradient descent: learning as downhill walking",
+        "PyTorch in 10 lines: model, loss, optimizer, training loop",
+        "What deep learning is great at (patterns in data) and terrible at (constraints, guarantees)"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Predict-then-Optimize: The Two-Stage Pipeline",
+      "duration": "15 minutes",
+      "description": "The workhorse architecture of applied prescriptive analytics: a learned model predicts uncertain parameters, then an optimization model turns those predictions into decisions.",
+      "bulletPoints": [
+        "Stage 1: PyTorch predicts demand from features (day, price, promotion, weather)",
+        "Stage 2: a gurobipy newsvendor converts the forecast into an order quantity",
+        "The seam between the two stages is where value leaks — or compounds"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch and refuel — and chew on this: if you could only improve one stage of the pipeline, which would you pick?",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:05 PM",
+      "title": "Decision-Focused Learning: Train for the Decision",
+      "duration": "20 minutes",
+      "description": "The frontier idea from the Mandi et al. JAIR 2024 survey: instead of training the predictor to minimize MSE, train it to minimize the regret of the decisions it induces.",
+      "bulletPoints": [
+        "Decision regret: profit lost versus the decision you would make with perfect foresight",
+        "Why symmetric MSE is the wrong loss when over- and under-ordering cost different amounts",
+        "Smart Predict-then-Optimize and differentiating through the optimizer — the intuition, not the calculus",
+        "When two-stage is good enough, and when decision-focused training pays for itself"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:05 PM - 9:30 PM",
+      "title": "Lab: RMSE vs. Regret Showdown",
+      "duration": "25 minutes",
+      "description": "In Colab, train a small PyTorch demand model, feed its predictions into a gurobipy newsvendor, and score models by decision regret instead of MSE. Watch the leaderboard flip.",
+      "bulletPoints": [
+        "Train two forecasters with different losses on the same data",
+        "Pipe each forecast into the newsvendor and simulate realized profit",
+        "Compare: which model wins on MSE? Which wins on money?"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Wrap-Up: Predict Less, Decide Better",
+      "duration": "10 minutes",
+      "description": "Consolidate the night's big idea and brief Homework #9, the decision-loss write-up. Next week the model stops predicting and starts acting: reinforcement learning.",
+      "bulletPoints": [
+        "The one-sentence takeaway to bring to your next forecasting meeting",
+        "Homework #9 briefing: the decision-loss comparison write-up",
+        "Teaser: what if the model never forecasts at all, and just learns to act?"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "PyTorch Official Tutorials",
+      "url": "https://pytorch.org/tutorials/",
+      "description": "The canonical starting point for PyTorch — the 60-minute blitz and the Learn the Basics track cover everything we use in tonight's lab.",
+      "icon": "code",
+      "badge": "Tutorial",
+      "badgeType": "interactive",
+      "linkText": "Start learning"
+    },
+    {
+      "title": "Mandi et al. — Decision-Focused Learning Survey (JAIR 2024)",
+      "url": "https://www.jair.org/index.php/jair/article/view/15320",
+      "description": "The definitive survey of decision-focused learning, and the source of tonight's key line: the model with the best RMSE is often not the model that makes the best decisions.",
+      "icon": "file-text",
+      "badge": "Paper",
+      "badgeType": "reference",
+      "linkText": "Read the survey"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Models",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "A library of ready-to-run gurobipy notebooks, including inventory and ML-plus-optimization examples you can adapt for the homework and your final project.",
+      "icon": "github",
+      "badge": "Code",
+      "badgeType": "code",
+      "linkText": "Browse notebooks"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "target",
+      "title": "RMSE vs. Regret: Train a Forecaster, Score the Decision",
+      "description": "Build the full predict-then-optimize pipeline in one notebook: a small PyTorch network forecasts demand, a gurobipy newsvendor turns each forecast into an order, and a simulator scores every model on the metric that matters — profit left on the table.",
+      "steps": [
+        {
+          "title": "Train the demand model",
+          "description": "Fit a two-layer PyTorch network on synthetic retail demand (features: day of week, price, promotion flag) using standard MSE loss."
+        },
+        {
+          "title": "Wire in the newsvendor",
+          "description": "For each predicted demand, solve a gurobipy newsvendor with unit cost $4, selling price $10, salvage value $1 — the cost asymmetry that makes MSE the wrong yardstick."
+        },
+        {
+          "title": "Compute decision regret",
+          "description": "Simulate realized demand, compare each model's profit to the perfect-foresight profit, and average the gap. That gap is regret."
+        },
+        {
+          "title": "Flip the leaderboard",
+          "description": "Retrain with an asymmetric newsvendor-quantile loss, rescore, and watch a worse-RMSE model beat the MSE champion on money."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import torch, torch.nn as nn\nimport gurobipy as gp\nfrom gurobipy import GRB\n\n# --- Stage 1: tiny demand forecaster ---\nmodel = nn.Sequential(nn.Linear(3, 16), nn.ReLU(), nn.Linear(16, 1))\nopt = torch.optim.Adam(model.parameters(), lr=0.01)\nfor epoch in range(200):\n    pred = model(X_train)\n    loss = nn.functional.mse_loss(pred, y_train)  # try a quantile loss later!\n    opt.zero_grad(); loss.backward(); opt.step()\n\n# --- Stage 2: newsvendor decision from the forecast ---\ndef order_quantity(d_hat, cost=4, price=10, salvage=1):\n    m = gp.Model(); m.Params.OutputFlag = 0\n    q, sold, left = m.addVar(), m.addVar(), m.addVar()\n    m.addConstr(sold <= d_hat); m.addConstr(sold <= q)\n    m.addConstr(left == q - sold)\n    m.setObjective(price*sold + salvage*left - cost*q, GRB.MAXIMIZE)\n    m.optimize()\n    return q.X\n\n# --- Scoreboard: regret = perfect-foresight profit minus our profit ---\nregret = avg_regret(model, X_test, y_test, order_quantity)\nprint(f\"Test MSE: {test_mse:.2f} | Avg decision regret: ${regret:.2f}\")"
+      },
+      "discussionNote": "When the leaderboard flips, pause and discuss: what would you tell a VP who just spent a year and $2M improving forecast accuracy by 5%? Under what cost structures does better RMSE actually translate into better decisions — and when is it a mirage?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "brain",
+      "text": "A neural network is just a flexible function trained by gradient descent — and you choose what it optimizes. Choose the loss that matches the business."
+    },
+    {
+      "icon": "target",
+      "text": "The model with the best RMSE is often not the model that makes the best decisions. Measure decision regret, not just prediction error."
+    },
+    {
+      "icon": "zap",
+      "text": "Predict-then-optimize is the workhorse of applied prescriptive analytics: ML predicts the uncertain parameters, optimization turns them into money."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #9",
+      "text": "Decision-loss comparison write-up: extend tonight's notebook by training the demand model under (a) MSE loss and (b) an asymmetric newsvendor-quantile loss. Report RMSE and average decision regret for both models, then write a one-page executive memo (max 400 words) explaining which model you would deploy, why, and what this implies for how your organization should evaluate its forecasting teams. Submit the Colab link plus the memo before Session 12."
+    }
+  ],
+  "nextSession": {
+    "title": "Reinforcement Learning & the AI Frontier of Prescriptive Analytics",
+    "description": "What if the model skips prediction entirely and learns to act? Q-learning intuition, deployed RL at Alibaba, Amazon, and DoorDash, LLM copilots that write optimization models, and the full modern prescriptive stack in one picture.",
+    "tags": ["Reinforcement Learning", "LLM Copilots", "Frontier"],
+    "slug": "session-12"
+  }
+}

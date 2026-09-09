@@ -1,0 +1,205 @@
+{
+  "number": 2,
+  "slug": "session-02",
+  "title": "Linear Optimization I: The Art of Formulation",
+  "subtitle": "Decision variables, objectives, and constraints — the three-part grammar that turns messy business problems into solvable models",
+  "duration": "120 Minutes",
+  "icon": "target",
+  "tags": ["Linear Programming", "Formulation", "Gurobi"],
+  "objectives": [
+    {
+      "title": "Translate business problems into LP form",
+      "description": "Identify decision variables, write a linear objective, and express real constraints — capacity, demand, quality specs — as linear inequalities."
+    },
+    {
+      "title": "Read the geometry of an LP",
+      "description": "Explain the feasible region, why optimal solutions live at corner points, and what binding vs. non-binding constraints mean for a manager."
+    },
+    {
+      "title": "Build and solve your first gurobipy model",
+      "description": "Set up a free Gurobi academic license, write a production-mix model in Google Colab, and interpret the solver output line by line."
+    },
+    {
+      "title": "Recognize LP structure in the wild",
+      "description": "See how production mix and blending problems share one skeleton — and why that skeleton powers everything from refineries to Google's data centers."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Story Hook: Google's Carbon-Aware Compute",
+      "duration": "20 minutes",
+      "description": "A 2026 Franz Edelman Award finalist, Google shifts massive data-center workloads across time and geography to chase clean electricity — and the engine under the hood is linear programming. We reverse-engineer the decision: what are they choosing, what are they maximizing, what limits them?",
+      "bulletPoints": [
+        "Compute jobs move to hours and regions where the grid is greenest",
+        "Every LP has the same three parts: decisions, objective, constraints",
+        "If a trillion-dollar company runs on LP, your spreadsheet problems definitely can"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "The Formulation Grammar",
+      "duration": "20 minutes",
+      "description": "The single most valuable skill in this course: turning a paragraph of business prose into decision variables, an objective function, and constraints. We formulate a two-product production-mix problem live, from words to algebra.",
+      "bulletPoints": [
+        "Decision variables: what is actually under your control?",
+        "Objective: one number you want biggest or smallest",
+        "Constraints: machine-hours, labor, demand ceilings, non-negativity",
+        "Common trap: modeling outcomes instead of decisions"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "LP Geometry: Why Corners Win",
+      "duration": "15 minutes",
+      "description": "We graph the feasible region of our production-mix problem and slide the profit line until it leaves the polygon. The optimum always lands on a corner — that geometric fact is why LPs with millions of variables solve in seconds.",
+      "bulletPoints": [
+        "Feasible region = every plan that breaks no rules",
+        "Corner points are where constraints intersect — and where optima live",
+        "Binding constraints touch the optimum; slack constraints have room to spare"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch, coffee, and get your Gurobi academic license request submitted if you haven't already.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:10 PM",
+      "title": "Hands-On Lab: First gurobipy Model in Colab",
+      "duration": "25 minutes",
+      "description": "Laptops open. We activate the free academic license, then build the production-mix model in gurobipy from a blank Colab cell: variables, objective, constraints, optimize, and read the solution.",
+      "bulletPoints": [
+        "License setup at gurobi.com/academics — free with your suffolk.edu email",
+        "addVar, setObjective, addConstr, optimize — the four verbs of gurobipy",
+        "Verify the solver's answer against the corner point we found graphically"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:10 PM - 9:30 PM",
+      "title": "Blending Problems: Same Skeleton, New Skin",
+      "duration": "20 minutes",
+      "description": "From gasoline blending to animal feed to coffee roasting, blending problems are where LP earned its first industrial fortunes. We formulate a fuel-blending example with quality specs as ratio constraints — and learn the linearization trick that makes ratios legal.",
+      "bulletPoints": [
+        "Blend ingredients to hit quality specs at minimum cost",
+        "Ratio constraints must be cross-multiplied into linear form",
+        "Refineries have run LP daily since the 1950s — billions saved per year industry-wide"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Wrap-Up & Homework #1 Briefing",
+      "duration": "10 minutes",
+      "description": "Recap the formulation grammar, preview sensitivity analysis and shadow prices coming next week, and walk through the blending homework so everyone leaves knowing exactly what to build.",
+      "bulletPoints": [
+        "Formulate first, code second — always",
+        "Homework #1: formulate and solve a blending problem in gurobipy",
+        "Next week: what is one more machine-hour actually worth?"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Gurobi Academic License",
+      "url": "https://www.gurobi.com/academics",
+      "description": "Request your free full-featured academic license with your suffolk.edu email. Required before Homework #1 — takes about five minutes.",
+      "icon": "shield",
+      "badge": "Required",
+      "badgeType": "tool",
+      "linkText": "Get your license"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Models",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "A library of ready-to-run optimization notebooks — production planning, blending, and dozens more. Perfect templates for your own models.",
+      "icon": "code",
+      "badge": "Code Library",
+      "badgeType": "code",
+      "linkText": "Browse notebooks"
+    },
+    {
+      "title": "MIT OCW: The Analytics Edge",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/",
+      "description": "MIT's celebrated analytics course, free and open. The linear optimization units pair beautifully with our next three sessions.",
+      "icon": "presentation",
+      "badge": "Deep Dive",
+      "badgeType": "reference",
+      "linkText": "Open the course"
+    },
+    {
+      "title": "PuLP Documentation",
+      "url": "https://coin-or.github.io/pulp/",
+      "description": "Our open-source fallback modeling library. If your Gurobi license is delayed, PuLP with the HiGHS solver runs every model in this course.",
+      "icon": "wrench",
+      "badge": "Fallback",
+      "badgeType": "tool",
+      "linkText": "Read the docs"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "terminal",
+      "title": "Production-Mix LP in gurobipy",
+      "description": "Build a furniture-maker's weekly production plan: two products competing for limited carpentry and finishing hours. Formulate on paper, then solve in Colab and confirm the answer sits on the corner point you predicted.",
+      "steps": [
+        {
+          "title": "Formulate on paper first",
+          "description": "Define x_desks and x_chairs, write the profit objective, and express carpentry and finishing capacity as linear constraints. No code until the algebra is done."
+        },
+        {
+          "title": "Code the model in gurobipy",
+          "description": "Translate your formulation line-for-line: one addVar per decision, setObjective for profit, one addConstr per resource limit."
+        },
+        {
+          "title": "Solve and interpret",
+          "description": "Run optimize(), read the optimal plan and profit, and check which constraints are binding (used to the last hour) versus slack."
+        },
+        {
+          "title": "Stress-test the model",
+          "description": "Add a demand cap of 30 desks and re-solve. Watch how the optimal corner moves — your first taste of what-if analysis."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model(\"production_mix\")\n\n# Decision variables: units to produce this week\ndesks = m.addVar(name=\"desks\")\nchairs = m.addVar(name=\"chairs\")\n\n# Objective: maximize total profit ($)\nm.setObjective(70 * desks + 50 * chairs, GRB.MAXIMIZE)\n\n# Constraints: limited shop-floor hours\nm.addConstr(4 * desks + 3 * chairs <= 240, \"carpentry_hours\")\nm.addConstr(2 * desks + 1 * chairs <= 100, \"finishing_hours\")\n\nm.optimize()\n\nprint(f\"Build {desks.X:.0f} desks and {chairs.X:.0f} chairs\")\nprint(f\"Weekly profit: ${m.ObjVal:,.0f}\")"
+      },
+      "discussionNote": "Both resource constraints are binding at the optimum — the shop uses every carpentry hour and every finishing hour. So which resource would you expand first if you could? You cannot answer that from the solution alone. Hold that thought: it is exactly the question shadow prices answer in Session 3."
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "target",
+      "text": "Every LP is three questions: What can I decide? What am I maximizing or minimizing? What rules can I not break? Master that grammar and you can model almost any resource-allocation problem."
+    },
+    {
+      "icon": "zap",
+      "text": "Optimal solutions live at corner points of the feasible region — the geometric insight that lets solvers crush million-variable problems, from a furniture shop to Google's global data-center fleet."
+    },
+    {
+      "icon": "code",
+      "text": "Formulate on paper before you type. gurobipy is just a transcription tool — the model in your head is the real deliverable."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #1",
+      "text": "The Blending Challenge: a specialty coffee roaster blends three bean origins (each with a cost per pound, caffeine content, and flavor score) into a house blend that must hit minimum quality specs at minimum cost. Formulate the LP on paper (variables, objective, constraints), then solve it in gurobipy in Colab. Submit your Colab notebook plus a five-sentence plain-English summary of the optimal blend and total cost. Due before Session 3."
+    }
+  ],
+  "nextSession": {
+    "title": "Linear Optimization II: Sensitivity, Duality & What-If Thinking",
+    "description": "Solving the model was the easy part. Next week we interrogate it: what is one more machine-hour worth, which products deserve to exist, and why sensitivity analysis is the manager's lie detector for AI-generated models.",
+    "tags": ["Sensitivity Analysis", "Shadow Prices", "Duality"],
+    "slug": "session-03"
+  }
+}

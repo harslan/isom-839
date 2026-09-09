@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 1 · The Age of Optimal Decisions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f; --bg2: #12121a; --card: #16161f;
+    --text: #f0f0f5; --text2: #a0a0b0; --muted: #606070;
+    --cyan: #00d4ff; --purple: #8855ff; --magenta: #ff00aa; --green: #00ff88; --orange: #ff8800;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 6vh 8vw; gap: 3vh;
+  }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'Space Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--cyan); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 800; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 800; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 900px; line-height: 1.55; }
+  .big { font-size: clamp(3.2rem, 11vw, 8.5rem); font-weight: 800; line-height: 1; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1200px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 2.4vh 1.6vw; min-width: 230px; max-width: 330px; flex: 1; text-align: left;
+  }
+  .card .label { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  .num { font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  pre {
+    background: #0d1117; border: 1px solid var(--border); border-radius: 14px;
+    padding: 2.6vh 2vw; text-align: left; font-family: 'Space Mono', monospace;
+    font-size: clamp(0.72rem, 1.35vw, 1.05rem); line-height: 1.6; color: #d8dee9;
+    max-width: 880px; overflow: auto;
+  }
+  pre .c { color: #6a737d; } pre .k { color: #ff7b72; } pre .s { color: #a5d6ff; } pre .f { color: #d2a8ff; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--purple)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 880px; color: var(--text2); font-size: clamp(0.95rem, 1.8vw, 1.3rem); line-height: 1.7; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.2vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--cyan); }
+  .pill { display: inline-block; font-family: 'Space Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--cyan); border-radius: 999px; color: var(--cyan); }
+  .accent-g { color: var(--green); } .accent-o { color: var(--orange); } .accent-m { color: var(--magenta); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 01</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">Suffolk University · Sawyer Business School · Fall 2026</div>
+  <h1>ISOM 839<br><span class="grad">Prescriptive Analytics</span></h1>
+  <p class="sub">Session 1 — The Age of Optimal Decisions</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Wednesdays 7:40–9:40 PM</p>
+</section>
+
+<!-- 2 · The question -->
+<section class="slide">
+  <div class="kicker">The Only Question That Matters</div>
+  <h2>Data doesn't make money.<br><span class="grad">Decisions do.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Descriptive</div><div class="title">What happened?</div><p>Dashboards, reports, BI. Necessary — but it looks backward.</p></div>
+    <div class="card"><div class="label">Predictive</div><div class="title">What will happen?</div><p>Forecasts, ML models. Your previous courses. Still just information.</p></div>
+    <div class="card" style="border-color: rgba(0,212,255,0.45)"><div class="label" style="color:var(--green)">Prescriptive · this course</div><div class="title">What should we DO?</div><p>Optimal decisions under real constraints. The top of the value chain.</p></div>
+  </div>
+</section>
+
+<!-- 3 · $431B -->
+<section class="slide">
+  <div class="kicker">INFORMS Franz Edelman Award · Documented Impact Since 1972</div>
+  <div class="big grad">$431B+</div>
+  <p class="sub">Audited, documented value created by the finalist projects of this field's top prize alone.<br>Not projections — <strong style="color:var(--text)">receipts</strong>. Tonight: two of those stories.</p>
+</section>
+
+<!-- 4 · USA Cycling -->
+<section class="slide">
+  <div class="kicker">Story One · 2025 Edelman Winner</div>
+  <h2>USA Cycling: <span class="grad">Project 4:05</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The Problem</div><p>Women's team pursuit: <strong style="color:var(--text)">8th in the world</strong>, 4:12.684 at 2023 Worlds. Medal probability: ~10%.</p></div>
+    <div class="card"><div class="label">The Decision Variables</div><p>Rider order. Lap-by-lap pacing. <strong style="color:var(--text)">Watts over time.</strong> Plus aerodynamics optimized from body scans.</p></div>
+    <div class="card"><div class="label">The Result</div><p><strong class="accent-g">Olympic GOLD in Paris — 4:04.302.</strong> Eight seconds found by optimization, not by training harder.</p></div>
+  </div>
+</section>
+
+<!-- 5 · Microsoft -->
+<section class="slide">
+  <div class="kicker">Story Two · 2026 Edelman Winner</div>
+  <h2>Microsoft's Cloud <span class="grad">Supply Chain</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The Problem</div><p>Fulfilling data-center hardware for the world's cloud — thousands of interdependent decisions under uncertainty.</p></div>
+    <div class="card"><div class="label">The Stack</div><p>Machine learning + <strong style="color:var(--text)">mathematical optimization</strong> + generative &amp; agentic AI. Exactly this course's toolkit.</p></div>
+    <div class="card"><div class="label">The Result</div><p>Cycle times <strong class="accent-g">cut in half</strong>. Tens to hundreds of <strong class="accent-g">millions of dollars</strong> saved annually. 23% less team workload.</p></div>
+  </div>
+</section>
+
+<!-- 6 · The pattern -->
+<section class="slide">
+  <div class="kicker">The Pattern In Both Stories</div>
+  <h2>Prediction is an <span style="color:var(--text2)">input</span>.<br>The decision is the <span class="grad">product</span>.</h2>
+  <p class="sub">A perfect forecast changes nothing until someone changes an allocation, a schedule, a price, a route.<br>This semester you learn to build the layer that decides.</p>
+</section>
+
+<!-- 7 · Careers -->
+<section class="slide">
+  <div class="kicker">Why This Is Worth 13 Wednesday Nights</div>
+  <h2>Everyone on that award stage <span class="grad">is hiring</span></h2>
+  <div class="cards">
+    <div class="card"><div class="num">12%</div><p>Projected job growth for operations research analysts, 2025–2035 (BLS) — "much faster than average."</p></div>
+    <div class="card"><div class="num">~$156K</div><p>Average US salary for a decision scientist — the title this skill set carries in industry.</p></div>
+    <div class="card"><div class="num">1,000+</div><p>Open OR-scientist roles at Amazon alone. Plus Microsoft, Google, NVIDIA, Chewy, airlines, consulting.</p></div>
+  </div>
+</section>
+
+<!-- 8 · Anatomy -->
+<section class="slide">
+  <div class="kicker">The Grammar You'll Use Every Week</div>
+  <h2>Every model has <span class="grad">three ingredients</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">1 · Decision Variables</div><div class="title">What can we control?</div><p>How many to make, where to ship, whom to schedule, what to charge.</p></div>
+    <div class="card"><div class="label">2 · Objective</div><div class="title">What does "best" mean?</div><p>Maximize profit. Minimize cost. Minimize seconds on a velodrome.</p></div>
+    <div class="card"><div class="label">3 · Constraints</div><div class="title">What are the rules?</div><p>Capacity, budget, demand, physics, policy. Reality, written as inequalities.</p></div>
+  </div>
+  <p class="sub">From a lemonade stand to Microsoft's cloud — same grammar, bigger sentences.</p>
+</section>
+
+<!-- 9 · Furniture problem -->
+<section class="slide">
+  <div class="kicker">Live · Let's Build One Together</div>
+  <h2>Sawyer Furniture Co.</h2>
+  <ul class="list">
+    <li>Tables: <strong style="color:var(--text)">$120 profit</strong> · 4 hrs carpentry · 2 hrs finishing</li>
+    <li>Chairs: <strong style="color:var(--text)">$80 profit</strong> · 3 hrs carpentry · 1 hr finishing</li>
+    <li>This week: <strong style="color:var(--text)">240 carpentry hours</strong>, <strong style="color:var(--text)">100 finishing hours</strong></li>
+    <li class="accent-o">Write down your production plan and its profit. Don't overthink — 60 seconds.</li>
+  </ul>
+</section>
+
+<!-- 10 · Formulation -->
+<section class="slide">
+  <div class="kicker">The Same Problem, In Model Grammar</div>
+  <h2>The formulation</h2>
+  <pre>
+<span class="c"># Decision variables</span>
+T = number of tables,  C = number of chairs
+
+<span class="c"># Objective</span>
+maximize  120·T + 80·C
+
+<span class="c"># Constraints</span>
+4·T + 3·C  ≤  240    <span class="c">(carpentry hours)</span>
+2·T + 1·C  ≤  100    <span class="c">(finishing hours)</span>
+T, C  ≥  0</pre>
+  <p class="sub">Three ingredients. That's a complete linear program.</p>
+</section>
+
+<!-- 11 · Code -->
+<section class="slide">
+  <div class="kicker">And In Python · gurobipy</div>
+  <h2>Eleven lines to optimal</h2>
+  <pre>
+<span class="k">import</span> gurobipy <span class="k">as</span> gp
+<span class="k">from</span> gurobipy <span class="k">import</span> GRB
+
+m = gp.<span class="f">Model</span>(<span class="s">'sawyer_furniture'</span>)
+T = m.<span class="f">addVar</span>(name=<span class="s">'tables'</span>)
+C = m.<span class="f">addVar</span>(name=<span class="s">'chairs'</span>)
+m.<span class="f">setObjective</span>(120*T + 80*C, GRB.MAXIMIZE)
+m.<span class="f">addConstr</span>(4*T + 3*C &lt;= 240)
+m.<span class="f">addConstr</span>(2*T + 1*C &lt;= 100)
+m.<span class="f">optimize</span>()
+<span class="f">print</span>(T.X, C.X, m.ObjVal)</pre>
+</section>
+
+<!-- 12 · Certificate -->
+<section class="slide">
+  <div class="kicker">What You Just Bought</div>
+  <h2>A <span class="grad">certificate of optimality</span></h2>
+  <p class="sub">A spreadsheet gives you <em>an</em> answer. A solver gives you the <strong style="color:var(--text)">provably best</strong> answer —
+  and can tell you exactly what one more hour of carpentry is worth.<br><br>
+  The gap between the room's best guess and the optimum is usually <strong class="accent-o">10–20% of profit</strong>.<br>
+  That gap, at company scale, is the $431 billion.</p>
+</section>
+
+<!-- 13 · Hands-on / QR -->
+<section class="slide">
+  <div class="kicker">Your Turn · 25 Minutes</div>
+  <h2>Open the notebook, <span class="grad">beat your guess</span></h2>
+  <div class="row">
+    <img class="qr" width="190" height="190" alt="QR code to Colab notebook"
+      src="https://api.qrserver.com/v1/create-qr-code/?size=190x190&data=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fharslan%2Fisom-839%2Fblob%2Fmaster%2Fpublic%2Fsession-01%2FISOM839_Session1_First_Optimization_Model.ipynb">
+    <ul class="list" style="max-width:560px">
+      <li>Scan → notebook opens in Colab, runs free, no license needed</li>
+      <li>Solve the furniture model · compare with your written guess</li>
+      <li>Then <strong style="color:var(--text)">break it</strong>: chair profit → $110 · carpentry → 200 hrs</li>
+      <li>Watch the <em>decision</em> change, not just the profit</li>
+    </ul>
+  </div>
+  <p class="sub" style="font-family:'Space Mono',monospace;font-size:0.85rem">isom-839.vercel.app → Session 1 → Open in Colab</p>
+</section>
+
+<!-- 14 · Roadmap -->
+<section class="slide">
+  <div class="kicker">The Semester Arc · 13 Wednesdays</div>
+  <h2>One toolkit, built <span class="grad">week by week</span></h2>
+  <div class="cards" style="max-width:1250px">
+    <div class="card"><div class="label">Weeks 2–3</div><p><strong style="color:var(--text)">Linear optimization</strong> — formulation, sensitivity, shadow prices</p></div>
+    <div class="card"><div class="label">Weeks 4–5</div><p><strong style="color:var(--text)">Networks</strong> — transportation, flows, supply chain design</p></div>
+    <div class="card"><div class="label">Weeks 6–7</div><p><strong style="color:var(--text)">Integer optimization</strong> — yes/no decisions, scheduling · midterm case</p></div>
+    <div class="card"><div class="label">Week 8</div><p><strong style="color:var(--text)">Nonlinear</strong> — portfolios &amp; pricing</p></div>
+    <div class="card"><div class="label">Weeks 9–10</div><p><strong style="color:var(--text)">Markov chains &amp; MDPs</strong> — customers &amp; sequential decisions</p></div>
+    <div class="card"><div class="label">Weeks 11–12</div><p><strong style="color:var(--text)">Deep learning &amp; RL</strong> — predict-then-optimize, the AI frontier</p></div>
+    <div class="card"><div class="label">Week 13</div><p><strong class="accent-g">Final presentations</strong> — your optimization story</p></div>
+  </div>
+</section>
+
+<!-- 15 · Grading -->
+<section class="slide">
+  <div class="kicker">How You're Graded</div>
+  <h2>Ship models, tell stories</h2>
+  <div class="cards">
+    <div class="card"><div class="num">15%</div><p>Participation &amp; in-class labs — every session has hands-on Python</p></div>
+    <div class="card"><div class="num">25%</div><p>Homework — one modeling assignment most weeks, on Canvas</p></div>
+    <div class="card"><div class="num">25%</div><p>Midterm case competition — teams, launches Oct 21, due Nov 4</p></div>
+    <div class="card"><div class="num">35%</div><p>Final project — a real decision, modeled and solved · presentations Dec 16</p></div>
+  </div>
+  <p class="sub">AI tools encouraged and disclosed — but you defend every constraint yourself.</p>
+</section>
+
+<!-- 16 · Homework -->
+<section class="slide">
+  <div class="kicker">Before Next Wednesday</div>
+  <h2>Homework <span class="grad">#0</span></h2>
+  <ul class="list">
+    <li>Finish the three what-if exercises in tonight's Colab notebook → Canvas</li>
+    <li>Claim your <strong style="color:var(--text)">free Gurobi academic license</strong> with your suffolk.edu email — gurobi.com/academics</li>
+    <li>Post one paragraph: <em>a real decision from your work that could be optimized</em> — it may become your final project</li>
+  </ul>
+  <p class="sub">Next week: <strong style="color:var(--text)">the art of formulation</strong> — you start writing models from scratch.<br><br><span class="grad" style="font-weight:700">Welcome to the age of optimal decisions.</span></p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>

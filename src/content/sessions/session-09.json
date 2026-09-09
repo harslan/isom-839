@@ -1,0 +1,209 @@
+{
+  "number": 9,
+  "slug": "session-09",
+  "title": "Markov Chains: Modeling Customer Journeys",
+  "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Plus: MIDTERM CASE DUE — team briefings tonight.",
+  "duration": "120 Minutes",
+  "icon": "users",
+  "tags": ["Markov Chains", "Customer Analytics", "Attribution"],
+  "objectives": [
+    {
+      "title": "Model systems with states and transition matrices",
+      "description": "Represent a customer base — or any evolving system — as a set of states with transition probabilities, and use matrix multiplication to project where the population will be in one month, six months, or the long run."
+    },
+    {
+      "title": "Compute steady states and long-run behavior",
+      "description": "Find the equilibrium distribution a Markov chain settles into, and understand why that single vector answers questions like 'what fraction of our customers will be active a year from now?'"
+    },
+    {
+      "title": "Quantify customer lifetime value and churn",
+      "description": "Turn retention and churn probabilities into dollars: compute expected customer lifetime value with absorbing states, and see why a 5-point retention improvement can be worth more than a 20-point acquisition boost."
+    },
+    {
+      "title": "Apply Markov attribution to marketing spend",
+      "description": "Use the removal-effect method to credit conversions across touchpoints — the Markov-chain answer to 'did the Instagram ad or the email actually close the sale?' — and understand PageRank as the same math at web scale."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "The $200 Billion Question: Where Do Customers Go?",
+      "duration": "20 minutes",
+      "description": "Netflix loses a subscriber. Was it forever, or a pause? Spotify sees a free user go quiet. Starbucks watches a gold-tier member drop to two visits a month. Every subscription and loyalty business lives or dies on transitions between customer states — and tonight's math prices those transitions.",
+      "bulletPoints": [
+        "Opening story: why streaming services obsess over 'resurrection rates' as much as churn — lapsed customers who return cost a fraction of new acquisitions",
+        "The Markov property: the future depends only on the current state — a bold, useful simplification",
+        "States for a business: Active, At-Risk, Lapsed, Churned — how analysts actually define them from behavioral data",
+        "Tonight's arc: transition matrices → steady state → CLV → attribution → your midterm briefings"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Transition Matrices & Steady State",
+      "duration": "20 minutes",
+      "description": "The mechanics, live in numpy. A transition matrix P holds one row per state; multiplying a population vector by P advances the world one time step. Do it enough times and the system forgets where it started — that's the steady state.",
+      "bulletPoints": [
+        "Building P: rows sum to 1, entries estimated from historical cohort data (e.g., 70% of Active customers stay Active next month)",
+        "Projection: the population after k months is x₀Pᵏ — three lines of numpy",
+        "Steady state as the eigenvector of P for eigenvalue 1 — and the power-iteration shortcut",
+        "Absorbing states: 'Churned' as a one-way door, and why absorbing chains unlock lifetime-value math"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "CLV, Attribution & the PageRank Connection",
+      "duration": "15 minutes",
+      "description": "Three killer applications in fifteen minutes. Customer lifetime value from expected time before absorption. Marketing attribution via the removal effect — delete a channel from the journey chain and measure how many conversions vanish. And the biggest Markov chain ever built: Google's PageRank, which models a random web surfer and ranks pages by steady-state visit probability.",
+      "bulletPoints": [
+        "CLV = margin per period × expected periods spent in paying states before churning",
+        "Removal effect: if deleting 'paid search' from the journey chain drops conversion probability 35%, paid search earns 35% of the credit — far fairer than last-click attribution",
+        "PageRank: a $2 trillion company founded on the steady state of a Markov chain over the web graph",
+        "Limits of the Markov property: seasonality, memory, and when you need richer models"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Breathe. Midterm teams: queue up your briefing slides — presentations start at 9:10.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:10 PM",
+      "title": "Lab: Customer Journey Chain in numpy",
+      "duration": "25 minutes",
+      "description": "Hands-on activity. Build a four-state customer transition matrix for a subscription business, project the customer base forward, compute the steady state, then add an absorbing Churned state and calculate expected customer lifetime value in dollars.",
+      "bulletPoints": [
+        "Encode Active / At-Risk / Lapsed / Churned with realistic monthly transition probabilities",
+        "Project 10,000 new customers forward 12 months with matrix powers",
+        "Find the steady state via power iteration and confirm with eigenvectors",
+        "Compute CLV with the fundamental matrix (I − Q)⁻¹ and test a retention-improvement scenario"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:10 PM - 9:35 PM",
+      "title": "MIDTERM CASE BRIEFINGS: 5 Minutes Per Team",
+      "duration": "25 minutes",
+      "description": "Your midterm case is due tonight. Each team delivers a tight 5-minute results briefing — the kind you'd give a VP, not a professor. Lead with the decision and the dollars; the model is your supporting evidence, not the headline.",
+      "bulletPoints": [
+        "Format: 1 minute problem framing, 2 minutes recommendation with numbers, 2 minutes on what the model revealed that intuition missed",
+        "Every team states one sensitivity: which input, if wrong by 20%, would flip your recommendation?",
+        "Peer scoring: each team rates one other briefing on clarity and decision-focus",
+        "Written case deliverable submitted on Blackboard before class tonight"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:35 PM - 9:40 PM",
+      "title": "Wrap-Up, Homework #7 & Schedule Note",
+      "duration": "5 minutes",
+      "description": "Homework #7 assigned: a churn Markov model. IMPORTANT SCHEDULE NOTE — no class next Wednesday, November 11 (Veterans Day). We meet next on November 18 for Markov Decision Processes, where chains learn to make decisions.",
+      "bulletPoints": [
+        "Homework #7: churn Markov model — details below, due November 18",
+        "NO CLASS NOV 11 — Veterans Day. Next class: Wednesday, November 18",
+        "Preview: MDPs add actions and rewards to chains — from 'what happens' to 'what should we DO'"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Setosa: Markov Chains, Visually Explained",
+      "url": "https://setosa.io/ev/markov-chains/",
+      "description": "The best interactive visualization of Markov chains on the internet — drag transition probabilities and watch the chain evolve in real time. Ten minutes here makes the matrix math intuitive.",
+      "icon": "eye",
+      "badge": "Must Try",
+      "badgeType": "interactive",
+      "linkText": "Play with the chains"
+    },
+    {
+      "title": "The Anatomy of a Search Engine (Brin & Page, 1998)",
+      "url": "http://infolab.stanford.edu/~backrub/google.html",
+      "description": "The original Stanford paper where two grad students described PageRank — a Markov chain over the web graph. Read Section 2.1 and recognize tonight's steady-state math inside a $2 trillion origin story.",
+      "icon": "search",
+      "badge": "Classic Paper",
+      "badgeType": "reference",
+      "linkText": "Read the paper"
+    },
+    {
+      "title": "Markov Chain Attribution in Python",
+      "url": "https://github.com/jerednel/markov-chain-attribution",
+      "description": "An open-source implementation of removal-effect marketing attribution — see how tonight's concepts become a production tool that marketing analytics teams actually run on clickstream data.",
+      "icon": "github",
+      "badge": "Applied",
+      "badgeType": "code",
+      "linkText": "Explore the repo"
+    },
+    {
+      "title": "numpy.linalg Documentation",
+      "url": "https://numpy.org/doc/stable/reference/routines.linalg.html",
+      "description": "Your lab toolkit: matrix_power for projections, eig for steady states, inv for the fundamental matrix behind CLV. Bookmark for tonight's activity and Homework #7.",
+      "icon": "code",
+      "badge": "Reference",
+      "badgeType": "tool",
+      "linkText": "Open the docs"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "users",
+      "title": "From Transition Matrix to Customer Lifetime Value",
+      "description": "Build a complete customer-journey model for a $15/month subscription business: encode the transition matrix, project the customer base, find the steady state, and convert churn math into a defensible CLV number a CFO would accept.",
+      "steps": [
+        {
+          "title": "Encode the journey",
+          "description": "Create a 4×4 numpy transition matrix over Active, At-Risk, Lapsed, and Churned (absorbing). Verify every row sums to 1 — the most common Markov bug in the wild."
+        },
+        {
+          "title": "Project the cohort",
+          "description": "Start 10,000 customers in Active and multiply by P twelve times. How many are still active after a year? After three?"
+        },
+        {
+          "title": "Find the steady state",
+          "description": "Run power iteration until the distribution stops changing. With an absorbing Churned state, where does everyone end up eventually — and what does the transient behavior tell you instead?"
+        },
+        {
+          "title": "Compute CLV",
+          "description": "Extract the transient submatrix Q, compute the fundamental matrix N = (I − Q)⁻¹, and multiply expected months in revenue-generating states by monthly margin. Then improve Active retention by 5 points and re-run — how much is that worth per customer?"
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import numpy as np\n\nstates = [\"Active\", \"At-Risk\", \"Lapsed\", \"Churned\"]\nP = np.array([\n    [0.80, 0.15, 0.03, 0.02],   # Active\n    [0.30, 0.40, 0.20, 0.10],   # At-Risk\n    [0.10, 0.10, 0.50, 0.30],   # Lapsed\n    [0.00, 0.00, 0.00, 1.00],   # Churned (absorbing)\n])\n\n# Project 10,000 new customers 12 months forward\nx = np.array([10_000.0, 0, 0, 0])\nfor _ in range(12):\n    x = x @ P\nprint(dict(zip(states, x.round())))\n\n# CLV via the fundamental matrix N = (I - Q)^-1\nQ = P[:3, :3]                         # transient states only\nN = np.linalg.inv(np.eye(3) - Q)      # expected months in each state\nmargin = np.array([15.0, 15.0, 0.0])  # $/month by state (Lapsed pays $0)\nclv = N @ margin\nprint(f\"CLV of a new Active customer: ${clv[0]:,.2f}\")"
+      },
+      "discussionNote": "Your model says a new customer is worth a specific dollar amount — so what's the maximum you'd pay to acquire one? Now compare two interventions costing $2 per customer per month: one lifts Active retention from 0.80 to 0.85, the other lifts At-Risk recovery from 0.30 to 0.40. Re-run the numbers. Which wins, and would your marketing team have guessed right?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "network",
+      "text": "A transition matrix is a complete model of system dynamics in one object: multiply to project the future, find the eigenvector to see the long run, invert (I − Q) to price the journey. Customer bases, web surfers, and machine states all obey the same algebra."
+    },
+    {
+      "icon": "target",
+      "text": "Absorbing-chain math turns retention rates into dollars: customer lifetime value is expected time in paying states times margin — which is why small retention gains routinely beat big acquisition pushes."
+    },
+    {
+      "icon": "search",
+      "text": "Removal-effect attribution and PageRank are the same idea at different scales: measure a node's importance by what breaks when you take it out of the chain. Google turned that eigenvector into the modern web."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #7",
+      "text": "Build a churn Markov model for a streaming service. You'll receive monthly cohort data for 5,000 subscribers across states New, Engaged, Casual, Dormant, and Cancelled (absorbing). (1) Estimate the transition matrix from the data. (2) Project the subscriber base 24 months forward and plot state populations over time. (3) Compute expected lifetime value per new subscriber at $12.99/month margin using the fundamental matrix. (4) Management proposes a win-back campaign moving the Dormant→Engaged probability from 0.05 to 0.15 at a cost of $3 per Dormant subscriber per month — recommend go/no-go with numbers. Colab notebook due before Session 10 on November 18 (remember: no class November 11 — Veterans Day)."
+    }
+  ],
+  "nextSession": {
+    "title": "Markov Decision Processes: Deciding Over Time",
+    "description": "We meet next on November 18 (no class Nov 11 — Veterans Day). Chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration — with inventory management as the classic playground and a bridge from OR to reinforcement learning.",
+    "tags": ["MDPs", "Dynamic Programming", "Sequential Decisions"],
+    "slug": "session-10"
+  }
+}

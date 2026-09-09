@@ -1,0 +1,209 @@
+{
+  "number": 10,
+  "slug": "session-10",
+  "title": "Markov Decision Processes: Deciding Over Time",
+  "subtitle": "Last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies — the Bellman equation, value iteration, and the classic inventory problem that launched a field.",
+  "duration": "120 Minutes",
+  "icon": "clock",
+  "tags": ["MDPs", "Dynamic Programming", "Sequential Decisions"],
+  "objectives": [
+    {
+      "title": "Extend Markov chains with actions and rewards",
+      "description": "Move from passive prediction (what will happen) to active control (what should we DO): define states, actions, transition probabilities that depend on your choices, and rewards that make some futures worth more than others."
+    },
+    {
+      "title": "Build intuition for the Bellman equation",
+      "description": "Understand the recursive heart of sequential decision-making: the value of a state equals the best immediate reward plus the discounted value of where you land next. One equation that powers inventory systems, AlphaGo, and every RL algorithm."
+    },
+    {
+      "title": "Implement value iteration in numpy",
+      "description": "Turn the Bellman equation into a working algorithm: iterate values until they converge, extract the optimal policy, and verify it makes business sense on a small inventory problem."
+    },
+    {
+      "title": "Connect OR to reinforcement learning",
+      "description": "Use Warren Powell's 'four classes of policies' framework to see MDPs, stochastic programming, and modern RL as one unified field of sequential decisions — so you can talk to both the operations team and the ML team."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "From 'What Happens' to 'What Do We DO?'",
+      "duration": "20 minutes",
+      "description": "Last session you watched customers drift through states. But Amazon doesn't just watch inventory drift — it decides, every night, how much of 400 million SKUs to reorder. A ride-share platform decides where to reposition drivers. A gas-fired power plant decides when to fire up. Sequential decisions under uncertainty: the hardest and most valuable problem class in this course.",
+      "bulletPoints": [
+        "Opening story: how Amazon's ordering systems make billions of reorder decisions a year — each one a state-action choice with uncertain demand ahead",
+        "The new ingredients: actions change the transition probabilities, and rewards score every (state, action) pair",
+        "The policy: a complete playbook mapping every state to an action — what we're actually solving for",
+        "Discounting: why $1 of profit next month is worth γ < 1 dollars today"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "The Bellman Equation: One Line That Runs the World",
+      "duration": "20 minutes",
+      "description": "Richard Bellman, RAND Corporation, 1950s: the value of being in a state is the best you can do right now plus the discounted value of wherever that choice takes you. We build the intuition with a two-state example on the whiteboard before any code.",
+      "bulletPoints": [
+        "V(s) = max over actions of [ reward(s,a) + γ · expected V(next state) ] — read it aloud until it feels obvious",
+        "Why recursion beats brute force: with 50 states, 5 actions, and 12 periods, enumeration is astronomically large — dynamic programming collapses it",
+        "Fun history: Bellman chose the name 'dynamic programming' partly because it sounded impressive enough to protect his funding",
+        "The fixed point: optimal values are self-consistent — which suggests an algorithm: guess, apply the equation, repeat"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Value Iteration: The Algorithm",
+      "duration": "15 minutes",
+      "description": "Value iteration in pseudocode, then numpy. Start with V = 0 everywhere, sweep the Bellman update over all states, repeat until nothing changes. The values converge, and the optimal policy falls out of the argmax for free.",
+      "bulletPoints": [
+        "The sweep: for every state, evaluate every action, keep the best — a nested loop over a small table",
+        "Convergence: the discount factor γ contracts errors every sweep, so iteration provably converges",
+        "Extracting the policy: argmax at each state gives the playbook; policies typically stabilize before values fully converge",
+        "Scaling reality: tables work to ~millions of states; beyond that, you approximate — which is exactly where deep RL enters (Session 11 foreshadowing)"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch and refuel — you're about to teach a computer to manage a warehouse.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:15 PM",
+      "title": "Lab: Value Iteration on an Inventory MDP",
+      "duration": "30 minutes",
+      "description": "Hands-on activity. The classic MDP: each day a shop chooses how many units to order, demand arrives randomly, sales earn margin, and stockouts cost goodwill. Build the model in numpy, run value iteration, and read the optimal ordering policy like an operations manager.",
+      "bulletPoints": [
+        "State: units on hand (0–10). Action: units to order (0–5). Random demand: 0–3 units per day",
+        "Rewards: $10 margin per sale, $8 per unit ordered, $15 stockout penalty per lost sale",
+        "Run value iteration to convergence and extract the policy table",
+        "Interpret: the optimal policy is an order-up-to rule — the (s, S) structure inventory theory predicted decades ago, rediscovered by your code"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:15 PM - 9:30 PM",
+      "title": "Powell's Bridge: Four Classes of Policies, From OR to RL",
+      "duration": "15 minutes",
+      "description": "Princeton's Warren Powell spent a career unifying the tribes — operations research, control theory, reinforcement learning — who all solve sequential decisions with different vocabulary. His framework: every method you'll ever meet is one of four policy classes. Suddenly the whole landscape has a map.",
+      "bulletPoints": [
+        "The four classes: policy function approximations (simple rules), cost function approximations (tweaked deterministic models), value function approximations (tonight's value iteration and Q-learning), and direct lookahead (planning forward)",
+        "Tonight's value iteration and modern deep RL are the same class — RL is approximate dynamic programming with neural networks as the approximator",
+        "Practical wisdom: in industry, a well-tuned simple rule (order-up-to, surge threshold) often beats a fancy learned policy — start simple, escalate only when the data justifies it",
+        "Powell's book 'Sequential Decision Analytics and Modeling' is free online — see resources"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Wrap-Up, Homework #8 & Schedule Note",
+      "duration": "10 minutes",
+      "description": "Homework #8 assigned: extend tonight's inventory MDP with holding costs and watch the optimal policy shift. SCHEDULE NOTE — no class next Wednesday, November 25 (Thanksgiving break). We meet next on December 2, when prediction meets prescription: deep learning meets optimization.",
+      "bulletPoints": [
+        "Homework #8: add holding costs to the inventory MDP — due December 2",
+        "NO CLASS NOV 25 — Thanksgiving. Next class: Wednesday, December 2",
+        "Preview: 'Predict, Then Decide' — feeding machine-learning forecasts into the optimization models you now command"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Powell: Sequential Decision Analytics and Modeling (Free Book)",
+      "url": "https://castle.princeton.edu/sdamodeling/",
+      "description": "Warren Powell's free online book unifying OR, dynamic programming, and reinforcement learning under one framework. Chapter 1 alone will change how you see every 'AI decision-making' headline.",
+      "icon": "download",
+      "badge": "Free Book",
+      "badgeType": "reference",
+      "linkText": "Read it free"
+    },
+    {
+      "title": "Grid World MDP Visualization",
+      "url": "https://cs.stanford.edu/people/karpathy/reinforcejs/gridworld_dp.html",
+      "description": "Karpathy's interactive grid-world: click through value iteration sweep by sweep and literally watch values propagate backward from rewards. The single best way to make the Bellman equation click.",
+      "icon": "play-circle",
+      "badge": "Must Try",
+      "badgeType": "interactive",
+      "linkText": "Run value iteration live"
+    },
+    {
+      "title": "Sutton & Barto: Reinforcement Learning, Ch. 3-4 (Free)",
+      "url": "http://incompleteideas.net/book/the-book-2nd.html",
+      "description": "The canonical RL textbook, free online. Chapters 3 and 4 cover exactly tonight's material — finite MDPs and dynamic programming — and show you the notation the ML world uses for the same ideas.",
+      "icon": "file-text",
+      "badge": "Deep Dive",
+      "badgeType": "reference",
+      "linkText": "Open the book"
+    },
+    {
+      "title": "Lab Notebook: Inventory MDP Starter",
+      "url": "https://colab.research.google.com/",
+      "description": "Tonight's Colab starter notebook with the inventory MDP scaffold — demand distribution, reward function, and an empty value-iteration loop for you to complete. Link posted on Blackboard.",
+      "icon": "terminal",
+      "badge": "Lab",
+      "badgeType": "code",
+      "linkText": "Open in Colab"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "box",
+      "title": "Teach a Computer to Run a Warehouse",
+      "description": "Implement value iteration from scratch on a small inventory MDP: a shop with limited shelf space, random daily demand, ordering costs, and stockout penalties. Converge the values, extract the optimal ordering policy, and discover that your code independently reinvented classic inventory theory.",
+      "steps": [
+        {
+          "title": "Define the MDP",
+          "description": "States: 0–10 units on hand. Actions: order 0–5 units (capped by shelf space). Demand: uniform on {0,1,2,3}. Rewards: $10 margin per sale, $8 cost per unit ordered, $15 penalty per unit of unmet demand."
+        },
+        {
+          "title": "Write the Bellman update",
+          "description": "For each state and action, compute expected reward plus γ times the expected value of the next inventory level, averaging over the demand distribution."
+        },
+        {
+          "title": "Iterate to convergence",
+          "description": "Sweep all states repeatedly until the largest value change drops below 1e-6. Track how many sweeps it takes — and try γ = 0.8 vs. 0.99 to see discounting change convergence speed."
+        },
+        {
+          "title": "Extract and interpret the policy",
+          "description": "Take the argmax action per state and print the policy table. You should see an order-up-to pattern: order more when stock is low, nothing when it's high. Where is the threshold, and which cost parameter moves it?"
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import numpy as np\n\nMAX_INV, MAX_ORDER = 10, 5\ndemands = np.array([0, 1, 2, 3])          # equally likely\nPRICE, COST, PENALTY, GAMMA = 10, 8, 15, 0.95\n\nV = np.zeros(MAX_INV + 1)\nfor sweep in range(1000):\n    V_new = np.full(MAX_INV + 1, -np.inf)\n    policy = np.zeros(MAX_INV + 1, dtype=int)\n    for s in range(MAX_INV + 1):\n        for a in range(min(MAX_ORDER, MAX_INV - s) + 1):\n            stock = s + a\n            q = 0.0\n            for d in demands:               # expectation over demand\n                sold = min(stock, d)\n                reward = PRICE * sold - COST * a - PENALTY * (d - sold)\n                q += 0.25 * (reward + GAMMA * V[stock - sold])\n            if q > V_new[s]:\n                V_new[s], policy[s] = q, a\n    if np.max(np.abs(V_new - V)) < 1e-6:\n        break\n    V = V_new\n\nprint(f\"Converged in {sweep} sweeps\")\nfor s in range(MAX_INV + 1):\n    print(f\"Stock {s:2d} -> order {policy[s]}\")"
+      },
+      "discussionNote": "Your policy almost certainly shows a threshold: below some stock level, order up to a target; above it, order nothing. Inventory theorists proved this (s, S) structure is optimal back in the 1950s — your value iteration just rediscovered it numerically. Now the manager's question: raise the stockout penalty from $15 to $40 (a premium brand protecting customer experience) and re-run. How does the threshold move, and how would you explain the change to a CFO who only sees the higher inventory bill?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "brain",
+      "text": "An MDP = a Markov chain plus actions and rewards. The solution is not a single decision but a policy — a complete state-to-action playbook — and the Bellman equation defines it recursively: best now plus discounted best later."
+    },
+    {
+      "icon": "wrench",
+      "text": "Value iteration is dynamic programming you can write in 30 lines of numpy: sweep the Bellman update until values converge, take the argmax, and the optimal policy falls out. For inventory, it rediscovers the classic order-up-to rule on its own."
+    },
+    {
+      "icon": "network",
+      "text": "Powell's four classes of policies unify OR and reinforcement learning: deep RL is approximate dynamic programming at scale. When someone says 'we use AI to make decisions,' you now know which of the four policy classes to ask about."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #8",
+      "text": "Extend tonight's inventory MDP with holding costs. Add a charge of $1 per unit of leftover inventory per day (the real cost of tied-up capital and shelf space), re-run value iteration, and compare the optimal policy with and without holding costs side by side. Then answer: (1) How did the order-up-to threshold move, and why? (2) Sweep the holding cost from $0 to $4 and plot the threshold against it. (3) One paragraph for a store manager: in plain English, what tradeoff is the model balancing, and when would carrying 'too much' stock actually be the right call? Colab notebook due before Session 11 on December 2 (no class November 25 — Thanksgiving)."
+    }
+  ],
+  "nextSession": {
+    "title": "Deep Learning Meets Optimization: Predict, Then Decide",
+    "description": "December 2 (no class Nov 25 — Thanksgiving). The two halves of analytics finally meet: machine-learning forecasts feeding optimization models. Predict demand, then optimize inventory; predict churn, then optimize retention spend — the predict-then-decide pipeline that runs modern operations.",
+    "tags": ["Deep Learning", "Predict-then-Optimize", "Pipelines"],
+    "slug": "session-11"
+  }
+}

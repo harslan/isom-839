@@ -1,0 +1,224 @@
+{
+  "number": 1,
+  "slug": "session-01",
+  "title": "The Age of Optimal Decisions",
+  "subtitle": "What prescriptive analytics is, why it wins Olympic golds and saves billions, and your first optimization model — tonight",
+  "duration": "120 Minutes",
+  "icon": "rocket",
+  "tags": [
+    "Introduction",
+    "Prescriptive Analytics",
+    "First Model"
+  ],
+  "objectives": [
+    {
+      "title": "Locate Prescriptive on the Analytics Map",
+      "description": "Descriptive tells you what happened. Predictive tells you what will happen. Prescriptive tells you what to DO — and that is where the money is."
+    },
+    {
+      "title": "See the Anatomy of Every Optimization Model",
+      "description": "Decision variables, objective, constraints. Three ingredients, one grammar — from lemonade stands to Microsoft's cloud supply chain."
+    },
+    {
+      "title": "Solve Your First Model in Python",
+      "description": "Open Colab, formulate a real production decision, and let a solver find the provably best answer in milliseconds."
+    },
+    {
+      "title": "Know the Semester Arc",
+      "description": "Linear, network, integer, nonlinear, Markov chains, deep learning, reinforcement learning — one toolkit, thirteen Wednesdays."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 7:55 PM",
+      "title": "Welcome to the $431 Billion Field",
+      "duration": "15 minutes",
+      "description": "Who I am, why this course exists, and the number that frames the whole semester: documented value from INFORMS Edelman Award finalist projects alone has passed $431 billion.",
+      "bulletPoints": [
+        "Course promise: by December you will build models that tell organizations what to do — and defend them",
+        "Every 2026 Edelman finalist — Microsoft, Google, NVIDIA, Chewy, ECCO, the Government of India — is hiring exactly these skills"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:55 PM - 8:05 PM",
+      "title": "Introductions",
+      "duration": "10 minutes",
+      "description": "Name, program, and one decision — at work or in life — you wish you could optimize. We will revisit your answer in December.",
+      "bulletPoints": [],
+      "isBreak": false
+    },
+    {
+      "time": "8:05 PM - 8:25 PM",
+      "title": "Two Stories: Olympic Gold & a Cloud Empire",
+      "duration": "20 minutes",
+      "description": "USA Cycling's Project 4:05 — from 8th in the world to Olympic gold in Paris by optimizing rider order and pacing watts. Microsoft's Intelligent Fulfillment Service — the 2026 Edelman winner that cut cloud supply chain cycle times in half by combining optimization with AI.",
+      "bulletPoints": [
+        "USA Cycling: 4:12.684 and a 10% medal probability → gold at 4:04.302. The decision variable was watts over time.",
+        "Microsoft: ML + mathematical optimization + agentic AI — the exact stack of this course",
+        "The pattern in both: prediction alone changes nothing; the decision is where value is created"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:25 PM - 8:35 PM",
+      "title": "The Semester Roadmap & How You're Graded",
+      "duration": "10 minutes",
+      "description": "Thirteen Wednesdays: formulation → sensitivity → networks → integer → nonlinear → Markov chains → MDPs → deep learning → reinforcement learning → your final project.",
+      "bulletPoints": [
+        "Every session: business story → modeling idea → hands-on Python",
+        "Midterm team case (launches Oct 21), final project presentations Dec 16"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch, coffee, talk to a future teammate.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:05 PM",
+      "title": "Live: The Anatomy of an Optimization Model",
+      "duration": "20 minutes",
+      "description": "We take one real decision — a furniture maker allocating scarce wood and labor — and build the model live: decision variables, objective, constraints. First by hand and intuition, then we watch the solver prove us wrong (or right).",
+      "bulletPoints": [
+        "The three-ingredient grammar you will use every week for the rest of the semester",
+        "Why 'pretty good' intuition leaves money on the table — and how much"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:05 PM - 9:30 PM",
+      "title": "Hands-On: Your First Model in Python",
+      "duration": "25 minutes",
+      "description": "Open the Colab notebook and solve the production-mix problem with a real industrial solver. Then break it: change a price, tighten a constraint, and watch the optimal decision change instantly.",
+      "bulletPoints": [
+        "gurobipy runs free in Colab for models this size — no license needed tonight",
+        "You leave tonight having solved an optimization problem that Excel's eyeballing cannot beat"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:30 PM - 9:40 PM",
+      "title": "Homework #0, Toolkit Setup & Q&A",
+      "duration": "10 minutes",
+      "description": "Your setup checklist and first homework, plus questions about the course, the tools, or the field.",
+      "bulletPoints": [
+        "Homework #0: finish the notebook exercises, claim your free Gurobi academic license, and post on Canvas one real decision from your work that could be optimized",
+        "Next Wednesday: the art of formulation — you will start writing models from scratch"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "Session 1 Slide Deck",
+      "url": "/session-01/slides.html",
+      "description": "Tonight's presentation: the analytics hierarchy, the USA Cycling and Microsoft stories, the three-ingredient anatomy of every model, the semester roadmap, and Homework #0. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
+      "title": "Your First Optimization Model — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-01/ISOM839_Session1_First_Optimization_Model.ipynb",
+      "description": "The Session 1 hands-on and Homework #0: formulate and solve the production-mix problem in gurobipy, then complete three what-if exercises. Runs free in your browser — no license or API keys needed.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Free Gurobi Academic License",
+      "url": "https://www.gurobi.com/academics/",
+      "description": "Claim your full-power, size-unlimited academic license with your suffolk.edu email — the same solver Microsoft, Amazon, and the NFL use. Part of Homework #0. The WLS cloud license works inside Colab.",
+      "icon": "wrench",
+      "badge": "Setup",
+      "badgeType": "tool",
+      "linkText": "Get your license"
+    },
+    {
+      "title": "USA Cycling: Optimization Wins Olympic Gold",
+      "url": "https://www.informs.org/News-Room/INFORMS-Releases/Awards-Releases/USA-Cycling-Awarded-the-2025-INFORMS-Edelman-Award-for-Data-Driven-Olympic-Gold-Strategy",
+      "description": "The 2025 Edelman Award story we told tonight: how rider order, pacing strategy, and aerodynamic optimization took the US women's team pursuit from 8th in the world to gold in Paris.",
+      "icon": "award",
+      "badge": "Story",
+      "badgeType": "reference",
+      "linkText": "Read the story"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "A library of documented, dollar-quantified optimization wins — Microsoft, Walmart, Amazon, UPS, airlines, hospitals. Browse it when choosing your final project domain.",
+      "icon": "database",
+      "badge": "Go Deeper",
+      "badgeType": "reference",
+      "linkText": "Browse the library"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "code",
+      "title": "Your First Optimization Model",
+      "description": "The Sawyer Furniture Co. makes tables and chairs. Tables profit $120, chairs $80. A table needs 4 hours of carpentry and 2 of finishing; a chair needs 3 and 1. This week: 240 carpentry hours, 100 finishing hours. What should they build?",
+      "steps": [
+        {
+          "title": "Guess first",
+          "description": "Write down your intuitive production plan and its profit. Keep it — we check it against the optimum at the end."
+        },
+        {
+          "title": "Name the three ingredients",
+          "description": "Decision variables (tables T, chairs C), objective (maximize 120T + 80C), constraints (4T + 3C ≤ 240, 2T + C ≤ 100, T, C ≥ 0)."
+        },
+        {
+          "title": "Solve it in Colab",
+          "description": "Run the gurobipy cell and read the optimal plan and profit. Compare with your guess — the room's best guess usually leaves 10-20% on the table."
+        },
+        {
+          "title": "Break it",
+          "description": "Chair profit rises to $110. Carpentry loses 40 hours. Re-solve after each change and watch the decision — not just the profit — flip."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model('sawyer_furniture')\nT = m.addVar(name='tables')\nC = m.addVar(name='chairs')\n\nm.setObjective(120*T + 80*C, GRB.MAXIMIZE)\nm.addConstr(4*T + 3*C <= 240, 'carpentry_hours')\nm.addConstr(2*T + 1*C <= 100, 'finishing_hours')\n\nm.optimize()\nprint(f'Build {T.X:.0f} tables and {C.X:.0f} chairs')\nprint(f'Max weekly profit: ${m.ObjVal:,.0f}')"
+      },
+      "discussionNote": "Notice what the solver gives you that a spreadsheet cannot: a <em>certificate of optimality</em>. It is not a good answer — it is provably the best answer. That guarantee is what companies pay for."
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "target",
+      "text": "Prescriptive analytics is the top of the value chain: <strong>descriptive → predictive → prescriptive</strong>. Prediction is an input; the decision is the product."
+    },
+    {
+      "icon": "layout",
+      "text": "Every optimization model — from tonight's furniture problem to Microsoft's cloud — has exactly three ingredients: <strong>decision variables, an objective, and constraints</strong>."
+    },
+    {
+      "icon": "zap",
+      "text": "Solvers don't just find good answers; they find <strong>provably optimal</strong> ones — and the gap between intuition and optimal is where careers and Edelman Awards are made."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Homework #0",
+      "text": "Finish the three what-if exercises in the Session 1 Colab notebook and submit on Canvas before next Wednesday. Claim your free Gurobi academic license with your suffolk.edu email. Finally, post one paragraph on the Canvas discussion board: describe one real decision from your work or industry that you suspect could be optimized — it may become your final project."
+    }
+  ],
+  "nextSession": {
+    "title": "Session 2: Linear Optimization I — The Art of Formulation",
+    "description": "Translating messy business language into decision variables, objectives, and constraints — production mix, blending, and your first models written from scratch in gurobipy.",
+    "tags": [
+      "Linear Programming",
+      "Formulation",
+      "Gurobi"
+    ],
+    "slug": "session-02"
+  }
+}

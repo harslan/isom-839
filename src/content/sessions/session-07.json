@@ -1,0 +1,204 @@
+{
+  "number": 7,
+  "slug": "session-07",
+  "title": "Integer Optimization II: Scheduling, Location & the Midterm Case",
+  "subtitle": "Set covering, workforce scheduling, and Google's CP-SAT solver — plus the midterm case launches: your team takes on retail replenishment optimization",
+  "duration": "120 Minutes",
+  "icon": "calendar",
+  "tags": ["Scheduling", "CP-SAT", "Midterm Case"],
+  "objectives": [
+    {
+      "title": "Recognize the three discrete workhorse patterns",
+      "description": "Formulate set covering, workforce scheduling, and knapsack models, and spot them hiding inside real staffing, location, and selection problems."
+    },
+    {
+      "title": "Solve scheduling problems with OR-Tools CP-SAT",
+      "description": "Build a constraint programming model in Google's CP-SAT solver and understand when CP-SAT beats a MIP formulation for scheduling and feasibility-heavy problems."
+    },
+    {
+      "title": "Learn from a production replenishment system",
+      "description": "Break down how ECCO Shoes automates roughly 300,000 monthly replenishment orders across 536 stores — and use it as the blueprint for your midterm case."
+    },
+    {
+      "title": "Launch the midterm case with a working plan",
+      "description": "Leave tonight with your team formed, the retail replenishment case understood, and a concrete modeling plan for the November 4 deliverable."
+    }
+  ],
+  "agenda": [
+    {
+      "time": "7:40 PM - 8:00 PM",
+      "title": "Opening Story: ECCO's 300,000 Orders a Month",
+      "duration": "20 minutes",
+      "description": "A 2026 Edelman finalist that looks exactly like your midterm case: ECCO Shoes automated store replenishment with optimization.",
+      "bulletPoints": [
+        "The scale: ~300,000 replenishment orders per month across 536 stores, automated end to end",
+        "The payoff: several million euros in annual savings — from a decision that used to be spreadsheets and gut feel",
+        "Why replenishment is an integer problem: whole cartons, minimum order quantities, yes/no shipment decisions"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:00 PM - 8:20 PM",
+      "title": "Set Covering & Workforce Scheduling",
+      "duration": "20 minutes",
+      "description": "The pattern behind fire stations, delivery zones, and every staff roster: cover all the demand with the fewest (or cheapest) resources.",
+      "bulletPoints": [
+        "Set covering: binary selection so every demand point is covered by at least one chosen facility",
+        "Shift scheduling as covering: each hour of demand covered by enough overlapping shifts",
+        "Knapsack recap from Homework #5: same binaries, budget constraint instead of covering constraints"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:35 PM",
+      "title": "Meet CP-SAT: A Different Kind of Solver",
+      "duration": "15 minutes",
+      "description": "Google's award-winning constraint programming solver — free, fast, and built for scheduling logic that is clumsy in MIP.",
+      "bulletPoints": [
+        "CP-SAT thinks in constraints and feasibility, not LP relaxations — a different engine than branch & bound over LPs",
+        "Native modeling of logic: AddBoolOr, OnlyEnforceIf, interval variables for shifts and tasks",
+        "Rule of thumb: heavy logical structure and scheduling — try CP-SAT; heavy continuous costs and flows — stay with Gurobi"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:35 PM - 8:45 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Caffeinate — fittingly, you spend the next block scheduling the people who make the coffee.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "8:45 PM - 9:10 PM",
+      "title": "Hands-On: Barista Shift Scheduling with CP-SAT",
+      "duration": "25 minutes",
+      "description": "Teams schedule a week of barista shifts at a campus café: cover hourly demand, respect availability and max-shift rules, minimize labor cost.",
+      "bulletPoints": [
+        "Binary assignment variables: barista b works shift s, or not",
+        "Coverage constraints per time block, plus rest rules via boolean logic",
+        "Solve, print the roster, then break it: add a Friday-evening demand spike and watch CP-SAT re-plan"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:10 PM - 9:35 PM",
+      "title": "MIDTERM CASE LAUNCH: Retail Replenishment Optimization",
+      "duration": "25 minutes",
+      "description": "The main event. Teams receive the midterm case — a multi-store retail replenishment problem in the spirit of ECCO — due Session 9, November 4.",
+      "bulletPoints": [
+        "The case: decide weekly replenishment quantities for a store network under warehouse capacity, minimum order quantities, and service-level requirements",
+        "Deliverables: working Colab model, a 5-page decision memo for the COO, and a 10-minute team presentation on November 4",
+        "Tonight: form teams of 3-4, read the case brief together, and draft your decision variables and constraints before you leave"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:35 PM - 9:40 PM",
+      "title": "Wrap-Up & Next Steps",
+      "duration": "5 minutes",
+      "description": "Case logistics, office hours for teams, and a preview of nonlinear optimization.",
+      "bulletPoints": [
+        "This week's homework IS the case: get your data pipeline and first model draft running",
+        "Team check-ins available during office hours and by appointment",
+        "Next week: when the world stops being linear — portfolios, pricing, and curves"
+      ],
+      "isBreak": false
+    }
+  ],
+  "resources": [
+    {
+      "title": "OR-Tools CP-SAT Solver Guide",
+      "url": "https://developers.google.com/optimization/cp/cp_solver",
+      "description": "Google's official CP-SAT documentation with Python examples — your primary reference for tonight's scheduling activity.",
+      "icon": "file-text",
+      "badge": "Docs",
+      "badgeType": "reference",
+      "linkText": "Read the guide"
+    },
+    {
+      "title": "Google OR-Tools on GitHub",
+      "url": "https://github.com/google/or-tools",
+      "description": "Source, examples, and the employee scheduling samples — pip install ortools and you are running in Colab in one cell.",
+      "icon": "github",
+      "badge": "Install",
+      "badgeType": "tool",
+      "linkText": "View on GitHub"
+    },
+    {
+      "title": "INFORMS O.R. & Analytics Success Stories",
+      "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
+      "description": "Home of the ECCO Shoes story and dozens of scheduling and replenishment deployments — required skimming for midterm case inspiration.",
+      "icon": "search",
+      "badge": "Case Library",
+      "badgeType": "reference",
+      "linkText": "Browse stories"
+    },
+    {
+      "title": "Gurobi Jupyter Notebook Modeling Examples",
+      "url": "https://www.gurobi.com/jupyter_models/",
+      "description": "The workforce scheduling and inventory notebooks are legitimate starting points for your midterm case model — adapt, don't copy.",
+      "icon": "code",
+      "badge": "Notebooks",
+      "badgeType": "code",
+      "linkText": "Open the notebooks"
+    }
+  ],
+  "activities": [
+    {
+      "number": 1,
+      "icon": "users",
+      "title": "Barista Shift Scheduling with CP-SAT",
+      "description": "The campus café needs a week of shifts covered: morning rush, midday, and evening blocks, each with a minimum barista count. Six baristas with different availability and wage rates. Build a CP-SAT model that covers every block, respects everyone's limits, and minimizes labor cost.",
+      "steps": [
+        {
+          "title": "Define assignment variables",
+          "description": "One BoolVar per (barista, shift) pair. This is the set-covering skeleton: rows are shifts to cover, columns are people who can cover them."
+        },
+        {
+          "title": "Add coverage and availability constraints",
+          "description": "Each shift needs at least its required headcount; baristas only work shifts they are available for; nobody exceeds 5 shifts per week or works both closing and next-morning opening."
+        },
+        {
+          "title": "Minimize cost and solve",
+          "description": "Objective: sum of wage times hours times assignment. Solve with CpSolver, check the status is OPTIMAL, and print a human-readable roster."
+        },
+        {
+          "title": "Re-plan under a demand spike",
+          "description": "Friday evening now needs 3 baristas instead of 2. Re-solve and compare rosters — note how fast CP-SAT handles the change, and who absorbed the extra shift."
+        }
+      ],
+      "codeBlock": {
+        "language": "python",
+        "code": "from ortools.sat.python import cp_model\n\nbaristas = [\"Ana\", \"Ben\", \"Chen\", \"Dara\", \"Eli\", \"Fay\"]\nwage = {\"Ana\": 18, \"Ben\": 16, \"Chen\": 17, \"Dara\": 19, \"Eli\": 16, \"Fay\": 18}\ndays = [\"Mon\", \"Tue\", \"Wed\", \"Thu\", \"Fri\"]\nshifts = [(d, blk) for d in days for blk in [\"open\", \"mid\", \"close\"]]\nneed = {\"open\": 2, \"mid\": 1, \"close\": 2}\n\nmodel = cp_model.CpModel()\nassign = {(b, s): model.NewBoolVar(f\"{b}_{s[0]}_{s[1]}\")\n          for b in baristas for s in shifts}\n\n# Cover every shift block\nfor s in shifts:\n    model.Add(sum(assign[b, s] for b in baristas) >= need[s[1]])\n# Max 5 shifts per barista per week\nfor b in baristas:\n    model.Add(sum(assign[b, s] for s in shifts) <= 5)\n# No close-then-open (\"clopen\") back to back\nfor b in baristas:\n    for d1, d2 in zip(days, days[1:]):\n        model.AddBoolOr([assign[b, (d1, \"close\")].Not(),\n                         assign[b, (d2, \"open\")].Not()])\n\nmodel.Minimize(sum(wage[b] * 4 * assign[b, s]  # 4-hour blocks\n                   for b in baristas for s in shifts))\n\nsolver = cp_model.CpSolver()\nstatus = solver.Solve(model)\nprint(solver.StatusName(status), f\"| weekly labor cost ${solver.ObjectiveValue():,.0f}\")\nfor s in shifts:\n    crew = [b for b in baristas if solver.Value(assign[b, s])]\n    print(f\"{s[0]} {s[1]:>5}: {', '.join(crew)}\")"
+      },
+      "discussionNote": "Your café has 6 people and 15 shift blocks. ECCO's system makes ~300,000 replenishment decisions a month across 536 stores — same class of model, industrial scale, several million euros a year in savings. As you draft your midterm case model tonight, ask the ECCO question: which decisions are truly binary, which constraints are hard rules versus preferences, and what single objective would the COO actually sign off on?"
+    }
+  ],
+  "takeaways": [
+    {
+      "icon": "layout",
+      "text": "Set covering, scheduling, and knapsack are the three discrete patterns you will see everywhere: cover the demand, respect the person-level rules, spend the budget where it earns most."
+    },
+    {
+      "icon": "bot",
+      "text": "CP-SAT is a genuinely different engine — logic-first, feasibility-driven, free — and it is often the right tool when scheduling rules get gnarly. Two solvers in your toolkit beats one."
+    },
+    {
+      "icon": "rocket",
+      "text": "The midterm case is live. ECCO turned this exact problem class into several million euros a year across 536 stores — your team has three weeks to show the same thinking on the retail replenishment case, due November 4."
+    }
+  ],
+  "homework": [
+    {
+      "label": "Midterm Case",
+      "text": "Midterm case work (in lieu of a numbered problem set): with your team, (1) finalize your team roster on the course site by Friday, (2) load the case data into Colab and produce summary statistics on store demand and warehouse capacity, and (3) draft your model skeleton — decision variables, objective, and at least four constraint families — as a one-page outline. Bring the outline to Session 8 for a 5-minute check-in with the instructor. Full deliverables (model, 5-page COO memo, 10-minute presentation) are due Session 9, November 4."
+    }
+  ],
+  "nextSession": {
+    "title": "Nonlinear Optimization: Portfolios, Pricing & Curves",
+    "description": "Linearity has taken us far, but risk is quadratic, demand curves bend, and prices interact. Next week we enter nonlinear optimization: Markowitz portfolios, revenue-maximizing pricing, and how modern solvers handle curvature — while your midterm case work continues in the background.",
+    "tags": ["Nonlinear Programming", "Portfolio Optimization", "Pricing"],
+    "slug": "session-08"
+  }
+}
