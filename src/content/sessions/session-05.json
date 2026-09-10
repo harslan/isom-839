@@ -5,7 +5,11 @@
   "subtitle": "Shortest paths, max flow, and min-cost flow — the models behind Amazon's regionalized network and Microsoft's Edelman-winning fulfillment engine",
   "duration": "120 Minutes",
   "icon": "trending-up",
-  "tags": ["Supply Chain", "Network Design", "Max Flow"],
+  "tags": [
+    "Supply Chain",
+    "Network Design",
+    "Max Flow"
+  ],
   "objectives": [
     {
       "title": "Formulate the three classic flow models",
@@ -117,6 +121,15 @@
       "linkText": "Read the story"
     },
     {
+      "title": "The Network Explorer — Min-Cost Flow, Live",
+      "url": "/explore/network/",
+      "description": "Three plants, four stores, twelve lanes. Move supplies, spike demands, edit costs — and watch the optimal shipping plan re-route instantly with animated flow.",
+      "icon": "network",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "Gurobi Jupyter Notebook Modeling Examples",
       "url": "https://www.gurobi.com/jupyter_models/",
       "description": "Runnable Colab-friendly notebooks including supply network design and transportation models — ideal templates for Homework #4.",
@@ -198,7 +211,11 @@
   "nextSession": {
     "title": "Integer Optimization I: The Power of Yes/No Decisions",
     "description": "Continuous flows are elegant — but real strategy is lumpy. Open the warehouse or don't. Pay the fixed cost or don't. Next week binary variables enter the model, and we see why one vtype change makes optimization exponentially harder and vastly more powerful.",
-    "tags": ["Integer Programming", "Binary Variables", "Fixed Costs"],
+    "tags": [
+      "Integer Programming",
+      "Binary Variables",
+      "Fixed Costs"
+    ],
     "slug": "session-06"
   }
 }

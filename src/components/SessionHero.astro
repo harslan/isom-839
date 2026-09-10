@@ -2,6 +2,7 @@
 import ScrollIndicator from './ScrollIndicator.astro';
 import GradientText from './GradientText.astro';
 import Icon from './Icon.astro';
+import { sessionMeta } from '../data/schedule';
 
 interface Props {
   number: number;
@@ -12,6 +13,7 @@ interface Props {
 }
 
 const { number, title, subtitle, duration, icon } = Astro.props;
+const meta = sessionMeta[number];
 ---
 
 <section class="min-h-screen flex flex-col justify-center items-center text-center px-8 pt-24 pb-16 relative">
@@ -25,8 +27,14 @@ const { number, title, subtitle, duration, icon } = Astro.props;
   <div class="flex gap-12 flex-wrap justify-center animate-[fadeInUp_0.8s_ease_0.8s_both]">
     <div class="flex items-center gap-3 text-text-muted text-[0.9rem]">
       <Icon name="calendar" class="text-accent-purple w-5 h-5" />
-      <span>Session {number} of 13</span>
+      <span>Session {number} of 13{meta ? ` · Wed ${meta.date}` : ''}</span>
     </div>
+    {meta && (
+      <div class="flex items-center gap-3 text-text-muted text-[0.9rem]">
+        <Icon name="layout" class="text-accent-purple w-5 h-5" />
+        <span>Module: {meta.module}</span>
+      </div>
+    )}
     <div class="flex items-center gap-3 text-text-muted text-[0.9rem]">
       <Icon name="clock" class="text-accent-purple w-5 h-5" />
       <span>{duration}</span>

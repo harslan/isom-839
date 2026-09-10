@@ -5,7 +5,11 @@
   "subtitle": "Plants, warehouses, and people as nodes and arcs — the model family that moves the world's goods and staffs its teams",
   "duration": "120 Minutes",
   "icon": "network",
-  "tags": ["Networks", "Transportation", "Assignment"],
+  "tags": [
+    "Networks",
+    "Transportation",
+    "Assignment"
+  ],
   "objectives": [
     {
       "title": "Formulate transportation models",
@@ -117,6 +121,15 @@
       "linkText": "Meet the finalists"
     },
     {
+      "title": "The Network Explorer — Min-Cost Flow, Live",
+      "url": "/explore/network/",
+      "description": "Three plants, four stores, twelve lanes. Move supplies, spike demands, edit costs — and watch the optimal shipping plan re-route instantly with animated flow.",
+      "icon": "network",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "Gurobi Jupyter Notebook Models",
       "url": "https://www.gurobi.com/jupyter_models/",
       "description": "Includes supply-network design and workforce assignment notebooks that extend tonight's lab — study the dictionary-indexed patterns closely.",
@@ -198,7 +211,11 @@
   "nextSession": {
     "title": "Network Optimization II: Flows, Paths & Supply Chain Design",
     "description": "We go deeper into the network toolbox: shortest paths, maximum flows, and minimum-cost flow models — then combine them to design supply chains end to end, deciding not just how to ship but which facilities should exist at all.",
-    "tags": ["Network Flows", "Shortest Path", "Supply Chain Design"],
+    "tags": [
+      "Network Flows",
+      "Shortest Path",
+      "Supply Chain Design"
+    ],
     "slug": "session-05"
   }
 }

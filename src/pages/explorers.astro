@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientText from '../components/GradientText.astro';
+import Icon from '../components/Icon.astro';
+
+const explorers = [
+  {
+    title: 'The Bakery Explorer',
+    tagline: 'Linear programming · the graphical method, live',
+    href: '/explore/',
+    icon: 'target',
+    session: 'Session 1 · Sep 9',
+    slug: 'session-01',
+    description: 'Drag profit and resource sliders on the Session 1 bakery problem. The feasible region flexes, the iso-profit line slides, and the optimal corner jumps — with presets replaying the exact what-ifs from class.',
+    concepts: ['Feasible region', 'Iso-profit lines', 'Corner-point optimality', 'Alternate optima'],
+  },
+  {
+    title: 'The Network Explorer',
+    tagline: 'Min-cost flow · watch shipping re-route',
+    href: '/explore/network/',
+    icon: 'network',
+    session: 'Sessions 4–5 · Sep 30 & Oct 7',
+    slug: 'session-04',
+    description: 'Three plants, four stores, twelve shipping lanes. Move supplies, spike a demand, edit a cost — and watch the optimal flow re-route instantly, with animated units moving along the gold arcs.',
+    concepts: ['Transportation model', 'Binding capacity', 'Infeasibility', 'Cheap-where-needed logic'],
+  },
+  {
+    title: 'The Branch & Bound Explorer',
+    tagline: 'Integer programming · step through the tree',
+    href: '/explore/integer/',
+    icon: 'check',
+    session: 'Sessions 6–7 · Oct 14 & 21',
+    slug: 'session-06',
+    description: 'The LP relaxation says build 1.5 units — reality disagrees. Step through branch & bound node by node: watch regions split, bounds prune whole subtrees, and the true integer optimum appear where rounding would never look.',
+    concepts: ['LP relaxation', 'Branching', 'Pruning by bound', 'Proof of optimality'],
+  },
+  {
+    title: 'The Efficient Frontier Explorer',
+    tagline: 'Nonlinear optimization · Markowitz, live',
+    href: '/explore/frontier/',
+    icon: 'trending-up',
+    session: 'Session 8 · Oct 28',
+    slug: 'session-08',
+    description: 'Stocks, bonds, gold. Drag your weights and try to reach the gold curve no rational investor should leave. Then press Crisis and watch correlations spike — and diversification, the only free lunch in finance, get eaten.',
+    concepts: ['Risk vs return', 'Covariance', 'Efficient frontier', 'Sharpe ratio'],
+  },
+];
+
+const comingSoon = [
+  { title: 'The Markov Explorer', session: 'Sessions 9–10', description: 'Customer journeys as transition matrices — watch steady states emerge.' },
+  { title: 'The Q-Learning Explorer', session: 'Session 12', description: 'An agent learns an ordering policy before your eyes.' },
+];
+---
+
+<BaseLayout title="ISOM 839 | Explorers — Interactive Optimization">
+  <section class="py-24 px-8 max-w-[1200px] mx-auto">
+    <div class="text-center mb-16">
+      <div class="font-mono text-[0.75rem] text-accent-cyan tracking-[3px] uppercase mb-6">
+        Touch the theory
+      </div>
+      <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-extrabold mb-4">
+        The <GradientText>Explorers</GradientText>
+      </h1>
+      <p class="text-text-secondary text-lg max-w-[680px] mx-auto">
+        Every big idea in this course gets a living, draggable version. No installation, no login —
+        open one on your phone during class or at midnight before the exam. If you can predict what
+        the picture will do before you drag, you understand the concept.
+      </p>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2">
+      {explorers.map((e) => (
+        <a href={e.href} class="group block bg-bg-card border border-border-subtle rounded-2xl p-8 no-underline text-inherit transition-all duration-300 hover:-translate-y-1 hover:border-accent-cyan/40 hover:shadow-[0_0_60px_rgba(242,177,53,0.15)] fade-in">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center">
+              <Icon name={e.icon} class="w-6 h-6 text-accent-cyan" />
+            </div>
+            <div>
+              <h2 class="text-xl font-bold transition-colors duration-300 group-hover:text-accent-cyan">{e.title}</h2>
+              <div class="font-mono text-[0.7rem] text-text-muted tracking-wide">{e.tagline}</div>
+            </div>
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed mb-5">{e.description}</p>
+          <div class="flex gap-2 flex-wrap mb-5">
+            {e.concepts.map((c) => (
+              <span class="px-3 py-1 bg-accent-purple/10 rounded-full text-[0.7rem] text-accent-purple">{c}</span>
+            ))}
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[0.72rem] text-text-muted">{e.session}</span>
+            <span class="font-mono text-[0.8rem] text-accent-cyan transition-transform duration-300 group-hover:translate-x-1">
+              Open →
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      {comingSoon.map((e) => (
+        <div class="bg-bg-card/50 border border-dashed border-border-subtle rounded-2xl p-7 fade-in">
+          <div class="font-mono text-[0.65rem] text-text-muted tracking-[2px] uppercase mb-2">Coming · {e.session}</div>
+          <h3 class="text-lg font-semibold text-text-secondary mb-1">{e.title}</h3>
+          <p class="text-text-muted text-sm">{e.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

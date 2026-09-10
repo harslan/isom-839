@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Network Explorer · ISOM 839</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; margin-bottom: 8px; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--text2); max-width: 780px; line-height: 1.6; font-size: 0.95rem; margin-bottom: 22px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(290px, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #12100d; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+  .presets button {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.25s;
+  }
+  .presets button:hover, .presets button.active { border-color: var(--gold); color: var(--gold); }
+  .grp { margin-bottom: 14px; }
+  .grp .glabel { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .srow { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .srow label { font-size: 0.8rem; color: var(--text2); width: 78px; }
+  .srow input[type=range] { flex: 1; accent-color: #f2b135; cursor: pointer; }
+  .srow b { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; width: 30px; text-align: right; }
+  table.costs { border-collapse: collapse; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; }
+  table.costs th, table.costs td { border: 1px solid var(--border); padding: 4px 6px; text-align: center; color: var(--text2); }
+  table.costs input { width: 40px; background: var(--bg2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; text-align: center; font-family: inherit; font-size: inherit; padding: 3px 2px; }
+  .readout .cost { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+  .readout { font-size: 0.85rem; line-height: 1.6; color: var(--text2); }
+  .note { border-left: 3px solid var(--copper); padding: 10px 14px; background: rgba(224,142,60,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 12px; }
+  .note b { color: var(--text); }
+  .warn { color: var(--red); font-weight: 600; }
+  a.back { color: var(--gold); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/sessions/session-04">← ISOM 839 · Sessions 4–5</a>
+  <div style="height:14px"></div>
+  <div class="kicker">Interactive · Min-Cost Flow, Live</div>
+  <h1>The Network <span class="grad">Explorer</span></h1>
+  <p class="sub">
+    Three plants ship to four stores. Every arc has a cost per unit; the solver finds the cheapest way to satisfy
+    every store. Move a supply, spike a demand, edit a cost — and watch the <b style="color:var(--text)">flow re-route
+    instantly</b>. Thicker gold arcs carry more flow.
+  </p>
+
+  <div class="presets" id="presets">
+    <button data-k="balanced">Balanced week</button>
+    <button data-k="surge">Store 4 surge</button>
+    <button data-k="outage">Albany outage</button>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <canvas id="cv" width="820" height="560"></canvas>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="grp">
+          <div class="glabel">Plant supplies</div>
+          <div class="srow"><label>Boston</label><input type="range" id="s0" min="0" max="60" value="40"><b id="vs0">40</b></div>
+          <div class="srow"><label>Hartford</label><input type="range" id="s1" min="0" max="60" value="30"><b id="vs1">30</b></div>
+          <div class="srow"><label>Albany</label><input type="range" id="s2" min="0" max="60" value="30"><b id="vs2">30</b></div>
+        </div>
+        <div class="grp">
+          <div class="glabel">Store demands</div>
+          <div class="srow"><label>Store 1</label><input type="range" id="d0" min="0" max="50" value="25"><b id="vd0">25</b></div>
+          <div class="srow"><label>Store 2</label><input type="range" id="d1" min="0" max="50" value="25"><b id="vd1">25</b></div>
+          <div class="srow"><label>Store 3</label><input type="range" id="d2" min="0" max="50" value="25"><b id="vd2">25</b></div>
+          <div class="srow"><label>Store 4</label><input type="range" id="d3" min="0" max="50" value="25"><b id="vd3">25</b></div>
+        </div>
+        <div class="grp" style="margin-bottom:4px">
+          <div class="glabel">Shipping cost per unit ($)</div>
+          <table class="costs" id="costTable"></table>
+        </div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="panel readout">
+        <div class="kicker" style="margin-bottom:6px">Optimal shipping plan</div>
+        <div class="cost" id="ro-cost">—</div>
+        <div id="ro-info"></div>
+        <div class="note" id="ro-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:26px">
+    <b style="color:var(--text)">The model:</b> minimize Σ c<sub>ij</sub>·x<sub>ij</sub> subject to
+    Σ<sub>j</sub> x<sub>ij</sub> ≤ supply<sub>i</sub> for each plant, Σ<sub>i</sub> x<sub>ij</sub> = demand<sub>j</sub>
+    for each store, x ≥ 0. This exact structure — scaled to hundreds of millions of people — is India's "Anna Chakra"
+    2026 Edelman finalist, and the spine of Amazon's regionalized network.
+  </p>
+</div>
+
+<script>
+const PLANTS = ['Boston', 'Hartford', 'Albany'];
+const STORES = ['Store 1', 'Store 2', 'Store 3', 'Store 4'];
+const state = {
+  sup: [40, 30, 30],
+  dem: [25, 25, 25, 25],
+  cost: [[4,6,9,5],[6,4,5,8],[9,7,4,3]],
+};
+const PRESETS = {
+  balanced: { sup: [40,30,30], dem: [25,25,25,25] },
+  surge:    { sup: [40,30,30], dem: [20,20,20,40] },
+  outage:   { sup: [50,50,0],  dem: [25,25,25,25] },
+};
+
+// ── Min-cost flow via successive shortest paths (Bellman-Ford on residual) ──
+// Nodes: 0 = source, 1-3 plants, 4-7 stores, 8 = sink.
+function solveFlow() {
+  const N = 9, S = 0, T = 8;
+  const cap = [], cost = [], to = [], head = Array.from({length: N}, () => []);
+  function addEdge(u, v, c, w) {
+    head[u].push(to.length); to.push(v); cap.push(c); cost.push(w);
+    head[v].push(to.length); to.push(u); cap.push(0); cost.push(-w);
+  }
+  for (let i = 0; i < 3; i++) addEdge(S, 1 + i, state.sup[i], 0);
+  const arcIdx = [];
+  for (let i = 0; i < 3; i++) { arcIdx.push([]);
+    for (let j = 0; j < 4; j++) { arcIdx[i].push(to.length); addEdge(1 + i, 4 + j, 1e9, state.cost[i][j]); } }
+  for (let j = 0; j < 4; j++) addEdge(4 + j, T, state.dem[j], 0);
+
+  let totalFlow = 0, totalCost = 0;
+  const need = state.dem.reduce((a, b) => a + b, 0);
+  while (totalFlow < need) {
+    const dist = new Array(N).fill(Infinity), inq = new Array(N).fill(false),
+          prevE = new Array(N).fill(-1), q = [S];
+    dist[S] = 0; inq[S] = true;
+    while (q.length) {
+      const u = q.shift(); inq[u] = false;
+      for (const e of head[u]) {
+        if (cap[e] > 0 && dist[u] + cost[e] < dist[to[e]] - 1e-9) {
+          dist[to[e]] = dist[u] + cost[e]; prevE[to[e]] = e;
+          if (!inq[to[e]]) { inq[to[e]] = true; q.push(to[e]); }
+        }
+      }
+    }
+    if (dist[T] === Infinity) break;   // can't push more — infeasible
+    let push = need - totalFlow, v = T;
+    while (v !== S) { push = Math.min(push, cap[prevE[v]]); v = to[prevE[v] ^ 1]; }
+    v = T;
+    while (v !== S) { cap[prevE[v]] -= push; cap[prevE[v] ^ 1] += push; v = to[prevE[v] ^ 1]; }
+    totalFlow += push; totalCost += push * dist[T];
+  }
+  const flow = state.cost.map((row, i) => row.map((_, j) => cap[arcIdx[i][j] ^ 1]));
+  return { flow, totalCost, totalFlow, need };
+}
+
+// ── Drawing ──
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const px = { plant: 150, store: 660 };
+const py = i => 90 + i * 160;   // plants
+const qy = j => 60 + j * 140;   // stores
+let particles = [];
+
+function draw(sol) {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  const maxFlow = Math.max(1, ...sol.flow.flat());
+
+  // arcs
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 4; j++) {
+    const f = sol.flow[i][j];
+    ctx.beginPath();
+    ctx.moveTo(px.plant + 46, py(i));
+    ctx.bezierCurveTo(px.plant + 210, py(i), px.store - 210, qy(j), px.store - 46, qy(j));
+    if (f > 0.01) {
+      ctx.strokeStyle = 'rgba(242,177,53,0.85)';
+      ctx.lineWidth = 1.5 + 7 * (f / maxFlow);
+    } else {
+      ctx.strokeStyle = 'rgba(255,240,214,0.07)';
+      ctx.lineWidth = 1;
+    }
+    ctx.stroke();
+    // cost label at midpoint
+    const mx = (px.plant + px.store) / 2, my = (py(i) + qy(j)) / 2;
+    if (f > 0.01) {
+      ctx.fillStyle = '#ffd166';
+      ctx.font = 'bold 12px "JetBrains Mono", monospace';
+      ctx.fillText(f + ' @ $' + state.cost[i][j], mx - 26, my - 4);
+    }
+  }
+
+  // flow particles
+  ctx.globalAlpha = 0.9;
+  for (const p of particles) {
+    const t = p.t;
+    const x0 = px.plant + 46, x1 = px.plant + 210, x2 = px.store - 210, x3 = px.store - 46;
+    const y0 = py(p.i), y1 = py(p.i), y2 = qy(p.j), y3 = qy(p.j);
+    const u = 1 - t;
+    const x = u*u*u*x0 + 3*u*u*t*x1 + 3*u*t*t*x2 + t*t*t*x3;
+    const y = u*u*u*y0 + 3*u*u*t*y1 + 3*u*t*t*y2 + t*t*t*y3;
+    ctx.beginPath(); ctx.arc(x, y, 2.6, 0, 7);
+    ctx.fillStyle = '#ffd166'; ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+
+  // plant nodes
+  for (let i = 0; i < 3; i++) {
+    const used = sol.flow[i].reduce((a, b) => a + b, 0);
+    ctx.beginPath(); ctx.arc(px.plant, py(i), 40, 0, 7);
+    ctx.fillStyle = '#1d1a15'; ctx.fill();
+    ctx.strokeStyle = state.sup[i] > 0 ? 'rgba(52,211,153,0.7)' : 'rgba(226,114,91,0.7)';
+    ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#f5f2ec'; ctx.font = 'bold 13px "Space Grotesk", sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(PLANTS[i], px.plant, py(i) - 4);
+    ctx.fillStyle = '#a8a196'; ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillText(used + ' / ' + state.sup[i], px.plant, py(i) + 14);
+  }
+  // store nodes
+  for (let j = 0; j < 4; j++) {
+    const got = sol.flow.reduce((a, row) => a + row[j], 0);
+    const met = got >= state.dem[j] - 0.01;
+    ctx.beginPath(); ctx.arc(px.store, qy(j), 36, 0, 7);
+    ctx.fillStyle = '#1d1a15'; ctx.fill();
+    ctx.strokeStyle = met ? 'rgba(242,177,53,0.75)' : 'rgba(226,114,91,0.9)';
+    ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#f5f2ec'; ctx.font = 'bold 12px "Space Grotesk", sans-serif';
+    ctx.fillText(STORES[j], px.store, qy(j) - 4);
+    ctx.fillStyle = met ? '#a8a196' : '#e2725b'; ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillText(got + ' / ' + state.dem[j], px.store, qy(j) + 14);
+  }
+  ctx.textAlign = 'left';
+}
+
+function syncParticles(sol) {
+  const want = [];
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 4; j++) {
+    const n = Math.round(sol.flow[i][j] / 6);
+    for (let k = 0; k < n; k++) want.push({ i, j });
+  }
+  while (particles.length > want.length) particles.pop();
+  while (particles.length < want.length) particles.push({ t: Math.random() });
+  particles.forEach((p, k) => { p.i = want[k].i; p.j = want[k].j; });
+}
+
+let sol = solveFlow();
+function refresh() {
+  for (let i = 0; i < 3; i++) document.getElementById('vs' + i).textContent = state.sup[i];
+  for (let j = 0; j < 4; j++) document.getElementById('vd' + j).textContent = state.dem[j];
+  sol = solveFlow();
+  syncParticles(sol);
+  const totalSup = state.sup.reduce((a, b) => a + b, 0);
+  const totalDem = state.dem.reduce((a, b) => a + b, 0);
+  const costEl = document.getElementById('ro-cost');
+  const info = document.getElementById('ro-info');
+  const note = document.getElementById('ro-note');
+  if (sol.totalFlow < sol.need - 0.01) {
+    costEl.innerHTML = '<span class="warn">Infeasible</span>';
+    info.innerHTML = `Total supply <b class="warn">${totalSup}</b> &lt; total demand <b>${totalDem}</b>. Some stores go unserved — the red rings show where.`;
+    note.innerHTML = '<b>This is what a real shortage looks like.</b> No routing cleverness can ship units that don\'t exist. Add supply or trim demand.';
+  } else {
+    costEl.textContent = '$' + sol.totalCost.toLocaleString();
+    const slack = totalSup - totalDem;
+    info.innerHTML = `All four stores fully served. Unused capacity: <b style="color:var(--text)">${slack} units</b>.`;
+    // cheapest unused arc insight
+    let cheapestUnused = null;
+    for (let i = 0; i < 3; i++) for (let j = 0; j < 4; j++)
+      if (sol.flow[i][j] < 0.01 && (cheapestUnused === null || state.cost[i][j] < cheapestUnused.c))
+        cheapestUnused = { i, j, c: state.cost[i][j] };
+    note.innerHTML = `<b>Read the gold arcs like a strategy.</b> The solver ships on cheap lanes first and uses expensive ones only when capacity forces it. ` +
+      (cheapestUnused ? `Notice ${PLANTS[cheapestUnused.i]} → ${STORES[cheapestUnused.j]} ($${cheapestUnused.c}) carries nothing — cheap alone isn't enough; it has to be cheap <i>where the units are needed</i>.` : '');
+  }
+  draw(sol);
+}
+
+// controls
+for (let i = 0; i < 3; i++) document.getElementById('s' + i).addEventListener('input', e => { state.sup[i] = +e.target.value; clearActive(); refresh(); });
+for (let j = 0; j < 4; j++) document.getElementById('d' + j).addEventListener('input', e => { state.dem[j] = +e.target.value; clearActive(); refresh(); });
+
+const tbl = document.getElementById('costTable');
+tbl.innerHTML = '<tr><th></th>' + STORES.map(s => `<th>${s.replace('Store ', 'S')}</th>`).join('') + '</tr>' +
+  PLANTS.map((p, i) => `<tr><th>${p}</th>` + STORES.map((_, j) =>
+    `<td><input type="number" min="1" max="20" value="${state.cost[i][j]}" data-i="${i}" data-j="${j}"></td>`).join('') + '</tr>').join('');
+tbl.addEventListener('input', e => {
+  const i = +e.target.dataset.i, j = +e.target.dataset.j;
+  const v = Math.max(1, Math.min(20, +e.target.value || 1));
+  state.cost[i][j] = v; clearActive(); refresh();
+});
+
+function clearActive() { document.querySelectorAll('#presets button').forEach(b => b.classList.remove('active')); }
+document.querySelectorAll('#presets button').forEach(btn => btn.addEventListener('click', () => {
+  const p = PRESETS[btn.dataset.k];
+  state.sup = [...p.sup]; state.dem = [...p.dem];
+  for (let i = 0; i < 3; i++) document.getElementById('s' + i).value = state.sup[i];
+  for (let j = 0; j < 4; j++) document.getElementById('d' + j).value = state.dem[j];
+  clearActive(); btn.classList.add('active'); refresh();
+}));
+
+// particle animation loop
+setInterval(() => { for (const p of particles) { p.t += 0.008; if (p.t > 1) p.t = 0; } draw(sol); }, 40);
+
+document.querySelector('#presets button').classList.add('active');
+refresh();
+</script>
+</body>
+</html>

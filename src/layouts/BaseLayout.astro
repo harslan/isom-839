@@ -21,6 +21,7 @@ const siteLinks: { label: string; href: string; accent?: 'graduate' }[] = [
   { label: 'Sessions', href: '/sessions' },
   { label: 'Syllabus', href: '/syllabus' },
   { label: 'Resources', href: '/resources' },
+  { label: 'Explorers', href: '/explorers' },
   { label: 'Project', href: '/project' },
   { label: 'Practice', href: '/practice' },
 ];
@@ -65,6 +66,13 @@ for (const session of sorted) {
     });
   }
 }
+
+searchIndex.push({
+  type: 'explorer',
+  title: 'Explorers — interactive optimization',
+  subtitle: 'Bakery LP, network flow, branch & bound, efficient frontier',
+  url: '/explorers',
+});
 
 searchIndex.push({
   type: 'practice',

@@ -5,7 +5,11 @@
   "subtitle": "Set covering, workforce scheduling, and Google's CP-SAT solver — plus the midterm case launches: your team takes on retail replenishment optimization",
   "duration": "120 Minutes",
   "icon": "calendar",
-  "tags": ["Scheduling", "CP-SAT", "Midterm Case"],
+  "tags": [
+    "Scheduling",
+    "CP-SAT",
+    "Midterm Case"
+  ],
   "objectives": [
     {
       "title": "Recognize the three discrete workhorse patterns",
@@ -117,6 +121,15 @@
       "linkText": "Read the guide"
     },
     {
+      "title": "The Branch & Bound Explorer — Step Through the Tree",
+      "url": "/explore/integer/",
+      "description": "The LP relaxation says build 1.5 units. Step through branch & bound node by node: regions split, bounds prune whole subtrees, and the true integer optimum appears where rounding would never look.",
+      "icon": "check",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "Google OR-Tools on GitHub",
       "url": "https://github.com/google/or-tools",
       "description": "Source, examples, and the employee scheduling samples — pip install ortools and you are running in Colab in one cell.",
@@ -198,7 +211,11 @@
   "nextSession": {
     "title": "Nonlinear Optimization: Portfolios, Pricing & Curves",
     "description": "Linearity has taken us far, but risk is quadratic, demand curves bend, and prices interact. Next week we enter nonlinear optimization: Markowitz portfolios, revenue-maximizing pricing, and how modern solvers handle curvature — while your midterm case work continues in the background.",
-    "tags": ["Nonlinear Programming", "Portfolio Optimization", "Pricing"],
+    "tags": [
+      "Nonlinear Programming",
+      "Portfolio Optimization",
+      "Pricing"
+    ],
     "slug": "session-08"
   }
 }

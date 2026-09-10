@@ -5,7 +5,11 @@
   "subtitle": "Binary variables, fixed costs, and big-M logic — how one line of code lets your model make strategic decisions, and why that makes it exponentially harder to solve",
   "duration": "120 Minutes",
   "icon": "check",
-  "tags": ["Integer Programming", "Binary Variables", "Fixed Costs"],
+  "tags": [
+    "Integer Programming",
+    "Binary Variables",
+    "Fixed Costs"
+  ],
   "objectives": [
     {
       "title": "Model decisions, not just quantities",
@@ -117,6 +121,15 @@
       "linkText": "Open the notebooks"
     },
     {
+      "title": "The Branch & Bound Explorer — Step Through the Tree",
+      "url": "/explore/integer/",
+      "description": "The LP relaxation says build 1.5 units. Step through branch & bound node by node: regions split, bounds prune whole subtrees, and the true integer optimum appears where rounding would never look.",
+      "icon": "check",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "INFORMS O.R. & Analytics Success Stories",
       "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/",
       "description": "Search 'facility location' and 'network design' — nearly every major supply chain win in this library has binary open/close decisions at its core.",
@@ -198,7 +211,11 @@
   "nextSession": {
     "title": "Integer Optimization II: Scheduling, Location & the Midterm Case",
     "description": "Binary variables meet the workforce: set covering, shift scheduling, and knapsack patterns — plus a new solver, Google's CP-SAT, built for exactly these problems. And the big one: the midterm case launches. Teams get a retail replenishment optimization challenge inspired by ECCO's Edelman-finalist system.",
-    "tags": ["Scheduling", "CP-SAT", "Midterm Case"],
+    "tags": [
+      "Scheduling",
+      "CP-SAT",
+      "Midterm Case"
+    ],
     "slug": "session-07"
   }
 }

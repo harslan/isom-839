@@ -5,7 +5,11 @@
   "subtitle": "When the world stops being linear — risk that grows with the square of exposure, revenue that bends as prices rise — you need a new toolkit. Tonight: convexity, Markowitz, and the efficient frontier.",
   "duration": "120 Minutes",
   "icon": "trending-up",
-  "tags": ["Nonlinear", "Portfolio Optimization", "CVXPY"],
+  "tags": [
+    "Nonlinear",
+    "Portfolio Optimization",
+    "CVXPY"
+  ],
   "objectives": [
     {
       "title": "Distinguish convex from nonconvex problems",
@@ -122,6 +126,15 @@
       "linkText": "Open CVXPY docs"
     },
     {
+      "title": "The Efficient Frontier Explorer — Markowitz, Live",
+      "url": "/explore/frontier/",
+      "description": "Drag portfolio weights toward the gold curve, then press Crisis and watch correlations spike and diversification die. Session 8's CVXPY lab, as a toy you can feel first.",
+      "icon": "trending-up",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "yfinance on GitHub",
       "url": "https://github.com/ranaroussi/yfinance",
       "description": "The open-source Python library we use to pull real historical stock prices from Yahoo Finance — one pip install, one line of code, two years of market data.",
@@ -203,7 +216,11 @@
   "nextSession": {
     "title": "Markov Chains: Modeling Customer Journeys",
     "description": "From optimizing decisions to modeling behavior over time: states, transition matrices, steady states, customer lifetime value, and marketing attribution — plus how Google's PageRank is secretly a Markov chain. MIDTERM CASE DUE: teams present 5-minute results briefings.",
-    "tags": ["Markov Chains", "Customer Analytics", "Attribution"],
+    "tags": [
+      "Markov Chains",
+      "Customer Analytics",
+      "Attribution"
+    ],
     "slug": "session-09"
   }
 }

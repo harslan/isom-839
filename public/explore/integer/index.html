@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Branch & Bound Explorer · ISOM 839</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; margin-bottom: 8px; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--text2); max-width: 780px; line-height: 1.6; font-size: 0.95rem; margin-bottom: 22px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #12100d; }
+  .btns { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+  .btns button {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; padding: 9px 16px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.25s;
+  }
+  .btns button.primary { background: linear-gradient(90deg, var(--gold), var(--copper)); color: #14120f; font-weight: 700; border: none; }
+  .btns button:hover:not(.primary) { border-color: var(--gold); color: var(--gold); }
+  .tree { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; line-height: 1.5; }
+  .tnode { padding: 7px 10px; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 6px; color: var(--text2); opacity: 0.35; transition: all 0.3s; }
+  .tnode.seen { opacity: 1; }
+  .tnode.current { border-color: var(--goldlight); box-shadow: 0 0 18px rgba(255,209,102,0.15); }
+  .tnode .st { float: right; font-weight: 700; }
+  .tnode.integer .st { color: var(--green); }
+  .tnode.pruned .st { color: var(--red); }
+  .tnode.infeasible .st { color: var(--red); }
+  .tnode.branched .st { color: var(--copper); }
+  .tnode.incumbent { border-color: rgba(52,211,153,0.5); }
+  .status { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+  .status b { color: var(--text); }
+  .best { font-family: 'JetBrains Mono', monospace; font-size: 1.3rem; font-weight: 700; color: var(--green); }
+  .note { border-left: 3px solid var(--copper); padding: 10px 14px; background: rgba(224,142,60,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 12px; }
+  .note b { color: var(--text); }
+  a.back { color: var(--gold); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/sessions/session-06">← ISOM 839 · Sessions 6–7</a>
+  <div style="height:14px"></div>
+  <div class="kicker">Interactive · Why Integer Programming Is Hard</div>
+  <h1>The Branch &amp; Bound <span class="grad">Explorer</span></h1>
+  <p class="sub">
+    The LP relaxation of this model lands at <b style="color:var(--text)">(3, 1.5)</b> — but you can't build half a unit.
+    Step through the algorithm every industrial solver runs: <b style="color:var(--text)">branch</b> on the fractional
+    variable, <b style="color:var(--text)">bound</b> each subproblem with its own LP, and <b style="color:var(--text)">prune</b>
+    whole regions without ever looking inside them.
+  </p>
+  <p class="sub" style="font-family:'JetBrains Mono',monospace;font-size:0.8rem">
+    max Z = 5x + 4y &nbsp;·&nbsp; s.t. &nbsp;6x + 4y ≤ 24, &nbsp;x + 2y ≤ 6, &nbsp;x, y ≥ 0 and INTEGER
+  </p>
+
+  <div class="btns">
+    <button class="primary" id="step">Next step →</button>
+    <button id="auto">Auto-run</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <canvas id="cv" width="760" height="600"></canvas>
+    </div>
+    <div>
+      <div class="panel">
+        <div class="kicker" style="margin-bottom:8px">Search tree</div>
+        <div class="tree" id="tree"></div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="panel">
+        <div class="kicker" style="margin-bottom:6px">Status</div>
+        <div class="status" id="status">Press <b>Next step</b> to solve the root LP relaxation.</div>
+        <div style="height:8px"></div>
+        <div class="best" id="best">Best integer plan: none yet</div>
+        <div class="note" id="note">The dots on the chart are the <b>integer lattice</b> — the only plans you can actually execute. The green region is what the LP relaxation pretends is allowed.</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:26px">
+    <b style="color:var(--text)">Why this matters:</b> integer programs are exponentially harder than LPs precisely because
+    of what you just watched — the tree can double with every fractional variable. Branch &amp; bound wins by proving that
+    entire branches <i>cannot</i> contain anything better than the incumbent, so it never has to look. That proof-of-optimality
+    is what Gurobi sells.
+  </p>
+</div>
+
+<script>
+// Model: max 5x + 4y s.t. 6x+4y<=24, x+2y<=6, x,y>=0 integer.
+const BASE = [
+  { a: 6, b: 4, rhs: 24 },
+  { a: 1, b: 2, rhs: 6 },
+];
+const OBJ = { cx: 5, cy: 4 };
+const XMAX = 5.5, YMAX = 4.5;
+
+// LP solve via polygon clipping + vertex evaluation (2 vars).
+function solveLP(extra) {
+  const cons = [...BASE, ...extra];
+  let poly = [[0,0],[XMAX*3,0],[XMAX*3,YMAX*3],[0,YMAX*3]];
+  for (const c of cons) {
+    const out = [];
+    for (let i = 0; i < poly.length; i++) {
+      const P = poly[i], Q = poly[(i+1) % poly.length];
+      const dP = c.a*P[0] + c.b*P[1] - c.rhs, dQ = c.a*Q[0] + c.b*Q[1] - c.rhs;
+      if (dP <= 1e-9) out.push(P);
+      if ((dP < -1e-9 && dQ > 1e-9) || (dP > 1e-9 && dQ < -1e-9)) {
+        const t = dP / (dP - dQ);
+        out.push([P[0] + t*(Q[0]-P[0]), P[1] + t*(Q[1]-P[1])]);
+      }
+    }
+    poly = out;
+    if (!poly.length) return { feasible: false };
+  }
+  let best = null, bv = -1;
+  for (const p of poly) { const v = OBJ.cx*p[0] + OBJ.cy*p[1]; if (v > bv) { bv = v; best = p; } }
+  return { feasible: true, x: best[0], y: best[1], z: bv, poly };
+}
+
+// Build the full B&B event sequence up front (DFS, branch on most fractional).
+const events = [];
+let incumbentZ = -1, incumbentPt = null;
+let nodeId = 0;
+function frac(v) { return Math.abs(v - Math.round(v)); }
+function isInt(v) { return frac(v) < 1e-6; }
+function explore(extra, label, depth, parentId) {
+  const id = nodeId++;
+  const lp = solveLP(extra);
+  const node = { id, label, depth, parentId, extra: [...extra] };
+  if (!lp.feasible) {
+    events.push({ ...node, kind: 'infeasible', text: 'LP infeasible — the added bounds emptied the region. Prune.' });
+    return;
+  }
+  const zr = Math.round(lp.z * 100) / 100;
+  if (lp.z <= incumbentZ + 1e-9) {
+    events.push({ ...node, kind: 'pruned', lp, text: `LP bound Z = ${zr} ≤ incumbent ${incumbentZ}. Nothing in this region can beat what we have. Prune — without checking a single lattice point inside.` });
+    return;
+  }
+  if (isInt(lp.x) && isInt(lp.y)) {
+    incumbentZ = Math.round(lp.z); incumbentPt = [Math.round(lp.x), Math.round(lp.y)];
+    events.push({ ...node, kind: 'integer', lp, text: `LP optimum (${Math.round(lp.x)}, ${Math.round(lp.y)}) is INTEGER with Z = ${incumbentZ}. New incumbent!` });
+    return;
+  }
+  const onX = frac(lp.x) >= frac(lp.y);
+  const v = onX ? lp.x : lp.y, name = onX ? 'x' : 'y';
+  const fl = Math.floor(v), ce = fl + 1;
+  events.push({ ...node, kind: 'branched', lp,
+    text: `LP optimum (${lp.x.toFixed(2)}, ${lp.y.toFixed(2)}), Z = ${zr} — but ${name} = ${v.toFixed(2)} is fractional. Branch: ${name} ≤ ${fl} or ${name} ≥ ${ce}.` });
+  const cL = onX ? { a: 1, b: 0, rhs: fl } : { a: 0, b: 1, rhs: fl };
+  const cR = onX ? { a: -1, b: 0, rhs: -ce } : { a: 0, b: -1, rhs: -ce };
+  explore([...extra, cL], `${name} ≤ ${fl}`, depth + 1, id);
+  explore([...extra, cR], `${name} ≥ ${ce}`, depth + 1, id);
+}
+explore([], 'Root (LP relaxation)', 0, -1);
+const FINAL = { z: incumbentZ, pt: incumbentPt };
+
+// ── UI state ──
+let step = -1;
+let timer = null;
+
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const PAD = { l: 56, r: 20, t: 20, b: 46 };
+const W = cv.width - PAD.l - PAD.r, H = cv.height - PAD.t - PAD.b;
+const sx = x => PAD.l + x / XMAX * W;
+const sy = y => PAD.t + H - y / YMAX * H;
+
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  // axes/grid
+  ctx.font = '11px "JetBrains Mono", monospace'; ctx.fillStyle = '#6b6459';
+  ctx.strokeStyle = 'rgba(255,240,214,0.05)';
+  for (let x = 0; x <= 5; x++) { ctx.beginPath(); ctx.moveTo(sx(x), sy(0)); ctx.lineTo(sx(x), PAD.t); ctx.stroke(); ctx.fillText(x, sx(x)-3, sy(0)+18); }
+  for (let y = 0; y <= 4; y++) { ctx.beginPath(); ctx.moveTo(sx(0), sy(y)); ctx.lineTo(sx(XMAX), sy(y)); ctx.stroke(); ctx.fillText(y, sx(0)-20, sy(y)+4); }
+  ctx.fillStyle = '#a8a196';
+  ctx.fillText('x', cv.width/2, cv.height - 10);
+  ctx.save(); ctx.translate(16, cv.height/2); ctx.rotate(-Math.PI/2); ctx.fillText('y', 0, 0); ctx.restore();
+  ctx.strokeStyle = 'rgba(255,240,214,0.25)';
+  ctx.beginPath(); ctx.moveTo(sx(0), PAD.t); ctx.lineTo(sx(0), sy(0)); ctx.lineTo(sx(XMAX), sy(0)); ctx.stroke();
+
+  // base LP region
+  const rootLP = solveLP([]);
+  ctx.beginPath();
+  rootLP.poly.forEach((p, i) => i ? ctx.lineTo(sx(p[0]), sy(p[1])) : ctx.moveTo(sx(p[0]), sy(p[1])));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(52,211,153,0.08)'; ctx.fill();
+  ctx.strokeStyle = 'rgba(52,211,153,0.4)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+  // current node's subregion
+  const ev = step >= 0 ? events[Math.min(step, events.length - 1)] : null;
+  if (ev && ev.lp && ev.lp.poly && ev.extra.length) {
+    ctx.beginPath();
+    ev.lp.poly.forEach((p, i) => i ? ctx.lineTo(sx(p[0]), sy(p[1])) : ctx.moveTo(sx(p[0]), sy(p[1])));
+    ctx.closePath();
+    ctx.fillStyle = ev.kind === 'pruned' ? 'rgba(226,114,91,0.18)' : 'rgba(255,209,102,0.15)';
+    ctx.fill();
+    ctx.strokeStyle = ev.kind === 'pruned' ? 'rgba(226,114,91,0.7)' : 'rgba(255,209,102,0.7)';
+    ctx.lineWidth = 2; ctx.stroke();
+  }
+
+  // integer lattice
+  for (let x = 0; x <= 5; x++) for (let y = 0; y <= 4; y++) {
+    const feas = BASE.every(c => c.a*x + c.b*y <= c.rhs);
+    ctx.beginPath(); ctx.arc(sx(x), sy(y), feas ? 4 : 2.5, 0, 7);
+    ctx.fillStyle = feas ? 'rgba(245,242,236,0.8)' : 'rgba(107,100,89,0.35)';
+    ctx.fill();
+  }
+
+  // current LP optimum
+  if (ev && ev.lp) {
+    const p = ev.lp;
+    const integer = isInt(p.x) && isInt(p.y);
+    const g = ctx.createRadialGradient(sx(p.x), sy(p.y), 2, sx(p.x), sy(p.y), 18);
+    const col = integer ? '52,211,153' : '255,209,102';
+    g.addColorStop(0, `rgba(${col},0.8)`); g.addColorStop(1, `rgba(${col},0)`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx(p.x), sy(p.y), 18, 0, 7); ctx.fill();
+    ctx.beginPath(); ctx.arc(sx(p.x), sy(p.y), 5, 0, 7);
+    ctx.fillStyle = integer ? '#34d399' : '#ffd166'; ctx.fill();
+    ctx.fillStyle = integer ? '#34d399' : '#ffd166';
+    ctx.font = 'bold 13px "JetBrains Mono", monospace';
+    ctx.fillText(`(${p.x.toFixed(2).replace(/\.00$/,'')}, ${p.y.toFixed(2).replace(/\.00$/,'')}) Z=${(Math.round(p.z*100)/100)}`, sx(p.x) + 12, sy(p.y) - 10);
+  }
+
+  // incumbent star once found
+  if (step >= 0) {
+    let bz = -1, bp = null;
+    for (let k = 0; k <= Math.min(step, events.length - 1); k++)
+      if (events[k].kind === 'integer') {
+        const z = Math.round(events[k].lp.z);
+        if (z > bz) { bz = z; bp = [Math.round(events[k].lp.x), Math.round(events[k].lp.y)]; }
+      }
+    if (bp) {
+      ctx.beginPath(); ctx.arc(sx(bp[0]), sy(bp[1]), 9, 0, 7);
+      ctx.strokeStyle = '#34d399'; ctx.lineWidth = 2.5; ctx.stroke();
+    }
+  }
+}
+
+function labelFor(ev) {
+  if (ev.kind === 'infeasible') return 'INFEASIBLE ✕';
+  if (ev.kind === 'pruned') return 'PRUNED ✕';
+  if (ev.kind === 'integer') return 'INTEGER ★';
+  return 'BRANCH';
+}
+
+function renderTree() {
+  const el = document.getElementById('tree');
+  el.innerHTML = events.map((ev, k) => {
+    const seen = k <= step, cur = k === step;
+    const z = ev.lp ? ` · Z=${Math.round(ev.lp.z*100)/100}` : '';
+    return `<div class="tnode ${ev.kind} ${seen ? 'seen' : ''} ${cur ? 'current' : ''}" style="margin-left:${ev.depth * 16}px">
+      ${ev.label}${seen ? z : ''} <span class="st">${seen ? labelFor(ev) : '·'}</span></div>`;
+  }).join('');
+}
+
+function renderStatus() {
+  const st = document.getElementById('status'), best = document.getElementById('best'), note = document.getElementById('note');
+  if (step < 0) {
+    st.innerHTML = 'Press <b>Next step</b> to solve the root LP relaxation.';
+    best.textContent = 'Best integer plan: none yet';
+    return;
+  }
+  const ev = events[Math.min(step, events.length - 1)];
+  st.innerHTML = `<b>${ev.label}:</b> ${ev.text}`;
+  let bz = -1, bp = null;
+  for (let k = 0; k <= Math.min(step, events.length - 1); k++)
+    if (events[k].kind === 'integer') { const z = Math.round(events[k].lp.z); if (z > bz) { bz = z; bp = [Math.round(events[k].lp.x), Math.round(events[k].lp.y)]; } }
+  best.textContent = bp ? `Best integer plan: (${bp[0]}, ${bp[1]}) · Z = ${bz}` : 'Best integer plan: none yet';
+  if (step >= events.length - 1) {
+    note.innerHTML = `<b>Done — provably optimal.</b> The answer is (${FINAL.pt[0]}, ${FINAL.pt[1]}) with Z = ${FINAL.z}. Notice it is NOT the rounded LP answer: rounding (3, 1.5) to (3, 1) gives Z = 19, but the true optimum ${FINAL.z} lives at a corner rounding would never find. That gap is why integer programming is its own discipline.`;
+  } else if (ev.kind === 'pruned') {
+    note.innerHTML = '<b>This is the magic step.</b> The LP bound proves the whole shaded region can\'t beat the incumbent — so we skip it entirely. No enumeration. That\'s how solvers handle 10<sup>18</sup> combinations before lunch.';
+  } else if (ev.kind === 'integer') {
+    note.innerHTML = '<b>An incumbent!</b> From now on, any branch whose LP bound is ≤ this value dies instantly.';
+  } else {
+    note.innerHTML = 'The gold region is the subproblem we are examining now; the gold dot is its LP optimum.';
+  }
+}
+
+function doStep() {
+  if (step < events.length - 1) step++;
+  draw(); renderTree(); renderStatus();
+}
+document.getElementById('step').addEventListener('click', () => { stopAuto(); doStep(); });
+document.getElementById('auto').addEventListener('click', () => {
+  if (timer) { stopAuto(); return; }
+  document.getElementById('auto').textContent = 'Pause';
+  timer = setInterval(() => { doStep(); if (step >= events.length - 1) stopAuto(); }, 1800);
+});
+function stopAuto() { if (timer) clearInterval(timer); timer = null; document.getElementById('auto').textContent = 'Auto-run'; }
+document.getElementById('reset').addEventListener('click', () => { stopAuto(); step = -1; draw(); renderTree(); renderStatus(); });
+
+draw(); renderTree(); renderStatus();
+</script>
+</body>
+</html>

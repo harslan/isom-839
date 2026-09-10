@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Efficient Frontier Explorer · ISOM 839</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b; --blue: #7cb8f7;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 700; margin-bottom: 8px; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--text2); max-width: 780px; line-height: 1.6; font-size: 0.95rem; margin-bottom: 22px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(300px, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 920px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #12100d; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+  .presets button {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; padding: 7px 12px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.25s;
+  }
+  .presets button:hover, .presets button.active { border-color: var(--gold); color: var(--gold); }
+  .srow { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .srow label { font-size: 0.8rem; color: var(--text2); width: 92px; }
+  .srow input[type=range] { flex: 1; accent-color: #f2b135; cursor: pointer; }
+  .srow b { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; width: 44px; text-align: right; }
+  .readout { font-size: 0.85rem; line-height: 1.65; color: var(--text2); }
+  .readout .big { font-family: 'JetBrains Mono', monospace; font-size: 1.15rem; font-weight: 700; color: var(--text); }
+  .note { border-left: 3px solid var(--copper); padding: 10px 14px; background: rgba(224,142,60,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 12px; }
+  .note b { color: var(--text); }
+  a.back { color: var(--gold); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.67rem; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/sessions/session-08">← ISOM 839 · Session 8</a>
+  <div style="height:14px"></div>
+  <div class="kicker">Interactive · Markowitz, Live</div>
+  <h1>The Efficient Frontier <span class="grad">Explorer</span></h1>
+  <p class="sub">
+    Three assets — stocks, bonds, gold. Every possible mix of them is a dot in risk-return space; the
+    <b style="color:var(--text)">gold curve</b> is the efficient frontier, the set of mixes no rational investor should
+    ever leave. Drag your weights and try to reach it. Then press <b style="color:var(--text)">Crisis</b> and watch
+    diversification — the only free lunch in finance — get eaten.
+  </p>
+
+  <div class="presets" id="presets">
+    <button data-k="normal">Normal times</button>
+    <button data-k="uncorr">Uncorrelated world</button>
+    <button data-k="crisis">Crisis — correlations spike</button>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <canvas id="cv" width="820" height="600"></canvas>
+      <div class="legend">
+        <span style="color:var(--muted)">· every possible portfolio</span>
+        <span style="color:var(--goldlight)">— efficient frontier</span>
+        <span style="color:var(--green)">● your portfolio</span>
+        <span style="color:var(--blue)">◆ min-risk mix</span>
+        <span style="color:var(--goldlight)">★ best risk-adjusted (Sharpe)</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="kicker" style="margin-bottom:8px">Your weights</div>
+        <div class="srow"><label>Stocks <span style="color:var(--muted)">11%/18%</span></label><input type="range" id="w0" min="0" max="100" value="40"><b id="vw0">40%</b></div>
+        <div class="srow"><label>Bonds <span style="color:var(--muted)">5%/7%</span></label><input type="range" id="w1" min="0" max="100" value="40"><b id="vw1">40%</b></div>
+        <div class="srow" style="margin-bottom:2px"><label>Gold <span style="color:var(--muted)">7%/15%</span></label><input type="range" id="w2" min="0" max="100" value="20" disabled><b id="vw2">20%</b></div>
+        <div style="font-size:0.7rem;color:var(--muted);font-family:'JetBrains Mono',monospace">gold = what's left after stocks + bonds</div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="panel readout">
+        <div class="kicker" style="margin-bottom:6px">Your portfolio</div>
+        <div>Expected return: <span class="big" id="ro-mu">—</span></div>
+        <div>Risk (std dev): <span class="big" id="ro-sig">—</span></div>
+        <div>Sharpe ratio (rf 2%): <span class="big" id="ro-sharpe">—</span></div>
+        <div id="ro-verdict" style="margin-top:6px"></div>
+        <div class="note" id="ro-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:26px">
+    <b style="color:var(--text)">The model:</b> minimize portfolio variance w<sup>T</sup>Σw subject to a target return
+    and Σw = 1 — Markowitz's 1952 formulation, the first great <i>nonlinear</i> optimization in business, and still the
+    spine of every robo-advisor. In Session 8 you'll build this frontier yourself in CVXPY with live market data.
+  </p>
+</div>
+
+<script>
+const ASSETS = [
+  { name: 'Stocks', mu: 0.11, sig: 0.18 },
+  { name: 'Bonds',  mu: 0.05, sig: 0.07 },
+  { name: 'Gold',   mu: 0.07, sig: 0.15 },
+];
+const REGIMES = {
+  normal: { rho: [[1,-0.1,0.1],[-0.1,1,0.2],[0.1,0.2,1]], note: 'Stocks and bonds slightly <b>negatively</b> correlated — the classic 60/40 logic. Notice the frontier bulges left of every individual asset: mixing is strictly better than any pure bet.' },
+  uncorr: { rho: [[1,0,0],[0,1,0],[0,0,1]], note: 'Zero correlations. Diversification is at maximum power — risk falls fast as you mix, and the frontier pushes far to the left.' },
+  crisis: { rho: [[1,0.8,0.7],[0.8,1,0.6],[0.7,0.6,1]], note: '<b>Crisis.</b> Everything falls together (correlations 0.6–0.8). Watch the cloud collapse toward a line and the frontier retreat to the right — exactly when you need diversification most, it delivers least. This is 2008 in one picture.' },
+};
+let regime = 'normal';
+const state = { w0: 0.4, w1: 0.4 };
+const RF = 0.02;
+
+function cov() {
+  const r = REGIMES[regime].rho;
+  return ASSETS.map((a, i) => ASSETS.map((b, j) => r[i][j] * a.sig * b.sig));
+}
+function stats(w) {
+  const C = cov();
+  const mu = w.reduce((s, wi, i) => s + wi * ASSETS[i].mu, 0);
+  let v = 0;
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) v += w[i] * w[j] * C[i][j];
+  return { mu, sig: Math.sqrt(Math.max(v, 0)) };
+}
+
+// Sample all feasible portfolios; extract frontier, min-var, max-Sharpe.
+function computeCloud() {
+  const pts = [];
+  for (let a = 0; a <= 50; a++) for (let b = 0; b <= 50 - a; b++) {
+    const w = [a / 50, b / 50, 1 - a / 50 - b / 50];
+    const s = stats(w);
+    pts.push({ ...s, w });
+  }
+  let minVar = pts[0], maxSharpe = pts[0];
+  for (const p of pts) {
+    if (p.sig < minVar.sig) minVar = p;
+    if ((p.mu - RF) / p.sig > (maxSharpe.mu - RF) / maxSharpe.sig) maxSharpe = p;
+  }
+  // frontier: for binned sigma, max mu; keep only the increasing upper-left hull above minVar
+  const bins = new Map();
+  for (const p of pts) {
+    const k = Math.round(p.sig * 400);
+    if (!bins.has(k) || p.mu > bins.get(k).mu) bins.set(k, p);
+  }
+  const frontier = [...bins.values()].sort((a, b) => a.sig - b.sig).filter(p => p.sig >= minVar.sig - 1e-6);
+  return { pts, minVar, maxSharpe, frontier };
+}
+
+const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+const PAD = { l: 64, r: 20, t: 20, b: 50 };
+const W = cv.width - PAD.l - PAD.r, H = cv.height - PAD.t - PAD.b;
+const SMAX = 0.20, MUMIN = 0.03, MUMAX = 0.12;
+const sx = s => PAD.l + s / SMAX * W;
+const sy = m => PAD.t + H - (m - MUMIN) / (MUMAX - MUMIN) * H;
+
+function draw() {
+  const { pts, minVar, maxSharpe, frontier } = computeCloud();
+  ctx.clearRect(0, 0, cv.width, cv.height);
+
+  // grid + axes
+  ctx.font = '11px "JetBrains Mono", monospace'; ctx.fillStyle = '#6b6459';
+  ctx.strokeStyle = 'rgba(255,240,214,0.05)';
+  for (let s = 0; s <= 0.20; s += 0.05) { ctx.beginPath(); ctx.moveTo(sx(s), sy(MUMIN)); ctx.lineTo(sx(s), PAD.t); ctx.stroke(); ctx.fillText((s*100).toFixed(0) + '%', sx(s)-10, sy(MUMIN)+18); }
+  for (let m = 0.04; m <= 0.12; m += 0.02) { ctx.beginPath(); ctx.moveTo(sx(0), sy(m)); ctx.lineTo(sx(SMAX), sy(m)); ctx.stroke(); ctx.fillText((m*100).toFixed(0) + '%', sx(0)-34, sy(m)+4); }
+  ctx.fillStyle = '#a8a196';
+  ctx.fillText('Risk — annual std dev', cv.width/2 - 70, cv.height - 10);
+  ctx.save(); ctx.translate(16, cv.height/2 + 60); ctx.rotate(-Math.PI/2); ctx.fillText('Expected annual return', 0, 0); ctx.restore();
+
+  // cloud
+  for (const p of pts) {
+    ctx.beginPath(); ctx.arc(sx(p.sig), sy(p.mu), 1.4, 0, 7);
+    ctx.fillStyle = 'rgba(168,161,150,0.18)'; ctx.fill();
+  }
+
+  // frontier
+  ctx.beginPath();
+  frontier.forEach((p, i) => i ? ctx.lineTo(sx(p.sig), sy(p.mu)) : ctx.moveTo(sx(p.sig), sy(p.mu)));
+  ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 2.5; ctx.stroke();
+
+  // individual assets
+  ctx.font = 'bold 11px "JetBrains Mono", monospace';
+  ASSETS.forEach((a) => {
+    ctx.beginPath(); ctx.arc(sx(a.sig), sy(a.mu), 4, 0, 7);
+    ctx.fillStyle = '#e08e3c'; ctx.fill();
+    ctx.fillStyle = '#a8a196'; ctx.fillText(a.name, sx(a.sig) + 8, sy(a.mu) + 4);
+  });
+
+  // min-var diamond
+  ctx.save(); ctx.translate(sx(minVar.sig), sy(minVar.mu)); ctx.rotate(Math.PI/4);
+  ctx.fillStyle = '#7cb8f7'; ctx.fillRect(-5, -5, 10, 10); ctx.restore();
+
+  // max-Sharpe star
+  const ms = maxSharpe;
+  ctx.fillStyle = '#ffd166'; ctx.font = 'bold 20px sans-serif';
+  ctx.fillText('★', sx(ms.sig) - 7, sy(ms.mu) + 7);
+
+  // user portfolio
+  const w = [state.w0, state.w1, 1 - state.w0 - state.w1];
+  const u = stats(w);
+  const g = ctx.createRadialGradient(sx(u.sig), sy(u.mu), 2, sx(u.sig), sy(u.mu), 20);
+  g.addColorStop(0, 'rgba(52,211,153,0.8)'); g.addColorStop(1, 'rgba(52,211,153,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx(u.sig), sy(u.mu), 20, 0, 7); ctx.fill();
+  ctx.beginPath(); ctx.arc(sx(u.sig), sy(u.mu), 6, 0, 7);
+  ctx.fillStyle = '#34d399'; ctx.fill();
+
+  return { u, minVar, maxSharpe, frontier };
+}
+
+function refresh() {
+  // clamp: stocks + bonds ≤ 100
+  if (state.w0 + state.w1 > 1) state.w1 = 1 - state.w0;
+  document.getElementById('w0').value = Math.round(state.w0 * 100);
+  document.getElementById('w1').value = Math.round(state.w1 * 100);
+  const w2 = 1 - state.w0 - state.w1;
+  document.getElementById('vw0').textContent = Math.round(state.w0 * 100) + '%';
+  document.getElementById('vw1').textContent = Math.round(state.w1 * 100) + '%';
+  document.getElementById('vw2').textContent = Math.round(w2 * 100) + '%';
+  document.getElementById('w2').value = Math.round(w2 * 100);
+
+  const { u, maxSharpe, frontier } = draw();
+  document.getElementById('ro-mu').textContent = (u.mu * 100).toFixed(1) + '%';
+  document.getElementById('ro-sig').textContent = (u.sig * 100).toFixed(1) + '%';
+  document.getElementById('ro-sharpe').textContent = ((u.mu - RF) / u.sig).toFixed(2);
+
+  // distance to frontier at same return
+  let onF = null;
+  for (const p of frontier) if (onF === null || Math.abs(p.mu - u.mu) < Math.abs(onF.mu - u.mu)) onF = p;
+  const gap = u.sig - (onF ? onF.sig : u.sig);
+  const verdict = document.getElementById('ro-verdict');
+  if (gap < 0.004) {
+    verdict.innerHTML = '<span style="color:var(--green);font-weight:700">On the frontier ✓</span> — no mix earns this return with less risk.';
+  } else {
+    verdict.innerHTML = `<span style="color:var(--red);font-weight:700">Inefficient</span> — a smarter mix earns the same ${(u.mu*100).toFixed(1)}% with <b style="color:var(--text)">${(gap*100).toFixed(1)} points less risk</b>. Slide toward the gold curve.`;
+  }
+  document.getElementById('ro-note').innerHTML = REGIMES[regime].note +
+    ` The ★ (best Sharpe) mix right now: ${Math.round(maxSharpe.w[0]*100)}% stocks / ${Math.round(maxSharpe.w[1]*100)}% bonds / ${Math.round(maxSharpe.w[2]*100)}% gold.`;
+}
+
+document.getElementById('w0').addEventListener('input', e => { state.w0 = +e.target.value / 100; refresh(); });
+document.getElementById('w1').addEventListener('input', e => { state.w1 = +e.target.value / 100; refresh(); });
+document.querySelectorAll('#presets button').forEach(btn => btn.addEventListener('click', () => {
+  regime = btn.dataset.k;
+  document.querySelectorAll('#presets button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  refresh();
+}));
+document.querySelector('#presets button').classList.add('active');
+refresh();
+</script>
+</body>
+</html>
