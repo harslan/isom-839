@@ -6,6 +6,7 @@ import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { grading, policies } from '../data/syllabus';
 import { course } from '../data/course';
+import { sessionMeta } from '../data/schedule';
 
 const sessions = await getCollection('sessions');
 const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
@@ -42,6 +43,9 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
             <div class="font-semibold">{session.data.title}</div>
             <div class="text-text-secondary text-sm truncate">{session.data.subtitle}</div>
           </div>
+          <span class="font-mono text-[0.75rem] text-text-muted whitespace-nowrap shrink-0 max-sm:hidden">
+            Wed · {sessionMeta[session.data.number]?.date}
+          </span>
           <Icon name="chevron-right" class="w-5 h-5 text-text-muted shrink-0" />
         </a>
       ))}

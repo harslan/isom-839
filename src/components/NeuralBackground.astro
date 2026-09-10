@@ -28,8 +28,11 @@
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
+    // A drifting field of "corner points". Nearby points connect with faint
+    // warm constraint edges; one vertex at a time glows gold (the optimum),
+    // and a slow iso-profit line sweeps the field.
     const nodes = [];
-    const numNodes = 50;
+    const numNodes = 46;
     const w = window.innerWidth;
     const h = window.innerHeight;
 
@@ -37,11 +40,15 @@
       nodes.push({
         x: Math.random() * w,
         y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 2 + 1
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.8 + 0.8
       });
     }
+
+    let optimum = 0;
+    let optTimer = 0;
+    let sweep = -0.3;
 
     function animate(timestamp) {
       animId = requestAnimationFrame(animate);
@@ -54,6 +61,27 @@
 
       ctx.clearRect(0, 0, cw, ch);
 
+      // faint warm edges between neighbors
+      for (let i = 0; i < nodes.length; i++) {
+        const a = nodes[i];
+        for (let j = i + 1; j < nodes.length; j++) {
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 24000) {
+            const dist = Math.sqrt(distSq);
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = 'rgba(224, 142, 60, ' + (0.13 * (1 - dist / 155)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // corner points
       for (let i = 0; i < nodes.length; i++) {
         const node = nodes[i];
         node.x += node.vx;
@@ -63,28 +91,40 @@
 
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 212, 255, 0.6)';
+        ctx.fillStyle = 'rgba(242, 177, 53, 0.45)';
         ctx.fill();
       }
 
-      for (let i = 0; i < nodes.length; i++) {
-        const a = nodes[i];
-        for (let j = i + 1; j < nodes.length; j++) {
-          const b = nodes[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const distSq = dx * dx + dy * dy;
-          if (distSq < 22500) {
-            const dist = Math.sqrt(distSq);
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = 'rgba(136, 85, 255, ' + (0.2 * (1 - dist / 150)) + ')';
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
+      // the optimum: one glowing gold vertex, wandering every few seconds
+      optTimer++;
+      if (optTimer > 150) { optTimer = 0; optimum = Math.floor(Math.random() * nodes.length); }
+      const o = nodes[optimum];
+      const g = ctx.createRadialGradient(o.x, o.y, 1, o.x, o.y, 26);
+      g.addColorStop(0, 'rgba(255, 209, 102, 0.55)');
+      g.addColorStop(1, 'rgba(255, 209, 102, 0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, 26, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(o.x, o.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 209, 102, 0.9)';
+      ctx.fill();
+
+      // slow iso-profit line sweeping the diagonal
+      sweep += 0.0009;
+      if (sweep > 1.35) sweep = -0.35;
+      const c = (cw + ch) * sweep;
+      ctx.beginPath();
+      ctx.moveTo(c, 0);
+      ctx.lineTo(c - ch, ch);
+      const lg = ctx.createLinearGradient(c, 0, c - ch, ch);
+      lg.addColorStop(0, 'rgba(255, 209, 102, 0)');
+      lg.addColorStop(0.5, 'rgba(255, 209, 102, 0.10)');
+      lg.addColorStop(1, 'rgba(255, 209, 102, 0)');
+      ctx.strokeStyle = lg;
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
     }
 
     animId = requestAnimationFrame(animate);

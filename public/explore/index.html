@@ -5,48 +5,48 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Bakery Explorer · ISOM 839</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f; --bg2: #12121a; --card: #16161f;
-    --text: #f0f0f5; --text2: #a0a0b0; --muted: #606070;
-    --cyan: #00d4ff; --purple: #8855ff; --magenta: #ff00aa; --green: #00ff88; --orange: #ff8800; --gold: #ffd166;
-    --border: rgba(255,255,255,0.08);
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --cyan: #f2b135; --purple: #e08e3c; --magenta: #ff00aa; --green: #34d399; --orange: #ff8800; --gold: #ffd166;
+    --border: rgba(255,240,214,0.09);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; min-height: 100vh; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; min-height: 100vh; }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
-  .kicker { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
   h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 8px; }
   .grad { background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .sub { color: var(--text2); max-width: 760px; line-height: 1.6; font-size: 0.95rem; margin-bottom: 24px; }
   .layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr); gap: 22px; align-items: start; }
   @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
   .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
-  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #0d0d14; cursor: crosshair; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #12100d; cursor: crosshair; }
   .controls .row { margin-bottom: 16px; }
   .controls label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text2); margin-bottom: 6px; }
-  .controls label b { color: var(--text); font-family: 'Space Mono', monospace; }
-  input[type=range] { width: 100%; accent-color: #00d4ff; cursor: pointer; }
+  .controls label b { color: var(--text); font-family: 'JetBrains Mono', monospace; }
+  input[type=range] { width: 100%; accent-color: #f2b135; cursor: pointer; }
   .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
   .presets button {
-    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.5px;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 0.5px;
     padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
     background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.25s;
   }
   .presets button:hover { border-color: var(--cyan); color: var(--cyan); }
-  .presets button.active { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+  .presets button.active { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(242,177,53,0.2); }
   .readout { font-size: 0.9rem; line-height: 1.65; }
   .readout .opt { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-  .readout .profit { font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 10px; }
-  .badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; margin: 2px 4px 2px 0; }
+  .readout .profit { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+  .badge { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; margin: 2px 4px 2px 0; }
   .badge.bind { background: rgba(255,209,102,0.12); color: var(--gold); border: 1px solid rgba(255,209,102,0.35); }
   .badge.slack { background: rgba(160,160,176,0.08); color: var(--muted); border: 1px solid var(--border); }
-  .hoverbox { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 10px; min-height: 1.2em; }
-  .note { border-left: 3px solid var(--purple); padding: 10px 14px; background: rgba(136,85,255,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 14px; }
+  .hoverbox { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 10px; min-height: 1.2em; }
+  .note { border-left: 3px solid var(--purple); padding: 10px 14px; background: rgba(224,142,60,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 14px; }
   .note b { color: var(--text); }
-  a.back { color: var(--cyan); text-decoration: none; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
-  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text2); }
+  a.back { color: var(--cyan); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--text2); }
   .legend span::before { content: "––– "; font-weight: 700; }
   .lg-oven::before { color: #b56cff; } .lg-labor::before { color: #ff6cc8; }
   .lg-bdem::before { color: #4fd1c5; } .lg-cdem::before { color: #e2e8f0; }
@@ -189,7 +189,7 @@ function draw() {
   const { poly, best, value } = solve();
 
   // grid + axes
-  ctx.font = '11px "Space Mono", monospace'; ctx.fillStyle = '#606070';
+  ctx.font = '11px "JetBrains Mono", monospace'; ctx.fillStyle = '#606070';
   ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
   for (let x = 0; x <= 160; x += 20) {
     ctx.beginPath(); ctx.moveTo(sx(x), sy(0)); ctx.lineTo(sx(x), PAD.t); ctx.stroke();
@@ -261,7 +261,7 @@ function draw() {
         ctx.fillStyle = '#ffd166'; ctx.beginPath(); ctx.arc(sx(b[0]), sy(b[1]), 5, 0, 7); ctx.fill();
       }
       const b0 = best[0];
-      ctx.fillStyle = '#ffd166'; ctx.font = 'bold 13px "Space Mono", monospace';
+      ctx.fillStyle = '#ffd166'; ctx.font = 'bold 13px "JetBrains Mono", monospace';
       const label = `(${fmt(b0[0],1)}, ${fmt(b0[1],1)})`;
       ctx.fillText(label, Math.min(sx(b0[0]) + 12, cv.width - 90), sy(b0[1]) - 12);
     }

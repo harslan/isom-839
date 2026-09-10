@@ -4,13 +4,24 @@ import Hero from '../components/Hero.astro';
 import CourseHighlights from '../components/CourseHighlights.astro';
 import InstructorSection from '../components/InstructorSection.astro';
 import SessionCard from '../components/SessionCard.astro';
-import SessionGrid from '../components/SessionGrid.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { course } from '../data/course';
+import { modules, sessionMeta } from '../data/schedule';
 
 const sessions = await getCollection('sessions');
 const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
+const byNumber = new Map(sorted.map((s) => [s.data.number, s]));
+
+// Serialize the schedule for the client-side "next class" spotlight
+const nextClassData = sorted.map((s) => ({
+  n: s.data.number,
+  slug: s.data.slug,
+  title: s.data.title,
+  date: sessionMeta[s.data.number]?.date ?? '',
+  iso: sessionMeta[s.data.number]?.iso ?? '',
+}));
 ---
 
 <BaseLayout title="ISOM 839 | Prescriptive Analytics: Modeling & Optimization — Suffolk University">
@@ -18,9 +29,26 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
 
   <CourseHighlights />
 
+  <!-- Next class spotlight (populated client-side from today's date) -->
+  <section id="next-class" class="px-8 max-w-[1200px] mx-auto -mt-8 mb-4 hidden">
+    <a id="next-class-link" href="/sessions" class="group block bg-gradient-to-br from-accent-green/[0.06] to-bg-card border border-accent-green/25 rounded-2xl px-7 py-6 no-underline transition-all duration-300 hover:border-accent-green/60 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_rgba(52,211,153,0.12)]">
+      <div class="flex flex-wrap items-center justify-between gap-5">
+        <div class="min-w-0">
+          <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-green mb-2">
+            <span id="next-class-when">Next class</span> · Wednesday 7:40 PM
+          </div>
+          <div class="text-xl font-bold text-text-primary" id="next-class-title"></div>
+        </div>
+        <span class="font-mono text-[0.8rem] tracking-wide text-accent-green whitespace-nowrap transition-transform duration-300 group-hover:translate-x-1">
+          Open the session →
+        </span>
+      </div>
+    </a>
+  </section>
+
   <!-- Bakery Explorer spotlight -->
-  <section class="px-8 max-w-[1200px] mx-auto -mt-8 mb-4">
-    <a href="/explore/" class="group block bg-gradient-to-br from-accent-cyan/[0.07] to-bg-card border border-accent-cyan/25 rounded-2xl px-7 py-6 no-underline transition-all duration-300 hover:border-accent-cyan/60 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_rgba(0,212,255,0.15)]">
+  <section class="px-8 max-w-[1200px] mx-auto mb-4">
+    <a href="/explore/" class="group block bg-gradient-to-br from-accent-cyan/[0.07] to-bg-card border border-accent-cyan/25 rounded-2xl px-7 py-6 no-underline transition-all duration-300 hover:border-accent-cyan/60 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_rgba(242,177,53,0.15)]">
       <div class="flex flex-wrap items-center justify-between gap-5">
         <div class="min-w-0">
           <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan mb-2">
@@ -40,22 +68,41 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
     </a>
   </section>
 
+  <!-- The journey, module by module -->
   <section class="py-24 px-8 max-w-[1200px] mx-auto">
-    <SectionHeader number="01" label="Course Sessions" title="13-Week Journey" description="From your first linear program to reinforcement learning — one decision toolkit, built week by week." />
-    <SessionGrid>
-      {sorted.map((session) => (
-        <div class="fade-in">
-          <SessionCard
-            number={session.data.number}
-            slug={session.data.slug}
-            title={session.data.title}
-            subtitle={session.data.subtitle}
-            icon={session.data.icon}
-            tags={session.data.tags}
-          />
+    <SectionHeader number="01" label="The Journey" title="Eight Modules, Thirteen Wednesdays" description="From your first linear program to reinforcement learning — one decision toolkit, built module by module." />
+    {modules.map((mod, mi) => (
+      <div class="mb-14 fade-in">
+        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-5 border-b border-border-subtle pb-3">
+          <span class="font-mono text-[0.75rem] text-accent-cyan tracking-[2px]">{String(mi + 1).padStart(2, '0')}</span>
+          <h3 class="text-xl font-bold text-text-primary">{mod.name}</h3>
+          <span class="text-text-muted text-sm">{mod.blurb}</span>
+          <span class="ml-auto font-mono text-[0.7rem] text-text-muted">
+            {mod.sessions.map((n) => sessionMeta[n]?.date).join(' · ')}
+          </span>
         </div>
-      ))}
-    </SessionGrid>
+        <div class={`grid gap-6 ${mod.sessions.length > 1 ? 'md:grid-cols-2' : 'md:grid-cols-2'}`}>
+          {mod.sessions.map((n) => {
+            const s = byNumber.get(n);
+            return s ? (
+              <SessionCard
+                number={s.data.number}
+                slug={s.data.slug}
+                title={s.data.title}
+                subtitle={s.data.subtitle}
+                icon={s.data.icon}
+                tags={s.data.tags}
+                date={sessionMeta[n]?.date}
+                iso={sessionMeta[n]?.iso}
+              />
+            ) : null;
+          })}
+        </div>
+      </div>
+    ))}
+    <p class="text-text-muted text-sm font-mono text-center mt-2">
+      No class Nov 11 (Veterans Day) · Nov 25 (Thanksgiving)
+    </p>
   </section>
 
   <InstructorSection
@@ -65,4 +112,31 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
     bio={course.instructor.bio}
     github={course.instructor.github}
   />
+
+  <script is:inline define:vars={{ nextClassData }}>
+    // Highlight the next upcoming class based on today's date.
+    (function () {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      let next = null, isToday = false;
+      for (const s of nextClassData) {
+        if (!s.iso) continue;
+        const d = new Date(s.iso + 'T23:59:00');
+        if (d >= today) { next = s; isToday = (s.iso === today.toISOString().slice(0, 10)); break; }
+      }
+      if (!next) return;
+      const box = document.getElementById('next-class');
+      const link = document.getElementById('next-class-link');
+      const title = document.getElementById('next-class-title');
+      const when = document.getElementById('next-class-when');
+      link.href = '/sessions/' + next.slug;
+      title.textContent = 'Session ' + next.n + ': ' + next.title;
+      when.textContent = (isToday ? 'Tonight' : 'Next class · ' + next.date);
+      box.classList.remove('hidden');
+      // ring the matching session card
+      document.querySelectorAll('.session-card[data-session-iso="' + next.iso + '"]').forEach((el) => {
+        el.classList.add('border-accent-green/40');
+      });
+    })();
+  </script>
 </BaseLayout>

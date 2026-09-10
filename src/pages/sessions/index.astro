@@ -5,6 +5,7 @@ import SessionGrid from '../../components/SessionGrid.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import GradientText from '../../components/GradientText.astro';
 import { getCollection } from 'astro:content';
+import { sessionMeta } from '../../data/schedule';
 
 const sessions = await getCollection('sessions');
 const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
@@ -38,6 +39,8 @@ const allTags = [...new Set(sorted.flatMap((s) => s.data.tags))];
             subtitle={session.data.subtitle}
             icon={session.data.icon}
             tags={session.data.tags}
+            date={sessionMeta[session.data.number]?.date}
+            iso={sessionMeta[session.data.number]?.iso}
           />
         </div>
       ))}

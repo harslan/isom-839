@@ -1,22 +1,28 @@
 @import "tailwindcss";
 
+/*
+ * ISOM 839 — "Find the gold corner"
+ * Warm ink graphite base · gold = the optimum · emerald = feasible.
+ * Token NAMES are inherited from the scaffold (accent-cyan is the primary
+ * accent role); VALUES define the course's own identity.
+ */
 @theme {
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-bg-tertiary: #1a1a25;
-  --color-bg-card: #16161f;
-  --color-text-primary: #f0f0f5;
-  --color-text-secondary: #a0a0b0;
-  --color-text-muted: #606070;
-  --color-accent-cyan: #00d4ff;
-  --color-accent-magenta: #ff00aa;
-  --color-accent-purple: #8855ff;
-  --color-accent-green: #00ff88;
-  --color-accent-orange: #ff8800;
-  --color-grad-violet: #c4b5fd;
-  --color-border-subtle: rgba(255, 255, 255, 0.08);
-  --font-sans: 'Sora', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Space Mono', ui-monospace, monospace;
+  --color-bg-primary: #0d0c0a;
+  --color-bg-secondary: #14120f;
+  --color-bg-tertiary: #1d1a15;
+  --color-bg-card: #161412;
+  --color-text-primary: #f5f2ec;
+  --color-text-secondary: #a8a196;
+  --color-text-muted: #6b6459;
+  --color-accent-cyan: #f2b135;    /* gold — the optimum, primary accent */
+  --color-accent-magenta: #e2725b; /* terracotta — breaks, video badges */
+  --color-accent-purple: #e08e3c;  /* copper — secondary accent, gradients */
+  --color-accent-green: #34d399;   /* emerald — feasible, success */
+  --color-accent-orange: #ce8147;  /* clay — reference badges */
+  --color-grad-violet: #ffd166;    /* light gold */
+  --color-border-subtle: rgba(255, 240, 214, 0.09);
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* Base */
@@ -40,8 +46,12 @@ body {
   background: var(--color-bg-secondary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-accent-purple);
+  background: #8a6a2f;
   border-radius: 4px;
+}
+
+::selection {
+  background: rgba(242, 177, 53, 0.25);
 }
 
 /* Animations */
