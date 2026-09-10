@@ -18,6 +18,28 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
 
   <CourseHighlights />
 
+  <!-- Bakery Explorer spotlight -->
+  <section class="px-8 max-w-[1200px] mx-auto -mt-8 mb-4">
+    <a href="/explore/" class="group block bg-gradient-to-br from-accent-cyan/[0.07] to-bg-card border border-accent-cyan/25 rounded-2xl px-7 py-6 no-underline transition-all duration-300 hover:border-accent-cyan/60 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_rgba(0,212,255,0.15)]">
+      <div class="flex flex-wrap items-center justify-between gap-5">
+        <div class="min-w-0">
+          <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan mb-2">
+            Interactive · The Bakery Explorer
+          </div>
+          <div class="text-xl font-bold text-text-primary mb-2">
+            Watch the optimum jump corners.
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed max-w-[720px]">
+            Session 1's bakery problem as a living feasible region — drag profit and resource sliders, slide the iso-profit line, and replay the what-ifs from class.
+          </p>
+        </div>
+        <span class="font-mono text-[0.8rem] tracking-wide text-accent-cyan whitespace-nowrap transition-transform duration-300 group-hover:translate-x-1">
+          Open the explorer →
+        </span>
+      </div>
+    </a>
+  </section>
+
   <section class="py-24 px-8 max-w-[1200px] mx-auto">
     <SectionHeader number="01" label="Course Sessions" title="13-Week Journey" description="From your first linear program to reinforcement learning — one decision toolkit, built week by week." />
     <SessionGrid>

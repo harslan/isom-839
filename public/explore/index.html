@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Bakery Explorer · ISOM 839</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f; --bg2: #12121a; --card: #16161f;
+    --text: #f0f0f5; --text2: #a0a0b0; --muted: #606070;
+    --cyan: #00d4ff; --purple: #8855ff; --magenta: #ff00aa; --green: #00ff88; --orange: #ff8800; --gold: #ffd166;
+    --border: rgba(255,255,255,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; min-height: 100vh; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+  .kicker { font-family: 'Space Mono', monospace; font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.6rem); font-weight: 800; margin-bottom: 8px; }
+  .grad { background: linear-gradient(90deg, var(--cyan), var(--purple)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { color: var(--text2); max-width: 760px; line-height: 1.6; font-size: 0.95rem; margin-bottom: 24px; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(280px, 1fr); gap: 22px; align-items: start; }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 12px; background: #0d0d14; cursor: crosshair; }
+  .controls .row { margin-bottom: 16px; }
+  .controls label { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text2); margin-bottom: 6px; }
+  .controls label b { color: var(--text); font-family: 'Space Mono', monospace; }
+  input[type=range] { width: 100%; accent-color: #00d4ff; cursor: pointer; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 20px; }
+  .presets button {
+    font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.5px;
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--bg2); color: var(--text2); cursor: pointer; transition: all 0.25s;
+  }
+  .presets button:hover { border-color: var(--cyan); color: var(--cyan); }
+  .presets button.active { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
+  .readout { font-size: 0.9rem; line-height: 1.65; }
+  .readout .opt { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+  .readout .profit { font-family: 'Space Mono', monospace; font-size: 1.5rem; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+  .badge { display: inline-block; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 1px; padding: 3px 10px; border-radius: 999px; margin: 2px 4px 2px 0; }
+  .badge.bind { background: rgba(255,209,102,0.12); color: var(--gold); border: 1px solid rgba(255,209,102,0.35); }
+  .badge.slack { background: rgba(160,160,176,0.08); color: var(--muted); border: 1px solid var(--border); }
+  .hoverbox { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); margin-top: 10px; min-height: 1.2em; }
+  .note { border-left: 3px solid var(--purple); padding: 10px 14px; background: rgba(136,85,255,0.06); border-radius: 0 10px 10px 0; font-size: 0.82rem; color: var(--text2); line-height: 1.55; margin-top: 14px; }
+  .note b { color: var(--text); }
+  a.back { color: var(--cyan); text-decoration: none; font-family: 'Space Mono', monospace; font-size: 0.75rem; letter-spacing: 1px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text2); }
+  .legend span::before { content: "––– "; font-weight: 700; }
+  .lg-oven::before { color: #b56cff; } .lg-labor::before { color: #ff6cc8; }
+  .lg-bdem::before { color: #4fd1c5; } .lg-cdem::before { color: #e2e8f0; }
+  .lg-iso::before { color: var(--gold); } .lg-feas { color: var(--green); }
+  .lg-feas::before { content: "▧ "; color: var(--green); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/sessions/session-01">← ISOM 839 · Session 1</a>
+  <div style="height:14px"></div>
+  <div class="kicker">Interactive · The Graphical Method, Live</div>
+  <h1>The Bakery <span class="grad">Explorer</span></h1>
+  <p class="sub">
+    The Session 1 bakery, now touchable. Drag the profit and resource sliders and watch the feasible region flex,
+    the iso-profit line tilt, and the optimal corner <b style="color:var(--text)">jump</b>. Try the presets —
+    they replay the exact what-ifs from class.
+  </p>
+
+  <div class="presets" id="presets">
+    <button data-p="50,60,4650,4200">Class example</button>
+    <button data-p="40,60,4650,4200">Bread drops to $40</button>
+    <button data-p="30,60,4650,4200">The $30 tie</button>
+    <button data-p="20,60,4650,4200">Bread drops to $20</button>
+    <button data-p="50,60,4725,4200">+75 oven minutes</button>
+  </div>
+
+  <div class="layout">
+    <div class="panel">
+      <canvas id="cv" width="820" height="620"></canvas>
+      <div class="legend">
+        <span class="lg-oven">Oven</span><span class="lg-labor">Labor</span>
+        <span class="lg-bdem">Bread demand</span><span class="lg-cdem">Cake demand</span>
+        <span class="lg-iso">Iso-profit line</span><span class="lg-feas">Feasible set</span>
+      </div>
+      <div class="hoverbox" id="hoverbox">hover over the chart to test a production plan…</div>
+    </div>
+
+    <div>
+      <div class="panel controls">
+        <div class="row">
+          <label>Bread profit <b id="v-pb">$50 / batch</b></label>
+          <input type="range" id="pb" min="10" max="90" step="5" value="50">
+        </div>
+        <div class="row">
+          <label>Cake profit <b id="v-pc">$60 / batch</b></label>
+          <input type="range" id="pc" min="10" max="90" step="5" value="60">
+        </div>
+        <div class="row">
+          <label>Oven minutes <b id="v-oven">4,650</b></label>
+          <input type="range" id="oven" min="3600" max="6000" step="75" value="4650">
+        </div>
+        <div class="row" style="margin-bottom:4px">
+          <label>Labor minutes <b id="v-labor">4,200</b></label>
+          <input type="range" id="labor" min="3000" max="5400" step="60" value="4200">
+        </div>
+      </div>
+      <div style="height:14px"></div>
+      <div class="panel readout">
+        <div class="kicker" style="margin-bottom:6px">Optimal plan</div>
+        <div class="opt" id="ro-plan">—</div>
+        <div class="profit" id="ro-profit">—</div>
+        <div id="ro-binding"></div>
+        <div class="note" id="ro-note"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sub" style="margin-top:26px">
+    <b style="color:var(--text)">The model:</b> maximize p<sub>B</sub>·B + p<sub>C</sub>·C subject to
+    60B + 45C ≤ oven, 30B + 60C ≤ labor, B ≤ 90, C ≤ 60, B, C ≥ 0.
+    Whatever you do to the sliders, the optimum lives at a corner — that is the theorem this page exists to make unforgettable.
+  </p>
+</div>
+
+<script>
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+const XMAX = 165, YMAX = 115;           // model coords
+const PAD = { l: 52, r: 16, t: 14, b: 40 };
+const W = cv.width - PAD.l - PAD.r, H = cv.height - PAD.t - PAD.b;
+const sx = x => PAD.l + x / XMAX * W;
+const sy = y => PAD.t + H - y / YMAX * H;
+
+const state = { pb: 50, pc: 60, oven: 4650, labor: 4200 };
+let isoAnim = 0, animId = null;
+
+function constraints() {
+  return [
+    { a: 60, b: 45, rhs: state.oven,  color: '#b56cff', label: 'Oven' },
+    { a: 30, b: 60, rhs: state.labor, color: '#ff6cc8', label: 'Labor' },
+    { a: 1,  b: 0,  rhs: 90,          color: '#4fd1c5', label: 'Bread demand' },
+    { a: 0,  b: 1,  rhs: 60,          color: '#e2e8f0', label: 'Cake demand' },
+  ];
+}
+
+// Sutherland–Hodgman: clip the positive quadrant box by each half-plane ax+by<=rhs
+function feasiblePolygon() {
+  let poly = [[0,0],[XMAX*2,0],[XMAX*2,YMAX*2],[0,YMAX*2]];
+  for (const c of constraints()) {
+    const out = [];
+    for (let i = 0; i < poly.length; i++) {
+      const P = poly[i], Q = poly[(i+1) % poly.length];
+      const dP = c.a*P[0] + c.b*P[1] - c.rhs, dQ = c.a*Q[0] + c.b*Q[1] - c.rhs;
+      if (dP <= 1e-9) out.push(P);
+      if ((dP < -1e-9 && dQ > 1e-9) || (dP > 1e-9 && dQ < -1e-9)) {
+        const t = dP / (dP - dQ);
+        out.push([P[0] + t*(Q[0]-P[0]), P[1] + t*(Q[1]-P[1])]);
+      }
+    }
+    poly = out;
+    if (!poly.length) return [];
+  }
+  return poly;
+}
+
+function solve() {
+  const poly = feasiblePolygon();
+  if (!poly.length) return { poly, best: null };
+  let bestV = -1, best = [], obj = p => state.pb*p[0] + state.pc*p[1];
+  for (const p of poly) {
+    const v = obj(p);
+    if (v > bestV + 1e-6) { bestV = v; best = [p]; }
+    else if (Math.abs(v - bestV) <= 1e-6) best.push(p);
+  }
+  // dedupe near-identical vertices
+  const uniq = [];
+  for (const p of best) if (!uniq.some(q => Math.hypot(p[0]-q[0], p[1]-q[1]) < 0.01)) uniq.push(p);
+  return { poly, best: uniq, value: bestV };
+}
+
+function binding(pt) {
+  return constraints().filter(c => Math.abs(c.a*pt[0] + c.b*pt[1] - c.rhs) < 0.5);
+}
+
+function fmt(n, d=0) { return n.toLocaleString('en-US', { maximumFractionDigits: d, minimumFractionDigits: 0 }); }
+
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  const { poly, best, value } = solve();
+
+  // grid + axes
+  ctx.font = '11px "Space Mono", monospace'; ctx.fillStyle = '#606070';
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+  for (let x = 0; x <= 160; x += 20) {
+    ctx.beginPath(); ctx.moveTo(sx(x), sy(0)); ctx.lineTo(sx(x), PAD.t); ctx.stroke();
+    ctx.fillText(x, sx(x)-8, sy(0)+18);
+  }
+  for (let y = 0; y <= 110; y += 10) {
+    ctx.beginPath(); ctx.moveTo(sx(0), sy(y)); ctx.lineTo(sx(XMAX), sy(y)); ctx.stroke();
+    if (y % 20 === 0) ctx.fillText(y, sx(0)-30, sy(y)+4);
+  }
+  ctx.fillStyle = '#a0a0b0';
+  ctx.fillText('Bread (batches)', cv.width/2 - 50, cv.height - 8);
+  ctx.save(); ctx.translate(14, cv.height/2 + 40); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Cake (batches)', 0, 0); ctx.restore();
+  ctx.strokeStyle = 'rgba(255,255,255,0.25)';
+  ctx.beginPath(); ctx.moveTo(sx(0), PAD.t); ctx.lineTo(sx(0), sy(0)); ctx.lineTo(sx(XMAX), sy(0)); ctx.stroke();
+
+  // feasible region
+  if (poly.length) {
+    ctx.beginPath();
+    poly.forEach((p, i) => i ? ctx.lineTo(sx(p[0]), sy(p[1])) : ctx.moveTo(sx(p[0]), sy(p[1])));
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(0,255,136,0.10)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(0,255,136,0.45)'; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+
+  // constraint lines
+  for (const c of constraints()) {
+    ctx.strokeStyle = c.color; ctx.lineWidth = 1.6; ctx.globalAlpha = 0.8;
+    ctx.beginPath();
+    if (c.b === 0) { const x = c.rhs / c.a; ctx.moveTo(sx(x), sy(0)); ctx.lineTo(sx(x), sy(YMAX)); }
+    else if (c.a === 0) { const y = c.rhs / c.b; ctx.moveTo(sx(0), sy(y)); ctx.lineTo(sx(XMAX), sy(y)); }
+    else {
+      const y0 = c.rhs / c.b, x1 = c.rhs / c.a;
+      ctx.moveTo(sx(0), sy(Math.min(y0, YMAX))); ctx.lineTo(sx(Math.min(x1, XMAX)), sy(Math.max(0, (c.rhs - c.a*Math.min(x1, XMAX)) / c.b)));
+    }
+    ctx.stroke(); ctx.globalAlpha = 1;
+  }
+
+  // corner points
+  if (poly.length) for (const p of poly) {
+    ctx.beginPath(); ctx.arc(sx(p[0]), sy(p[1]), 3.5, 0, 7);
+    ctx.fillStyle = 'rgba(0,255,136,0.9)'; ctx.fill();
+  }
+
+  // iso-profit line(s) through (animated fraction of) optimum
+  if (best && best.length && (state.pb > 0 || state.pc > 0)) {
+    const v = value * isoAnim;
+    for (const [frac, alpha, width] of [[0.45, 0.18, 1], [0.72, 0.28, 1], [1, 0.95, 2.4]]) {
+      const val = v * frac;
+      ctx.strokeStyle = `rgba(255,209,102,${alpha})`; ctx.lineWidth = width;
+      ctx.beginPath();
+      if (state.pc === 0) { const x = val/state.pb; ctx.moveTo(sx(x), sy(0)); ctx.lineTo(sx(x), sy(YMAX)); }
+      else {
+        const yAt = x => (val - state.pb*x) / state.pc;
+        ctx.moveTo(sx(-5), sy(yAt(-5))); ctx.lineTo(sx(XMAX), sy(yAt(XMAX)));
+      }
+      ctx.stroke();
+    }
+    // optimum marker(s)
+    if (isoAnim > 0.999) {
+      if (best.length > 1) {   // alternate optima edge
+        ctx.strokeStyle = 'rgba(255,209,102,1)'; ctx.lineWidth = 5; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(sx(best[0][0]), sy(best[0][1])); ctx.lineTo(sx(best[1][0]), sy(best[1][1])); ctx.stroke();
+      }
+      for (const b of best) {
+        const g = ctx.createRadialGradient(sx(b[0]), sy(b[1]), 2, sx(b[0]), sy(b[1]), 18);
+        g.addColorStop(0, 'rgba(255,209,102,0.9)'); g.addColorStop(1, 'rgba(255,209,102,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(sx(b[0]), sy(b[1]), 18, 0, 7); ctx.fill();
+        ctx.fillStyle = '#ffd166'; ctx.beginPath(); ctx.arc(sx(b[0]), sy(b[1]), 5, 0, 7); ctx.fill();
+      }
+      const b0 = best[0];
+      ctx.fillStyle = '#ffd166'; ctx.font = 'bold 13px "Space Mono", monospace';
+      const label = `(${fmt(b0[0],1)}, ${fmt(b0[1],1)})`;
+      ctx.fillText(label, Math.min(sx(b0[0]) + 12, cv.width - 90), sy(b0[1]) - 12);
+    }
+  }
+}
+
+function updateReadout() {
+  const { best, value } = solve();
+  const plan = document.getElementById('ro-plan');
+  const profit = document.getElementById('ro-profit');
+  const bindEl = document.getElementById('ro-binding');
+  const note = document.getElementById('ro-note');
+  if (!best || !best.length) {
+    plan.textContent = 'No feasible plan'; profit.textContent = '—'; bindEl.innerHTML = ''; note.textContent = '';
+    return;
+  }
+  const b = best[0];
+  plan.innerHTML = `${fmt(b[0],1)} batches of bread · ${fmt(b[1],1)} batches of cake`;
+  profit.textContent = '$' + fmt(value, 0);
+  const binds = binding(b);
+  const bindLabels = new Set(binds.map(c => c.label));
+  bindEl.innerHTML = constraints().map(c =>
+    bindLabels.has(c.label)
+      ? `<span class="badge bind">${c.label} · binding</span>`
+      : `<span class="badge slack">${c.label} · slack</span>`
+  ).join('');
+  if (best.length > 1) {
+    note.innerHTML = `<b>Alternate optima!</b> The iso-profit line is parallel to a binding constraint — every point on the highlighted gold edge earns exactly $${fmt(value,0)}. This is the "$30 tie" from class.`;
+  } else if (binds.length >= 2) {
+    note.innerHTML = `The optimum sits where <b>${binds.map(c=>c.label.toLowerCase()).join(' and ')}</b> intersect — both fully used. Loosen a binding constraint and the corner moves; loosen a slack one and nothing happens. That's Session 3's shadow-price idea, in one sentence.`;
+  } else {
+    note.innerHTML = `Only <b>${binds[0]?.label.toLowerCase() ?? 'one constraint'}</b> binds here. The other resources have room to spare — buying more of them would be money wasted.`;
+  }
+}
+
+function animateIso() {
+  if (animId) cancelAnimationFrame(animId);
+  isoAnim = 0;
+  const start = performance.now();
+  function step(t) {
+    isoAnim = Math.min(1, (t - start) / 700);
+    isoAnim = 1 - Math.pow(1 - isoAnim, 3);  // ease-out cubic
+    draw();
+    if (isoAnim < 1) animId = requestAnimationFrame(step);
+  }
+  animId = requestAnimationFrame(step);
+}
+
+function refresh(animate = true) {
+  document.getElementById('v-pb').textContent = `$${state.pb} / batch`;
+  document.getElementById('v-pc').textContent = `$${state.pc} / batch`;
+  document.getElementById('v-oven').textContent = fmt(state.oven);
+  document.getElementById('v-labor').textContent = fmt(state.labor);
+  updateReadout();
+  if (animate) animateIso(); else { isoAnim = 1; draw(); }
+}
+
+for (const id of ['pb','pc','oven','labor']) {
+  document.getElementById(id).addEventListener('input', e => {
+    state[id] = +e.target.value;
+    document.querySelectorAll('#presets button').forEach(b => b.classList.remove('active'));
+    refresh(false);
+  });
+  document.getElementById(id).addEventListener('change', () => refresh(true));
+}
+
+document.querySelectorAll('#presets button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const [pb, pc, oven, labor] = btn.dataset.p.split(',').map(Number);
+    Object.assign(state, { pb, pc, oven, labor });
+    for (const id of ['pb','pc','oven','labor']) document.getElementById(id).value = state[id];
+    document.querySelectorAll('#presets button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    refresh(true);
+  });
+});
+
+cv.addEventListener('mousemove', e => {
+  const r = cv.getBoundingClientRect();
+  const mx = (e.clientX - r.left) * (cv.width / r.width);
+  const my = (e.clientY - r.top) * (cv.height / r.height);
+  const x = (mx - PAD.l) / W * XMAX, y = (PAD.t + H - my) / H * YMAX;
+  const box = document.getElementById('hoverbox');
+  if (x < 0 || y < 0 || x > XMAX || y > YMAX) { box.textContent = 'hover over the chart to test a production plan…'; return; }
+  const feas = constraints().every(c => c.a*x + c.b*y <= c.rhs + 1e-9);
+  const p = state.pb*x + state.pc*y;
+  box.innerHTML = `plan (${fmt(x,0)} bread, ${fmt(y,0)} cake) → profit $${fmt(p,0)} · ` +
+    (feas ? '<span style="color:#00ff88">feasible ✓</span>' : '<span style="color:#ff6cc8">infeasible ✗</span>');
+});
+
+document.querySelector('#presets button').classList.add('active');
+refresh(true);
+</script>
+</body>
+</html>

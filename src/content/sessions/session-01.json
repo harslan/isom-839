@@ -124,6 +124,15 @@
       "linkText": "Open in Colab"
     },
     {
+      "title": "The Bakery Explorer — Interactive Feasible Region",
+      "url": "/explore/",
+      "description": "The graphical method, live. Drag the profit and resource sliders, watch the feasible region flex and the optimal corner jump — with presets replaying the exact what-ifs from class ($40 bread, the $30 tie, +75 oven minutes).",
+      "icon": "zap",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "Bread & Cake Slides (PDF download)",
       "url": "/session-01/LP_Bread_and_Cake_Example.pdf",
       "description": "The same deck as a PDF for offline review — every step of the graphical solution and the sensitivity what-ifs, one figure at a time.",
