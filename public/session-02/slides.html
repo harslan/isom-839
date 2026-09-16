@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 2 · The Art of Formulation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0; display: none; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 6vh 8vw; gap: 3vh;
+  }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 940px; line-height: 1.55; }
+  .big { font-size: clamp(3rem, 10vw, 7.5rem); font-weight: 700; line-height: 1; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 2.4vh 1.6vw; min-width: 240px; max-width: 350px; flex: 1; text-align: left;
+  }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  pre {
+    background: #12100d; border: 1px solid var(--border); border-radius: 14px;
+    padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6;
+    max-width: 900px; overflow: auto;
+  }
+  pre .c { color: #6b6459; } pre .k { color: #e2725b; } pre .s { color: #a5d6a7; } pre .f { color: #ffd166; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 900px; color: var(--text2); font-size: clamp(0.95rem, 1.9vw, 1.35rem); line-height: 1.7; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 02</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 2 · Wed Sep 16</div>
+  <h1>The Art of <span class="grad">Formulation</span></h1>
+  <p class="sub">Turning business prose into models — the most valuable skill in this course.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · Recap -->
+<section class="slide">
+  <div class="kicker">60-Second Recap · The Bakery</div>
+  <h2>Three ingredients. <span class="grad">Corners win.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">1 · Decisions</div><p>Batches of bread B, cake C — what we control.</p></div>
+    <div class="card"><div class="label">2 · Objective</div><p>max 50B + 60C — one number, biggest or smallest.</p></div>
+    <div class="card"><div class="label">3 · Constraints</div><p>Oven, labor, demand — reality as inequalities.</p></div>
+  </div>
+  <p class="sub">The optimum landed at a <b class="accent-gold">corner</b>: (40, 50), $5,000 — where oven and labor cross.<br>Tonight: you learn to <b style="color:var(--text)">write</b> models like that from scratch.</p>
+</section>
+
+<!-- 3 · Google story -->
+<section class="slide">
+  <div class="kicker">Story Hook · 2026 Edelman Finalist</div>
+  <h2>Google chases <span class="grad">clean electrons</span> with LP</h2>
+  <div class="cards">
+    <div class="card"><div class="label">The Decisions</div><p>Which flexible compute jobs run <b style="color:var(--text)">when</b> and <b style="color:var(--text)">where</b> — shifted across hours and data centers since 2020.</p></div>
+    <div class="card"><div class="label">The Objective</div><p>Minimize carbon (and cost) of the electricity behind every search and video.</p></div>
+    <div class="card"><div class="label">The Constraints</div><p>Jobs must finish on time. Data centers have capacity. The grid is greener in some hours than others.</p></div>
+  </div>
+  <p class="sub">Same three-part grammar as the bakery — at planetary scale.<br><b style="color:var(--text)">If a trillion-dollar company runs on LP, your spreadsheet problems definitely can.</b></p>
+</section>
+
+<!-- 4 · The grammar -->
+<section class="slide">
+  <div class="kicker">The Formulation Grammar</div>
+  <h2>Three questions, <span class="grad">always in order</span></h2>
+  <ul class="list">
+    <li><b style="color:var(--text)">What can I decide?</b> → decision variables. Things under your control, with units.</li>
+    <li><b style="color:var(--text)">What am I maximizing or minimizing?</b> → one linear expression. Money, hours, carbon.</li>
+    <li><b style="color:var(--text)">What rules can't I break?</b> → constraints. Capacity, demand, quality, policy, physics.</li>
+  </ul>
+  <p class="sub">Master this grammar and you can model almost any resource-allocation problem in business.</p>
+</section>
+
+<!-- 5 · Trap -->
+<section class="slide">
+  <div class="kicker">The #1 Formulation Trap</div>
+  <h2>Model <span class="grad">decisions</span>, not outcomes</h2>
+  <div class="cards">
+    <div class="card" style="border-color:rgba(226,114,91,0.4)"><div class="label" style="color:var(--red)">Wrong</div><div class="title">"Let P = our profit"</div><p>Profit is an <b style="color:var(--text)">outcome</b> — it happens to you as a consequence. You can't set it.</p></div>
+    <div class="card" style="border-color:rgba(52,211,153,0.4)"><div class="label" style="color:var(--green)">Right</div><div class="title">"Let D = desks built"</div><p>A <b style="color:var(--text)">decision</b> — something a manager can actually order on Monday morning. Profit becomes the objective, computed from decisions.</p></div>
+  </div>
+  <p class="sub">Litmus test: <i>could you write this variable's value on a work order?</i></p>
+</section>
+
+<!-- 6 · Shop floor problem -->
+<section class="slide">
+  <div class="kicker">Live · Formulate With Me</div>
+  <h2>The Shop Floor</h2>
+  <ul class="list">
+    <li>Desks: <b style="color:var(--text)">$70 profit</b> · 4 hrs carpentry · 2 hrs finishing</li>
+    <li>Chairs: <b style="color:var(--text)">$50 profit</b> · 3 hrs carpentry · 1 hr finishing</li>
+    <li>This week: <b style="color:var(--text)">240 carpentry hours</b> · <b style="color:var(--text)">100 finishing hours</b></li>
+    <li class="accent-gold">Three questions. Two minutes. Paper first — no laptops yet.</li>
+  </ul>
+</section>
+
+<!-- 7 · Formulation -->
+<section class="slide">
+  <div class="kicker">The Answer, In Grammar</div>
+  <h2>Words → algebra</h2>
+  <div class="math">
+    max&nbsp;&nbsp;70D + 50C<br>
+    s.t.&nbsp;&nbsp;4D + 3C ≤ 240&nbsp;&nbsp;<span style="color:var(--muted)">(carpentry)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2D + 1C ≤ 100&nbsp;&nbsp;<span style="color:var(--muted)">(finishing)</span><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D, C ≥ 0
+  </div>
+  <p class="sub">Solution: <b class="accent-gold">(30 desks, 40 chairs) → $4,100</b> — and <b style="color:var(--text)">both</b> constraints binding: every hour of both departments used.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.1rem)">Which department deserves one more hour? <i>You can't tell from the solution alone. Hold that for next week.</i></p>
+</section>
+
+<!-- 8 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <h2>Break</h2>
+  <p class="sub">Coffee. And if you haven't yet: submit your Gurobi academic license request — <span class="accent-gold">gurobi.com/academics</span>, free with your suffolk.edu email. You need it for Homework #1.</p>
+</section>
+
+<!-- 9 · Lab -->
+<section class="slide">
+  <div class="kicker">Hands-On Lab · 25 Minutes</div>
+  <h2>The four verbs of <span class="grad">gurobipy</span></h2>
+  <div class="row">
+    <img class="qr" width="180" height="180" alt="QR code to Colab notebook"
+      src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fharslan%2Fisom-839%2Fblob%2Fmaster%2Fpublic%2Fsession-02%2FISOM839_Session2_Art_of_Formulation.ipynb">
+    <pre>
+m = gp.<span class="f">Model</span>(<span class="s">'production_mix'</span>)
+D = m.<span class="f">addVar</span>(name=<span class="s">'desks'</span>)      <span class="c"># 1 · decide</span>
+m.<span class="f">setObjective</span>(70*D + 50*C, GRB.MAXIMIZE)  <span class="c"># 2 · aim</span>
+m.<span class="f">addConstr</span>(4*D + 3*C <= 240)  <span class="c"># 3 · obey</span>
+m.<span class="f">optimize</span>()                    <span class="c"># 4 · solve</span></pre>
+  </div>
+  <p class="sub" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem">isom-839.vercel.app → Session 2 → Open in Colab</p>
+</section>
+
+<!-- 10 · Stress test -->
+<section class="slide">
+  <div class="kicker">Stress Test · In The Notebook</div>
+  <h2>Marketing caps desks at <span class="grad">20</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Before</div><div class="title">(30, 40) · $4,100</div><p>Carpentry and finishing both binding.</p></div>
+    <div class="card"><div class="label">After D ≤ 20</div><div class="title">(20, 53.33) · $4,067</div><p>The optimum <b style="color:var(--text)">jumps corners</b> and rebalances toward chairs. Profit falls just $33.</p></div>
+    <div class="card"><div class="label">Wait — 53.33 chairs?</div><div class="title">LPs build fractions</div><p>Fine for planning rates; wrong for whole units. That's <b style="color:var(--text)">integer optimization</b> — Sessions 6–7.</p></div>
+  </div>
+</section>
+
+<!-- 11 · Blending intro -->
+<section class="slide">
+  <div class="kicker">Same Skeleton, New Skin</div>
+  <h2>Blending: where LP earned its <span class="grad">first fortunes</span></h2>
+  <ul class="list">
+    <li>Refineries have run LP <b style="color:var(--text)">daily since the 1950s</b> — mixing crude stocks into fuels at minimum cost</li>
+    <li>Same grammar: decide the mix, minimize cost, obey quality specs</li>
+    <li>Also: animal feed, fertilizer, steel alloys, coffee, cocktails…</li>
+    <li>New wrinkle: <b class="accent-gold">quality specs are ratios</b> — and ratios of variables aren't linear</li>
+  </ul>
+</section>
+
+<!-- 12 · Harbor Fuels + ratio trick -->
+<section class="slide">
+  <div class="kicker">Live · Harbor Fuels</div>
+  <h2>The <span class="grad">ratio trick</span></h2>
+  <p class="sub">10,000 gal of Regular (octane ≥ 87) from Stock A (93 octane, $2.80) and Stock B (83 octane, $2.30):</p>
+  <div class="math">
+    <span class="accent-r">(93A + 83B) / (A + B) ≥ 87</span> &nbsp;← not linear ✗<br><br>
+    cross-multiply → &nbsp;93A + 83B ≥ 87(A + B)<br>
+    → &nbsp;<span class="accent-g">6A − 4B ≥ 0</span> &nbsp;← linear ✓
+  </div>
+  <p class="sub">Solution: <b class="accent-gold">4,000 gal A + 6,000 gal B = $25,000</b> — octane exactly 87.0. Specs met, never gold-plated.</p>
+</section>
+
+<!-- 13 · Homework -->
+<section class="slide">
+  <div class="kicker">Before Next Wednesday · Sep 23</div>
+  <h2>Homework <span class="grad">#1</span> — The Blending Challenge ☕</h2>
+  <ul class="list">
+    <li>Beacon Hill Roasters: blend <b style="color:var(--text)">Brazil, Colombia, Ethiopia</b> into a 100-lb House Blend — flavor ≥ 8.0, caffeine ≤ 1.05%, minimum cost</li>
+    <li>Formulate on paper → solve in the Session 2 notebook → answer the three interpretation questions</li>
+    <li>Spoiler-free hint: the optimal recipe will surprise you — <i>one bean gets zero pounds. Your job is to explain why.</i></li>
+    <li>Plus: claim your <b style="color:var(--text)">Gurobi academic license</b> (suffolk.edu email)</li>
+  </ul>
+</section>
+
+<!-- 14 · Next week -->
+<section class="slide">
+  <div class="kicker">Next Wednesday · Sep 23</div>
+  <h2>What is one more hour <span class="grad">worth?</span></h2>
+  <p class="sub">Tonight the model told you <b style="color:var(--text)">what to do</b>.<br>
+  Next week it tells you <b style="color:var(--text)">what everything is worth</b>: shadow prices, reduced costs,<br>and why sensitivity analysis is the manager's lie detector for AI-generated models.</p>
+  <p class="sub"><span class="grad" style="font-weight:700">Formulate first. Code second. See you Wednesday.</span></p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>

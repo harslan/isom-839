@@ -5,7 +5,11 @@
   "subtitle": "Decision variables, objectives, and constraints — the three-part grammar that turns messy business problems into solvable models",
   "duration": "120 Minutes",
   "icon": "target",
-  "tags": ["Linear Programming", "Formulation", "Gurobi"],
+  "tags": [
+    "Linear Programming",
+    "Formulation",
+    "Gurobi"
+  ],
   "objectives": [
     {
       "title": "Translate business problems into LP form",
@@ -109,6 +113,24 @@
   ],
   "resources": [
     {
+      "title": "Session 2 Slide Deck",
+      "url": "/session-02/slides.html",
+      "description": "Tonight's presentation: the Google carbon-aware LP story, the formulation grammar, the shop-floor model live, the ratio trick for blending, and Homework #1. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
+      "title": "The Art of Formulation — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-02/ISOM839_Session2_Art_of_Formulation.ipynb",
+      "description": "The Session 2 lab and Homework #1: the shop-floor production mix with slack readouts, the demand-cap stress test, Harbor Fuels blending with the ratio trick, and the Beacon Hill coffee-blend homework scaffold.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Gurobi Academic License",
       "url": "https://www.gurobi.com/academics",
       "description": "Request your free full-featured academic license with your suffolk.edu email. Required before Homework #1 — takes about five minutes.",
@@ -166,7 +188,7 @@
         },
         {
           "title": "Stress-test the model",
-          "description": "Add a demand cap of 30 desks and re-solve. Watch how the optimal corner moves — your first taste of what-if analysis."
+          "description": "Add a demand cap of 20 desks and re-solve. Watch how the optimal corner moves — your first taste of what-if analysis."
         }
       ],
       "codeBlock": {
@@ -199,7 +221,11 @@
   "nextSession": {
     "title": "Linear Optimization II: Sensitivity, Duality & What-If Thinking",
     "description": "Solving the model was the easy part. Next week we interrogate it: what is one more machine-hour worth, which products deserve to exist, and why sensitivity analysis is the manager's lie detector for AI-generated models.",
-    "tags": ["Sensitivity Analysis", "Shadow Prices", "Duality"],
+    "tags": [
+      "Sensitivity Analysis",
+      "Shadow Prices",
+      "Duality"
+    ],
     "slug": "session-03"
   }
 }
