@@ -155,6 +155,24 @@
       "badge": "Notebooks",
       "badgeType": "code",
       "linkText": "Open the notebooks"
+    },
+    {
+      "title": "Sports Scheduling (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/sports-scheduling-an-introduction-to-integer-optimization/",
+      "description": "Build a league schedule with binary variables — including the dedicated segment on encoding if-then logic with binaries, the core IP modeling skill of this module. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "award",
+      "badge": "Case",
+      "badgeType": "video",
+      "linkText": "Watch the case"
+    },
+    {
+      "title": "Operating Room Scheduling (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/operating-room-scheduling-making-hospitals-run-smoothly-recitation/",
+      "description": "Assign OR block time to surgical departments (based on real Mount Sinai work) — the healthcare twin of tonight's staff-scheduling lab. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "clock",
+      "badge": "Case",
+      "badgeType": "video",
+      "linkText": "Watch the case"
     }
   ],
   "activities": [

@@ -5,7 +5,11 @@
   "subtitle": "Neural networks for decision-makers — and why the best forecast is not always the best decision",
   "duration": "120 Minutes",
   "icon": "brain",
-  "tags": ["Deep Learning", "Predict-then-Optimize", "Decision-Focused Learning"],
+  "tags": [
+    "Deep Learning",
+    "Predict-then-Optimize",
+    "Decision-Focused Learning"
+  ],
   "objectives": [
     {
       "title": "Understand neural networks as decision inputs",
@@ -135,6 +139,15 @@
       "badge": "Code",
       "badgeType": "code",
       "linkText": "Browse notebooks"
+    },
+    {
+      "title": "eHarmony: Predict, Then Optimize in the Wild (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/eharmony-maximizing-the-probability-of-love/",
+      "description": "A regression predicts compatibility scores; an integer program prescribes the matches. You saw this case in Session 4 — rewatch it tonight wearing predict-then-optimize glasses and notice the pipeline hiding in plain sight. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "brain",
+      "badge": "Case",
+      "badgeType": "video",
+      "linkText": "Rewatch the case"
     }
   ],
   "activities": [
@@ -191,7 +204,11 @@
   "nextSession": {
     "title": "Reinforcement Learning & the AI Frontier of Prescriptive Analytics",
     "description": "What if the model skips prediction entirely and learns to act? Q-learning intuition, deployed RL at Alibaba, Amazon, and DoorDash, LLM copilots that write optimization models, and the full modern prescriptive stack in one picture.",
-    "tags": ["Reinforcement Learning", "LLM Copilots", "Frontier"],
+    "tags": [
+      "Reinforcement Learning",
+      "LLM Copilots",
+      "Frontier"
+    ],
     "slug": "session-12"
   }
 }

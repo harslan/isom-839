@@ -173,6 +173,15 @@
       "badge": "Reference",
       "badgeType": "reference",
       "linkText": "Compare libraries"
+    },
+    {
+      "title": "Even' Star Organic Farm — Sensitivity Practice (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/linear-optimization/assignment-8/",
+      "description": "A real Maryland organic farm allocating eight crops across sales channels — with the best sensitivity questions in any public course: is a $1,000 truck upgrade worth it? Which crop deserves five more acres? Data files included. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "database",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open the assignment"
     }
   ],
   "activities": [

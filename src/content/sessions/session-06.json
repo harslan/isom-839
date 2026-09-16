@@ -155,6 +155,24 @@
       "badge": "Install Ahead",
       "badgeType": "tool",
       "linkText": "View on GitHub"
+    },
+    {
+      "title": "Even' Star Farm Revisited: Fixed Charges (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/assignment-9/",
+      "description": "The same farm from Session 3's practice — now each sales channel has an entry fee and a binary participate-or-not decision. The cleanest LP-to-MIP progression on one dataset anywhere. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "check",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open the assignment"
+    },
+    {
+      "title": "Gerrymandering New Mexico (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/assignment-9/gerrymandering-new-mexico/",
+      "description": "Assign 33 counties to 3 districts with binary variables, win-margin constraints, and either-or logic — integer programming at its most provocative. Guaranteed classroom argument. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "shield",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open the assignment"
     }
   ],
   "activities": [

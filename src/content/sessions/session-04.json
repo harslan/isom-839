@@ -155,6 +155,15 @@
       "badge": "Case Studies",
       "badgeType": "reference",
       "linkText": "Read the stories"
+    },
+    {
+      "title": "eHarmony: Maximizing the Probability of Love (MIT 15.071x)",
+      "url": "https://ocw.mit.edu/courses/15-071-the-analytics-edge-spring-2017/pages/integer-optimization/eharmony-maximizing-the-probability-of-love/",
+      "description": "The assignment problem at its most charming: match users to maximize total compatibility, each person matched at most once. Bonus foreshadowing: the compatibility scores come from a prediction model — predict-then-optimize, which we meet formally in Session 11. MIT OCW 15.071 (Bertsimas), CC BY-NC-SA.",
+      "icon": "users",
+      "badge": "Case",
+      "badgeType": "video",
+      "linkText": "Watch the case"
     }
   ],
   "activities": [
