@@ -42,7 +42,7 @@ export const materials = [
 export const grading = [
   { component: 'Participation & In-Class Labs', weight: 15 },
   { component: 'Homework Assignments (Python + Modeling)', weight: 25 },
-  { component: 'Midterm Case Competition (Team)', weight: 25 },
+  { component: 'Midterm Case Competition (Pairs)', weight: 25 },
   { component: 'Final Project & Presentation', weight: 35 },
 ];
 
@@ -63,7 +63,7 @@ export const gradingDetail = [
     component: 'Midterm Case Competition',
     weight: 25,
     icon: 'award',
-    detail: 'Teams of 2–3. A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9), where each team gives a five-minute results briefing. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
+    detail: 'Pairs (one trio, since we are 17). A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9), where each team gives a five-minute results briefing. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
   },
   {
     component: 'Final Project & Presentation',
@@ -90,7 +90,7 @@ export const gradeScale = [
 export const keyDates = [
   { date: 'Sep 9', label: 'First class · Homework #0 assigned', type: 'session' },
   { date: 'Sep 16', label: 'Claim your Gurobi academic license by tonight', type: 'deadline' },
-  { date: 'Oct 21', label: 'Midterm case launches (teams of 2–3)', type: 'milestone' },
+  { date: 'Oct 21', label: 'Midterm case launches (pairs — one trio)', type: 'milestone' },
   { date: 'Nov 4', label: 'Midterm case due + team briefings · Final project proposal due', type: 'deadline' },
   { date: 'Nov 11', label: 'No class — Veterans Day', type: 'break' },
   { date: 'Nov 25', label: 'No class — Thanksgiving', type: 'break' },
