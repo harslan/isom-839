@@ -6,7 +6,7 @@ import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import {
   description, objectives, materials, grading, gradingDetail,
-  gradeScale, keyDates, howItWorks, policies,
+  gradeScale, keyDates, howItWorks, policies, noExams,
 } from '../data/syllabus';
 import { course } from '../data/course';
 import { sessionMeta, modules } from '../data/schedule';
@@ -155,6 +155,12 @@ const byNumber = new Map(sorted.map((s) => [s.data.number, s]));
   <!-- Assessment -->
   <section class="py-12 px-8 max-w-[1200px] mx-auto">
     <SectionHeader number="06" label="Assessment" title="How You're Graded" description="Ship models, tell stories. Every component rewards the same two skills: honest modeling and clear communication." />
+    <div class="mb-8 bg-gradient-to-br from-accent-green/[0.06] to-bg-card border border-accent-green/25 rounded-2xl p-7 fade-in">
+      <div class="flex items-start gap-4">
+        <Icon name="check" class="w-6 h-6 text-accent-green shrink-0 mt-0.5" />
+        <p class="text-text-secondary text-sm leading-relaxed"><strong class="text-text-primary">No exams.</strong> {noExams}</p>
+      </div>
+    </div>
     <div class="grid gap-4 mb-8 fade-in">
       {gradingDetail.map((g) => (
         <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-2xl p-7">

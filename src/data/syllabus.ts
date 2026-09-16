@@ -69,9 +69,12 @@ export const gradingDetail = [
     component: 'Final Project & Presentation',
     weight: 35,
     icon: 'rocket',
-    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Nov 4; notebook + two-page decision memo due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded on the five beats of every great prescriptive story: a real decision, an honest model, a solved answer, a dollar figure, and a sensitivity story.',
+    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Nov 4; notebook + two-page decision memo due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded on the five beats of every great prescriptive story: a real decision, an honest model, a solved answer, a dollar figure, and a sensitivity story. Each presentation ends with a short individual model defense — two questions about your own constraints ("why is this here?", "what happens if I relax that one?"), answered live, without the AI.',
   },
 ];
+
+export const noExams =
+  'This course has no exams. You are assessed entirely on what you build — and on your ability to defend it. The individual accountability an exam would provide lives in the model defense: on presentation night, every student answers questions about their own model, live.';
 
 export const gradeScale = [
   { grade: 'A', range: '93–100' },
