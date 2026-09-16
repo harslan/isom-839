@@ -4,62 +4,202 @@ import GradientText from '../components/GradientText.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
-import { grading, policies } from '../data/syllabus';
+import {
+  description, objectives, materials, grading, gradingDetail,
+  gradeScale, keyDates, howItWorks, policies,
+} from '../data/syllabus';
 import { course } from '../data/course';
-import { sessionMeta } from '../data/schedule';
+import { sessionMeta, modules } from '../data/schedule';
 
 const sessions = await getCollection('sessions');
 const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
+const byNumber = new Map(sorted.map((s) => [s.data.number, s]));
 ---
 
 <BaseLayout title="ISOM 839 | Syllabus">
   <section class="py-24 px-8 max-w-[1200px] mx-auto">
-    <div class="text-center mb-16">
+    <div class="text-center mb-12">
       <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-extrabold mb-4">
         Course <GradientText>Syllabus</GradientText>
       </h1>
       <p class="text-text-secondary text-lg max-w-[600px] mx-auto">
         {course.code}: {course.title} &bull; {course.semester}
       </p>
-      <p class="text-text-muted text-sm mt-4 max-w-[600px] mx-auto font-mono">
-        {course.meeting} &bull; {course.credits} Credits &bull; Prerequisite: {course.prerequisite}
-      </p>
-      <p class="text-text-muted text-sm mt-2 max-w-[600px] mx-auto">
-        No class Nov 11 (Veterans Day) or Nov 25 (Thanksgiving). Final presentations Dec 16.
-      </p>
+      <button onclick="window.print()" class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 border border-border-subtle rounded-full text-text-secondary text-sm cursor-pointer bg-transparent transition-all duration-300 hover:border-accent-cyan hover:text-accent-cyan print:hidden">
+        <Icon name="download" class="w-4 h-4" />
+        Print / save as PDF
+      </button>
+    </div>
+
+    <!-- Logistics at a glance -->
+    <div class="grid md:grid-cols-4 gap-4 mb-4">
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Meets</div>
+        <div class="text-sm text-text-primary leading-snug">{course.meeting}</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Credits</div>
+        <div class="text-sm text-text-primary leading-snug">{course.credits} graduate credits</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Prerequisite</div>
+        <div class="text-sm text-text-primary leading-snug">ISOM 631 or ISOM 730 (Python)</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl p-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Instructor</div>
+        <div class="text-sm text-text-primary leading-snug">{course.instructor.name}<br>
+          <a href={`mailto:${course.instructor.email}`} class="text-accent-cyan no-underline">{course.instructor.email}</a>
+        </div>
+      </div>
+    </div>
+    <p class="text-text-muted text-sm text-center font-mono mb-2">
+      Office hours by appointment and after every class &bull; No class Nov 11 &amp; Nov 25
+    </p>
+  </section>
+
+  <!-- About -->
+  <section class="py-12 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="01" label="About" title="What This Course Is" />
+    <div class="grid md:grid-cols-2 gap-6 fade-in">
+      <div class="bg-bg-card border border-border-subtle rounded-2xl p-8">
+        <h3 class="text-lg font-semibold mb-3 text-accent-cyan">In plain language</h3>
+        <p class="text-text-secondary text-sm leading-relaxed">{description.plain}</p>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-2xl p-8">
+        <h3 class="text-lg font-semibold mb-3 text-accent-cyan">Catalog description</h3>
+        <p class="text-text-secondary text-sm leading-relaxed">{description.catalog}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objectives -->
+  <section class="py-12 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="02" label="Learning Objectives" title="What You Will Be Able To Do" description="By December, on a real problem, without a textbook open." />
+    <div class="grid md:grid-cols-2 gap-4 fade-in">
+      {objectives.map((o) => (
+        <div class="flex gap-4 bg-bg-card border border-border-subtle rounded-xl p-6">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center shrink-0">
+            <Icon name={o.icon} class="w-5 h-5 text-accent-cyan" />
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed">{o.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- How the course works -->
+  <section class="py-12 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="03" label="Method" title="How This Course Works" />
+    <div class="grid md:grid-cols-2 gap-6 fade-in">
+      {howItWorks.map((h) => (
+        <div class="bg-bg-card border border-border-subtle rounded-2xl p-8">
+          <div class="flex items-center gap-3 mb-3">
+            <Icon name={h.icon} class="w-5 h-5 text-accent-purple" />
+            <h3 class="text-lg font-semibold text-accent-cyan">{h.title}</h3>
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed">{h.detail}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <!-- Schedule -->
   <section class="py-12 px-8 max-w-[1200px] mx-auto">
-    <SectionHeader number="01" label="Schedule" title="Session Schedule" description="13 Wednesday evenings: from your first linear program to reinforcement learning." />
-    <div class="grid gap-4">
-      {sorted.map((session) => (
-        <a href={`/sessions/${session.data.slug}`} class="flex items-center gap-6 px-6 py-5 bg-bg-card border border-border-subtle rounded-xl transition-all duration-300 no-underline text-inherit hover:border-accent-cyan/30 hover:translate-x-2 fade-in">
-          <div class="font-mono text-2xl font-bold bg-gradient-to-br from-accent-cyan to-accent-purple bg-clip-text text-transparent shrink-0 w-10">
-            {String(session.data.number).padStart(2, '0')}
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="font-semibold">{session.data.title}</div>
-            <div class="text-text-secondary text-sm truncate">{session.data.subtitle}</div>
-          </div>
-          <span class="font-mono text-[0.75rem] text-text-muted whitespace-nowrap shrink-0 max-sm:hidden">
-            Wed · {sessionMeta[session.data.number]?.date}
-          </span>
-          <Icon name="chevron-right" class="w-5 h-5 text-text-muted shrink-0" />
-        </a>
+    <SectionHeader number="04" label="Schedule" title="Thirteen Wednesdays" description="Grouped by module. Every session page has the full agenda, lab, and resources." />
+    {modules.map((mod) => (
+      <div class="mb-8 fade-in">
+        <div class="flex flex-wrap items-baseline gap-x-4 gap-y-1 mb-3">
+          <h3 class="text-base font-bold text-accent-cyan">{mod.name}</h3>
+          <span class="text-text-muted text-sm">{mod.blurb}</span>
+        </div>
+        <div class="grid gap-3">
+          {mod.sessions.map((n) => {
+            const s = byNumber.get(n);
+            return s ? (
+              <a href={`/sessions/${s.data.slug}`} class="flex items-center gap-6 px-6 py-4 bg-bg-card border border-border-subtle rounded-xl transition-all duration-300 no-underline text-inherit hover:border-accent-cyan/30 hover:translate-x-2">
+                <div class="font-mono text-xl font-bold bg-gradient-to-br from-accent-cyan to-accent-purple bg-clip-text text-transparent shrink-0 w-9">
+                  {String(n).padStart(2, '0')}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-semibold text-sm">{s.data.title}</div>
+                  <div class="text-text-secondary text-xs truncate">{s.data.subtitle}</div>
+                </div>
+                <span class="font-mono text-[0.72rem] text-text-muted whitespace-nowrap shrink-0 max-sm:hidden">
+                  Wed · {sessionMeta[n]?.date}
+                </span>
+                <Icon name="chevron-right" class="w-4 h-4 text-text-muted shrink-0" />
+              </a>
+            ) : null;
+          })}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- Key dates -->
+  <section class="py-12 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="05" label="Key Dates" title="Mark These Eight" />
+    <div class="grid gap-3 fade-in">
+      {keyDates.map((k) => (
+        <div class="flex items-center gap-5 px-6 py-4 bg-bg-card border border-border-subtle rounded-xl">
+          <span class="font-mono text-sm font-bold w-16 shrink-0"
+            class:list={[
+              k.type === 'deadline' ? 'text-accent-cyan' : k.type === 'break' ? 'text-text-muted' : 'text-accent-green',
+            ]}>{k.date}</span>
+          <span class="text-sm" class:list={[k.type === 'break' ? 'text-text-muted' : 'text-text-secondary']}>{k.label}</span>
+        </div>
       ))}
     </div>
   </section>
 
-  <!-- Grading -->
+  <!-- Assessment -->
   <section class="py-12 px-8 max-w-[1200px] mx-auto">
-    <SectionHeader number="02" label="Grading" title="Grade Breakdown" />
-    <div class="grid gap-4 fade-in">
-      {grading.map((item) => (
-        <div class="flex items-center justify-between px-6 py-5 bg-bg-card border border-border-subtle rounded-xl">
-          <span class="font-medium">{item.component}</span>
-          <span class="font-mono text-accent-cyan font-bold text-lg">{item.weight}%</span>
+    <SectionHeader number="06" label="Assessment" title="How You're Graded" description="Ship models, tell stories. Every component rewards the same two skills: honest modeling and clear communication." />
+    <div class="grid gap-4 mb-8 fade-in">
+      {gradingDetail.map((g) => (
+        <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-2xl p-7">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center shrink-0">
+            <Icon name={g.icon} class="w-6 h-6 text-accent-cyan" />
+          </div>
+          <div class="flex-1">
+            <div class="flex items-baseline justify-between gap-4 mb-2">
+              <h3 class="font-bold">{g.component}</h3>
+              <span class="font-mono text-accent-cyan font-bold text-lg shrink-0">{g.weight}%</span>
+            </div>
+            <p class="text-text-secondary text-sm leading-relaxed">{g.detail}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="bg-bg-card border border-border-subtle rounded-2xl p-7 fade-in">
+      <h3 class="font-semibold mb-4 text-accent-cyan text-sm font-mono tracking-[2px] uppercase">Grade scale</h3>
+      <div class="grid grid-cols-4 md:grid-cols-8 gap-3 text-center">
+        {gradeScale.map((g) => (
+          <div>
+            <div class="font-mono font-bold text-text-primary">{g.grade}</div>
+            <div class="font-mono text-[0.7rem] text-text-muted">{g.range}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials -->
+  <section class="py-12 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="07" label="Materials & Tools" title="What You Need" />
+    <div class="grid md:grid-cols-2 gap-4 fade-in">
+      {materials.map((m) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl p-6">
+          <div class="flex items-center justify-between gap-3 mb-2">
+            <h3 class="font-semibold text-sm">{m.title}</h3>
+            <span class="font-mono text-[0.65rem] tracking-wide px-3 py-1 rounded-full border shrink-0"
+              class:list={[
+                m.badge === 'Required' ? 'text-accent-cyan border-accent-cyan/40' :
+                m.badge === 'Free' ? 'text-accent-green border-accent-green/40' :
+                'text-text-muted border-border-subtle',
+              ]}>{m.badge}</span>
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed">{m.detail}</p>
         </div>
       ))}
     </div>
@@ -67,7 +207,7 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
 
   <!-- Policies -->
   <section class="py-12 px-8 max-w-[1200px] mx-auto">
-    <SectionHeader number="03" label="Policies" title="Course Policies" />
+    <SectionHeader number="08" label="Policies" title="Course Policies" />
     <div class="grid gap-6 md:grid-cols-2 fade-in">
       {policies.map((policy) => (
         <div class="bg-bg-card border border-border-subtle rounded-2xl p-8">
@@ -76,6 +216,9 @@ const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
         </div>
       ))}
     </div>
+    <p class="text-text-muted text-xs text-center mt-8 max-w-[700px] mx-auto leading-relaxed">
+      This syllabus is a living document; any changes will be announced in class and on Canvas.
+      University-wide policies (academic integrity, disability accommodation, credit-hour standards) apply as published by Suffolk University.
+    </p>
   </section>
-
 </BaseLayout>
