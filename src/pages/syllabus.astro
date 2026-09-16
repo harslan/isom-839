@@ -7,6 +7,7 @@ import { getCollection } from 'astro:content';
 import {
   description, objectives, materials, grading, gradingDetail,
   gradeScale, keyDates, howItWorks, policies, noExams,
+  homeworkRubric, caseRubric, finalRubric,
 } from '../data/syllabus';
 import { course } from '../data/course';
 import { sessionMeta, modules } from '../data/schedule';
@@ -177,6 +178,49 @@ const byNumber = new Map(sorted.map((s) => [s.data.number, s]));
         </div>
       ))}
     </div>
+    <!-- Rubrics -->
+    <div class="grid md:grid-cols-3 gap-4 mb-8 fade-in">
+      <div class="bg-bg-card border border-border-subtle rounded-2xl p-6">
+        <h3 class="font-semibold mb-1 text-accent-cyan text-sm font-mono tracking-[2px] uppercase">Homework rubric</h3>
+        <p class="text-text-muted text-xs mb-4">Each assignment scored 0–3. Self-grade before you submit.</p>
+        {homeworkRubric.map((r) => (
+          <div class="flex gap-3 mb-3">
+            <span class="font-mono font-bold text-accent-cyan w-4 shrink-0">{r.score}</span>
+            <div>
+              <div class="text-sm font-semibold">{r.label}</div>
+              <p class="text-text-secondary text-xs leading-relaxed">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-2xl p-6">
+        <h3 class="font-semibold mb-1 text-accent-cyan text-sm font-mono tracking-[2px] uppercase">Midterm case · 25 pts</h3>
+        <p class="text-text-muted text-xs mb-4">Pairs. Model + five-minute briefing, Nov 4.</p>
+        {caseRubric.map((r) => (
+          <div class="flex gap-3 mb-3">
+            <span class="font-mono font-bold text-accent-cyan w-6 shrink-0">{r.points}</span>
+            <div>
+              <div class="text-sm font-semibold">{r.label}</div>
+              <p class="text-text-secondary text-xs leading-relaxed">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-2xl p-6">
+        <h3 class="font-semibold mb-1 text-accent-cyan text-sm font-mono tracking-[2px] uppercase">Final project · 35 pts</h3>
+        <p class="text-text-muted text-xs mb-4">The five beats + the defense. Presentations Dec 16.</p>
+        {finalRubric.map((r) => (
+          <div class="flex gap-3 mb-3">
+            <span class="font-mono font-bold text-accent-cyan w-6 shrink-0">{r.points}</span>
+            <div>
+              <div class="text-sm font-semibold">{r.label}</div>
+              <p class="text-text-secondary text-xs leading-relaxed">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
     <div class="bg-bg-card border border-border-subtle rounded-2xl p-7 fade-in">
       <h3 class="font-semibold mb-4 text-accent-cyan text-sm font-mono tracking-[2px] uppercase">Grade scale</h3>
       <div class="grid grid-cols-4 md:grid-cols-8 gap-3 text-center">

@@ -76,6 +76,27 @@ export const gradingDetail = [
 export const noExams =
   'This course has no exams. You are assessed entirely on what you build — and on your ability to defend it. The individual accountability an exam would provide lives in the model defense: on presentation night, every student answers questions about their own model, live.';
 
+export const homeworkRubric = [
+  { score: '3', label: 'Correct & insightful', desc: 'Right formulation, right optimum, and the interpretation shows judgment — binding constraints named, what-ifs explained in business language.' },
+  { score: '2', label: 'Correct model', desc: 'Formulation is sound and the solver runs; a minor slip in code or arithmetic, or a thin interpretation.' },
+  { score: '1', label: 'Honest attempt', desc: 'A real try with a structural error — flipped inequality, unit mismatch, missing constraint. This is where feedback teaches most.' },
+  { score: '0', label: 'No real attempt', desc: 'Not submitted, or code with no model behind it.' },
+];
+
+export const caseRubric = [
+  { points: 10, label: 'Model correctness', desc: 'The formulation captures the case\'s real constraints and the solution is verifiably optimal for it.' },
+  { points: 8, label: 'Business insight', desc: 'The briefing says what to do and what it\'s worth — not just what the solver printed.' },
+  { points: 7, label: 'Briefing clarity', desc: 'Five minutes, plain English, a decision-maker could act on it. The best model no one understands loses to a good model everyone does.' },
+];
+
+export const finalRubric = [
+  { points: 5, label: 'The real decision', desc: 'A decision someone actually owns, made badly or blindly today.' },
+  { points: 10, label: 'The honest model', desc: 'Variables, objective, constraints that capture the trade-offs that actually bind — at a scale you fully understand.' },
+  { points: 10, label: 'The solved answer & the money', desc: 'A provably strong solution, and the gap between today\'s decision and the optimal one quantified honestly.' },
+  { points: 5, label: 'The sensitivity story', desc: 'Which assumptions carry the weight, and how the recommendation moves when they do.' },
+  { points: 5, label: 'The model defense', desc: 'Each team member answers two live questions about their own constraints — without the AI.' },
+];
+
 export const gradeScale = [
   { grade: 'A', range: '93–100' },
   { grade: 'A−', range: '90–92.9' },
