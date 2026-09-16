@@ -136,17 +136,18 @@ let isoAnim = 0, animId = null;
 
 function constraints() {
   return [
-    { a: 60, b: 45, rhs: state.oven,  color: '#b56cff', label: 'Oven' },
-    { a: 30, b: 60, rhs: state.labor, color: '#ff6cc8', label: 'Labor' },
-    { a: 1,  b: 0,  rhs: 90,          color: '#4fd1c5', label: 'Bread demand' },
-    { a: 0,  b: 1,  rhs: 60,          color: '#e2e8f0', label: 'Cake demand' },
+    { a: 60, b: 45, rhs: state.oven,  color: '#b56cff', label: 'Oven', unit: 'min' },
+    { a: 30, b: 60, rhs: state.labor, color: '#ff6cc8', label: 'Labor', unit: 'min' },
+    { a: 1,  b: 0,  rhs: 90,          color: '#4fd1c5', label: 'Bread demand', unit: 'batch' },
+    { a: 0,  b: 1,  rhs: 60,          color: '#e2e8f0', label: 'Cake demand', unit: 'batch' },
   ];
 }
 
 // Sutherland–Hodgman: clip the positive quadrant box by each half-plane ax+by<=rhs
-function feasiblePolygon() {
+function feasiblePolygon(bumpIdx = -1) {
   let poly = [[0,0],[XMAX*2,0],[XMAX*2,YMAX*2],[0,YMAX*2]];
-  for (const c of constraints()) {
+  const cons = constraints().map((c, k) => k === bumpIdx ? { ...c, rhs: c.rhs + 1 } : c);
+  for (const c of cons) {
     const out = [];
     for (let i = 0; i < poly.length; i++) {
       const P = poly[i], Q = poly[(i+1) % poly.length];
@@ -163,8 +164,8 @@ function feasiblePolygon() {
   return poly;
 }
 
-function solve() {
-  const poly = feasiblePolygon();
+function solve(bumpIdx = -1) {
+  const poly = feasiblePolygon(bumpIdx);
   if (!poly.length) return { poly, best: null };
   let bestV = -1, best = [], obj = p => state.pb*p[0] + state.pc*p[1];
   for (const p of poly) {
@@ -283,11 +284,12 @@ function updateReadout() {
   profit.textContent = '$' + fmt(value, 0);
   const binds = binding(b);
   const bindLabels = new Set(binds.map(c => c.label));
-  bindEl.innerHTML = constraints().map(c =>
-    bindLabels.has(c.label)
-      ? `<span class="badge bind">${c.label} · binding</span>`
-      : `<span class="badge slack">${c.label} · slack</span>`
-  ).join('');
+  bindEl.innerHTML = constraints().map((c, k) => {
+    if (!bindLabels.has(c.label)) return `<span class="badge slack">${c.label} · slack · worth $0</span>`;
+    const bumped = solve(k);
+    const sp = bumped.best && bumped.best.length ? Math.max(0, bumped.value - value) : 0;
+    return `<span class="badge bind">${c.label} · binding · +$${sp.toFixed(2)}/${c.unit}</span>`;
+  }).join('');
   if (best.length > 1) {
     note.innerHTML = `<b>Alternate optima!</b> The iso-profit line is parallel to a binding constraint — every point on the highlighted gold edge earns exactly $${fmt(value,0)}. This is the "$30 tie" from class.`;
   } else if (binds.length >= 2) {

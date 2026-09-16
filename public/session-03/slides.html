@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 3 · What Is One More Hour Worth?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 940px; line-height: 1.55; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 360px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 920px; color: var(--text2); font-size: clamp(0.95rem, 1.9vw, 1.35rem); line-height: 1.7; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 03</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 3 · Wed Sep 23</div>
+  <h1>What Is One More Hour <span class="grad">Worth?</span></h1>
+  <p class="sub">Sensitivity, duality &amp; what-if thinking — the model stops giving answers and starts giving <b style="color:var(--text)">prices</b>.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · The cliffhanger -->
+<section class="slide">
+  <div class="kicker">Last Week's Cliffhanger</div>
+  <h2>Both departments <span class="grad">maxed out</span></h2>
+  <div class="math">
+    Plan: (30 desks, 40 chairs) → $4,100<br>
+    Carpentry: 240 / 240 hrs &nbsp;·&nbsp; Finishing: 100 / 100 hrs
+  </div>
+  <p class="sub">A staffing agency calls: <b style="color:var(--text)">overtime available, either department.</b><br>
+  Which one gets the hour? Last week you couldn't answer. <b class="accent-gold">In 10 minutes you can.</b></p>
+</section>
+
+<!-- 3 · The reveal -->
+<section class="slide">
+  <div class="kicker">The Reveal · Shadow Prices</div>
+  <h2>The model already <span class="grad">priced everything</span></h2>
+  <div class="cards">
+    <div class="card" style="border-color:rgba(255,209,102,0.4)"><div class="label">Carpentry</div><div class="title" style="font-size:2rem">$15 / hour</div><p>What one more carpentry hour adds to optimal profit.</p></div>
+    <div class="card"><div class="label">Finishing</div><div class="title" style="font-size:2rem">$5 / hour</div><p>Three times less valuable — same shop, same night, very different scarcity.</p></div>
+  </div>
+  <p class="sub">Every constraint in every LP carries a <b style="color:var(--text)">shadow price</b>: the marginal value of one more unit of that resource. The solver computes them for free, every time.</p>
+</section>
+
+<!-- 4 · Proof -->
+<section class="slide">
+  <div class="kicker">Don't Trust — Verify</div>
+  <h2>Give the shop <span class="grad">one more hour</span></h2>
+  <div class="math">
+    240 carpentry hrs → $4,100.00<br>
+    241 carpentry hrs → <span class="accent-g">$4,115.00</span> &nbsp;(+$15 ✓)<br><br>
+    <span style="color:var(--text2);font-size:0.8em">and the plan rebalances: (30, 40) → (29.5, 41)</span>
+  </div>
+  <p class="sub">The extra hour doesn't just "make more desks" — the entire mix shifts. Optimization thinks in <i>systems</i>, not increments.</p>
+</section>
+
+<!-- 5 · Electricity story -->
+<section class="slide">
+  <div class="kicker">This Is Not A Classroom Toy</div>
+  <h2>Your electric bill <span class="grad">is a shadow price</span></h2>
+  <ul class="list">
+    <li>Every ~5 minutes, grid operators (ISO-NE here in Boston, PJM, CAISO…) solve an optimization: cheapest generation that meets demand without melting any line</li>
+    <li>The <b style="color:var(--text)">shadow price of the demand constraint at each location</b> is published as the LMP — the locational marginal price</li>
+    <li>That number IS the wholesale price of electricity. Billions of dollars settle on duals, every day</li>
+    <li class="accent-gold">Tonight's $15/hour is the same mathematics that prices the lights in this room</li>
+  </ul>
+</section>
+
+<!-- 6 · Overtime decision -->
+<section class="slide">
+  <div class="kicker">Use It · The Overtime Offer</div>
+  <h2>Overtime costs $25/hr. <span class="grad">Buy?</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">At $25 / hr</div><div class="title accent-r">Buy nothing</div><p>Carpentry hours are worth $15, finishing $5. Paying $25 for either <b style="color:var(--text)">destroys value</b> — even in a shop running at 100%.</p></div>
+    <div class="card"><div class="label">At $10 / hr</div><div class="title accent-g">Buy carpentry only</div><p>$15 − $10 = $5 profit per hour. Finishing at $10 still loses $5/hr. Full capacity ≠ worth expanding.</p></div>
+  </div>
+  <p class="sub">This is the discipline shadow prices buy you: <b style="color:var(--text)">"we're maxed out" is not an argument. "$15 &gt; $10" is.</b></p>
+</section>
+
+<!-- 7 · Ranging -->
+<section class="slide">
+  <div class="kicker">The Fine Print</div>
+  <h2>Prices hold <span class="grad">within ranges</span></h2>
+  <div class="math">
+    Carpentry: $15/hr valid from <span class="accent-gold">200 → 300 hrs</span><br>
+    <span style="color:var(--text2);font-size:0.8em">at 300 the shop goes all-chairs — past that, carpentry is worth $0</span><br><br>
+    Desk profit: plan survives from <span class="accent-gold">$66.67 → $100</span><br>
+    <span style="color:var(--text2);font-size:0.8em">inside the range: same plan. One cent past it: the corner jumps</span>
+  </div>
+  <p class="sub">So the full answer to the COO is never just "$15/hr" — it's <b style="color:var(--text)">"$15/hr for the next 60 hours."</b></p>
+</section>
+
+<!-- 8 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <h2>Break</h2>
+  <p class="sub">While you're up: open the Bakery Explorer — the binding badges now show <b class="accent-gold">live shadow prices</b>. Drag the oven slider and watch the price of a minute change.</p>
+</section>
+
+<!-- 9 · Reduced costs -->
+<section class="slide">
+  <div class="kicker">Which Products Deserve To Exist</div>
+  <h2>Reduced costs: the <span class="grad">entry fee</span></h2>
+  <div class="math">
+    Proposed bookcase: $50 profit, 3 carp + 2 fin hrs<br><br>
+    capacity it consumes: 3×$15 + 2×$5 = <span class="accent-r">$55</span><br>
+    profit it brings: <span style="color:var(--text)">$50</span> &nbsp;→&nbsp; reduced cost <span class="accent-r">−$5</span>
+  </div>
+  <p class="sub">The solver builds <b style="color:var(--text)">zero</b> — each bookcase would destroy $5 by displacing better products.<br>
+  Raise its price to $56 and it storms into the plan. <b class="accent-gold">Every product must out-earn the capacity it steals.</b></p>
+</section>
+
+<!-- 10 · Duality -->
+<section class="slide">
+  <div class="kicker">Duality, For Managers</div>
+  <h2>The books <span class="grad">always balance</span></h2>
+  <div class="math">
+    240 hrs × $15 &nbsp;+&nbsp; 100 hrs × $5<br>
+    = $3,600 + $500 = <span class="accent-g">$4,100</span> &nbsp;= optimal profit. Exactly.
+  </div>
+  <p class="sub">Value every resource at its shadow price and you account for <b style="color:var(--text)">every dollar of profit</b> — no more, no less. Behind every optimization lives a twin problem that prices what the first one uses. That symmetry (strong duality) is why these prices are trustworthy enough to run electricity markets.</p>
+</section>
+
+<!-- 11 · Lab -->
+<section class="slide">
+  <div class="kicker">Hands-On Lab · 25 Minutes</div>
+  <h2>Pi, RC, and the <span class="grad">ranging report</span></h2>
+  <div class="row">
+    <img class="qr" width="180" height="180" alt="QR code to Colab notebook"
+      src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fharslan%2Fisom-839%2Fblob%2Fmaster%2Fpublic%2Fsession-03%2FISOM839_Session3_Sensitivity_and_Shadow_Prices.ipynb">
+    <pre>
+m.optimize()
+carpentry.Pi        <span class="c"># shadow price  -> 15.0</span>
+carpentry.SARHSLow  <span class="c"># range         -> 200</span>
+carpentry.SARHSUp   <span class="c">#               -> 300</span>
+bookcase.RC         <span class="c"># reduced cost  -> -5.0</span>
+desks.SAObjLow      <span class="c"># obj ranging   -> 66.67</span></pre>
+  </div>
+  <p class="sub" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem">isom-839.vercel.app → Session 3 → Open in Colab</p>
+</section>
+
+<!-- 12 · Lie detector -->
+<section class="slide">
+  <div class="kicker">In The Notebook · The Lie Detector 🕵️</div>
+  <h2>An AI rebuilt your model. <span class="grad">Audit it.</span></h2>
+  <ul class="list">
+    <li>Its output runs, prints a plan, and claims <b style="color:var(--text)">$4,200 profit</b> — more than yours!</li>
+    <li>But the report says finishing has <b class="accent-r">40 idle hours, worth $0/hr</b></li>
+    <li>You have walked the floor. Finishing is slammed. <b style="color:var(--text)">The model is lying somewhere.</b></li>
+    <li class="accent-gold">Sensitivity analysis is how you catch it — the economics must match the world</li>
+  </ul>
+  <p class="sub">Anyone can generate a model now. <b style="color:var(--text)">The analyst who can audit one is the one who gets trusted.</b></p>
+</section>
+
+<!-- 13 · Homework -->
+<section class="slide">
+  <div class="kicker">Before Next Wednesday · Sep 30</div>
+  <h2>Homework <span class="grad">#2</span> — The COO Memo 📄</h2>
+  <ul class="list">
+    <li><b style="color:var(--text)">Meridian Manufacturing</b>: three products, three resources — and a product line that was discontinued on gut feel</li>
+    <li>Q1: which resource to expand first, at what max price, for how many hours</li>
+    <li>Q2: does the discontinued Deluxe deserve a second look — at what margin?</li>
+    <li>Q3: what happens if Premium's margin falls 15%? Find the exact cliff</li>
+    <li class="accent-gold">One page, executive English, every claim citing a Pi, RC, or range</li>
+  </ul>
+</section>
+
+<!-- 14 · Next week -->
+<section class="slide">
+  <div class="kicker">Next Wednesday · Sep 30</div>
+  <h2>The models go <span class="grad">to the map</span></h2>
+  <p class="sub">Transportation, transshipment, assignment — the network models that move the world's goods.<br>
+  Featuring the 2026 Edelman finalist that feeds <b style="color:var(--text)">810 million people</b>: India's Anna Chakra.</p>
+  <p class="sub"><span class="grad" style="font-weight:700">Every constraint has a price. Now you know how to read them.</span></p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>

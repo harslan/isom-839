@@ -5,7 +5,11 @@
   "subtitle": "The solution is the beginning, not the end — shadow prices, reduced costs, and the economics hiding inside every solved LP",
   "duration": "120 Minutes",
   "icon": "search",
-  "tags": ["Sensitivity Analysis", "Shadow Prices", "Duality"],
+  "tags": [
+    "Sensitivity Analysis",
+    "Shadow Prices",
+    "Duality"
+  ],
   "objectives": [
     {
       "title": "Price your scarce resources with shadow prices",
@@ -108,6 +112,33 @@
   ],
   "resources": [
     {
+      "title": "Session 3 Slide Deck",
+      "url": "/session-03/slides.html",
+      "description": "Tonight's presentation: the overtime cliffhanger answered ($15 vs $5), why your electric bill is a shadow price, ranging, reduced costs, the books-balance duality moment, and the AI lie detector. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
+      "title": "Sensitivity & Shadow Prices — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-03/ISOM839_Session3_Sensitivity_and_Shadow_Prices.ipynb",
+      "description": "The Session 3 lab and Homework #2: Pi and ranging on the shop-floor model, the $50 bookcase reduced-cost test, the strong-duality balance check, the AI lie-detector audit, and the Meridian COO memo scaffold.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Bakery Explorer — Now With Live Shadow Prices",
+      "url": "/explore/",
+      "description": "The binding badges now show what one more unit of each resource is worth, recomputed live as you drag. Watch the price of an oven-minute change as the bottleneck moves.",
+      "icon": "zap",
+      "badge": "Play",
+      "badgeType": "interactive",
+      "linkText": "Open the explorer"
+    },
+    {
       "title": "Gurobi Jupyter Notebook Models",
       "url": "https://www.gurobi.com/jupyter_models/",
       "description": "Several notebooks in this library print and interpret full sensitivity output — ideal worked examples for Homework #2.",
@@ -149,7 +180,7 @@
       "number": 1,
       "icon": "search",
       "title": "The Sensitivity Interrogation",
-      "description": "Solve the expanded three-product furniture model, extract the full sensitivity report from gurobipy, and answer a rapid-fire set of managerial what-ifs — without re-solving the model.",
+      "description": "Extend the shop-floor model with a proposed $50 bookcase (3 hrs carpentry, 2 hrs finishing), extract the full sensitivity report from gurobipy, and answer a rapid-fire set of managerial what-ifs — without re-solving the model.",
       "steps": [
         {
           "title": "Solve and extract the report",
@@ -170,7 +201,7 @@
       ],
       "codeBlock": {
         "language": "python",
-        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model(\"furniture_expanded\")\ndesks = m.addVar(name=\"desks\")\nchairs = m.addVar(name=\"chairs\")\nshelves = m.addVar(name=\"shelves\")\n\nm.setObjective(70*desks + 50*chairs + 40*shelves, GRB.MAXIMIZE)\nm.addConstr(4*desks + 3*chairs + 2*shelves <= 240, \"carpentry\")\nm.addConstr(2*desks + 1*chairs + 1*shelves <= 100, \"finishing\")\nm.optimize()\n\nprint(\"--- Shadow prices (Pi) ---\")\nfor c in m.getConstrs():\n    print(f\"{c.ConstrName}: ${c.Pi:.2f}/hour  \"\n          f\"(valid RHS range {c.SARHSLow:.0f}-{c.SARHSUp:.0f})\")\n\nprint(\"--- Reduced costs (RC) ---\")\nfor v in m.getVars():\n    print(f\"{v.VarName}: x={v.X:.0f}, RC={v.RC:.2f}, \"\n          f\"obj range {v.SAObjLow:.0f} to {v.SAObjUp:.0f}\")"
+        "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model(\"furniture_expanded\")\ndesks = m.addVar(name=\"desks\")\nchairs = m.addVar(name=\"chairs\")\nbookcases = m.addVar(name=\"bookcases\")\n\nm.setObjective(70*desks + 50*chairs + 50*bookcases, GRB.MAXIMIZE)\ncarpentry = m.addConstr(4*desks + 3*chairs + 3*bookcases <= 240, \"carpentry\")\nfinishing = m.addConstr(2*desks + 1*chairs + 2*bookcases <= 100, \"finishing\")\nm.optimize()\n\nprint(f\"Plan: {desks.X:.0f} desks, {chairs.X:.0f} chairs, {bookcases.X:.0f} bookcases\")\nprint(f\"Carpentry: Pi ${carpentry.Pi:.2f}, valid RHS [{carpentry.SARHSLow:.0f}, {carpentry.SARHSUp:.0f}]\")\nprint(f\"Finishing: Pi ${finishing.Pi:.2f}, valid RHS [{finishing.SARHSLow:.0f}, {finishing.SARHSUp:.0f}]\")\nprint(f\"Bookcase reduced cost: ${bookcases.RC:.2f}   # negative = not worth building yet\")"
       },
       "discussionNote": "Shelves carry a negative reduced cost: at a $40 margin they simply cannot outbid desks and chairs for scarce hours. If an AI assistant confidently added shelves to the plan anyway, the RC value is your one-line proof it's wrong. That is the pattern for the AI era — the machine drafts, the sensitivity report testifies, and you deliver the verdict."
     }
@@ -198,7 +229,11 @@
   "nextSession": {
     "title": "Network Optimization I: Transportation, Transshipment & Assignment",
     "description": "Optimization goes geographic: plants, warehouses, and delivery routes as networks. Featuring India's Anna Chakra — a 2026 Edelman finalist feeding 810 million people — and the beautiful reason network LPs hand you integer answers for free.",
-    "tags": ["Networks", "Transportation", "Assignment"],
+    "tags": [
+      "Networks",
+      "Transportation",
+      "Assignment"
+    ],
     "slug": "session-04"
   }
 }
