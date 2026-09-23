@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 4 · The Models Go to the Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 940px; line-height: 1.55; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 360px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 920px; color: var(--text2); font-size: clamp(0.95rem, 1.9vw, 1.35rem); line-height: 1.7; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 04</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 4 · Wed Sep 30</div>
+  <h1>The Models Go <span class="grad">to the Map</span></h1>
+  <p class="sub">Transportation, transshipment &amp; assignment — nodes, arcs, and the one model family that moves the world's goods and staffs its teams.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · HW2 debrief -->
+<section class="slide">
+  <div class="kicker">Homework #2 Debrief · Meridian Manufacturing</div>
+  <h2>The discontinued product was <span class="grad">one dollar away</span></h2>
+  <div class="math">
+    Standard 70 &nbsp;·&nbsp; Deluxe <span class="accent-r">0</span> &nbsp;·&nbsp; Premium 110 &nbsp;→&nbsp; <span class="accent-g">$8,840</span><br>
+    <span style="color:var(--text2);font-size:0.8em">packaging $18/hr (holds for 20 hrs) &nbsp;·&nbsp; assembly $14/hr &nbsp;·&nbsp; machining: 20 idle hrs, worth $0</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">Q1 · The trap</div><p>Machining has the most hours and is worth <b style="color:var(--text)">nothing</b>. Expand packaging — but only up to $18/hr and only for 20 hours.</p></div>
+    <div class="card"><div class="label">Q2 · Deluxe</div><p>Reduced cost −$4: it uses $46 of scarce capacity for $42 of margin. <b style="color:var(--text)">Above $46 it comes back.</b></p></div>
+    <div class="card"><div class="label">Q3 · The cliff</div><p>Plan survives down to $52 (−13.3%). At −15% Deluxe carries the company. <b class="accent-gold">One dollar of price erosion.</b></p></div>
+  </div>
+</section>
+
+<!-- 3 · Anna Chakra -->
+<section class="slide">
+  <div class="kicker">2026 Edelman Finalist · India's Dept. of Food &amp; Public Distribution</div>
+  <h2>Feeding 810 million people is <span class="grad">a network problem</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    FCI depots &nbsp;→&nbsp; state warehouses &nbsp;→&nbsp; fair-price shops &nbsp;→&nbsp; ration-card households<br>
+    <span style="color:var(--text2)">sources &nbsp;·&nbsp; hubs where in = out &nbsp;·&nbsp; sinks with fixed monthly demand</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">Before</div><p>Each state routed grain by habit and spreadsheet. Trucks crossed paths; a shop's grain often came from a far depot while a near one shipped elsewhere.</p></div>
+    <div class="card"><div class="label">Anna Chakra</div><p>An O.R. decision-support tool built with the U.N. World Food Programme and IIT Delhi: a min-cost network flow over every depot, warehouse and shop, re-solved state by state.</p></div>
+    <div class="card"><div class="label">After</div><p>An estimated <b class="accent-gold">₹2.5 billion saved a year</b> and <b class="accent-gold">35% lower emissions</b> — the same tonnage, shorter arcs.</p></div>
+  </div>
+  <p class="sub">Tonight's three-plant toy has 12 arcs. Theirs has a few hundred thousand. <b style="color:var(--text)">The constraints are word-for-word the same.</b></p>
+</section>
+
+<!-- 4 · Poll 1 -->
+<section class="slide">
+  <div class="kicker">Zoom Poll 1 · Before We Solve</div>
+  <h2>Northeast Beverages: <span class="grad">3 plants, 4 warehouses</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    Boston 300 · Hartford 260 · Albany 240 cases &nbsp;→&nbsp; Portland 180 · Worcester 220 · Providence 190 · Springfield 160<br>
+    <span style="color:var(--text2)">cheapest lanes: Boston→Worcester $2 · Hartford→Providence $2 · Hartford→Springfield $2</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Every $2 lane runs full</div></div>
+    <div class="card"><div class="label">B</div><div class="title">A $2 lane carries nothing</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Every plant ships all it has</div></div>
+    <div class="card"><div class="label">D</div><div class="title">Can't tell without solving</div></div>
+  </div>
+</section>
+
+<!-- 5 · The transportation model -->
+<section class="slide">
+  <div class="kicker">The Transportation Model</div>
+  <h2>One variable <span class="grad">per lane</span></h2>
+  <div class="math">
+    x[p, w] = cases shipped from plant p to warehouse w<br><br>
+    min &nbsp;Σ c[p,w] · x[p,w]<br>
+    Σ<sub>w</sub> x[p,w] ≤ supply[p] &nbsp;&nbsp;<span style="color:var(--text2)">each plant — rows cap</span><br>
+    Σ<sub>p</sub> x[p,w] = demand[w] &nbsp;<span style="color:var(--text2)">each warehouse — columns fill</span>
+  </div>
+  <p class="sub">12 variables, 7 constraints. The same grammar as Session 2 — decide, aim, obey — but the decisions now live on <b style="color:var(--text)">a map</b>.</p>
+</section>
+
+<!-- 6 · Solved -->
+<section class="slide">
+  <div class="kicker">Northeast Beverages · Solved</div>
+  <h2>The cheapest plan costs <span class="grad">$2,180</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    Boston → Portland 180 &nbsp;·&nbsp; Boston → Worcester 120<br>
+    Hartford → Worcester 70 &nbsp;·&nbsp; Hartford → Providence 190<br>
+    Albany → Worcester 30 &nbsp;·&nbsp; Albany → Springfield 160 &nbsp;·&nbsp; <span style="color:var(--text2)">Albany keeps 50 cases idle</span>
+  </div>
+  <p class="sub">Hartford → Springfield costs $2 and carries <b class="accent-r">nothing</b>; Albany → Springfield costs $3 and carries 160. Hartford's cases are worth more in Providence. <b style="color:var(--text)">The cheapest lane is not always the best use of a plant.</b></p>
+</section>
+
+<!-- 7 · Prices on a map -->
+<section class="slide">
+  <div class="kicker">Session 3 Didn't End</div>
+  <h2>Every node <span class="grad">has a price</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">One more case of demand costs</div><p>Portland <b style="color:var(--text)">$7</b> · Worcester $5 · Providence $4 · Springfield $3 — the marginal cost to serve each city, not the cheapest lane into it.</p></div>
+    <div class="card"><div class="label">One more case of capacity saves</div><p>Boston <b style="color:var(--text)">$3</b> · Hartford $2 · Albany <b class="accent-r">$0</b> — Albany already has 50 cases nobody wants.</p></div>
+  </div>
+  <p class="sub">Same <code style="font-family:'JetBrains Mono',monospace">.Pi</code>, new map. Where would you add capacity? Where would you chase new customers?</p>
+</section>
+
+<!-- 8 · Unbalanced -->
+<section class="slide">
+  <div class="kicker">Unbalanced Networks</div>
+  <h2>Supply 800, demand 750: <span class="grad">someone idles</span></h2>
+  <ul class="list">
+    <li>Supply &gt; demand: write supply as <b style="color:var(--text)">≤</b> and the model chooses who idles (Albany, 50 cases)</li>
+    <li>Portland grows to 230 → total demand 800 = supply. Cost $2,530, every plant runs full</li>
+    <li>Portland at 240 → demand 810 &gt; 800. The solver says <b class="accent-r">INFEASIBLE</b> — it will not lie to you</li>
+    <li class="accent-gold">Fix: a dummy "shortage" source with a penalty cost. The model then tells you <i>which</i> city goes short</li>
+  </ul>
+</section>
+
+<!-- 9 · Transshipment -->
+<section class="slide">
+  <div class="kicker">Transshipment · The One New Idea</div>
+  <h2>At a hub, <span class="grad">in equals out</span></h2>
+  <div class="math">
+    Σ flow into hub &nbsp;−&nbsp; Σ flow out of hub &nbsp;=&nbsp; 0<br><br>
+    <span style="color:var(--text2);font-size:0.85em">sources: net outflow = supply &nbsp;·&nbsp; sinks: net inflow = demand &nbsp;·&nbsp; hubs: zero</span>
+  </div>
+  <p class="sub">One constraint type, three node roles. Add cross-docks, distribution centers, ports — the grammar never changes. This is the constraint Anna Chakra writes at every state warehouse.</p>
+</section>
+
+<!-- 10 · Framingham -->
+<section class="slide">
+  <div class="kicker">Use It · A Cross-Dock in Framingham</div>
+  <h2>The hub earns <span class="grad">$130 a day</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    inbound: Boston $1 · Hartford $1 · Albany $2<br>outbound: Portland $4 · Worcester $1 · Providence $1 · Springfield $2<br><br>
+    New plan: $2,050 &nbsp;<span class="accent-g">(was $2,180)</span> — 100 cases route through the hub to Worcester<br>
+    <span style="color:var(--text2)">Hartford → hub 70 · Albany → hub 30 · hub → Worcester 100</span>
+  </div>
+  <p class="sub">Add a $1/case handling fee and the saving shrinks to <b style="color:var(--text)">$30</b>. The model doesn't love hubs. It finds exactly when they pay.</p>
+</section>
+
+<!-- 11 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <h2>Break</h2>
+  <p class="sub">While you're up: open the <b class="accent-gold">Network Explorer</b> (Explorers → Network) and try the "Albany outage" preset. Watch the flow re-route. You'll need it after the break.</p>
+</section>
+
+<!-- 12 · Poll 2 -->
+<section class="slide">
+  <div class="kicker">Zoom Poll 2</div>
+  <h2>Providence's demand becomes <span class="grad">150.5 cases</span>. What happens?</h2>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Solver errors</div></div>
+    <div class="card"><div class="label">B</div><div class="title">Some shipments turn fractional</div></div>
+    <div class="card"><div class="label">C</div><div class="title">All shipments stay whole</div></div>
+    <div class="card"><div class="label">D</div><div class="title">Infeasible</div></div>
+  </div>
+  <p class="sub">We never declared integer variables. So why were all six shipments whole numbers a minute ago?</p>
+</section>
+
+<!-- 13 · Integrality -->
+<section class="slide">
+  <div class="kicker">Integer Answers For Free</div>
+  <h2>Ship 3.7 trucks? <span class="grad">Never.</span></h2>
+  <ul class="list">
+    <li>Every network constraint matrix is <b style="color:var(--text)">totally unimodular</b>: each column has one +1 and one −1</li>
+    <li>So every corner of the feasible region is integer — whenever supplies and demands are integers</li>
+    <li>The LP <i>is</i> the integer program. No branch-and-bound. No extra compute. Even at 810 million people</li>
+    <li class="accent-gold">Providence 150.5 → shipments of 150.5 and 9.5. The fraction came from the data, never from the model</li>
+  </ul>
+</section>
+
+<!-- 14 · Breakout -->
+<section class="slide">
+  <div class="kicker">Breakout Rooms · Pairs · 10 Minutes</div>
+  <h2>The Network <span class="grad">Speed Round</span></h2>
+  <ul class="list">
+    <li><b style="color:var(--text)">isom-839.vercel.app → Explorers → Network.</b> Three plants (40 · 30 · 30), four stores (25 each), twelve lanes, live re-routing.</li>
+    <li>Q1 · Add <b style="color:var(--text)">one unit</b> to any store's demand. What does the Explorer say — and why?</li>
+    <li>Q2 · Set Boston to 50. Now add 5 to each store, one at a time. Which store is dearest to serve <i>at the margin</i>, per unit?</li>
+    <li>Q3 · Back to defaults. Give each plant 10 more units, one at a time. Whose capacity is worth the most? Whose is worth nothing?</li>
+    <li>Q4 · Apply the <b style="color:var(--text)">Albany outage</b> preset. What re-routes, and what does the outage cost per day?</li>
+    <li>Q5 · Find the <b style="color:var(--text)">smallest single cost edit</b> that changes the flow pattern.</li>
+  </ul>
+  <p class="sub">Post answers in chat when you return. Dollar signs and lane names only.</p>
+</section>
+
+<!-- 14b · Breakout answers -->
+<section class="slide">
+  <div class="kicker">Speed Round · Answers</div>
+  <h2>Cost is a <span class="grad">system property</span></h2>
+  <div class="math" style="font-size:clamp(0.85rem,1.7vw,1.3rem)">
+    Q1 · <span class="accent-r">Infeasible</span>. Supply 100 = demand 100 exactly. You can't sell what you can't make<br>
+    Q2 · Store 3 at <span class="accent-gold">$6 / unit</span> (S1 $4 · S2 $5 · S4 $5) — its cheapest lane is $4, but serving it cascades<br>
+    Q3 · Albany <span class="accent-g">$2 / unit</span> · Hartford $1 · Boston <span class="accent-r">$0</span> — Boston's lanes are already the last resort<br>
+    Q4 · $450, <span class="accent-r">+$40 a day</span>. Boston → S4 goes 15 → 25, Hartford → S3 goes 5 → 25<br>
+    Q5 · One dollar: Albany → S3 $4 → $5, or Hartford → S3 $5 → $4. Half the map re-routes
+  </div>
+  <p class="sub">Bonus, the books: 25 × ($4 + $5 + $6 + $5) − (30 × $1 + 30 × $2) = $500 − $90 = <b class="accent-g">$410</b>. Demand values minus capacity values equals cost. Duality, on a map.</p>
+</section>
+
+<!-- 15 · Lab -->
+<section class="slide">
+  <div class="kicker">Hands-On Lab · 25 Minutes</div>
+  <h2>The pattern that <span class="grad">scales to a nation</span></h2>
+  <div class="row">
+    <img class="qr" width="180" height="180" alt="QR code to Colab notebook" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fharslan%2Fisom-839%2Fblob%2Fmaster%2Fpublic%2Fsession-04%2FISOM839_Session4_Networks_Transportation_Assignment.ipynb">
+    <pre>
+ship = m.addVars(cost.keys(), name=<span class="f">"ship"</span>)     <span class="c"># one var per lane</span>
+m.setObjective(ship.prod(cost), GRB.MINIMIZE)   <span class="c"># Σ cost × flow</span>
+m.addConstrs((ship.sum(p, <span class="f">"*"</span>) &lt;= supply[p]
+              for p in supply), <span class="f">"supply"</span>)         <span class="c"># rows cap</span>
+m.addConstrs((ship.sum(<span class="f">"*"</span>, w) == demand[w]
+              for w in demand), <span class="f">"demand"</span>)         <span class="c"># columns fill</span></pre>
+  </div>
+  <p class="sub" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem">isom-839.vercel.app → Session 4 → Open in Colab &nbsp;·&nbsp; 12 lanes or 12,000 — the code does not change</p>
+</section>
+
+<!-- 16 · Assignment -->
+<section class="slide">
+  <div class="kicker">Assignment · Transportation With All Ones</div>
+  <h2>Everyone gets <span class="grad">exactly one</span></h2>
+  <div class="math">
+    x[i, j] = 1 if person i takes job j<br><br>
+    max &nbsp;Σ fit[i,j] · x[i,j]<br>
+    Σ<sub>j</sub> x[i,j] = 1 &nbsp;<span style="color:var(--text2)">each person, one job</span> &nbsp;·&nbsp; Σ<sub>i</sub> x[i,j] = 1 &nbsp;<span style="color:var(--text2)">each job, one person</span>
+  </div>
+  <p class="sub">Supplies of 1, demands of 1 — so integrality-for-free makes every x a clean <b style="color:var(--text)">0 or 1</b> without declaring it. Consultants to projects, nurses to shifts, TAs to sections, eHarmony users to each other.</p>
+</section>
+
+<!-- 17 · Greedy trap -->
+<section class="slide">
+  <div class="kicker">Live · 90 Seconds In Chat</div>
+  <h2>Four TAs, four sections. <span class="grad">Beat the solver.</span></h2>
+  <pre style="font-size:clamp(0.85rem,1.6vw,1.2rem)">
+fit         Mon AM   Mon PM   Wed AM   Wed PM
+Priya          9        8        5        6
+Marcus         9        5        4        3
+Lin            5        7        9        8
+Sofia          8        4        6        9</pre>
+  <p class="sub">Assign each TA one section, each section one TA. Post your total. <span style="color:var(--text2)">Hint: "everyone takes their favorite in order" scores 32. The solver scores more.</span></p>
+</section>
+
+<!-- 18 · AI angle -->
+<section class="slide">
+  <div class="kicker">When An AI Writes Your Network Model</div>
+  <h2>Two questions <span class="grad">before you trust it</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">1 · Is it balanced?</div><p>Total supply vs total demand. An LLM will happily write supply as an equality on an unbalanced network — and hand you INFEASIBLE, or worse, a silently wrong dummy node.</p></div>
+    <div class="card"><div class="label">2 · Do the prices make sense?</div><p>A city whose marginal cost is <i>below</i> its cheapest lane, or an idle plant with a positive shadow price, means a sign is flipped in the flow-balance constraint.</p></div>
+  </div>
+  <p class="sub">The model that feeds 810 million people is checked the same way. <b style="color:var(--text)">Structure first, prices second, code last.</b></p>
+</section>
+
+<!-- 19 · Homework -->
+<section class="slide">
+  <div class="kicker">Before Next Wednesday · Oct 7</div>
+  <h2>Homework <span class="grad">#3</span> — The Staffing Matchmaker 🧩</h2>
+  <ul class="list">
+    <li><b style="color:var(--text)">Beacon Street Advisory</b>: six consultants, six client projects, a 6×6 fit-score matrix in the notebook</li>
+    <li>Formulate the assignment LP with <b style="color:var(--text)">continuous</b> variables. Show the answer is a clean 0/1 matching anyway</li>
+    <li>Compare it to the "everyone picks their favorite in seniority order" plan the partners would have made by hand</li>
+    <li>Pick one twist — a consultant barred from a client, or a project that needs two people — re-solve, and explain who moved and why</li>
+    <li class="accent-gold">Notebook + a short paragraph. Every claim cites a number from the solve</li>
+  </ul>
+</section>
+
+<!-- 20 · Next week -->
+<section class="slide">
+  <div class="kicker">Next Wednesday · Oct 7</div>
+  <h2>Which facilities <span class="grad">should exist at all?</span></h2>
+  <p class="sub">Network Optimization II: shortest paths, maximum flows, minimum-cost flow — then supply chain design, where the model decides not just how to ship but <b style="color:var(--text)">which warehouses to open</b>.</p>
+  <p class="sub"><span class="grad" style="font-weight:700">Nodes, arcs, balance. You now speak the language of every supply chain on Earth.</span></p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>

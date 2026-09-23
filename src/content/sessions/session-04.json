@@ -112,6 +112,24 @@
   ],
   "resources": [
     {
+      "title": "Session 4 Slide Deck",
+      "url": "/session-04/slides.html",
+      "description": "Tonight's presentation: HW2 debrief, Anna Chakra, two live polls, the transportation grammar, prices on a map, the Framingham cross-dock, integrality for free, the Network Speed Round breakout, the TA greedy trap, and the AI checklist. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
+      "title": "Networks, Transportation & Assignment — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-04/ISOM839_Session4_Networks_Transportation_Assignment.ipynb",
+      "description": "The Session 4 lab and Homework #3: the Northeast Beverages shipping model with dictionary-indexed variables, demand and capacity prices, the infeasible-and-honest solver, the Framingham transshipment hub, the 150.5-case integrality demo, the four-TA assignment with its greedy trap, and the Beacon Street Advisory staffing scaffold.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "INFORMS 2026 Edelman Finalists Announcement",
       "url": "https://www.informs.org/News-Room/INFORMS-Releases/Awards-Releases/INFORMS-Names-Six-Finalists-for-the-2026-Franz-Edelman-Award-the-World-s-Leading-Honor-in-Analytics-Operations-Research-and-Management-Science",
       "description": "The official announcement featuring Anna Chakra and Google among six finalists for analytics' most prestigious prize. Read what world-class O.R. impact looks like.",
@@ -195,6 +213,35 @@
         "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nplants = {\"Boston\": 300, \"Hartford\": 260, \"Albany\": 240}\ndemand = {\"Portland\": 180, \"Worcester\": 220, \"Providence\": 190, \"Springfield\": 160}\n\ncost = {  # $ per case shipped\n    (\"Boston\", \"Portland\"): 4, (\"Boston\", \"Worcester\"): 2,\n    (\"Boston\", \"Providence\"): 3, (\"Boston\", \"Springfield\"): 5,\n    (\"Hartford\", \"Portland\"): 7, (\"Hartford\", \"Worcester\"): 3,\n    (\"Hartford\", \"Providence\"): 2, (\"Hartford\", \"Springfield\"): 2,\n    (\"Albany\", \"Portland\"): 8, (\"Albany\", \"Worcester\"): 5,\n    (\"Albany\", \"Providence\"): 6, (\"Albany\", \"Springfield\"): 3,\n}\n\nm = gp.Model(\"shipping_network\")\nship = m.addVars(cost.keys(), name=\"ship\")\n\nm.setObjective(ship.prod(cost), GRB.MINIMIZE)\nm.addConstrs((ship.sum(p, \"*\") <= plants[p] for p in plants), \"supply\")\nm.addConstrs((ship.sum(\"*\", w) == demand[w] for w in demand), \"demand\")\nm.optimize()\n\nprint(f\"Total shipping cost: ${m.ObjVal:,.0f}\")\nfor (p, w), v in ship.items():\n    if v.X > 0.5:\n        print(f\"  {p} -> {w}: {v.X:.0f} cases\")"
       },
       "discussionNote": "Notice what the model did NOT do: several lanes carry zero cases because cheaper routes absorbed the flow. And every shipment came out a whole number even though we never declared integer variables — network structure did it for us. Now scale this mental model up: Anna Chakra is this same skeleton with thousands of nodes, and the integrality guarantee is part of why a nation-scale problem stays computationally cheap."
+    },
+    {
+      "number": 2,
+      "icon": "users",
+      "title": "The Network Speed Round (Breakout Rooms)",
+      "description": "In pairs, open the <a href=\"/explore/network/\">Network Explorer</a> — three plants, four stores, twelve lanes, live re-routing — and answer five questions in ten minutes. No code: read the flows, the costs, and what changes when you move a slider.",
+      "steps": [
+        {
+          "title": "Read the base plan",
+          "description": "At the defaults, note the total cost and work out which store is the most expensive to serve per unit — not the cheapest lane into it, the actual marginal cost."
+        },
+        {
+          "title": "Find the refused lane",
+          "description": "Name a lane that is cheap but carries zero flow, and explain in one sentence why the model refuses it."
+        },
+        {
+          "title": "Survive an outage",
+          "description": "Apply the Albany outage preset. Which lanes pick up the slack, and what does the outage cost per day?"
+        },
+        {
+          "title": "Price extra capacity",
+          "description": "Back at the defaults, raise Boston's supply by 10. Does total cost fall? By how much per unit — and why might the answer be zero?"
+        },
+        {
+          "title": "Tip the balance",
+          "description": "Find the smallest single cost edit that changes the flow pattern. That number is a ranging limit made visible."
+        }
+      ],
+      "discussionNote": "The lesson every pair rediscovers: a network's cost is a system property. Cheap lanes go unused, an idle plant's extra capacity is worth nothing, and one dollar on the right arc re-routes half the map."
     }
   ],
   "takeaways": [
@@ -214,7 +261,7 @@
   "homework": [
     {
       "label": "Homework #3",
-      "text": "The Staffing Matchmaker: a Boston consulting firm must assign six consultants to six client projects for the fall engagement cycle. You are given a 6x6 fit-score matrix (skills, industry experience, client history). Formulate the assignment problem to maximize total fit, solve it in gurobipy with continuous variables, and verify the solution is a clean 0/1 matching. Then add one real-world twist — one consultant is unavailable for one client, or one project needs two consultants — re-solve, and write a short paragraph on how the assignments shifted. Submit your Colab notebook before Session 5."
+      "text": "The Staffing Matchmaker: Beacon Street Advisory, a Boston consulting firm, must assign six consultants to six client projects for the fall engagement cycle. The 6×6 fit-score matrix (skills, industry experience, client history) is in the Session 4 notebook. Formulate the assignment problem to maximize total fit, solve it in gurobipy with continuous variables, and verify the solution is a clean 0/1 matching. Compare it to the partners' by-hand plan (everyone picks their favorite open project in seniority order) and say who pays for that plan's mistake. Then add one twist — Chloe barred from Biotech, or Hospital needing two consultants with Biotech postponed — re-solve, and write a short paragraph on who moved and why. Submit your Colab notebook before Session 5."
     }
   ],
   "nextSession": {
