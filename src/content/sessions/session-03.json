@@ -114,7 +114,7 @@
     {
       "title": "Session 3 Slide Deck",
       "url": "/session-03/slides.html",
-      "description": "Tonight's presentation: the overtime cliffhanger answered ($15 vs $5), why your electric bill is a shadow price, ranging, reduced costs, the books-balance duality moment, and the AI lie detector. Arrow keys to navigate, F for fullscreen.",
+      "description": "Tonight's presentation: HW1 debrief, three live polls, the overtime cliffhanger answered ($15 vs $5), the $30 power line, ranging, reduced costs, the books-balance duality moment, the Bakery Speed Round breakout, and the AI lie detector. Arrow keys to navigate, F for fullscreen.",
       "icon": "presentation",
       "badge": "Slides",
       "badgeType": "interactive",
@@ -123,7 +123,7 @@
     {
       "title": "Sensitivity & Shadow Prices — Colab Notebook",
       "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-03/ISOM839_Session3_Sensitivity_and_Shadow_Prices.ipynb",
-      "description": "The Session 3 lab and Homework #2: Pi and ranging on the shop-floor model, the $50 bookcase reduced-cost test, the strong-duality balance check, the AI lie-detector audit, and the Meridian COO memo scaffold.",
+      "description": "The Session 3 lab and Homework #2: Pi and ranging on the shop-floor model, the $50 bookcase reduced-cost test, the strong-duality balance check, the AI lie-detector audit, a bonus two-node electricity market (LMPs as shadow prices), and the Meridian COO memo scaffold.",
       "icon": "code",
       "badge": "Hands-On",
       "badgeType": "interactive",
@@ -213,6 +213,35 @@
         "code": "import gurobipy as gp\nfrom gurobipy import GRB\n\nm = gp.Model(\"furniture_expanded\")\ndesks = m.addVar(name=\"desks\")\nchairs = m.addVar(name=\"chairs\")\nbookcases = m.addVar(name=\"bookcases\")\n\nm.setObjective(70*desks + 50*chairs + 50*bookcases, GRB.MAXIMIZE)\ncarpentry = m.addConstr(4*desks + 3*chairs + 3*bookcases <= 240, \"carpentry\")\nfinishing = m.addConstr(2*desks + 1*chairs + 2*bookcases <= 100, \"finishing\")\nm.optimize()\n\nprint(f\"Plan: {desks.X:.0f} desks, {chairs.X:.0f} chairs, {bookcases.X:.0f} bookcases\")\nprint(f\"Carpentry: Pi ${carpentry.Pi:.2f}, valid RHS [{carpentry.SARHSLow:.0f}, {carpentry.SARHSUp:.0f}]\")\nprint(f\"Finishing: Pi ${finishing.Pi:.2f}, valid RHS [{finishing.SARHSLow:.0f}, {finishing.SARHSUp:.0f}]\")\nprint(f\"Bookcase reduced cost: ${bookcases.RC:.2f}   # negative = not worth building yet\")"
       },
       "discussionNote": "Shelves carry a negative reduced cost: at a $40 margin they simply cannot outbid desks and chairs for scarce hours. If an AI assistant confidently added shelves to the plan anyway, the RC value is your one-line proof it's wrong. That is the pattern for the AI era — the machine drafts, the sensitivity report testifies, and you deliver the verdict."
+    },
+    {
+      "number": 2,
+      "icon": "users",
+      "title": "The Bakery Speed Round (Breakout Rooms)",
+      "description": "In pairs, open the <a href=\"/explore/\">Bakery Explorer</a> — its binding badges now show live shadow prices — and answer five manager questions in ten minutes. No solver, no algebra: every answer is a shadow price times a quantity, compared to an offer, then checked against its range.",
+      "steps": [
+        {
+          "title": "Read the base prices",
+          "description": "At the default settings the oven is binding at about $0.53 per minute and labor at $0.60 per minute; both demand caps are slack and worth $0. Plan (40 bread, 50 cake), $5,000."
+        },
+        {
+          "title": "Price two offers",
+          "description": "A temp offers 60 labor minutes for $30 — take it? The landlord offers 75 extra oven minutes for $50 — take it? Multiply, compare, decide, then drag the slider to verify."
+        },
+        {
+          "title": "Value a slack constraint",
+          "description": "Cake demand rises from 60 to 61 batches. What is that worth? (Look at the badge before you guess.)"
+        },
+        {
+          "title": "Find the edge of the range",
+          "description": "Drag labor upward and watch the badges. At what point does labor stop being worth $0.60, and which constraint takes over as the bottleneck?"
+        },
+        {
+          "title": "Balance the books",
+          "description": "Compute 4,650 × oven price + 4,200 × labor price. Compare it to the optimal profit. That identity is strong duality — the deepest fact in the course."
+        }
+      ],
+      "discussionNote": "Two of the five answers surprise people every time: more oven time is not worth having at the landlord's price, and one more batch of cake demand is worth exactly nothing. Full capacity and zero value can coexist; scarcity is about the bottleneck, not the size of the number."
     }
   ],
   "takeaways": [

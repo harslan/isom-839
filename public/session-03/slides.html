@@ -57,6 +57,21 @@
   <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
 </section>
 
+<!-- 2 · HW1 debrief -->
+<section class="slide">
+  <div class="kicker">Homework #1 Debrief · Beacon Hill Roasters ☕</div>
+  <h2>The barbell beat <span class="grad">the compromise</span></h2>
+  <div class="math">
+    Brazil 51.6 lb &nbsp;·&nbsp; Colombia <span class="accent-r">0</span> &nbsp;·&nbsp; Ethiopia 48.4 lb &nbsp;→&nbsp; <span class="accent-g">$584.52</span><br>
+    <span style="color:var(--text2);font-size:0.8em">flavor exactly 8.0 (binding) &nbsp;·&nbsp; caffeine 1.01% under the 1.05% cap (slack)</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">Why zero Colombia?</div><p>Cheap Brazil plus rich Ethiopia reaches flavor 8.0 for less than the middle bean does. <b style="color:var(--text)">Extremes beat the middle.</b> Remember this — it comes back in Homework #2.</p></div>
+    <div class="card"><div class="label">Flavor 8.5?</div><p>Cost rises to <b style="color:var(--text)">$639.35</b>. Tightening a constraint can never lower a minimum — the Session 1 rule.</p></div>
+    <div class="card"><div class="label">Tonight's twist</div><p>That binding flavor spec and that slack caffeine cap <b class="accent-gold">already carry prices</b>. Tonight you learn to read them.</p></div>
+  </div>
+</section>
+
 <!-- 2 · The cliffhanger -->
 <section class="slide">
   <div class="kicker">Last Week's Cliffhanger</div>
@@ -67,6 +82,19 @@
   </div>
   <p class="sub">A staffing agency calls: <b style="color:var(--text)">overtime available, either department.</b><br>
   Which one gets the hour? Last week you couldn't answer. <b class="accent-gold">In 10 minutes you can.</b></p>
+</section>
+
+<!-- 4 · Poll 1 -->
+<section class="slide">
+  <div class="kicker">Zoom Poll 1 · 60 Seconds</div>
+  <h2>Which department gets <span class="grad">the hour?</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Carpentry</div></div>
+    <div class="card"><div class="label">B</div><div class="title">Finishing</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Doesn't matter</div><p>Both are maxed out.</p></div>
+    <div class="card"><div class="label">D</div><div class="title">Can't tell</div><p>Not without re-solving.</p></div>
+  </div>
+  <p class="sub">Commit before the reveal. Then one sentence of reasoning in chat.</p>
 </section>
 
 <!-- 3 · The reveal -->
@@ -104,6 +132,34 @@
   </ul>
 </section>
 
+<!-- 8 · Two-node grid -->
+<section class="slide">
+  <div class="kicker">Duality In The Wild · Two Nodes, One Wire</div>
+  <h2>The <span class="grad">$30</span> power line</h2>
+  <div class="math">
+    Node A: cheap plant, $20/MWh<br>
+    Node B: the city — needs 100 MW, local plant $50/MWh<br>
+    Line A → B carries at most <span class="accent-gold">60 MW</span><br><br>
+    Dispatch: 60 MW from A + 40 MW from B = $3,200 / hr<br>
+    Shadow prices: demand at A <span class="accent-g">$20</span> &nbsp;·&nbsp; demand at B <span class="accent-r">$50</span> &nbsp;·&nbsp; line capacity <span class="accent-gold">$30 / MW</span>
+  </div>
+  <p class="sub">B's shadow price <i>is</i> the city's electricity price. The $30 is the value of a fatter wire — exactly how transmission upgrades get argued. Widen the line to 100 MW and both prices collapse to $20. <b style="color:var(--text)">Same math as the $15 carpentry hour.</b></p>
+</section>
+
+
+<!-- 9 · Poll 2 -->
+<section class="slide">
+  <div class="kicker">Zoom Poll 2 · Two Questions</div>
+  <h2>Overtime at <span class="grad">$25/hour</span>, either department. What do you buy?</h2>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Carpentry only</div></div>
+    <div class="card"><div class="label">B</div><div class="title">Finishing only</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Both</div><p>We're maxed out.</p></div>
+    <div class="card"><div class="label">D</div><div class="title">Nothing</div></div>
+  </div>
+  <p class="sub">Then the price drops to <b class="accent-gold">$10/hour</b>. Vote again.</p>
+</section>
+
 <!-- 6 · Overtime decision -->
 <section class="slide">
   <div class="kicker">Use It · The Overtime Offer</div>
@@ -135,6 +191,20 @@
   <p class="sub">While you're up: open the Bakery Explorer — the binding badges now show <b class="accent-gold">live shadow prices</b>. Drag the oven slider and watch the price of a minute change.</p>
 </section>
 
+<!-- 13 · Poll 3 -->
+<section class="slide">
+  <div class="kicker">Zoom Poll 3 · Before Any Math</div>
+  <h2>Marketing proposes <span class="grad">a bookcase</span></h2>
+  <div class="math">$50 profit &nbsp;·&nbsp; 3 hrs carpentry &nbsp;·&nbsp; 2 hrs finishing. &nbsp;Build it?</div>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Yes</div><p>$50 is a healthy margin.</p></div>
+    <div class="card"><div class="label">B</div><div class="title">No</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Only with more hours</div></div>
+    <div class="card"><div class="label">D</div><div class="title">Need the solver</div></div>
+  </div>
+  <p class="sub">Hint: you already know what an hour of each department is worth.</p>
+</section>
+
 <!-- 9 · Reduced costs -->
 <section class="slide">
   <div class="kicker">Which Products Deserve To Exist</div>
@@ -157,6 +227,35 @@
     = $3,600 + $500 = <span class="accent-g">$4,100</span> &nbsp;= optimal profit. Exactly.
   </div>
   <p class="sub">Value every resource at its shadow price and you account for <b style="color:var(--text)">every dollar of profit</b> — no more, no less. Behind every optimization lives a twin problem that prices what the first one uses. That symmetry (strong duality) is why these prices are trustworthy enough to run electricity markets.</p>
+</section>
+
+<!-- 16 · Breakout -->
+<section class="slide">
+  <div class="kicker">Breakout Rooms · Pairs · 10 Minutes</div>
+  <h2>The Bakery <span class="grad">Speed Round</span></h2>
+  <ul class="list">
+    <li><b style="color:var(--text)">isom-839.vercel.app → Explorers → Bakery Explorer.</b> The binding badges show live shadow prices. One drives, one writes.</li>
+    <li>Q1 · A temp offers <b style="color:var(--text)">60 labor minutes for $30</b>. Take it?</li>
+    <li>Q2 · The landlord offers <b style="color:var(--text)">75 extra oven minutes for $50</b>. Take it?</li>
+    <li>Q3 · Cake demand rises from 60 to 61 batches. What is that worth?</li>
+    <li>Q4 · Drag labor upward. Where does the $0.60 stop — and what becomes the bottleneck?</li>
+    <li>Q5 · Do the books balance? 4,650 × oven price + 4,200 × labor price = ?</li>
+  </ul>
+  <p class="sub">Answers with a dollar sign only. Post them in chat when you're back.</p>
+</section>
+
+<!-- 17 · Breakout answers -->
+<section class="slide">
+  <div class="kicker">Speed Round · Answers</div>
+  <h2>Every question was a <span class="grad">price comparison</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    Q1 · 60 × $0.60 = $36 &gt; $30 &nbsp;→&nbsp; <span class="accent-g">take it, +$6</span> &nbsp;(verified: $5,036)<br>
+    Q2 · 75 × $0.53 = $40 &lt; $50 &nbsp;→&nbsp; <span class="accent-r">decline</span> &nbsp;(verified: $5,040 — more oven, wrong price)<br>
+    Q3 · <span class="accent-r">$0</span> — cake demand has 10 batches of slack<br>
+    Q4 · $0.60 holds until <span class="accent-gold">4,575 min</span> (+375). Then cake demand binds ($22.50/batch), oven → $0.83, labor → $0<br>
+    Q5 · 4,650 × $0.533 + 4,200 × $0.60 = $2,480 + $2,520 = <span class="accent-g">$5,000</span> ✓
+  </div>
+  <p class="sub">Shadow price × quantity, compared to the offer. Then check the range. <b style="color:var(--text)">That is the whole skill.</b></p>
 </section>
 
 <!-- 11 · Lab -->
