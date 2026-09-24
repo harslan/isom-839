@@ -213,7 +213,7 @@ for (const s of sortedSessions) {
       <SectionHeader number="06" label="Homework" title="Before Next Session" description="Complete these tasks before our next class to prepare for prompt engineering." />
       <div class="grid gap-4 fade-in">
         {data.homework.map((item: any) => (
-          <HomeworkItem label={item.label} text={item.text} />
+          <HomeworkItem label={item.label} text={item.text} submitUrl={item.submitUrl} submitText={item.submitText} />
         ))}
       </div>
     </section>

@@ -261,7 +261,8 @@
   "homework": [
     {
       "label": "Homework #2",
-      "text": "The COO Memo: you are the analytics lead at Meridian Manufacturing. Solve the provided three-product, three-resource LP in gurobipy, then write a one-page memo to your fictional COO answering: (1) which resource to expand first and the maximum price per unit worth paying, (2) whether the discontinued product line deserves a second look and at what margin, (3) how robust the plan is if the top product's price falls 15%. Every claim must cite a specific Pi, RC, or ranging value — but the memo itself must be written in plain executive English with zero jargon. Submit the notebook plus the memo before Session 4."
+      "text": "The COO Memo: you are the analytics lead at Meridian Manufacturing. Solve the provided three-product, three-resource LP in gurobipy, then write a one-page memo to your fictional COO answering: (1) which resource to expand first and the maximum price per unit worth paying, (2) whether the discontinued product line deserves a second look and at what margin, (3) how robust the plan is if the top product's price falls 15%. Every claim must cite a specific Pi, RC, or ranging value — but the memo itself must be written in plain executive English with zero jargon. Submit the notebook plus the memo before Session 4.",
+      "submitUrl": "https://suffolk.instructure.com/courses/18439/assignments/259770"
     }
   ],
   "nextSession": {

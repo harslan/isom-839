@@ -215,7 +215,8 @@
   "homework": [
     {
       "label": "Homework #1",
-      "text": "The Blending Challenge: a specialty coffee roaster blends three bean origins (each with a cost per pound, caffeine content, and flavor score) into a house blend that must hit minimum quality specs at minimum cost. Formulate the LP on paper (variables, objective, constraints), then solve it in gurobipy in Colab. Submit your Colab notebook plus a five-sentence plain-English summary of the optimal blend and total cost. Due before Session 3."
+      "text": "The Blending Challenge: a specialty coffee roaster blends three bean origins (each with a cost per pound, caffeine content, and flavor score) into a house blend that must hit minimum quality specs at minimum cost. Formulate the LP on paper (variables, objective, constraints), then solve it in gurobipy in Colab. Submit your Colab notebook plus a five-sentence plain-English summary of the optimal blend and total cost. Due Thursday, Sep 24 by 11:59 PM (extended from Session 3 — the Canvas assignment opened late).",
+      "submitUrl": "https://suffolk.instructure.com/courses/18439/assignments/259767"
     }
   ],
   "nextSession": {

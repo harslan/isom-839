@@ -59,6 +59,8 @@ const sessionsCollection = defineCollection({
     homework: z.array(z.object({
       label: z.string(),
       text: z.string(),
+      submitUrl: z.string().url().optional(),
+      submitText: z.string().default('Submit on Canvas'),
     })).default([]),
     nextSession: z.object({
       title: z.string(),

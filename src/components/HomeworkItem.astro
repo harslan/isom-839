@@ -1,15 +1,29 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
   label: string;
   text: string;
+  submitUrl?: string;
+  submitText?: string;
 }
 
-const { label, text } = Astro.props;
+const { label, text, submitUrl, submitText = 'Submit on Canvas' } = Astro.props;
 ---
 
 <div class="flex gap-4 items-center px-6 py-5 bg-bg-card border border-border-subtle rounded-xl transition-all duration-300 hover:border-accent-green hover:translate-x-2">
   <div class="shrink-0 w-6 h-6 border-2 border-accent-green rounded-md"></div>
-  <div>
+  <div class="flex-1">
     <strong>{label}</strong> {text}
+    {submitUrl && (
+      <a
+        href={submitUrl}
+        target="_blank"
+        rel="noopener"
+        class="group inline-flex items-center gap-2 mt-3 px-4 py-2 rounded-lg border border-accent-green/50 text-accent-green font-mono text-xs tracking-[1px] uppercase no-underline transition-all duration-300 hover:bg-accent-green/10 hover:border-accent-green"
+      >
+        {submitText} <Icon name="arrow-right" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+      </a>
+    )}
   </div>
 </div>
