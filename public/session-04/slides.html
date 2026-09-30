@@ -65,16 +65,16 @@
     max &nbsp;32 S + 42 D + 60 P<br>
     <span style="color:var(--text2)">machining 2S + 3D + 4P ≤ 600 &nbsp;·&nbsp; assembly 1S + 2D + 3P ≤ 400 &nbsp;·&nbsp; packaging 1S + 1D + 1P ≤ 180</span>
   </div>
-  <pre style="font-size:clamp(0.8rem,1.5vw,1.15rem)">
+  <pre style="font-size:clamp(0.78rem,1.45vw,1.1rem);max-width:1120px">
 plan        Standard <span class="f">70</span>   Deluxe <span class="r">0</span>   Premium <span class="f">110</span>   margin <span class="g">$8,840</span>
 
 resource     used   avail   slack   shadow price
-machining     580     600      20      <span class="r">$0</span>   <span class="c">← the trap: most hours, worth nothing</span>
+machining     580     600      20      <span class="r">$0</span>   <span class="c">← most hours, worth nothing</span>
 assembly      400     400       0     <span class="g">$14</span>
-packaging     180     180       0     <span class="g">$18</span>   <span class="c">← holds for 20 more hours (180 → 200)</span>
+packaging     180     180       0     <span class="g">$18</span>   <span class="c">← holds for 20 more hrs</span>
 
-Deluxe reduced cost   <span class="r">−$4</span>   <span class="c">uses $46 of scarce capacity for $42 of margin</span>
-Premium price range   <span class="f">$52 → $60+</span>   <span class="c">at $51 the plan flips to Deluxe 140 / Premium 40</span></pre>
+Deluxe reduced cost   <span class="r">−$4</span>   <span class="c">$46 of capacity for $42 of margin</span>
+Premium price range   <span class="f">$52 → $60+</span>   <span class="c">at $51 → Deluxe 140 / Premium 40</span></pre>
   <p class="sub">The right recommendation was the <b style="color:var(--text)">smallest</b> row on the table.</p>
 </section>
 
