@@ -261,7 +261,8 @@
   "homework": [
     {
       "label": "Homework #3",
-      "text": "The Staffing Matchmaker: Beacon Street Advisory, a Boston consulting firm, must assign six consultants to six client projects for the fall engagement cycle. The 6×6 fit-score matrix (skills, industry experience, client history) is in the Session 4 notebook. Formulate the assignment problem to maximize total fit, solve it in gurobipy with continuous variables, and verify the solution is a clean 0/1 matching. Compare it to the partners' by-hand plan (everyone picks their favorite open project in seniority order) and say who pays for that plan's mistake. Then add one twist — Chloe barred from Biotech, or Hospital needing two consultants with Biotech postponed — re-solve, and write a short paragraph on who moved and why. Submit your Colab notebook before Session 5."
+      "text": "The Staffing Matchmaker: Beacon Street Advisory, a Boston consulting firm, must assign six consultants to six client projects for the fall engagement cycle. The 6×6 fit-score matrix (skills, industry experience, client history) is in the Session 4 notebook. Formulate the assignment problem to maximize total fit, solve it in gurobipy with continuous variables, and verify the solution is a clean 0/1 matching. Compare it to the partners' by-hand plan (everyone picks their favorite open project in seniority order) and say who pays for that plan's mistake. Then add one twist — Chloe barred from Biotech, or Hospital needing two consultants with Biotech postponed — re-solve, and write a short paragraph on who moved and why. Submit your Colab notebook before Session 5.",
+      "submitUrl": "https://suffolk.instructure.com/courses/18439/assignments/260483"
     }
   ],
   "nextSession": {
