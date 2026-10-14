@@ -21,6 +21,7 @@ import CodeBlock from '../components/CodeBlock.astro';
 import VideoEmbed from '../components/VideoEmbed.astro';
 import TakeawayItem from '../components/TakeawayItem.astro';
 import HomeworkItem from '../components/HomeworkItem.astro';
+import { deadlineForUrl, display as displayDeadline } from '../data/deadlines';
 import NextSessionPreview from '../components/NextSessionPreview.astro';
 import { getCollection } from 'astro:content';
 
@@ -210,10 +211,10 @@ for (const s of sortedSessions) {
 
   {data.homework?.length > 0 && (
     <section id="homework" class="py-24 px-8 max-w-[1200px] mx-auto">
-      <SectionHeader number="06" label="Homework" title="Before Next Session" description="Complete these tasks before our next class to prepare for prompt engineering." />
+      <SectionHeader number="06" label="Homework" title="Before Next Session" description="One modeling problem, two weeks. Every due date is on the Deadlines page and on Canvas." />
       <div class="grid gap-4 fade-in">
         {data.homework.map((item: any) => (
-          <HomeworkItem label={item.label} text={item.text} submitUrl={item.submitUrl} submitText={item.submitText} />
+          <HomeworkItem label={item.label} text={item.text} submitUrl={item.submitUrl} submitText={item.submitText} due={deadlineForUrl(item.submitUrl)} />
         ))}
       </div>
     </section>

@@ -112,6 +112,15 @@
   ],
   "resources": [
     {
+      "title": "Flows, Paths & Supply Chain Design — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-05/ISOM839_Session5_Flows_Paths_Supply_Chain_Design.ipynb",
+      "description": "The Session 5 lab and Homework #4: a shortest path and a max flow as LPs, the two-plant / three-DC / four-region network design model with lane shadow prices, the Worcester→Boston stress test, and the Keystone Distribution three-echelon scaffold with its data.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Microsoft Cloud Supply Chain — 2026 Edelman Winner",
       "url": "https://www.informs.org/Impact/O.R.-Analytics-Success-Stories/Microsoft-Cloud-Supply-Chain",
       "description": "The INFORMS success story behind tonight's headline: how the Intelligent Fulfillment Service halved fulfillment cycle times and saves tens to hundreds of millions of dollars annually.",
@@ -214,7 +223,7 @@
   "homework": [
     {
       "label": "Homework #4",
-      "text": "Build a min-cost flow model in gurobipy for the three-echelon distribution network from tonight (2 plants, 3 cross-docks, 5 demand zones). Formulate node-balance and capacity constraints, solve, and report: (1) the optimal flow plan and total cost, (2) the two most binding lane capacities with their shadow prices, and (3) a one-paragraph memo recommending which single lane to expand and why. Due Wednesday, October 21 by 7:40 PM on Canvas — two weeks, not one.",
+      "text": "Build a min-cost flow model in gurobipy for Keystone Distribution's three-echelon network (2 plants, 3 cross-docks, 5 demand zones) — the data and a TODO scaffold are in the Homework #4 cell of the Session 5 notebook. Formulate node-balance and capacity constraints, solve, and report: (1) the optimal flow plan and total cost, (2) the two most binding lane capacities with their shadow prices, and (3) a one-paragraph memo recommending which single lane to expand and why. Due Wednesday, October 21 by 7:40 PM on Canvas — two weeks, not one.",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261895"
     }
   ],

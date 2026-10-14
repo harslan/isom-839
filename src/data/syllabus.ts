@@ -1,4 +1,5 @@
 // The full syllabus — everything a student needs to know in week one.
+import { deadlines, shortDate, weekday, clock } from './deadlines';
 
 export const description = {
   catalog:
@@ -108,21 +109,28 @@ export const gradeScale = [
   { grade: 'F', range: 'below 73' },
 ];
 
-export const keyDates = [
-  { date: 'Sep 9', label: 'First class · Homework #0 assigned', type: 'session' },
-  { date: 'Sep 16', label: 'Claim your Gurobi academic license by tonight', type: 'deadline' },
-  { date: 'Oct 21', label: 'Homework #4 due · Midterm case launches (pairs — one trio)', type: 'milestone' },
-  { date: 'Oct 28', label: 'Homework #5 due', type: 'deadline' },
-  { date: 'Nov 4', label: 'Midterm case due + team briefings (nothing else due this week)', type: 'deadline' },
-  { date: 'Nov 11', label: 'No class — Veterans Day', type: 'break' },
-  { date: 'Nov 12', label: 'Final project proposal due, Thu 11:59 PM (Canvas discussion)', type: 'deadline' },
-  { date: 'Nov 18', label: 'Homework #6 due', type: 'deadline' },
-  { date: 'Nov 25', label: 'No class — Thanksgiving (nothing due this week)', type: 'break' },
-  { date: 'Dec 2', label: 'Homework #7 due (pick one: inventory MDP or pricing curve)', type: 'deadline' },
-  { date: 'Dec 9', label: 'Final milestone due: first working result + dry-run deck', type: 'deadline' },
-  { date: 'Dec 15', label: 'Final notebook + decision memo + deck due, 11:59 PM', type: 'deadline' },
-  { date: 'Dec 16', label: 'Final presentations · The Edelman of ISOM-839', type: 'milestone' },
+// Deadlines come from deadlines.ts (the single source of truth); fixed calendar
+// moments are listed here and the two are merged in date order.
+const fixedDates = [
+  { iso: '2026-09-09', label: 'First class · Homework #0 assigned', type: 'session' },
+  { iso: '2026-09-16', label: 'Claim your Gurobi academic license by tonight', type: 'deadline' },
+  { iso: '2026-10-21', label: 'Midterm case launches (pairs — one trio) · join your team on Canvas', type: 'milestone' },
+  { iso: '2026-11-11', label: 'No class — Veterans Day', type: 'break' },
+  { iso: '2026-11-25', label: 'No class — Thanksgiving (nothing due this week)', type: 'break' },
 ];
+
+export const keyDates = [
+  ...fixedDates,
+  ...deadlines
+    .filter((d) => d.iso >= '2026-10-21')
+    .map((d) => ({
+      iso: d.iso,
+      label: `${d.label} — due ${weekday(d.iso)} ${clock(d.hhmm)}${d.kind === 'in-class' ? ' (in class)' : ''}`,
+      type: d.kind === 'in-class' ? 'milestone' : 'deadline',
+    })),
+]
+  .sort((a, b) => (a.iso === b.iso ? (a.type === 'deadline' ? -1 : 1) : a.iso.localeCompare(b.iso)))
+  .map((k) => ({ date: shortDate(k.iso), label: k.label, type: k.type }));
 
 export const howItWorks = [
   {

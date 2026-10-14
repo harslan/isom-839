@@ -112,6 +112,15 @@
   ],
   "resources": [
     {
+      "title": "Integer Optimization: Yes/No Decisions — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-06/ISOM839_Session6_Integer_Optimization_Yes_No_Decisions.ipynb",
+      "description": "The Session 6 lab and Homework #5: the five-warehouse facility location model with the fixed-charge link, reading the branch & bound log, the LP relaxation that opens 0.32 of a warehouse, logic as algebra, a 60-item knapsack solved in a blink, and the 12-project portfolio scaffold with its data.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Gurobi Jupyter Notebook Modeling Examples",
       "url": "https://www.gurobi.com/jupyter_models/",
       "description": "The facility location and knapsack notebooks here are direct templates for tonight's activity and Homework #5 — runnable in Colab.",
@@ -223,7 +232,7 @@
   "homework": [
     {
       "label": "Homework #5",
-      "text": "Project-selection knapsack: your division has $10M of capital and 12 candidate projects, each with an investment cost, an expected NPV, and staffing needs (data file provided). Build a binary IP in gurobipy that maximizes total NPV subject to the budget and at most 60 staff-months, with two logical rules: Project 7 requires Project 3 (if-then), and Projects 5 and 9 are mutually exclusive (either/or). Report the chosen portfolio, then re-solve with an $8M budget and write 3-4 sentences on which projects fell out and what that says about their bang-for-buck. Due Wednesday, October 28 by 7:40 PM on Canvas.",
+      "text": "Project-selection knapsack: your division has $10M of capital and 12 candidate projects, each with an investment cost, an expected NPV, and staffing needs — the table and a TODO scaffold are in the Homework #5 cell of the Session 6 notebook. Build a binary IP in gurobipy that maximizes total NPV subject to the budget and at most 60 staff-months, with two logical rules: Project 7 requires Project 3 (if-then), and Projects 5 and 9 are mutually exclusive (either/or). Report the chosen portfolio, then re-solve with an $8M budget and write 3-4 sentences on which projects fell out and what that says about their bang-for-buck. Due Wednesday, October 28 by 7:40 PM on Canvas.",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261898"
     }
   ],

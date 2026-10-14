@@ -1,19 +1,31 @@
 ---
 import Icon from './Icon.astro';
+import { display, type Deadline } from '../data/deadlines';
 
 interface Props {
   label: string;
   text: string;
   submitUrl?: string;
   submitText?: string;
+  due?: Deadline;
 }
 
-const { label, text, submitUrl, submitText = 'Submit on Canvas' } = Astro.props;
+const { label, text, submitUrl, submitText = 'Submit on Canvas', due } = Astro.props;
+const kindWord: Record<string, string> = { homework: 'Homework', case: 'Midterm case', project: 'Final project', milestone: 'Milestone', 'in-class': 'In class' };
 ---
 
-<div class="flex gap-4 items-center px-6 py-5 bg-bg-card border border-border-subtle rounded-xl transition-all duration-300 hover:border-accent-green hover:translate-x-2">
-  <div class="shrink-0 w-6 h-6 border-2 border-accent-green rounded-md"></div>
-  <div class="flex-1">
+<div class="flex gap-4 items-start px-6 py-5 bg-bg-card border border-border-subtle rounded-xl transition-all duration-300 hover:border-accent-green hover:translate-x-2" data-deadline-iso={due?.iso}>
+  <div class="shrink-0 w-6 h-6 mt-0.5 border-2 border-accent-green rounded-md"></div>
+  <div class="flex-1 min-w-0">
+    {due && (
+      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 mb-2">
+        <span class="inline-flex items-center gap-1.5 font-mono text-[0.7rem] tracking-[1.5px] uppercase text-accent-cyan">
+          <Icon name="clock" class="w-3.5 h-3.5" /> Due {display(due)}
+        </span>
+        <span class="font-mono text-[0.7rem] tracking-[1px] uppercase text-text-muted">· {due.points} pts</span>
+        <span class="js-days-left font-mono text-[0.7rem] tracking-[1px] uppercase text-text-muted"></span>
+      </div>
+    )}
     <strong>{label}</strong> {text}
     {submitUrl && (
       <a
@@ -27,3 +39,19 @@ const { label, text, submitUrl, submitText = 'Submit on Canvas' } = Astro.props;
     )}
   </div>
 </div>
+
+<script is:inline>
+  // "in 7 days" / "today" / "closed" — computed in the student's browser so it is always right.
+  (function () {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    document.querySelectorAll('[data-deadline-iso]').forEach((el) => {
+      const iso = el.getAttribute('data-deadline-iso'); if (!iso) return;
+      const [y, m, d] = iso.split('-').map(Number);
+      const due = new Date(y, m - 1, d);
+      const days = Math.round((due - today) / 86400000);
+      const out = el.querySelector('.js-days-left'); if (!out) return;
+      out.textContent = days > 1 ? `· in ${days} days` : days === 1 ? '· tomorrow' : days === 0 ? '· today' : '· past';
+      if (days >= 0 && days <= 3) out.classList.add('text-accent-cyan');
+    });
+  })();
+</script>

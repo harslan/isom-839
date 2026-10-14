@@ -9,10 +9,13 @@ import Icon from '../components/Icon.astro';
 import { getCollection } from 'astro:content';
 import { course } from '../data/course';
 import { modules, sessionMeta } from '../data/schedule';
+import { deadlines } from '../data/deadlines';
 
 const sessions = await getCollection('sessions');
 const sorted = sessions.sort((a, b) => a.data.number - b.data.number);
 const byNumber = new Map(sorted.map((s) => [s.data.number, s]));
+
+const nextDueData = deadlines.map((d) => ({ iso: d.iso, label: d.label }));
 
 // Serialize the schedule for the client-side "next class" spotlight
 const nextClassData = sorted.map((s) => ({
@@ -43,6 +46,17 @@ const nextClassData = sorted.map((s) => ({
           Open the session →
         </span>
       </div>
+    </a>
+  </section>
+
+  <!-- Next due (client-side, from deadlines.ts) -->
+  <section id="next-due" class="px-8 max-w-[1200px] mx-auto mb-4 hidden">
+    <a href="/deadlines" class="group flex flex-wrap items-center justify-between gap-4 bg-bg-card border border-border-subtle rounded-2xl px-7 py-4 no-underline transition-all duration-300 hover:border-accent-cyan/60">
+      <div class="min-w-0">
+        <span class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan">Next due · <span id="next-due-when"></span></span>
+        <span class="block text-text-primary font-semibold mt-1" id="next-due-label"></span>
+      </div>
+      <span class="font-mono text-[0.8rem] tracking-wide text-accent-cyan whitespace-nowrap transition-transform duration-300 group-hover:translate-x-1">All deadlines →</span>
     </a>
   </section>
 
@@ -113,7 +127,7 @@ const nextClassData = sorted.map((s) => ({
     github={course.instructor.github}
   />
 
-  <script is:inline define:vars={{ nextClassData }}>
+  <script is:inline define:vars={{ nextClassData, nextDueData }}>
     // Highlight the next upcoming class based on today's date.
     (function () {
       const today = new Date();
@@ -137,6 +151,18 @@ const nextClassData = sorted.map((s) => ({
       document.querySelectorAll('.session-card[data-session-iso="' + next.iso + '"]').forEach((el) => {
         el.classList.add('border-accent-green/40');
       });
+    })();
+
+    // Next due date, from deadlines.ts
+    (function () {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const toDate = (iso) => { const [y, m, d] = iso.split('-').map(Number); return new Date(y, m - 1, d); };
+      const next = nextDueData.find((d) => toDate(d.iso) >= today);
+      if (!next) return;
+      const days = Math.round((toDate(next.iso) - today) / 86400000);
+      document.getElementById('next-due-when').textContent = days === 0 ? 'tonight' : days === 1 ? 'tomorrow' : 'in ' + days + ' days';
+      document.getElementById('next-due-label').textContent = next.label;
+      document.getElementById('next-due').classList.remove('hidden');
     })();
   </script>
 </BaseLayout>

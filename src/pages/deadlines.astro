@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/Icon.astro';
+import { deadlines, weekday, shortDate, clock } from '../data/deadlines';
+
+const kindLabel: Record<string, string> = {
+  homework: 'Homework', case: 'Midterm case', project: 'Final project', milestone: 'Milestone', 'in-class': 'In class',
+};
+const kindColor: Record<string, string> = {
+  homework: 'text-accent-green', case: 'text-accent-cyan', project: 'text-accent-cyan', milestone: 'text-accent-cyan', 'in-class': 'text-text-muted',
+};
+const rules = [
+  { icon: 'calendar', title: 'One due date per week', text: 'Never two deadlines in the same Monday-to-Sunday week. The midterm case and the final project get their weeks to themselves.' },
+  { icon: 'clock', title: 'Two weeks for anything with a notebook', text: 'Every homework is assigned one Wednesday and due two Wednesdays later, at 7:40 PM — before class, so the last session before a deadline is your chance to ask.' },
+  { icon: 'check', title: 'Nothing due Thanksgiving week', text: 'No deadline on a holiday, the day after a holiday, or in the days before presentations. Breaks are breaks.' },
+];
+const serialized = deadlines.map((d) => ({ id: d.id, iso: d.iso, label: d.label }));
+---
+
+<BaseLayout title="ISOM 839 | Deadlines" description="Every due date in ISOM 839, one per week, with a link to the Canvas submission page and a calendar feed.">
+  <section class="py-24 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="00" label="Deadlines" title="Every Due Date, One Per Week" description="The whole semester on one page. Each row links to the exact Canvas page where you submit. Dates here, on Canvas, and on every session page are the same — if you ever see two that disagree, tell the instructor and the one on Canvas wins." />
+
+    <!-- Next due (client-side) -->
+    <div id="next-due" class="hidden mb-10 bg-gradient-to-br from-accent-cyan/[0.07] to-bg-card border border-accent-cyan/25 rounded-2xl px-7 py-6">
+      <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan mb-2">Next due · <span id="next-due-when"></span></div>
+      <div class="text-xl font-bold text-text-primary" id="next-due-label"></div>
+    </div>
+
+    <div class="overflow-x-auto rounded-2xl border border-border-subtle">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-bg-card text-left font-mono text-[0.7rem] tracking-[2px] uppercase text-text-muted">
+            <th class="px-5 py-4">Due</th>
+            <th class="px-5 py-4">What</th>
+            <th class="px-5 py-4">Points</th>
+            <th class="px-5 py-4"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {deadlines.map((d) => (
+            <tr class="border-t border-border-subtle transition-colors hover:bg-bg-card/60" data-deadline-iso={d.iso}>
+              <td class="px-5 py-4 whitespace-nowrap align-top">
+                <div class="font-mono font-bold text-text-primary">{weekday(d.iso)} {shortDate(d.iso)}</div>
+                <div class="font-mono text-xs text-text-muted">{clock(d.hhmm)}{d.kind === 'in-class' ? ' · in class' : ''}</div>
+              </td>
+              <td class="px-5 py-4 align-top">
+                <div class="text-text-primary font-semibold">{d.label}</div>
+                <div class="font-mono text-[0.7rem] tracking-[1px] uppercase mt-1" class:list={[kindColor[d.kind]]}>
+                  {kindLabel[d.kind]}{d.session ? ` · Session ${d.session}` : ''}
+                </div>
+                {d.note && <div class="text-text-secondary text-xs mt-1.5 leading-relaxed">{d.note}</div>}
+              </td>
+              <td class="px-5 py-4 whitespace-nowrap align-top font-mono text-text-secondary">{d.points}</td>
+              <td class="px-5 py-4 whitespace-nowrap align-top text-right">
+                <a href={d.url} target="_blank" rel="noopener" class="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-accent-green/50 text-accent-green font-mono text-[0.7rem] tracking-[1px] uppercase no-underline transition-all duration-300 hover:bg-accent-green/10 hover:border-accent-green">
+                  {d.kind === 'in-class' ? 'Rubric' : 'Canvas'} <Icon name="arrow-right" class="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex flex-wrap gap-4 items-center mt-6">
+      <a href="/deadlines.ics" class="group inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-accent-cyan/50 text-accent-cyan font-mono text-xs tracking-[1px] uppercase no-underline transition-all duration-300 hover:bg-accent-cyan/10 hover:border-accent-cyan">
+        <Icon name="calendar" class="w-3.5 h-3.5" /> Add to my calendar (.ics)
+      </a>
+      <span class="text-text-muted text-xs">Opens in Apple Calendar, Google Calendar, or Outlook. Canvas also has its own feed under Calendar → Calendar Feed.</span>
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="01" label="The Rules" title="Why the Dates Are Where They Are" description="Three rules, applied to the whole semester. If a date ever has to move, it moves to keep these true." />
+    <div class="grid gap-5 md:grid-cols-3">
+      {rules.map((r) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-6">
+          <Icon name={r.icon} class="w-5 h-5 text-accent-cyan mb-3" />
+          <div class="font-bold text-text-primary mb-2">{r.title}</div>
+          <p class="text-text-secondary text-sm leading-relaxed">{r.text}</p>
+        </div>
+      ))}
+    </div>
+    <p class="text-text-secondary text-sm leading-relaxed mt-8 max-w-[800px]">
+      Late work: 10% per day for up to three days, then the assignment closes. Your lowest homework score is dropped — that is the built-in grace. Full policies on the <a href="/syllabus" class="text-accent-cyan no-underline">syllabus</a>.
+    </p>
+  </section>
+
+  <script is:inline define:vars={{ serialized }}>
+    (function () {
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      const toDate = (iso) => { const [y, m, d] = iso.split('-').map(Number); return new Date(y, m - 1, d); };
+      let next = null;
+      for (const d of serialized) { if (toDate(d.iso) >= today) { next = d; break; } }
+      document.querySelectorAll('tr[data-deadline-iso]').forEach((tr) => {
+        if (toDate(tr.getAttribute('data-deadline-iso')) < today) tr.classList.add('opacity-50');
+      });
+      if (!next) return;
+      const days = Math.round((toDate(next.iso) - today) / 86400000);
+      document.getElementById('next-due-label').textContent = next.label;
+      document.getElementById('next-due-when').textContent = days === 0 ? 'today' : days === 1 ? 'tomorrow' : `in ${days} days`;
+      document.getElementById('next-due').classList.remove('hidden');
+      const row = document.querySelector(`tr[data-deadline-iso="${next.iso}"]`);
+      if (row) row.classList.add('bg-accent-cyan/[0.06]');
+    })();
+  </script>
+</BaseLayout>
