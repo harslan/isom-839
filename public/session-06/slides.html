@@ -22,19 +22,29 @@
   h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
   h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
   .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 940px; line-height: 1.55; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1000px; line-height: 1.5; font-weight: 600; }
   .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
   .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 360px; flex: 1; text-align: left; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 260px; max-width: 400px; flex: 1; text-align: left; }
   .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
-  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
-  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
   pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
   pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
   .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
   .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
   .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
-  ul.list { text-align: left; max-width: 920px; color: var(--text2); font-size: clamp(0.95rem, 1.9vw, 1.35rem); line-height: 1.7; list-style: none; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; }
+  .defs { display: grid; grid-template-columns: auto auto; gap: 1.4vh 2.5vw; text-align: left; align-items: baseline; max-width: 1100px; }
+  .defs .k { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text); }
+  .defs .v { font-size: clamp(1rem, 1.9vw, 1.4rem); color: var(--text2); }
   ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
   ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
   .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
@@ -53,18 +63,18 @@
 <section class="slide active">
   <div class="pill">ISOM 839 · Session 6 · Wed Oct 14</div>
   <h1>The Power of <span class="grad">Yes / No</span></h1>
-  <p class="sub">Binary variables, fixed costs, and big-M logic — how one line of code lets your model make strategic decisions, and why that makes it exponentially harder to solve.</p>
+  <p class="sub">Tonight the model decides <b style="color:var(--text)">whether</b> to open a warehouse, not just how much to ship through it. One word in the code makes that possible. The same word makes the problem much harder to solve.</p>
   <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
 </section>
 
 <!-- 2 · The schedule reset -->
 <section class="slide">
   <div class="kicker">Housekeeping · Two Minutes · isom-839.vercel.app/deadlines</div>
-  <h2>One due date per week, <span class="grad">two weeks per homework</span></h2>
+  <h2>One due date per week. <span class="grad">Two weeks for every homework.</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">Wed Oct 21 · 7:40 PM</div><div class="title">Homework #4 — Min-Cost Flow</div><p>Not tonight. Data and scaffold are now in the Session 5 notebook.</p></div>
-    <div class="card"><div class="label">Wed Oct 28 · 7:40 PM</div><div class="title">Homework #5 — Project Knapsack</div><p>Tonight's. Bottom of the Session 6 notebook.</p></div>
-    <div class="card"><div class="label">Before next week</div><div class="title">Join your team on Canvas</div><p>People → Groups → Teams. Pairs, one trio. The midterm case launches Oct 21: <b class="accent-gold">isom-839.vercel.app/case</b>.</p></div>
+    <div class="card"><div class="label">Wed Oct 21 · 7:40 PM</div><div class="title">Homework #4 — Min-Cost Flow</div><p>Not tonight. The data and scaffold are now in the Session 5 notebook.</p></div>
+    <div class="card"><div class="label">Wed Oct 28 · 7:40 PM</div><div class="title">Homework #5 — Project Knapsack</div><p>Tonight's homework. It is at the bottom of the Session 6 notebook.</p></div>
+    <div class="card"><div class="label">Before next week</div><div class="title">Join your team on Canvas</div><p>People → Groups → Teams. Pairs, plus one trio. The midterm case opens Oct 21 at <b class="accent-gold">isom-839.vercel.app/case</b>.</p></div>
   </div>
   <p class="sub">Nothing else is due midterm week. Nothing is due Thanksgiving week. Every date is on Canvas, on the site, and in a calendar feed you can subscribe to.</p>
 </section>
@@ -72,80 +82,77 @@
 <!-- 3 · HW3 debrief -->
 <section class="slide">
   <div class="kicker">Homework #3 Debrief · Beacon Street Advisory</div>
-  <h2>The partners' plan cost <span class="grad">26 points of fit</span></h2>
+  <h2>The partners' plan left <span class="grad">26 points of fit</span> on the table</h2>
   <div class="math">
-    optimum <span class="accent-g">532</span> &nbsp;·&nbsp; seniority-order plan <span class="accent-r">506</span> &nbsp;·&nbsp; every x a clean 0 or 1<br>
+    best possible fit <span class="accent-g">532</span> &nbsp;·&nbsp; seniority-order plan <span class="accent-r">506</span><br>
     <span style="color:var(--text2);font-size:0.8em">twists: Chloe barred from Biotech → 492 &nbsp;·&nbsp; Hospital needs two, Biotech postponed → 507</span>
   </div>
   <div class="cards">
-    <div class="card"><div class="label">Who pays</div><p><b style="color:var(--text)">Farid</b>, last in seniority, takes what is left. Greedy is locally right and globally wrong — and the gap grows with the team.</p></div>
-    <div class="card"><div class="label">No binaries needed</div><p>Supplies of 1, demands of 1: integrality for free. Tonight that free lunch ends.</p></div>
-    <div class="card"><div class="label">If you used GRB.BINARY</div><p>Same answer, more work for the solver. Fine. Tonight you learn when it is <b style="color:var(--text)">required</b>.</p></div>
+    <div class="card"><div class="label">Who lost out</div><p><b>Farid</b>, last in seniority, got whatever was left. Choosing one person at a time looks fair and is never the best plan for the team.</p></div>
+    <div class="card"><div class="label">Why every answer was 0 or 1</div><p>Each consultant is one unit of supply and each project needs whole people. In a network like that, the LP gives whole numbers on its own.</p></div>
+    <div class="card"><div class="label">Tonight that stops</div><p>Warehouses do not come in fractions, and nothing will round them for you. <b>You have to ask for whole numbers</b>, and asking has a cost.</p></div>
   </div>
 </section>
 
 <!-- 4 · P&G -->
 <section class="slide">
   <div class="kicker">Edelman Finalist · Procter &amp; Gamble · North American Supply Chain</div>
-  <h2>The question an LP <span class="grad">cannot answer</span></h2>
-  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
-    dozens of plants · hundreds of products · thousands of customer zones<br>
-    <span style="color:var(--text2)">which plants stay open, which close, and who makes what for whom</span>
-  </div>
+  <h2>An LP can shrink a plant. <span class="grad">It cannot close one.</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">The LP's answer</div><p>"Keep 0.42 of this plant." An LP can only shrink a plant, never close one — and the fixed cost of a plant is paid whether it runs at 42% or 100%.</p></div>
-    <div class="card"><div class="label">The model</div><p>A binary per plant-product pair, continuous flows, and one link: flow ≤ capacity × open. Mixed-integer programming plus GIS, plus judgment.</p></div>
-    <div class="card"><div class="label">The result</div><p>P&amp;G consolidated roughly a fifth of its North American plants and reported savings on the order of <b class="accent-gold">$200 million a year</b>.</p></div>
+    <div class="card"><div class="label">What P&amp;G asked</div><p>Dozens of plants, hundreds of products, thousands of customer zones. Which plants stay open, which close, and who makes what for whom?</p></div>
+    <div class="card"><div class="label">Why an LP fails</div><p>Its answer is "run this plant at 42%." But a plant's fixed cost is paid in full whether it runs at 42% or 100%. <b>The LP cannot see that cost.</b></p></div>
+    <div class="card"><div class="label">What worked</div><p>A yes/no variable for each plant, and one constraint tying production to that yes/no. P&amp;G closed about one plant in five and reported savings of about <b class="accent-gold">$200 million a year</b>.</p></div>
   </div>
-  <p class="sub">Tonight's five warehouses are that model in miniature. <b style="color:var(--text)">One vtype change: the calculator becomes a strategist.</b></p>
+  <p class="take">Tonight's five warehouses are the same model, small enough to solve in front of you.</p>
 </section>
 
 <!-- 5 · Vote 1 -->
 <section class="slide">
   <div class="kicker">Vote In Chat · One Letter · Before We Solve</div>
-  <h2>Five candidate warehouses. <span class="grad">How many open?</span></h2>
+  <h2>How many of the five warehouses <span class="grad">should we open?</span></h2>
   <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
-    Worcester $42K · Hartford $38K · Albany $31K · Providence $35K · Manchester $29K a year to open<br>
-    <span style="color:var(--text2)">eight customers · 1,220 units a week · shipping $2–$12 per unit</span>
+    Yearly cost to open: &nbsp;Worcester $42K · Hartford $38K · Albany $31K · Providence $35K · Manchester $29K<br>
+    <span style="color:var(--text2)">Eight customers need 1,220 units a week. Shipping costs $2–$12 per unit, depending on distance.</span>
   </div>
   <div class="cards">
     <div class="card"><div class="label">A</div><div class="title">One</div></div>
     <div class="card"><div class="label">B</div><div class="title">Two</div></div>
     <div class="card"><div class="label">C</div><div class="title">Three</div></div>
-    <div class="card"><div class="label">D</div><div class="title">All five — shipping is cheapest</div></div>
+    <div class="card"><div class="label">D</div><div class="title">All five, to keep shipping short</div></div>
   </div>
-  <p class="sub">Type A, B, C or D. Bonus: which two?</p>
+  <p class="sub">Type A, B, C or D. Bonus: which ones?</p>
 </section>
 
 <!-- 6 · Two variable families -->
 <section class="slide">
-  <div class="kicker">The Model · Two Kinds of Decision in One Place</div>
-  <h2>Strategic and operational, <span class="grad">one model</span></h2>
-  <div class="math">
-    open[w] ∈ {0, 1} &nbsp;&nbsp;<span style="color:var(--text2)">does warehouse w exist?</span><br>
-    x[w, c] ≥ 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text2)">units per week from w to customer c</span><br><br>
-    min &nbsp;Σ fixed[w] · open[w] &nbsp;+&nbsp; 52 · Σ ship[w,c] · x[w,c]<br>
-    Σ<sub>w</sub> x[w,c] = demand[c] &nbsp;&nbsp;<span style="color:var(--text2)">everyone is served</span>
+  <div class="kicker">The Model · Part 1 of the Notebook</div>
+  <h2>Two kinds of decision, <span class="grad">one model</span></h2>
+  <div class="defs">
+    <div class="k">open[w] ∈ {0, 1}</div><div class="v"><b style="color:var(--text)">The yes/no decision.</b> 1 if warehouse w opens, 0 if it does not.</div>
+    <div class="k">x[w, c] ≥ 0</div><div class="v"><b style="color:var(--text)">The how-much decision.</b> Units per week sent from warehouse w to customer c.</div>
+    <div class="k">min &nbsp;Σ fixed[w] · open[w] + 52 · Σ ship[w,c] · x[w,c]</div><div class="v">Total cost = leases for the warehouses we open + 52 weeks of shipping.</div>
+    <div class="k">Σ<sub>w</sub> x[w,c] = demand[c]</div><div class="v">Every customer gets exactly what they ordered.</div>
   </div>
-  <p class="sub">One constraint is missing. Without it, the model ships from warehouses it never paid to open.</p>
+  <p class="take">Something is missing. As written, the model can ship from a warehouse it never opened, and never pay the lease.</p>
 </section>
 
 <!-- 7 · The fixed-charge link -->
 <section class="slide">
-  <div class="kicker">The Single Most Useful Pattern in Prescriptive Analytics</div>
-  <h2>The <span class="grad">fixed-charge link</span></h2>
-  <div class="math">Σ<sub>c</sub> x[w,c] &nbsp;≤&nbsp; capacity[w] · open[w]</div>
+  <div class="kicker">The Missing Constraint · The Fixed-Charge Link</div>
+  <h2>If you ship from it, <span class="grad">you pay for it</span></h2>
+  <div class="math">shipments out of w &nbsp;≤&nbsp; capacity[w] · open[w]</div>
   <div class="cards">
-    <div class="card"><div class="label">open = 0</div><p>Right side is zero. <b style="color:var(--text)">Nothing can ship.</b> The warehouse does not exist.</p></div>
-    <div class="card"><div class="label">open = 1</div><p>Right side is the capacity. Ship up to it — and pay the fixed cost in the objective.</p></div>
-    <div class="card"><div class="label">The "M"</div><p>Here M is the <b class="accent-gold">capacity</b>, not an arbitrary huge number. Remember that when you write your own. Loose M = weak model.</p></div>
+    <div class="card"><div class="label">If open = 0</div><p>The right side is zero. <b>Nothing can leave the warehouse.</b> As far as the model is concerned, it does not exist.</p></div>
+    <div class="card"><div class="label">If open = 1</div><p>The right side is the capacity. Shipments can flow up to it, and the lease shows up in the total cost.</p></div>
+    <div class="card"><div class="label">Why capacity, not a huge number</div><p>Textbooks call this multiplier "big M." The right M here is the <b class="accent-gold">capacity</b>. A huge M makes the model much slower. More on that at the end.</p></div>
   </div>
+  <p class="take">This one line is the most useful pattern in the course. Every fixed-cost decision uses it.</p>
 </section>
 
 <!-- 8 · Solved -->
 <section class="slide" style="gap:1.5vh">
   <div class="kicker">Solved · Colab Part 1 · <span class="accent-g">$295,800 a year</span></div>
-  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">Two open, three <span class="grad">on paper</span></h2>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">Open Hartford and Manchester. <span class="grad">$295,800 a year.</span></h2>
   <svg viewBox="0 0 1000 560" style="width:min(88vw,980px);height:auto" xmlns="http://www.w3.org/2000/svg">
 <defs><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <line x1="390" y1="400" x2="720" y2="300" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
@@ -184,49 +191,50 @@
 <text x="590" y="144" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Manchester</text>
 <text x="500" y="548" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">SQUARES = CANDIDATE WAREHOUSES · CIRCLES = CUSTOMERS · LANES = THE OPTIMAL PLAN</text>
 </svg>
-  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Albany has the second-cheapest lease and loses anyway: its $11–12 lanes to Boston and Cambridge wipe out a $7K cheaper rent. <b style="color:var(--text)">The model prices the lease and the miles together.</b></p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Albany has the second-cheapest lease and still loses. Shipping to Boston and Cambridge from Albany costs $11–12 a unit, which wipes out the $7,000 saved on rent. <b style="color:var(--text)">The model weighs the lease and the shipping together.</b></p>
 </section>
 
 <!-- 9 · Read the log -->
 <section class="slide">
-  <div class="kicker">Read the Log · Three Numbers</div>
-  <h2>Branch &amp; bound <span class="grad">finishing its argument</span></h2>
+  <div class="kicker">The Solver Log · What to Read</div>
+  <h2>Three numbers tell you <span class="grad">how good the answer is</span></h2>
   <pre style="max-width:1000px">
     Nodes    |    Current Node    |     Objective Bounds      |  Gap
  Expl Unexpl |  Obj  Depth IntInf | <span class="f">Incumbent</span>    <span class="g">BestBd</span>   | 
-H    0     0                      396000.0  278908.0   29.6%   <span class="c">← first plan</span>
+H    0     0                      396000.0  278908.0   29.6%   <span class="c">← first real plan</span>
 H    0     0                      330000.0  278908.0   15.5%
-*    4     0                      295800.0  295800.0   <span class="g">0.00%</span>   <span class="c">← proven</span></pre>
+*    4     0                      295800.0  295800.0   <span class="g">0.00%</span>   <span class="c">← proven best</span></pre>
   <div class="cards">
-    <div class="card"><div class="label">Incumbent</div><p>The best <b style="color:var(--text)">feasible</b> plan found so far. Always a real answer.</p></div>
-    <div class="card"><div class="label">Best bound</div><p>What the relaxations say is the floor. Nothing can be cheaper than this.</p></div>
-    <div class="card"><div class="label">Gap</div><p>The distance between them. <b class="accent-gold">Trust the gap, not your enumeration instincts.</b></p></div>
+    <div class="card"><div class="label">Incumbent</div><p>The best <b>real plan</b> found so far. You could act on it today.</p></div>
+    <div class="card"><div class="label">Best bound</div><p>A <b>floor</b>. No plan can cost less than this number.</p></div>
+    <div class="card"><div class="label">Gap</div><p>How far apart those two are. <b class="accent-gold">At 0% the plan is proven best.</b> Read this number before anything else.</p></div>
   </div>
 </section>
 
 <!-- 10 · Logic as algebra -->
 <section class="slide">
-  <div class="kicker">Logic as Algebra · Business Rules Become Inequalities</div>
-  <h2>Once you have binaries, <span class="grad">rules are one line</span></h2>
-  <pre style="max-width:1100px">
-open at most two                        open.sum() <= 2
-if Albany opens, Hartford must too      open['Albany'] <= open['Hartford']       <span class="c">if-then</span>
-Worcester or Providence, not both       open['Worcester'] + open['Providence'] <= 1   <span class="c">either/or</span>
-Boston served from exactly one          x[w,'Boston'] <= demand * assign[w,'Boston'];  assign.sum() == 1
-project 7 requires project 3            x[7] <= x[3]                             <span class="c">tonight's homework</span></pre>
-  <p class="sub">Every rule a manager says in a meeting has a shape on this slide.</p>
+  <div class="kicker">Business Rules as Constraints</div>
+  <h2>Once a variable is yes/no, <span class="grad">a business rule is one line</span></h2>
+  <table class="rules">
+    <tr><th>The rule, in English</th><th>The constraint</th><th>Pattern</th></tr>
+    <tr><td>Open at most two warehouses</td><td class="code">open.sum() &lt;= 2</td><td class="tag">a limit</td></tr>
+    <tr><td>If Albany opens, Hartford must open too</td><td class="code">open['Albany'] &lt;= open['Hartford']</td><td class="tag">if-then</td></tr>
+    <tr><td>Worcester or Providence, not both</td><td class="code">open['Worcester'] + open['Providence'] &lt;= 1</td><td class="tag">either / or</td></tr>
+    <tr><td>Project 7 needs Project 3 &nbsp;<span style="color:var(--muted)">(tonight's homework)</span></td><td class="code">x[7] &lt;= x[3]</td><td class="tag">if-then</td></tr>
+  </table>
+  <p class="take">Check an if-then by reading it aloud: "if the left side is 1, the right side must be 1." Single sourcing needs one more yes/no variable per lane. That is Lab Twist 1.</p>
 </section>
 
 <!-- 11 · The political constraint -->
 <section class="slide">
-  <div class="kicker">Live · Colab Part 3</div>
-  <h2>A political constraint <span class="grad">with a price tag</span></h2>
+  <div class="kicker">Live · Notebook Part 3</div>
+  <h2>The model puts a price on <span class="grad">a political decision</span></h2>
   <div class="math">
-    "open at most two" &nbsp;→&nbsp; <span class="accent-g">$295,800</span> &nbsp;<span style="color:var(--text2)">(costs nothing — already two)</span><br>
-    "Albany must open" &nbsp;→&nbsp; <span class="accent-r">$326,800</span> &nbsp;<span style="color:var(--text2)">(three warehouses)</span><br><br>
-    the Albany decision costs <span class="accent-gold">$31,000 a year</span>
+    "Open at most two" &nbsp;→&nbsp; <span class="accent-g">$295,800</span> &nbsp;<span style="color:var(--text2)">no change: the best plan already opened two</span><br>
+    "Albany must open" &nbsp;→&nbsp; <span class="accent-r">$326,800</span> &nbsp;<span style="color:var(--text2)">three warehouses now</span><br><br>
+    Forcing Albany open costs <span class="accent-gold">$31,000 a year</span>
   </div>
-  <p class="sub">"We can do that. It costs $31,000 a year." — the single most useful sentence a modeler says in a meeting.</p>
+  <p class="take">The most useful sentence a modeler can say in a meeting: "We can do that. It costs $31,000 a year."</p>
 </section>
 
 <!-- 12 · Break -->
@@ -239,20 +247,20 @@ project 7 requires project 3            x[7] <= x[3]                            
 <!-- 13 · Vote 2 -->
 <section class="slide">
   <div class="kicker">Vote In Chat · One Letter</div>
-  <h2>Let the solver open <span class="grad">0.4 of a warehouse</span>. The cost is…</h2>
+  <h2>What if the solver may open <span class="grad">0.4 of a warehouse?</span></h2>
+  <p class="sub">Same model. The only change: open[w] can be any number between 0 and 1. The total cost will be…</p>
   <div class="cards">
-    <div class="card"><div class="label">A</div><div class="title">Lower than the integer plan</div></div>
+    <div class="card"><div class="label">A</div><div class="title">Lower than the real plan</div></div>
     <div class="card"><div class="label">B</div><div class="title">The same</div></div>
     <div class="card"><div class="label">C</div><div class="title">Higher</div></div>
-    <div class="card"><div class="label">D</div><div class="title">Infeasible</div></div>
+    <div class="card"><div class="label">D</div><div class="title">No solution</div></div>
   </div>
-  <p class="sub">vtype = continuous. Everything else unchanged.</p>
 </section>
 
 <!-- 14 · Relax and compare -->
 <section class="slide" style="gap:1.5vh">
-  <div class="kicker">Colab Part 2 · The Price of Reality</div>
-  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)"><span class="accent-g">$278,908</span> — cheaper, <span class="grad">and impossible</span></h2>
+  <div class="kicker">Notebook Part 2 · The Relaxed Model</div>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)"><span class="accent-g">$278,908.</span> Cheaper than the real plan, <span class="grad">and impossible to build.</span></h2>
   <svg viewBox="0 0 1000 560" style="width:min(88vw,980px);height:auto" xmlns="http://www.w3.org/2000/svg">
 <defs><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <circle cx="720" cy="300" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
@@ -283,13 +291,13 @@ project 7 requires project 3            x[7] <= x[3]                            
 <text x="590" y="144" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Manchester 40%</text>
 <text x="500" y="548" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">THE LP RELAXATION OPENS FRACTIONS OF BUILDINGS</text>
 </svg>
-  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">The relaxation pays 86% of Hartford's lease for 86% of a building. Integer plan: <b class="accent-gold">$295,800</b>. The <b style="color:var(--text)">$16,892</b> between them is the price of reality — and closing that gap is branch &amp; bound's entire job.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">The relaxed model opens 86% of Hartford and pays 86% of its lease. The real plan costs <b class="accent-gold">$295,800</b>. The <b style="color:var(--text)">$16,892</b> difference is the price of whole buildings. Branch &amp; bound exists to close that gap.</p>
 </section>
 
 <!-- 15 · Branch & bound -->
 <section class="slide" style="gap:1.5vh">
-  <div class="kicker">How the Solver Thinks · Schematic (real root and optimum, illustrative branches)</div>
-  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">Relax · Bound · <span class="grad">Branch · Prune</span></h2>
+  <div class="kicker">How the Solver Searches · Schematic (top and bottom values are real, middle ones illustrative)</div>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">How the solver finds the best <span class="grad">whole-number plan</span></h2>
   <svg viewBox="0 0 1000 420" style="width:min(80vw,900px);height:auto" xmlns="http://www.w3.org/2000/svg">
 <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6b6459"/></marker></defs>
 <g stroke="#6b6459" stroke-width="2" marker-end="url(#arr)">
@@ -311,75 +319,75 @@ project 7 requires project 3            x[7] <= x[3]                            
 <rect x="540" y="330" width="150" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/><rect x="775" y="330" width="150" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/>
 <text x="615" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text><text x="850" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text>
 </g></svg>
-  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Each node solves an LP. Its value is a <b style="color:var(--text)">floor</b> for everything below it — so once an integer plan at $295,800 exists, any node with a bound above that dies unexplored. That pruning is why 2<sup>60</sup> combinations finish before you lift your finger. Step through one live in the <b class="accent-gold">Branch &amp; Bound Explorer</b>.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Each box solves a relaxed problem. Its value is a <b style="color:var(--text)">floor</b> for every box below it. Once a real plan at $295,800 exists, any box with a floor above that is thrown away without looking further. That is why 2<sup>60</sup> combinations can finish in a blink. Try it yourself in the <b class="accent-gold">Branch &amp; Bound Explorer</b>.</p>
 </section>
 
 <!-- 16 · Lab -->
 <section class="slide">
-  <div class="kicker">9:05 – 9:30 · Lab · Colab Part 1 With a Twist</div>
-  <h2>Each team adds <span class="grad">one constraint</span></h2>
+  <div class="kicker">9:05 – 9:30 · Lab · Notebook Part 1 With a Twist</div>
+  <h2>Each team adds one rule, <span class="grad">then reports what it cost</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">Twist 1</div><div class="title">Single sourcing</div><p>Every customer from exactly one warehouse. Needs a new binary family.</p></div>
+    <div class="card"><div class="label">Twist 1</div><div class="title">Single sourcing</div><p>Every customer gets all of its units from one warehouse. You will need a new yes/no variable for each lane.</p></div>
     <div class="card"><div class="label">Twist 2</div><div class="title">Worcester or Providence</div><p>Not both. One line.</p></div>
-    <div class="card"><div class="label">Twist 3</div><div class="title">Capacity −25%</div><p>At every warehouse. Does a third one open — or does the model swap a building?</p></div>
-    <div class="card"><div class="label">Twist 4</div><div class="title">Shipping ×2</div><p>Leases just got relatively cheap. Does that change who opens?</p></div>
+    <div class="card"><div class="label">Twist 3</div><div class="title">Capacity down 25%</div><p>At every warehouse. Does a third one open, or does the plan change some other way?</p></div>
+    <div class="card"><div class="label">Twist 4</div><div class="title">Shipping costs double</div><p>Leases are now relatively cheap. Does that change which warehouses open?</p></div>
   </div>
-  <p class="sub">Report one sentence: "the twist cost $X and changed Y." Cite the number from your solve. A twist that costs $0 is a finding, not a bug — say why it was free.</p>
+  <p class="take">Report one sentence: "The twist cost $X and changed Y." If the twist cost $0, that is a real finding. Say why it was free.</p>
 </section>
 
 <!-- 17 · The cliff -->
 <section class="slide">
-  <div class="kicker">Colab Part 4 · The Computational Cliff</div>
-  <h2>Five binaries: 32. Sixty: <span class="grad">1.15 × 10<sup>18</sup></span></h2>
+  <div class="kicker">Notebook Part 4 · Why Yes/No Is Hard</div>
+  <h2>Sixty yes/no decisions is more combinations than <span class="grad">grains of sand on Earth</span></h2>
   <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
-    5 → 32 combinations &nbsp;·&nbsp; 30 → a billion &nbsp;·&nbsp; 60 → more than grains of sand on Earth<br>
-    <span style="color:var(--text2)">a 60-item knapsack: solved to proven optimality in 0.00 s, gap 0.0%</span>
+    5 decisions → 32 combinations &nbsp;·&nbsp; 30 → a billion &nbsp;·&nbsp; 60 → 1.15 × 10<sup>18</sup><br>
+    <span style="color:var(--text2)">The solver just proved the best of 1.15 × 10<sup>18</sup> in a blink, gap 0.0%.</span>
   </div>
   <div class="cards">
-    <div class="card"><div class="label">Why it works</div><p>Branch &amp; bound prunes with bounds. It never enumerates. Most of the tree dies without being visited.</p></div>
-    <div class="card"><div class="label">Why it sometimes doesn't</div><p>A loose M makes the relaxation useless: bounds are weak, nothing prunes, the tree explodes. <b class="accent-gold">Tight M values are the difference between models that solve and models that stall.</b></p></div>
-    <div class="card"><div class="label">The number to read first</div><p>The MIP gap. 0.5% in ten seconds often beats 0.00% in ten hours — say which you delivered.</p></div>
+    <div class="card"><div class="label">Why it is fast</div><p>The solver never checks every combination. The floors from the tree let it <b>throw away most of the tree without looking</b>.</p></div>
+    <div class="card"><div class="label">When it is slow</div><p>A huge M makes the floors useless. Nothing gets thrown away. <b>The same model can take hours.</b></p></div>
+    <div class="card"><div class="label">What to report</div><p>The gap. A plan within 0.5% in ten seconds usually beats a perfect plan in ten hours. <b class="accent-gold">Say which one you delivered.</b></p></div>
   </div>
 </section>
 
 <!-- 18 · AI angle -->
 <section class="slide">
-  <div class="kicker">The AI Angle · Copilots Love Big M</div>
-  <h2>Ask the copilot for the model. <span class="grad">Then check every M.</span></h2>
+  <div class="kicker">The AI Angle</div>
+  <h2>Copilots write M = 1,000,000. <span class="grad">You have to fix it.</span></h2>
   <ul class="list">
-    <li>LLM-drafted integer models default to <span class="accent-gold">M = 1,000,000</span>. It runs. It solves slowly, or returns 0.9999 and calls it 1.</li>
-    <li>Ask: "what is the largest this sum can physically be?" That number is your M. Usually it is a capacity, a demand, or a budget.</li>
-    <li>Every if-then and either/or: read it back as a sentence. If the sentence is not in the business, delete the constraint.</li>
-    <li>Session 12 is a full lab on this. The habit starts tonight.</li>
+    <li>An AI-drafted model with a huge M runs. But it solves slowly, or returns 0.9999 and calls it 1.</li>
+    <li>For every M, ask: <b style="color:var(--text)">what is the largest this sum could physically be?</b> Usually a capacity, a demand, or a budget. Use that.</li>
+    <li>For every if-then and either/or rule, read it aloud as a sentence. If the business never said that sentence, delete the constraint.</li>
+    <li>Session 12 is a full lab on this. Start the habit tonight.</li>
   </ul>
 </section>
 
 <!-- 19 · Homework -->
 <section class="slide">
   <div class="kicker">Homework #5 · Due Wed Oct 28 · 7:40 PM · Canvas</div>
-  <h2>The <span class="grad">project-selection knapsack</span></h2>
+  <h2>Pick the projects: <span class="grad">$10M, 12 candidates, two rules</span></h2>
   <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
-    $10M of capital · 12 candidate projects · 60 staff-months<br>
-    <span style="color:var(--text2)">Project 7 requires Project 3 &nbsp;·&nbsp; Projects 5 and 9 are mutually exclusive</span>
+    Each project has a cost, an expected NPV, and a staffing need. You have $10M and 60 staff-months.<br>
+    <span style="color:var(--text2)">Rule 1: Project 7 needs Project 3. &nbsp;·&nbsp; Rule 2: Projects 5 and 9 cannot both be chosen.</span>
   </div>
   <div class="cards">
-    <div class="card"><div class="label">1</div><p>Formulate: one binary per project, two resource constraints, two logical rules as inequalities.</p></div>
-    <div class="card"><div class="label">2</div><p>Solve at $10M with GRB.BINARY. Portfolio, NPV, capital used, staff-months used.</p></div>
-    <div class="card"><div class="label">3</div><p>Re-solve at $8M. Three to four sentences: what fell out, what came in, and why ratio alone does not decide. <b style="color:var(--text)">It often is not the lowest NPV-per-dollar.</b></p></div>
+    <div class="card"><div class="label">1</div><p><b>Formulate.</b> One yes/no variable per project. Maximize NPV. Two resource limits. The two rules as inequalities.</p></div>
+    <div class="card"><div class="label">2</div><p><b>Solve at $10M</b> with GRB.BINARY. Print the chosen projects, total NPV, capital used, and staff-months used.</p></div>
+    <div class="card"><div class="label">3</div><p><b>Re-solve at $8M.</b> In three or four sentences: what dropped out, what came in, and why the dropped projects are not simply the worst value per dollar.</p></div>
   </div>
-  <p class="sub">Table and TODO scaffold at the bottom of tonight's notebook. Two weeks. Submit on Canvas.</p>
+  <p class="sub">Table and scaffold at the bottom of tonight's notebook. Two weeks. Submit on Canvas.</p>
 </section>
 
 <!-- 20 · Next week -->
 <section class="slide">
   <div class="kicker">Next Week · Session 7 · Wed Oct 21</div>
-  <h2>Scheduling, CP-SAT, and <span class="grad">the midterm case launches</span></h2>
+  <h2>Scheduling with a new solver, <span class="grad">and the midterm case opens</span></h2>
   <div class="cards">
     <div class="card"><div class="label">Before next week</div><p>Join your team on Canvas (People → Groups → Teams). Submit HW #4 by 7:40 PM.</p></div>
-    <div class="card"><div class="label">The case</div><p><b class="accent-gold">Beacon Outfitters</b>: 12 stores, 8 SKUs, 4 weeks, case packs, a cold snap, not enough parkas. Brief at <b style="color:var(--text)">isom-839.vercel.app/case</b>.</p></div>
-    <div class="card"><div class="label">New solver</div><p>Google's CP-SAT — built for scheduling logic that is clumsy in MIP. Six baristas, fifteen shifts, no clopens.</p></div>
+    <div class="card"><div class="label">The case</div><p><b>Beacon Outfitters:</b> twelve stores, eight products, four weeks, a cold snap, and not enough parkas. Brief at <b class="accent-gold">isom-839.vercel.app/case</b>.</p></div>
+    <div class="card"><div class="label">New solver</div><p>Google's CP-SAT, built for scheduling rules that are awkward in MIP. Six baristas, fifteen shifts, no closing shift followed by an opening shift.</p></div>
   </div>
-  <p class="sub">Tonight the model learned to say no. Next week it learns to say <b style="color:var(--text)">who, and when</b>.</p>
+  <p class="take">Tonight the model learned to say yes or no. Next week it learns who, and when.</p>
 </section>
 
 <script>
