@@ -84,13 +84,20 @@
   </div>
 </section>
 
-<!-- 4 · The $50M question -->
+<!-- 4 · P&G -->
 <section class="slide">
-  <div class="kicker">Opening · The Question an LP Cannot Answer</div>
-  <h2>Open the warehouse, <span class="grad">or don't</span></h2>
-  <p class="sub">Last week we routed flow through a network we took as given. Tonight we decide what the network <b style="color:var(--text)">is</b>. An LP can only say "open 0.42 of it." Strategy is lumpy: pay the fixed cost or don't, launch or kill, in or out.</p>
-  <div class="math">x ∈ [0, ∞) &nbsp;→&nbsp; <span class="accent-gold">y ∈ {0, 1}</span></div>
-  <p class="sub">One <span class="accent-gold">vtype</span> change. The calculator becomes a strategist — and the problem becomes exponentially harder.</p>
+  <div class="kicker">Edelman Finalist · Procter &amp; Gamble · North American Supply Chain</div>
+  <h2>The question an LP <span class="grad">cannot answer</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    dozens of plants · hundreds of products · thousands of customer zones<br>
+    <span style="color:var(--text2)">which plants stay open, which close, and who makes what for whom</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">The LP's answer</div><p>"Keep 0.42 of this plant." An LP can only shrink a plant, never close one — and the fixed cost of a plant is paid whether it runs at 42% or 100%.</p></div>
+    <div class="card"><div class="label">The model</div><p>A binary per plant-product pair, continuous flows, and one link: flow ≤ capacity × open. Mixed-integer programming plus GIS, plus judgment.</p></div>
+    <div class="card"><div class="label">The result</div><p>P&amp;G consolidated roughly a fifth of its North American plants and reported savings on the order of <b class="accent-gold">$200 million a year</b>.</p></div>
+  </div>
+  <p class="sub">Tonight's five warehouses are that model in miniature. <b style="color:var(--text)">One vtype change: the calculator becomes a strategist.</b></p>
 </section>
 
 <!-- 5 · Vote 1 -->
@@ -136,17 +143,48 @@
 </section>
 
 <!-- 8 · Solved -->
-<section class="slide">
-  <div class="kicker">Solved · Colab Part 1</div>
-  <h2>Two open, three <span class="grad">on paper</span></h2>
-  <pre style="max-width:1100px">
-Annual cost  <span class="g">$295,800</span>     open: <span class="f">Hartford</span>, <span class="f">Manchester</span>
-
-Hartford   -> Boston 310 · Springfield 120 · New Haven 170 · Burlington 90
-Manchester -> Cambridge 140 · Portland 130 · Nashua 110 · Lowell 150
-
-Worcester ($42K)  Albany ($31K)  Providence ($35K)   <span class="c">never built</span></pre>
-  <p class="sub">Albany has the second-cheapest lease and loses anyway: its $11–12 lanes to Boston and Cambridge wipe out a $7K cheaper rent. <b style="color:var(--text)">The model prices the lease and the miles together.</b></p>
+<section class="slide" style="gap:1.5vh">
+  <div class="kicker">Solved · Colab Part 1 · <span class="accent-g">$295,800 a year</span></div>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">Two open, three <span class="grad">on paper</span></h2>
+  <svg viewBox="0 0 1000 560" style="width:min(88vw,980px);height:auto" xmlns="http://www.w3.org/2000/svg">
+<defs><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<line x1="390" y1="400" x2="720" y2="300" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="390" y1="400" x2="330" y2="330" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="390" y1="400" x2="380" y2="505" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="390" y1="400" x2="300" y2="70" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="590" y1="110" x2="690" y2="255" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="590" y1="110" x2="820" y2="80" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="590" y1="110" x2="545" y2="200" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<line x1="590" y1="110" x2="650" y2="220" stroke="#f2b135" stroke-opacity="0.55" stroke-width="2.5"/>
+<circle cx="720" cy="300" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="720" y="284" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Boston</text>
+<circle cx="690" cy="255" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="690" y="239" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Cambridge</text>
+<circle cx="330" cy="330" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="330" y="356" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Springfield</text>
+<circle cx="380" cy="505" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="380" y="531" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">New Haven</text>
+<circle cx="820" cy="80" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="820" y="64" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Portland</text>
+<circle cx="300" cy="70" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="300" y="54" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Burlington</text>
+<circle cx="545" cy="200" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="545" y="184" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Nashua</text>
+<circle cx="650" cy="220" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="650" y="204" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Lowell</text>
+<rect x="506" y="286" width="28" height="28" rx="6" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="520" y="334" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Worcester</text>
+<rect x="374" y="384" width="32" height="32" rx="6" fill="#f2b135" fill-opacity="1.00" stroke="#ffd166" stroke-width="2.5" filter="url(#glow)"/>
+<text x="390" y="434" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Hartford</text>
+<rect x="106" y="236" width="28" height="28" rx="6" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="120" y="284" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Albany</text>
+<rect x="626" y="426" width="28" height="28" rx="6" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="640" y="474" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Providence</text>
+<rect x="574" y="94" width="32" height="32" rx="6" fill="#f2b135" fill-opacity="1.00" stroke="#ffd166" stroke-width="2.5" filter="url(#glow)"/>
+<text x="590" y="144" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Manchester</text>
+<text x="500" y="548" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">SQUARES = CANDIDATE WAREHOUSES · CIRCLES = CUSTOMERS · LANES = THE OPTIMAL PLAN</text>
+</svg>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Albany has the second-cheapest lease and loses anyway: its $11–12 lanes to Boston and Cambridge wipe out a $7K cheaper rent. <b style="color:var(--text)">The model prices the lease and the miles together.</b></p>
 </section>
 
 <!-- 9 · Read the log -->
@@ -212,28 +250,68 @@ project 7 requires project 3            x[7] <= x[3]                            
 </section>
 
 <!-- 14 · Relax and compare -->
-<section class="slide">
+<section class="slide" style="gap:1.5vh">
   <div class="kicker">Colab Part 2 · The Price of Reality</div>
-  <h2>Cheaper, <span class="grad">and impossible</span></h2>
-  <pre style="max-width:1000px">
-LP relaxation   <span class="g">$278,908</span>   open = Worcester <span class="r">0.32</span> · Hartford <span class="r">0.86</span> · Manchester <span class="r">0.40</span>
-Integer plan    <span class="f">$295,800</span>   open = Hartford, Manchester
-
-the price of reality   <span class="f">$16,892</span> a year</pre>
-  <p class="sub">The relaxation pays 86% of Hartford's lease for 86% of a building. It is a <b style="color:var(--text)">bound</b>, never a plan — and branch &amp; bound's whole job is closing that $16,892 gap.</p>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)"><span class="accent-g">$278,908</span> — cheaper, <span class="grad">and impossible</span></h2>
+  <svg viewBox="0 0 1000 560" style="width:min(88vw,980px);height:auto" xmlns="http://www.w3.org/2000/svg">
+<defs><filter id="glow"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<circle cx="720" cy="300" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="720" y="284" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Boston</text>
+<circle cx="690" cy="255" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="690" y="239" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Cambridge</text>
+<circle cx="330" cy="330" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="330" y="356" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Springfield</text>
+<circle cx="380" cy="505" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="380" y="531" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">New Haven</text>
+<circle cx="820" cy="80" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="820" y="64" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Portland</text>
+<circle cx="300" cy="70" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="300" y="54" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Burlington</text>
+<circle cx="545" cy="200" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="545" y="184" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Nashua</text>
+<circle cx="650" cy="220" r="9" fill="#14120f" stroke="#a8a196" stroke-width="2"/>
+<text x="650" y="204" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="15" text-anchor="middle">Lowell</text>
+<rect x="504" y="284" width="32" height="32" rx="6" fill="#f2b135" fill-opacity="0.49" stroke="#ffd166" stroke-width="2.5" filter="url(#glow)"/>
+<text x="520" y="334" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Worcester 32%</text>
+<rect x="374" y="384" width="32" height="32" rx="6" fill="#f2b135" fill-opacity="0.90" stroke="#ffd166" stroke-width="2.5" filter="url(#glow)"/>
+<text x="390" y="434" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Hartford 86%</text>
+<rect x="106" y="236" width="28" height="28" rx="6" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="120" y="284" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Albany</text>
+<rect x="626" y="426" width="28" height="28" rx="6" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="4 3"/>
+<text x="640" y="474" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Providence</text>
+<rect x="574" y="94" width="32" height="32" rx="6" fill="#f2b135" fill-opacity="0.55" stroke="#ffd166" stroke-width="2.5" filter="url(#glow)"/>
+<text x="590" y="144" fill="#ffd166" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700" text-anchor="middle">Manchester 40%</text>
+<text x="500" y="548" fill="#6b6459" font-family="JetBrains Mono, monospace" font-size="13" text-anchor="middle" letter-spacing="2">THE LP RELAXATION OPENS FRACTIONS OF BUILDINGS</text>
+</svg>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">The relaxation pays 86% of Hartford's lease for 86% of a building. Integer plan: <b class="accent-gold">$295,800</b>. The <b style="color:var(--text)">$16,892</b> between them is the price of reality — and closing that gap is branch &amp; bound's entire job.</p>
 </section>
 
 <!-- 15 · Branch & bound -->
-<section class="slide">
-  <div class="kicker">How the Solver Thinks · Explorer Walk-Through</div>
-  <h2>Relax · Bound · <span class="grad">Branch · Prune</span></h2>
-  <div class="cards">
-    <div class="card"><div class="label">Relax</div><p>Drop the integer rule. Solve the LP. If every binary came out 0 or 1, you are done.</p></div>
-    <div class="card"><div class="label">Bound</div><p>The LP value is a floor for everything under this node. No integer plan below can beat it.</p></div>
-    <div class="card"><div class="label">Branch</div><p>Pick a fractional one — Worcester 0.32 — and split: a world where it is 0, a world where it is 1.</p></div>
-    <div class="card"><div class="label">Prune</div><p>Any node whose bound is worse than the incumbent is dead. Whole subtrees vanish unexplored.</p></div>
-  </div>
-  <p class="sub">That pruning is why 2<sup>60</sup> combinations finish before you lift your finger — usually.</p>
+<section class="slide" style="gap:1.5vh">
+  <div class="kicker">How the Solver Thinks · Schematic (real root and optimum, illustrative branches)</div>
+  <h2 style="font-size:clamp(1.5rem,3.6vw,2.6rem)">Relax · Bound · <span class="grad">Branch · Prune</span></h2>
+  <svg viewBox="0 0 1000 420" style="width:min(80vw,900px);height:auto" xmlns="http://www.w3.org/2000/svg">
+<defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#6b6459"/></marker></defs>
+<g stroke="#6b6459" stroke-width="2" marker-end="url(#arr)">
+<line x1="500" y1="92" x2="300" y2="190"/><line x1="500" y1="92" x2="700" y2="190"/>
+<line x1="300" y1="238" x2="180" y2="330"/><line x1="300" y1="238" x2="420" y2="330"/>
+<line x1="700" y1="238" x2="580" y2="330"/><line x1="700" y1="238" x2="820" y2="330"/>
+</g>
+<g font-family="JetBrains Mono, monospace" text-anchor="middle">
+<rect x="400" y="30" width="200" height="62" rx="12" fill="#161412" stroke="#f2b135" stroke-width="2"/>
+<text x="500" y="54" fill="#ffd166" font-size="15" font-weight="700">ROOT · LP RELAXATION</text><text x="500" y="78" fill="#34d399" font-size="18">bound $278,908</text>
+<text x="380" y="150" fill="#a8a196" font-size="13">Worcester = 0</text><text x="620" y="150" fill="#a8a196" font-size="13">Worcester = 1</text>
+<rect x="200" y="190" width="200" height="48" rx="12" fill="#161412" stroke="#a8a196" stroke-width="2"/><text x="300" y="221" fill="#f5f2ec" font-size="16">bound $283,100</text>
+<rect x="600" y="190" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="5 4"/><text x="700" y="221" fill="#6b6459" font-size="16">bound $301,400</text>
+<text x="700" y="262" fill="#e2725b" font-size="13" font-weight="700">PRUNED · worse than incumbent</text>
+<text x="200" y="300" fill="#a8a196" font-size="13">Manchester = 0</text><text x="400" y="300" fill="#a8a196" font-size="13">Manchester = 1</text>
+<rect x="80" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="5 4"/><text x="180" y="361" fill="#6b6459" font-size="16">bound $297,900</text>
+<rect x="320" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#34d399" stroke-width="2.5"/><text x="420" y="361" fill="#34d399" font-size="16" font-weight="700">integer · $295,800 ✓</text>
+<text x="180" y="402" fill="#e2725b" font-size="13" font-weight="700">PRUNED</text><text x="420" y="402" fill="#ffd166" font-size="13" font-weight="700">INCUMBENT → OPTIMAL · GAP 0.00%</text>
+<rect x="480" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/><rect x="720" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/>
+<text x="580" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text><text x="820" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text>
+</g></svg>
+  <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Each node solves an LP. Its value is a <b style="color:var(--text)">floor</b> for everything below it — so once an integer plan at $295,800 exists, any node with a bound above that dies unexplored. That pruning is why 2<sup>60</sup> combinations finish before you lift your finger. Step through one live in the <b class="accent-gold">Branch &amp; Bound Explorer</b>.</p>
 </section>
 
 <!-- 16 · Lab -->
