@@ -112,6 +112,24 @@
   ],
   "resources": [
     {
+      "title": "Scheduling with CP-SAT + the Midterm Case — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-07/ISOM839_Session7_Scheduling_CPSAT_and_Midterm_Case.ipynb",
+      "description": "The barista shift-scheduling lab in Google's CP-SAT (coverage, availability, no clopens, a Friday spike), then the midterm case: loads the five Beacon Outfitters data files, prints the first summary statistics, and lays out the model skeleton for the Session 8 check-in.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "The Midterm Case Brief — Beacon Outfitters",
+      "url": "/case",
+      "description": "The situation, the five questions the VP is asking, the data dictionary, deliverables, the 25-point rubric, and the timeline. Read it before you open the notebook.",
+      "icon": "file-text",
+      "badge": "Case",
+      "badgeType": "reference",
+      "linkText": "Read the brief"
+    },
+    {
       "title": "OR-Tools CP-SAT Solver Guide",
       "url": "https://developers.google.com/optimization/cp/cp_solver",
       "description": "Google's official CP-SAT documentation with Python examples — your primary reference for tonight's scheduling activity.",
@@ -223,7 +241,7 @@
   "homework": [
     {
       "label": "Midterm Case",
-      "text": "Midterm case work (in lieu of a numbered problem set): with your team, (1) join your team on Canvas under People → Groups → Teams by Friday (pairs — one trio), (2) load the case data into Colab and produce summary statistics on store demand and warehouse capacity, and (3) draft your model skeleton — decision variables, objective, and at least four constraint families — as a one-page outline. Bring the outline to Session 8 for a 5-minute check-in with the instructor. Full deliverables (model, COO memo of up to five pages, five-minute briefing in class) are due Wednesday, November 4 by 7:40 PM on Canvas — the midterm has that week to itself.",
+      "text": "Midterm case work (in lieu of a numbered problem set): with your team, (1) join your team on Canvas under People → Groups → Teams by Friday (pairs — one trio), (2) read the case brief at isom-839.vercel.app/case, open the Session 7 notebook, load the Beacon Outfitters data and complete the summary statistics, and (3) draft your model skeleton — decision variables, objective, and at least four constraint families — as a one-page outline. Bring the outline to Session 8 for a 5-minute check-in with the instructor. Full deliverables (model, COO memo of up to five pages, five-minute briefing in class) are due Wednesday, November 4 by 7:40 PM on Canvas — the midterm has that week to itself.",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261899"
     }
   ],

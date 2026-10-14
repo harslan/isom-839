@@ -117,6 +117,15 @@
   ],
   "resources": [
     {
+      "title": "MDPs: Deciding Over Time — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-10/ISOM839_Session10_MDP_Deciding_Over_Time.ipynb",
+      "description": "Value iteration from scratch on the inventory MDP, the (s, S) policy it rediscovers, discounting experiments, and the Homework #7 Option A scaffold with a wider demand distribution where the holding cost actually moves the threshold.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Powell: Sequential Decision Analytics and Modeling (Free Book)",
       "url": "https://castle.princeton.edu/sdamodeling/",
       "description": "Warren Powell's free online book unifying OR, dynamic programming, and reinforcement learning under one framework. Chapter 1 alone will change how you see every 'AI decision-making' headline.",
@@ -142,15 +151,6 @@
       "badge": "Deep Dive",
       "badgeType": "reference",
       "linkText": "Open the book"
-    },
-    {
-      "title": "Lab Notebook: Inventory MDP Starter",
-      "url": "https://colab.research.google.com/",
-      "description": "Tonight's Colab starter notebook with the inventory MDP scaffold — demand distribution, reward function, and an empty value-iteration loop for you to complete. Link posted on Blackboard.",
-      "icon": "terminal",
-      "badge": "Lab",
-      "badgeType": "code",
-      "linkText": "Open in Colab"
     }
   ],
   "activities": [
@@ -201,7 +201,7 @@
   "homework": [
     {
       "label": "Homework #7 · Option A",
-      "text": "Extend tonight's inventory MDP with holding costs — one of the two problems you can choose for Homework #7 (the other is the Session 8 pricing curve). Add a charge of $1 per unit of leftover inventory per day (the real cost of tied-up capital and shelf space), re-run value iteration, and compare the optimal policy with and without holding costs side by side. Then answer: (1) How did the order-up-to threshold move, and why? (2) Sweep the holding cost from $0 to $4 and plot the threshold against it. (3) One paragraph for a store manager: in plain English, what tradeoff is the model balancing, and when would carrying 'too much' stock actually be the right call? Due Wednesday, December 2 by 7:40 PM on Canvas (no class November 25 — Thanksgiving; nothing is due that week).",
+      "text": "Extend the inventory MDP with holding costs (the Homework #7 shop in the Session 10 notebook, with a wider demand distribution) — one of the two problems you can choose for Homework #7 (the other is the Session 8 pricing curve). Add a charge of $1 per unit of leftover inventory per day (the real cost of tied-up capital and shelf space), re-run value iteration, and compare the optimal policy with and without holding costs side by side. Then answer: (1) How did the order-up-to threshold move, and why? (2) Sweep the holding cost from $0 to $4 and plot the threshold against it. (3) One paragraph for a store manager: in plain English, what tradeoff is the model balancing, and when would carrying 'too much' stock actually be the right call? Due Wednesday, December 2 by 7:40 PM on Canvas (no class November 25 — Thanksgiving; nothing is due that week).",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261902"
     }
   ],

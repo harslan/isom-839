@@ -117,6 +117,15 @@
   ],
   "resources": [
     {
+      "title": "Portfolios, Pricing & Curves — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-08/ISOM839_Session8_Nonlinear_Portfolios_Pricing.ipynb",
+      "description": "Convex vs non-convex in one picture, the efficient frontier from two years of real prices (with a saved-statistics fallback), the pricing parabola in CVXPY, and the Homework #7 Option B scaffold with its demand-curve parameters.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "CVXPY Documentation",
       "url": "https://www.cvxpy.org/",
       "description": "The official home of CVXPY — tutorials, the full atoms library, and worked examples including portfolio optimization. Your primary reference for tonight's lab and beyond.",
@@ -210,7 +219,7 @@
   "homework": [
     {
       "label": "Homework #7 · Option B",
-      "text": "Revenue-maximizing pricing — one of the two problems you can choose for Homework #7 (the other is the inventory MDP from Session 10; pick the one you want to be good at). A product faces a linear demand curve: demand(p) = a − b·p (you'll be given a and b, estimated from historical sales). Formulate revenue R(p) = p·(a − b·p), solve for the optimal price analytically AND with CVXPY, then extend the model with a unit cost c to maximize profit instead. Deliver a Colab notebook with your formulation, both solutions, a plot of the revenue curve with the optimum marked, and a short paragraph: how does the optimal price change as b (price sensitivity) rises, and what does that mean for a manager? Due Wednesday, December 2 by 7:40 PM on Canvas. Nothing is due midterm week.",
+      "text": "Revenue-maximizing pricing — one of the two problems you can choose for Homework #7 (the other is the inventory MDP from Session 10; pick the one you want to be good at). A product faces a linear demand curve: demand(p) = a − b·p (a = 1,200, b = 15, unit cost c = $12 — the scaffold is in the Session 8 notebook). Formulate revenue R(p) = p·(a − b·p), solve for the optimal price analytically AND with CVXPY, then extend the model with a unit cost c to maximize profit instead. Deliver a Colab notebook with your formulation, both solutions, a plot of the revenue curve with the optimum marked, and a short paragraph: how does the optimal price change as b (price sensitivity) rises, and what does that mean for a manager? Due Wednesday, December 2 by 7:40 PM on Canvas. Nothing is due midterm week.",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261902"
     }
   ],

@@ -70,7 +70,7 @@ export const gradingDetail = [
     component: 'Final Project & Presentation',
     weight: 35,
     icon: 'rocket',
-    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Thu Nov 12 on the Canvas discussion board; first working result + dry-run deck due Dec 9; notebook + two-page decision memo + deck due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded on the five beats of every great prescriptive story: a real decision, an honest model, a solved answer, a dollar figure, and a sensitivity story. Each presentation ends with a short individual model defense — two questions about your own constraints ("why is this here?", "what happens if I relax that one?"), answered live, without the AI.',
+    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Thu Nov 12 on the Canvas discussion board; first working result + dry-run deck due Dec 9; notebook + two-page decision memo + deck due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded out of 45 points: proposal 5 and milestone 5 (complete / incomplete), then the five beats of every great prescriptive story — a real decision 5, an honest model 10, a solved answer with a dollar figure 10, a sensitivity story 5 — and the model defense 5. Each presentation ends with a short individual model defense — two questions about your own constraints ("why is this here?", "what happens if I relax that one?"), answered live, without the AI.',
   },
 ];
 
@@ -91,6 +91,8 @@ export const caseRubric = [
 ];
 
 export const finalRubric = [
+  { points: 5, label: 'The proposal', desc: 'One paragraph per team on the Canvas discussion board: the decision, who owns it, the data plan, the model class. Complete / incomplete — a green light or a redirect before you build.' },
+  { points: 5, label: 'The milestone', desc: 'One week before presentations: a notebook that solves end to end on your real data, and a dry-run deck in the five beats. Complete / incomplete — rough is fine, complete is required.' },
   { points: 5, label: 'The real decision', desc: 'A decision someone actually owns, made badly or blindly today.' },
   { points: 10, label: 'The honest model', desc: 'Variables, objective, constraints that capture the trade-offs that actually bind — at a scale you fully understand.' },
   { points: 10, label: 'The solved answer & the money', desc: 'A provably strong solution, and the gap between today\'s decision and the optimal one quantified honestly.' },

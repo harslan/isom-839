@@ -117,6 +117,15 @@
   ],
   "resources": [
     {
+      "title": "Markov Chains: Customer Journeys — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-09/ISOM839_Session9_Markov_Chains_Customer_Journeys.ipynb",
+      "description": "The four-state journey lab: row-sum check, 36-month projection, steady state, CLV from the fundamental matrix, two interventions compared — then the Homework #6 scaffold that loads the 5,000-subscriber streaming cohort.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Setosa: Markov Chains, Visually Explained",
       "url": "https://setosa.io/ev/markov-chains/",
       "description": "The best interactive visualization of Markov chains on the internet — drag transition probabilities and watch the chain evolve in real time. Ten minutes here makes the matrix math intuitive.",
@@ -201,7 +210,7 @@
   "homework": [
     {
       "label": "Homework #6",
-      "text": "Build a churn Markov model for a streaming service. You'll receive monthly cohort data for 5,000 subscribers across states New, Engaged, Casual, Dormant, and Cancelled (absorbing). (1) Estimate the transition matrix from the data. (2) Project the subscriber base 24 months forward and plot state populations over time. (3) Compute expected lifetime value per new subscriber at $12.99/month margin using the fundamental matrix. (4) Management proposes a win-back campaign moving the Dormant→Engaged probability from 0.05 to 0.15 at a cost of $3 per Dormant subscriber per month — recommend go/no-go with numbers. Due Wednesday, November 18 by 7:40 PM on Canvas (no class November 11 — Veterans Day).",
+      "text": "Build a churn Markov model for a streaming service. The monthly cohort file for 5,000 subscribers loads in the Session 9 notebook, across states New, Engaged, Casual, Dormant, and Cancelled (absorbing). (1) Estimate the transition matrix from the data. (2) Project the subscriber base 24 months forward and plot state populations over time. (3) Compute expected lifetime value per new subscriber at $12.99/month margin using the fundamental matrix. (4) Management proposes a win-back campaign moving the Dormant→Engaged probability from 0.05 to 0.15 at a cost of $3 per Dormant subscriber per month — recommend go/no-go with numbers. Due Wednesday, November 18 by 7:40 PM on Canvas (no class November 11 — Veterans Day).",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261901"
     },
     {

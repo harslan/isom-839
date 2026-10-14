@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Icon from '../components/Icon.astro';
+import { caseRubric } from '../data/syllabus';
+import { deadlines, display } from '../data/deadlines';
+
+const due = deadlines.find((d) => d.id === 'case')!;
+const RAW = 'https://raw.githubusercontent.com/harslan/isom-839/master/public/session-07/case/';
+const NB = 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-07/ISOM839_Session7_Scheduling_CPSAT_and_Midterm_Case.ipynb';
+
+const files = [
+  { name: 'stores.csv', rows: '12 stores', what: 'Shelf capacity in units, the cost of one truck visit, and the truck\'s capacity per visit.' },
+  { name: 'skus.csv', rows: '8 SKUs', what: 'Unit cost, retail price (margin is the difference), case pack size, and holding cost per unit per week on the shelf.' },
+  { name: 'demand_forecast.csv', rows: '384 rows', what: 'Forecast units for every store × SKU × week. Weeks 3–4 carry a cold snap: outerwear and accessories jump.' },
+  { name: 'opening_inventory.csv', rows: '96 rows', what: 'Units already on each store\'s shelf at the start of week 1.' },
+  { name: 'dc_availability.csv', rows: '32 rows', what: 'Units the distribution center can release of each SKU each week. Unused supply carries forward. Parkas, beanies and gloves are tight.' },
+];
+
+const questions = [
+  { q: 'The plan', a: 'How many cases of each SKU ship to each store each week? Which stores get a truck in which weeks?' },
+  { q: 'The money', a: 'Four-week profit under your plan, versus doing nothing (selling only opening stock) and versus a naive "ship everything the forecast asks for" rule. The difference is the business case for the model.' },
+  { q: 'The bottleneck', a: 'Which SKU is really constraining profit? What would 100 more units of it at the DC be worth? Say it in dollars — this is the number the VP will repeat in her next meeting.' },
+  { q: 'The trucks', a: 'Which stores are worth visiting every week and which are not? What does a delivery cost per unit at the smallest store, and should any store be consolidated to every other week?' },
+  { q: 'The cold snap', a: 'If the week 3–4 forecast is 20% too high, how does the plan change and what does it cost to have planned for it? If it is 20% too low? Your recommendation should survive both.' },
+];
+
+const faq = [
+  { q: 'Is this an LP or an IP?', a: 'An IP. Cases are integers and truck visits are yes/no. Expect a few seconds of branch & bound, not milliseconds. Watch the MIP gap in the log.' },
+  { q: 'What about the free gurobipy license?', a: 'A clean formulation of this case has about 1,600 variables, under the 2,000-variable cap of the pip license. If you add variables for every twist, claim your academic license (gurobi.com/academics) — you should have it already.' },
+  { q: 'Can we use CP-SAT or PuLP instead?', a: 'Yes. The model is the deliverable; the solver is a tool. Say which one and why.' },
+  { q: 'How big is the memo?', a: 'Up to five pages, plain executive English, written to the merchandising VP. Lead with the decision and the dollars. The formulation goes in an appendix or the notebook, not on page one.' },
+  { q: 'How are the five minutes graded?', a: 'The rubric below. A good briefing says what to ship, what it is worth, which constraint binds, and what you would do differently if the forecast is wrong — then stops.' },
+];
+---
+
+<BaseLayout title="ISOM 839 | Midterm Case: Beacon Outfitters" description="The ISOM 839 midterm case: four weeks of retail replenishment for a 12-store New England outfitter. Data, deliverables, rubric.">
+  <section class="py-24 px-8 max-w-[1200px] mx-auto">
+    <div class="font-mono text-[0.8rem] text-accent-cyan tracking-[3px] mb-4">MIDTERM CASE // TEAMS</div>
+    <h1 class="text-[clamp(2.2rem,6vw,4rem)] font-bold leading-tight mb-4">Beacon Outfitters: Four Weeks of Replenishment</h1>
+    <p class="text-text-secondary text-lg max-w-[780px] leading-relaxed">
+      A 12-store New England outfitter, one distribution center, eight SKUs, a cold snap on the way, and a DC that cannot ship enough parkas. The merchandising VP wants a plan: <strong class="text-text-primary">what do we ship, where, when — and what is it worth?</strong> This is the midterm. It is the first time this semester you build a model nobody handed you.
+    </p>
+    <div class="grid gap-4 sm:grid-cols-3 mt-10 max-w-[900px]">
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Due</div>
+        <div class="text-sm text-text-primary leading-snug">{display(due)} · <a href={due.url} class="text-accent-green no-underline">Canvas</a></div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Teams</div>
+        <div class="text-sm text-text-primary leading-snug">Pairs, one trio · join on Canvas under People → Groups → Teams</div>
+      </div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5">
+        <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-2">Worth</div>
+        <div class="text-sm text-text-primary leading-snug">25 points · 25% of the course</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="01" label="The Situation" title="What the VP Is Asking" description="Beacon ships from its Worcester DC to twelve stores once a week. Product moves in case packs. Each store has a shelf and a truck that costs money every time it comes. The DC has a fixed supply of each SKU each week, and for the three cold-weather SKUs it is not enough. Answer these five questions, in this order." />
+    <div class="grid gap-4">
+      {questions.map((item, i) => (
+        <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-xl px-6 py-5">
+          <div class="font-mono text-accent-cyan text-sm w-6 shrink-0 pt-0.5">0{i + 1}</div>
+          <div><div class="font-bold text-text-primary mb-1">{item.q}</div><p class="text-text-secondary text-sm leading-relaxed">{item.a}</p></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="02" label="The Data" title="Five Small Files" description="Everything is in the course repo and loads straight into Colab with pandas. The Session 7 notebook does the loading and the first summary statistics for you." />
+    <div class="overflow-x-auto rounded-2xl border border-border-subtle">
+      <table class="w-full text-sm border-collapse">
+        <thead><tr class="bg-bg-card text-left font-mono text-[0.7rem] tracking-[2px] uppercase text-text-muted"><th class="px-5 py-4">File</th><th class="px-5 py-4">Size</th><th class="px-5 py-4">What is in it</th></tr></thead>
+        <tbody>
+          {files.map((f) => (
+            <tr class="border-t border-border-subtle">
+              <td class="px-5 py-4 font-mono text-accent-green whitespace-nowrap"><a href={RAW + f.name} class="no-underline text-accent-green">{f.name}</a></td>
+              <td class="px-5 py-4 font-mono text-text-muted whitespace-nowrap">{f.rows}</td>
+              <td class="px-5 py-4 text-text-secondary">{f.what}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="flex flex-wrap gap-4 mt-6">
+      <a href={NB} target="_blank" rel="noopener" class="group inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-accent-green/50 text-accent-green font-mono text-xs tracking-[1px] uppercase no-underline transition-all duration-300 hover:bg-accent-green/10 hover:border-accent-green">
+        Open the Session 7 notebook in Colab <Icon name="arrow-right" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+      </a>
+    </div>
+    <p class="text-text-secondary text-sm leading-relaxed mt-6 max-w-[800px]">
+      <strong class="text-text-primary">Modeling notes.</strong> Units shipped = case pack × an integer number of cases. Inventory flows week to week: what was on the shelf, plus what arrived, equals what sold plus what is left. Sales cannot exceed the forecast; what the forecast asked for and did not get is a lost sale (and its margin is the cost). The shelf limits inventory after delivery. A truck visit is a yes/no with a fixed cost, and it caps what can be delivered that week — the fixed-charge link from Session 6. DC availability is cumulative across weeks.
+    </p>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="03" label="Deliverables" title="What to Submit" description="One submission per team on Canvas, and a five-minute briefing in class the night it is due." />
+    <div class="grid gap-5 md:grid-cols-3">
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-6"><Icon name="code" class="w-5 h-5 text-accent-cyan mb-3" /><div class="font-bold text-text-primary mb-2">The model</div><p class="text-text-secondary text-sm leading-relaxed">A Colab notebook that loads the data, builds the model, solves it, and prints the plan and the numbers behind every claim in the memo. Runs top to bottom.</p></div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-6"><Icon name="file-text" class="w-5 h-5 text-accent-cyan mb-3" /><div class="font-bold text-text-primary mb-2">The COO memo</div><p class="text-text-secondary text-sm leading-relaxed">Up to five pages to the merchandising VP. What to ship, what it is worth, the bottleneck in dollars, the truck recommendation, and how the plan moves if the cold snap forecast is wrong. Zero jargon on page one.</p></div>
+      <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-6"><Icon name="presentation" class="w-5 h-5 text-accent-cyan mb-3" /><div class="font-bold text-text-primary mb-2">The five-minute briefing</div><p class="text-text-secondary text-sm leading-relaxed">In class, to a room of VPs. Lead with the decision and the dollars. Slides optional. Questions follow.</p></div>
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="04" label="Grading" title="25 Points" description="The published case rubric from the syllabus. The best model nobody understands loses to a good model everyone does." />
+    <div class="grid gap-4 md:grid-cols-3">
+      {caseRubric.map((r) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5"><div class="font-mono text-accent-cyan text-2xl font-bold mb-1">{r.points}</div><div class="font-bold text-text-primary mb-2">{r.label}</div><p class="text-text-secondary text-sm leading-relaxed">{r.desc}</p></div>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="05" label="Timeline" title="Two Weeks, Three Checkpoints" />
+    <div class="grid gap-4">
+      <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-xl px-6 py-5"><div class="font-mono text-accent-cyan text-sm w-20 shrink-0 pt-0.5">Session 7</div><div class="text-text-secondary text-sm leading-relaxed"><strong class="text-text-primary">Launch.</strong> Join your team on Canvas by Friday. Open the notebook, load the data, run the summary statistics.</div></div>
+      <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-xl px-6 py-5"><div class="font-mono text-accent-cyan text-sm w-20 shrink-0 pt-0.5">Session 8</div><div class="text-text-secondary text-sm leading-relaxed"><strong class="text-text-primary">Check-in.</strong> Bring a one-page outline — variables, objective, at least four constraint families — for a five-minute conversation with the instructor. This is where a wrong model shape gets fixed for free.</div></div>
+      <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-xl px-6 py-5"><div class="font-mono text-accent-cyan text-sm w-20 shrink-0 pt-0.5">Session 9</div><div class="text-text-secondary text-sm leading-relaxed"><strong class="text-text-primary">Due and briefed.</strong> Submit on Canvas by 7:40 PM. Briefings start at 9:10. Nothing else is due this week.</div></div>
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="06" label="FAQ" title="Before You Ask" />
+    <div class="grid gap-4">
+      {faq.map((f) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5"><div class="font-bold text-text-primary mb-1">{f.q}</div><p class="text-text-secondary text-sm leading-relaxed">{f.a}</p></div>
+      ))}
+    </div>
+    <p class="text-text-secondary text-sm leading-relaxed mt-8 max-w-[800px]">
+      Inspired by ECCO's 2026 Edelman-finalist replenishment system — 536 stores, 300,000 decisions a month. Yours is twelve stores and four weeks. The model class is the same.
+    </p>
+  </section>
+</BaseLayout>
