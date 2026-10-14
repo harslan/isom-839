@@ -57,19 +57,19 @@ export const gradingDetail = [
     component: 'Homework Assignments',
     weight: 25,
     icon: 'code',
-    detail: 'Roughly nine assignments, due Wednesdays by 7:40 PM on Canvas. Each is one modeling problem: formulate on paper, solve in Python, interpret in plain English. Your lowest homework score is dropped. AI tools allowed with disclosure — and you must be able to defend every constraint.',
+    detail: 'Seven assignments, due Wednesdays by 7:40 PM on Canvas, each with two weeks from the night it is assigned. Each is one modeling problem: formulate on paper, solve in Python, interpret in plain English. Your lowest homework score is dropped. AI tools allowed with disclosure — and you must be able to defend every constraint.',
   },
   {
     component: 'Midterm Case Competition',
     weight: 25,
     icon: 'award',
-    detail: 'Pairs (one trio, since we are 17). A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9), where each team gives a five-minute results briefing. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
+    detail: 'Pairs (one trio, since we are 17). A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9), where each team gives a five-minute results briefing. Nothing else is due that week. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
   },
   {
     component: 'Final Project & Presentation',
     weight: 35,
     icon: 'rocket',
-    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Nov 4; notebook + two-page decision memo due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded on the five beats of every great prescriptive story: a real decision, an honest model, a solved answer, a dollar figure, and a sensitivity story. Each presentation ends with a short individual model defense — two questions about your own constraints ("why is this here?", "what happens if I relax that one?"), answered live, without the AI.',
+    detail: 'Your optimization story: a real decision, modeled and solved end-to-end. One-paragraph proposal due Thu Nov 12 on the Canvas discussion board; first working result + dry-run deck due Dec 9; notebook + two-page decision memo + deck due Dec 15 at 11:59 PM; presentations in class Dec 16. Graded on the five beats of every great prescriptive story: a real decision, an honest model, a solved answer, a dollar figure, and a sensitivity story. Each presentation ends with a short individual model defense — two questions about your own constraints ("why is this here?", "what happens if I relax that one?"), answered live, without the AI.',
   },
 ];
 
@@ -111,11 +111,16 @@ export const gradeScale = [
 export const keyDates = [
   { date: 'Sep 9', label: 'First class · Homework #0 assigned', type: 'session' },
   { date: 'Sep 16', label: 'Claim your Gurobi academic license by tonight', type: 'deadline' },
-  { date: 'Oct 21', label: 'Midterm case launches (pairs — one trio)', type: 'milestone' },
-  { date: 'Nov 4', label: 'Midterm case due + team briefings · Final project proposal due', type: 'deadline' },
+  { date: 'Oct 21', label: 'Homework #4 due · Midterm case launches (pairs — one trio)', type: 'milestone' },
+  { date: 'Oct 28', label: 'Homework #5 due', type: 'deadline' },
+  { date: 'Nov 4', label: 'Midterm case due + team briefings (nothing else due this week)', type: 'deadline' },
   { date: 'Nov 11', label: 'No class — Veterans Day', type: 'break' },
-  { date: 'Nov 25', label: 'No class — Thanksgiving', type: 'break' },
-  { date: 'Dec 15', label: 'Final notebook + decision memo due, 11:59 PM', type: 'deadline' },
+  { date: 'Nov 12', label: 'Final project proposal due, Thu 11:59 PM (Canvas discussion)', type: 'deadline' },
+  { date: 'Nov 18', label: 'Homework #6 due', type: 'deadline' },
+  { date: 'Nov 25', label: 'No class — Thanksgiving (nothing due this week)', type: 'break' },
+  { date: 'Dec 2', label: 'Homework #7 due (pick one: inventory MDP or pricing curve)', type: 'deadline' },
+  { date: 'Dec 9', label: 'Final milestone due: first working result + dry-run deck', type: 'deadline' },
+  { date: 'Dec 15', label: 'Final notebook + decision memo + deck due, 11:59 PM', type: 'deadline' },
   { date: 'Dec 16', label: 'Final presentations · The Edelman of ISOM-839', type: 'milestone' },
 ];
 

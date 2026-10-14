@@ -5,7 +5,11 @@
   "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Plus: MIDTERM CASE DUE — team briefings tonight.",
   "duration": "120 Minutes",
   "icon": "users",
-  "tags": ["Markov Chains", "Customer Analytics", "Attribution"],
+  "tags": [
+    "Markov Chains",
+    "Customer Analytics",
+    "Attribution"
+  ],
   "objectives": [
     {
       "title": "Model systems with states and transition matrices",
@@ -196,14 +200,25 @@
   ],
   "homework": [
     {
-      "label": "Homework #7",
-      "text": "Build a churn Markov model for a streaming service. You'll receive monthly cohort data for 5,000 subscribers across states New, Engaged, Casual, Dormant, and Cancelled (absorbing). (1) Estimate the transition matrix from the data. (2) Project the subscriber base 24 months forward and plot state populations over time. (3) Compute expected lifetime value per new subscriber at $12.99/month margin using the fundamental matrix. (4) Management proposes a win-back campaign moving the Dormant→Engaged probability from 0.05 to 0.15 at a cost of $3 per Dormant subscriber per month — recommend go/no-go with numbers. Colab notebook due before Session 10 on November 18 (remember: no class November 11 — Veterans Day)."
+      "label": "Homework #6",
+      "text": "Build a churn Markov model for a streaming service. You'll receive monthly cohort data for 5,000 subscribers across states New, Engaged, Casual, Dormant, and Cancelled (absorbing). (1) Estimate the transition matrix from the data. (2) Project the subscriber base 24 months forward and plot state populations over time. (3) Compute expected lifetime value per new subscriber at $12.99/month margin using the fundamental matrix. (4) Management proposes a win-back campaign moving the Dormant→Engaged probability from 0.05 to 0.15 at a cost of $3 per Dormant subscriber per month — recommend go/no-go with numbers. Due Wednesday, November 18 by 7:40 PM on Canvas (no class November 11 — Veterans Day).",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261901"
+    },
+    {
+      "label": "Final Project Proposal",
+      "text": "Your pitch: one paragraph per team on the Canvas discussion board — the decision and who owns it today, your data plan, and the model class you expect. Due Thursday, November 12 by 11:59 PM (Veterans Day week, no class). Complete/incomplete; you get a green light or a redirect before you build.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/discussion_topics/202440",
+      "submitText": "Post on Canvas"
     }
   ],
   "nextSession": {
     "title": "Markov Decision Processes: Deciding Over Time",
     "description": "We meet next on November 18 (no class Nov 11 — Veterans Day). Chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration — with inventory management as the classic playground and a bridge from OR to reinforcement learning.",
-    "tags": ["MDPs", "Dynamic Programming", "Sequential Decisions"],
+    "tags": [
+      "MDPs",
+      "Dynamic Programming",
+      "Sequential Decisions"
+    ],
     "slug": "session-10"
   }
 }

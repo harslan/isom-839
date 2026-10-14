@@ -5,7 +5,11 @@
   "subtitle": "Last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies — the Bellman equation, value iteration, and the classic inventory problem that launched a field.",
   "duration": "120 Minutes",
   "icon": "clock",
-  "tags": ["MDPs", "Dynamic Programming", "Sequential Decisions"],
+  "tags": [
+    "MDPs",
+    "Dynamic Programming",
+    "Sequential Decisions"
+  ],
   "objectives": [
     {
       "title": "Extend Markov chains with actions and rewards",
@@ -196,14 +200,19 @@
   ],
   "homework": [
     {
-      "label": "Homework #8",
-      "text": "Extend tonight's inventory MDP with holding costs. Add a charge of $1 per unit of leftover inventory per day (the real cost of tied-up capital and shelf space), re-run value iteration, and compare the optimal policy with and without holding costs side by side. Then answer: (1) How did the order-up-to threshold move, and why? (2) Sweep the holding cost from $0 to $4 and plot the threshold against it. (3) One paragraph for a store manager: in plain English, what tradeoff is the model balancing, and when would carrying 'too much' stock actually be the right call? Colab notebook due before Session 11 on December 2 (no class November 25 — Thanksgiving)."
+      "label": "Homework #7 · Option A",
+      "text": "Extend tonight's inventory MDP with holding costs — one of the two problems you can choose for Homework #7 (the other is the Session 8 pricing curve). Add a charge of $1 per unit of leftover inventory per day (the real cost of tied-up capital and shelf space), re-run value iteration, and compare the optimal policy with and without holding costs side by side. Then answer: (1) How did the order-up-to threshold move, and why? (2) Sweep the holding cost from $0 to $4 and plot the threshold against it. (3) One paragraph for a store manager: in plain English, what tradeoff is the model balancing, and when would carrying 'too much' stock actually be the right call? Due Wednesday, December 2 by 7:40 PM on Canvas (no class November 25 — Thanksgiving; nothing is due that week).",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261902"
     }
   ],
   "nextSession": {
     "title": "Deep Learning Meets Optimization: Predict, Then Decide",
     "description": "December 2 (no class Nov 25 — Thanksgiving). The two halves of analytics finally meet: machine-learning forecasts feeding optimization models. Predict demand, then optimize inventory; predict churn, then optimize retention spend — the predict-then-decide pipeline that runs modern operations.",
-    "tags": ["Deep Learning", "Predict-then-Optimize", "Pipelines"],
+    "tags": [
+      "Deep Learning",
+      "Predict-then-Optimize",
+      "Pipelines"
+    ],
     "slug": "session-11"
   }
 }

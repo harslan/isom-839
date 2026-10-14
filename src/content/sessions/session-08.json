@@ -209,8 +209,9 @@
   ],
   "homework": [
     {
-      "label": "Homework #6",
-      "text": "Build a revenue-maximizing pricing model. A product faces a linear demand curve: demand(p) = a − b·p (you'll be given a and b, estimated from historical sales). Formulate revenue R(p) = p·(a − b·p), solve for the optimal price analytically AND with CVXPY, then extend the model with a unit cost c to maximize profit instead. Deliver a Colab notebook with your formulation, both solutions, a plot of the revenue curve with the optimum marked, and a short paragraph: how does the optimal price change as b (price sensitivity) rises, and what does that mean for a manager? Due before Session 9."
+      "label": "Homework #7 · Option B",
+      "text": "Revenue-maximizing pricing — one of the two problems you can choose for Homework #7 (the other is the inventory MDP from Session 10; pick the one you want to be good at). A product faces a linear demand curve: demand(p) = a − b·p (you'll be given a and b, estimated from historical sales). Formulate revenue R(p) = p·(a − b·p), solve for the optimal price analytically AND with CVXPY, then extend the model with a unit cost c to maximize profit instead. Deliver a Colab notebook with your formulation, both solutions, a plot of the revenue curve with the optimum marked, and a short paragraph: how does the optimal price change as b (price sensitivity) rises, and what does that mean for a manager? Due Wednesday, December 2 by 7:40 PM on Canvas. Nothing is due midterm week.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261902"
     }
   ],
   "nextSession": {

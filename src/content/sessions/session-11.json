@@ -197,8 +197,9 @@
   ],
   "homework": [
     {
-      "label": "Homework #9",
-      "text": "Decision-loss comparison write-up: extend tonight's notebook by training the demand model under (a) MSE loss and (b) an asymmetric newsvendor-quantile loss. Report RMSE and average decision regret for both models, then write a one-page executive memo (max 400 words) explaining which model you would deploy, why, and what this implies for how your organization should evaluate its forecasting teams. Submit the Colab link plus the memo before Session 12."
+      "label": "Final Project Milestone",
+      "text": "No numbered problem set tonight — the decision-loss comparison stays an in-class lab extension. Instead, the milestone before the finale: with your team, get your final project to a first working result (notebook running end to end on your real data, a solved answer out, even if the numbers aren't final) and build a dry-run deck in the five beats — decision, model, answer, money, sensitivity. Rough is fine; complete is required. Due Wednesday, December 9 by 7:40 PM on Canvas, so the last week is for polish and rehearsal. Complete/incomplete, with feedback on the one thing you're most worried about.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261903"
     }
   ],
   "nextSession": {

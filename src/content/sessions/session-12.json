@@ -5,7 +5,11 @@
   "subtitle": "Agents that learn to decide — from Q-learning intuition to RL running live on a million SKUs, plus LLM copilots that write your models",
   "duration": "120 Minutes",
   "icon": "bot",
-  "tags": ["Reinforcement Learning", "LLM Copilots", "Frontier"],
+  "tags": [
+    "Reinforcement Learning",
+    "LLM Copilots",
+    "Frontier"
+  ],
   "objectives": [
     {
       "title": "Build Q-learning intuition",
@@ -194,14 +198,19 @@
   ],
   "homework": [
     {
-      "label": "Homework #10",
-      "text": "Final project prep: lock your presentation for next week. Finalize your model and results, quantify the business impact in dollars, and build a 10-minute slide deck telling the full story — real problem, data, model, solution, recommendation. Do one timed rehearsal as a team, upload your deck and Colab notebook by Tuesday, December 15 at 11:59 PM, and come ready to present. Every team member speaks."
+      "label": "Final Project",
+      "text": "Lock your presentation for next week. Finalize your model and results, quantify the business impact in dollars, and build an 8-10 minute slide deck telling the full story — real problem, data, model, solution, recommendation. Do one timed rehearsal as a team, upload your notebook, two-page decision memo and deck to Canvas by Tuesday, December 15 at 11:59 PM, and come ready to present. Every team member speaks, and every team member answers two live questions about their own constraints.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261904"
     }
   ],
   "nextSession": {
     "title": "Final Project Presentations: Your Optimization Story",
     "description": "Finals week is demo night. Teams present end-to-end prescriptive analytics projects — real problem to model to dollars — the class votes on the Edelman of ISOM-839, and we chart where your optimization career goes next.",
-    "tags": ["Final Projects", "Presentations", "Celebration"],
+    "tags": [
+      "Final Projects",
+      "Presentations",
+      "Celebration"
+    ],
     "slug": "session-13"
   }
 }

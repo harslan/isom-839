@@ -223,7 +223,8 @@
   "homework": [
     {
       "label": "Midterm Case",
-      "text": "Midterm case work (in lieu of a numbered problem set): with your team, (1) finalize your team roster on the course site by Friday, (2) load the case data into Colab and produce summary statistics on store demand and warehouse capacity, and (3) draft your model skeleton — decision variables, objective, and at least four constraint families — as a one-page outline. Bring the outline to Session 8 for a 5-minute check-in with the instructor. Full deliverables (model, 5-page COO memo, 10-minute presentation) are due Session 9, November 4."
+      "text": "Midterm case work (in lieu of a numbered problem set): with your team, (1) join your team on Canvas under People → Groups → Teams by Friday (pairs — one trio), (2) load the case data into Colab and produce summary statistics on store demand and warehouse capacity, and (3) draft your model skeleton — decision variables, objective, and at least four constraint families — as a one-page outline. Bring the outline to Session 8 for a 5-minute check-in with the instructor. Full deliverables (model, COO memo of up to five pages, five-minute briefing in class) are due Wednesday, November 4 by 7:40 PM on Canvas — the midterm has that week to itself.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261899"
     }
   ],
   "nextSession": {

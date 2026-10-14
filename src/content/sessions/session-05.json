@@ -214,7 +214,8 @@
   "homework": [
     {
       "label": "Homework #4",
-      "text": "Build a min-cost flow model in gurobipy for the provided three-echelon distribution network (2 plants, 3 cross-docks, 5 demand zones). Formulate node-balance and capacity constraints, solve, and report: (1) the optimal flow plan and total cost, (2) the two most binding lane capacities with their shadow prices, and (3) a one-paragraph memo recommending which single lane to expand and why. Submit your Colab notebook link before Session 6."
+      "text": "Build a min-cost flow model in gurobipy for the three-echelon distribution network from tonight (2 plants, 3 cross-docks, 5 demand zones). Formulate node-balance and capacity constraints, solve, and report: (1) the optimal flow plan and total cost, (2) the two most binding lane capacities with their shadow prices, and (3) a one-paragraph memo recommending which single lane to expand and why. Due Wednesday, October 21 by 7:40 PM on Canvas — two weeks, not one.",
+      "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261895"
     }
   ],
   "nextSession": {
