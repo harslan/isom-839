@@ -115,6 +115,24 @@
   ],
   "resources": [
     {
+      "title": "RL & the AI Frontier — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-12/ISOM839_Session12_RL_and_the_AI_Frontier.ipynb",
+      "description": "A Gymnasium inventory world, tabular Q-learning that rediscovers a base-stock policy from reward alone, a stress test with a higher holding cost — then the LLM copilot exercise: a drafted bakery model with two bugs, the five-point verification checklist, and the course's stack in one table.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Final Project Starter Kit",
+      "url": "/project#starter-kit",
+      "description": "The starter notebook in the five beats with a built-in self-check, the two-page decision memo template, and the model-defense question bank.",
+      "icon": "rocket",
+      "badge": "Final",
+      "badgeType": "reference",
+      "linkText": "Open the kit"
+    },
+    {
       "title": "Alibaba DeepStock — RL Inventory at Full Scale",
       "url": "https://arxiv.org/pdf/2603.19621",
       "description": "The deployment paper behind tonight's headline number: reinforcement learning live on 100% of more than one million SKU-warehouse pairs since October 2025.",
@@ -199,7 +217,7 @@
   "homework": [
     {
       "label": "Final Project",
-      "text": "Lock your presentation for next week. Finalize your model and results, quantify the business impact in dollars, and build an 8-10 minute slide deck telling the full story — real problem, data, model, solution, recommendation. Do one timed rehearsal as a team, upload your notebook, two-page decision memo and deck to Canvas by Tuesday, December 15 at 11:59 PM, and come ready to present. Every team member speaks, and every team member answers two live questions about their own constraints.",
+      "text": "Lock your presentation for next week — the starter notebook, memo template and defense question bank are on the project page. Finalize your model and results, quantify the business impact in dollars, and build an 8-10 minute slide deck telling the full story — real problem, data, model, solution, recommendation. Do one timed rehearsal as a team, upload your notebook, two-page decision memo and deck to Canvas by Tuesday, December 15 at 11:59 PM, and come ready to present. Every team member speaks, and every team member answers two live questions about their own constraints.",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261904"
     }
   ],

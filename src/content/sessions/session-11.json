@@ -114,6 +114,15 @@
   ],
   "resources": [
     {
+      "title": "Predict, Then Decide — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-11/ISOM839_Session11_Predict_Then_Decide.ipynb",
+      "description": "The full predict-then-optimize pipeline: synthetic retail demand with three features, a two-layer PyTorch forecaster trained on MSE, a gurobipy newsvendor, decision regret as the scoreboard — and the leaderboard flip when the loss becomes the newsvendor quantile. Ends with the optional decision-loss extension.",
+      "icon": "code",
+      "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "PyTorch Official Tutorials",
       "url": "https://pytorch.org/tutorials/",
       "description": "The canonical starting point for PyTorch — the 60-minute blitz and the Learn the Basics track cover everything we use in tonight's lab.",

@@ -105,6 +105,24 @@ const faq = [
   </section>
 
   <section class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="03b" label="The Five Minutes" title="A Shape for the Briefing" description="Five minutes is about 600 words. This is the shape that works; the order is the point." />
+    <div class="grid gap-3">
+      {[
+        ['0:00', 'The decision and the dollars', 'One sentence: ship this plan, it is worth $X over four weeks versus what we do today.'],
+        ['0:30', 'The bottleneck', 'Which SKU constrains profit, how many sales it costs, and what 100 more units at the DC would be worth. One number the VP will repeat.'],
+        ['1:30', 'The plan, in a picture', 'Who gets a truck which weeks; the two or three stores where the model disagrees with current practice and why.'],
+        ['3:00', 'What we assumed and what moves', 'The cold-snap forecast 20% either way. What changes, what does not, and the recommendation that survives both.'],
+        ['4:15', 'The ask', 'What you need from the VP: secure more parkas, approve the truck schedule, or run the model again when the next forecast lands. Then stop.'],
+      ].map(([t, h, d]) => (
+        <div class="flex gap-5 bg-bg-card border border-border-subtle rounded-xl px-6 py-4">
+          <div class="font-mono text-accent-cyan text-sm w-12 shrink-0 pt-0.5">{t}</div>
+          <div><div class="font-bold text-text-primary">{h}</div><p class="text-text-secondary text-sm leading-relaxed">{d}</p></div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
     <SectionHeader number="04" label="Grading" title="25 Points" description="The published case rubric from the syllabus. The best model nobody understands loses to a good model everyone does." />
     <div class="grid gap-4 md:grid-cols-3">
       {caseRubric.map((r) => (

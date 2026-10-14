@@ -81,6 +81,22 @@ const deliverables = [
   },
 ];
 
+const starterKit = [
+  { icon: 'code', title: 'Starter notebook', href: 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/project/ISOM839_Final_Project_Starter.ipynb', cta: 'Open in Colab', text: 'Structured in the five beats, with a prompt and a code cell for each and a self-check cell that flags unnamed constraints, a non-optimal status, and the MIP gap. When it runs top to bottom, the milestone is done.' },
+  { icon: 'file-text', title: 'Decision memo template', href: '/project/decision_memo_template.md', cta: 'Download the template', text: 'Two pages, five labeled sections, a placeholder for every number that must match the notebook, and a line for AI disclosure. Markdown; paste it into Docs or Word.' },
+  { icon: 'shield', title: 'Model-defense question bank', href: '#defense', cta: 'See the questions', text: 'The kinds of questions each team member answers live on presentation night, by model class. Prepare the defense table in the notebook and none of them will surprise you.' },
+];
+
+const defenseBank = [
+  { cls: 'Any model', qs: ['Point to one constraint. Which sentence in the business did it come from?', 'If I delete this constraint, does the objective go up or down, and roughly by how much?', 'Which constraint binds at the optimum, and what is one more unit of it worth?', 'What is the status quo decision, and where does your model disagree with it most?', 'Which number in your data are you least sure of, and what happens if it is 20% off?'] },
+  { cls: 'Linear programs', qs: ['Why is this variable zero at the optimum? What would its coefficient have to be for it to enter?', 'The shadow price on this constraint is X. Over what range does that price hold?', 'Why did you not need integer variables here?'] },
+  { cls: 'Network models', qs: ['Where is the balance constraint for this node? What goes in and what comes out?', 'Which arc is the bottleneck, and what did you compare to decide that?', 'Why did the flow re-route this way when you cut that capacity?'] },
+  { cls: 'Integer and binary models', qs: ['Where is the fixed-charge link, and what is your big-M? Why that value?', 'What was the LP relaxation, and how far was it from the integer optimum?', 'This either/or rule — show me the inequality. What if both options were allowed?'] },
+  { cls: 'Nonlinear and convex', qs: ['Why is this objective convex? What would make it non-convex?', 'What happens to the optimal decision as this curvature parameter rises?'] },
+  { cls: 'Markov and MDP', qs: ['Why does this row sum to one? Which transition are you least sure of?', 'Which state carries most of the lifetime value, and why?', 'Which cost parameter moves the threshold in your policy, and in which direction?'] },
+  { cls: 'Predict-then-optimize', qs: ['Why is this the right loss for the decision downstream?', 'If the forecast is biased high, which direction does your decision err, and what does that cost?'] },
+];
+
 const briefPrompts = [
   {
     label: 'The decision',
@@ -292,10 +308,38 @@ const faqs = [
         ))}
       </ul>
     </div>
+    <div id="starter-kit" class="mt-16">
+      <SectionHeader number="02b" label="Starter Kit" title="Start From Here, Not From Blank" description="Three files that make the five beats concrete. Open the notebook the night your proposal is accepted." />
+      <div class="grid gap-5 md:grid-cols-3">
+        {starterKit.map((k) => (
+          <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-6 flex flex-col">
+            <Icon name={k.icon} class="w-5 h-5 text-accent-cyan mb-3" />
+            <div class="font-bold text-text-primary mb-2">{k.title}</div>
+            <p class="text-text-secondary text-sm leading-relaxed flex-1">{k.text}</p>
+            <a href={k.href} target={k.href.startsWith('http') ? '_blank' : undefined} rel="noopener" class="group inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg border border-accent-green/50 text-accent-green font-mono text-xs tracking-[1px] uppercase no-underline transition-all duration-300 hover:bg-accent-green/10 hover:border-accent-green self-start">
+              {k.cta} <Icon name="arrow-right" class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
   </section>
 
-  <!-- Suggested Problems -->
-  <section class="py-12 px-8 max-w-[1100px] mx-auto">
+  <section id="defense" class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="02c" label="The Model Defense" title="The Questions You Will Be Asked" description="Two per team member, live, without the AI, about your own constraints. They come from this list and its obvious neighbors. If you can answer every row for your model, you are ready." />
+    <div class="grid gap-4 md:grid-cols-2">
+      {defenseBank.map((b) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl px-6 py-5">
+          <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan mb-3">{b.cls}</div>
+          <ul class="space-y-2">
+            {b.qs.map((q) => <li class="text-text-secondary text-sm leading-relaxed flex gap-3"><span class="text-accent-green shrink-0">›</span><span>{q}</span></li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="py-16 px-8 max-w-[1200px] mx-auto">
     <SectionHeader number="03" label="Project Ideas" title="Eight Domains to Adapt" description="Starting points, not assignments — the best projects come from decisions you have actually watched someone struggle with." />
     <div class="grid md:grid-cols-2 gap-6">
       {problemIdeas.map((cat) => (
