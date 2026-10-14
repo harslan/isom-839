@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 6 · The Power of Yes/No</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text2); max-width: 940px; line-height: 1.55; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 360px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(0.95rem, 1.5vw, 1.2rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 0.95rem); line-height: 1.5; }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 920px; color: var(--text2); font-size: clamp(0.95rem, 1.9vw, 1.35rem); line-height: 1.7; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 06</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 6 · Wed Oct 14</div>
+  <h1>The Power of <span class="grad">Yes / No</span></h1>
+  <p class="sub">Binary variables, fixed costs, and big-M logic — how one line of code lets your model make strategic decisions, and why that makes it exponentially harder to solve.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · The schedule reset -->
+<section class="slide">
+  <div class="kicker">Housekeeping · Two Minutes · isom-839.vercel.app/deadlines</div>
+  <h2>One due date per week, <span class="grad">two weeks per homework</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Wed Oct 21 · 7:40 PM</div><div class="title">Homework #4 — Min-Cost Flow</div><p>Not tonight. Data and scaffold are now in the Session 5 notebook.</p></div>
+    <div class="card"><div class="label">Wed Oct 28 · 7:40 PM</div><div class="title">Homework #5 — Project Knapsack</div><p>Tonight's. Bottom of the Session 6 notebook.</p></div>
+    <div class="card"><div class="label">Before next week</div><div class="title">Join your team on Canvas</div><p>People → Groups → Teams. Pairs, one trio. The midterm case launches Oct 21: <b class="accent-gold">isom-839.vercel.app/case</b>.</p></div>
+  </div>
+  <p class="sub">Nothing else is due midterm week. Nothing is due Thanksgiving week. Every date is on Canvas, on the site, and in a calendar feed you can subscribe to.</p>
+</section>
+
+<!-- 3 · HW3 debrief -->
+<section class="slide">
+  <div class="kicker">Homework #3 Debrief · Beacon Street Advisory</div>
+  <h2>The partners' plan cost <span class="grad">26 points of fit</span></h2>
+  <div class="math">
+    optimum <span class="accent-g">532</span> &nbsp;·&nbsp; seniority-order plan <span class="accent-r">506</span> &nbsp;·&nbsp; every x a clean 0 or 1<br>
+    <span style="color:var(--text2);font-size:0.8em">twists: Chloe barred from Biotech → 492 &nbsp;·&nbsp; Hospital needs two, Biotech postponed → 507</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">Who pays</div><p><b style="color:var(--text)">Farid</b>, last in seniority, takes what is left. Greedy is locally right and globally wrong — and the gap grows with the team.</p></div>
+    <div class="card"><div class="label">No binaries needed</div><p>Supplies of 1, demands of 1: integrality for free. Tonight that free lunch ends.</p></div>
+    <div class="card"><div class="label">If you used GRB.BINARY</div><p>Same answer, more work for the solver. Fine. Tonight you learn when it is <b style="color:var(--text)">required</b>.</p></div>
+  </div>
+</section>
+
+<!-- 4 · The $50M question -->
+<section class="slide">
+  <div class="kicker">Opening · The Question an LP Cannot Answer</div>
+  <h2>Open the warehouse, <span class="grad">or don't</span></h2>
+  <p class="sub">Last week we routed flow through a network we took as given. Tonight we decide what the network <b style="color:var(--text)">is</b>. An LP can only say "open 0.42 of it." Strategy is lumpy: pay the fixed cost or don't, launch or kill, in or out.</p>
+  <div class="math">x ∈ [0, ∞) &nbsp;→&nbsp; <span class="accent-gold">y ∈ {0, 1}</span></div>
+  <p class="sub">One <span class="accent-gold">vtype</span> change. The calculator becomes a strategist — and the problem becomes exponentially harder.</p>
+</section>
+
+<!-- 5 · Vote 1 -->
+<section class="slide">
+  <div class="kicker">Vote In Chat · One Letter · Before We Solve</div>
+  <h2>Five candidate warehouses. <span class="grad">How many open?</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    Worcester $42K · Hartford $38K · Albany $31K · Providence $35K · Manchester $29K a year to open<br>
+    <span style="color:var(--text2)">eight customers · 1,220 units a week · shipping $2–$12 per unit</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">One</div></div>
+    <div class="card"><div class="label">B</div><div class="title">Two</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Three</div></div>
+    <div class="card"><div class="label">D</div><div class="title">All five — shipping is cheapest</div></div>
+  </div>
+  <p class="sub">Type A, B, C or D. Bonus: which two?</p>
+</section>
+
+<!-- 6 · Two variable families -->
+<section class="slide">
+  <div class="kicker">The Model · Two Kinds of Decision in One Place</div>
+  <h2>Strategic and operational, <span class="grad">one model</span></h2>
+  <div class="math">
+    open[w] ∈ {0, 1} &nbsp;&nbsp;<span style="color:var(--text2)">does warehouse w exist?</span><br>
+    x[w, c] ≥ 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--text2)">units per week from w to customer c</span><br><br>
+    min &nbsp;Σ fixed[w] · open[w] &nbsp;+&nbsp; 52 · Σ ship[w,c] · x[w,c]<br>
+    Σ<sub>w</sub> x[w,c] = demand[c] &nbsp;&nbsp;<span style="color:var(--text2)">everyone is served</span>
+  </div>
+  <p class="sub">One constraint is missing. Without it, the model ships from warehouses it never paid to open.</p>
+</section>
+
+<!-- 7 · The fixed-charge link -->
+<section class="slide">
+  <div class="kicker">The Single Most Useful Pattern in Prescriptive Analytics</div>
+  <h2>The <span class="grad">fixed-charge link</span></h2>
+  <div class="math">Σ<sub>c</sub> x[w,c] &nbsp;≤&nbsp; capacity[w] · open[w]</div>
+  <div class="cards">
+    <div class="card"><div class="label">open = 0</div><p>Right side is zero. <b style="color:var(--text)">Nothing can ship.</b> The warehouse does not exist.</p></div>
+    <div class="card"><div class="label">open = 1</div><p>Right side is the capacity. Ship up to it — and pay the fixed cost in the objective.</p></div>
+    <div class="card"><div class="label">The "M"</div><p>Here M is the <b class="accent-gold">capacity</b>, not an arbitrary huge number. Remember that when you write your own. Loose M = weak model.</p></div>
+  </div>
+</section>
+
+<!-- 8 · Solved -->
+<section class="slide">
+  <div class="kicker">Solved · Colab Part 1</div>
+  <h2>Two open, three <span class="grad">on paper</span></h2>
+  <pre style="max-width:1100px">
+Annual cost  <span class="g">$295,800</span>     open: <span class="f">Hartford</span>, <span class="f">Manchester</span>
+
+Hartford   -> Boston 310 · Springfield 120 · New Haven 170 · Burlington 90
+Manchester -> Cambridge 140 · Portland 130 · Nashua 110 · Lowell 150
+
+Worcester ($42K)  Albany ($31K)  Providence ($35K)   <span class="c">never built</span></pre>
+  <p class="sub">Albany has the second-cheapest lease and loses anyway: its $11–12 lanes to Boston and Cambridge wipe out a $7K cheaper rent. <b style="color:var(--text)">The model prices the lease and the miles together.</b></p>
+</section>
+
+<!-- 9 · Read the log -->
+<section class="slide">
+  <div class="kicker">Read the Log · Three Numbers</div>
+  <h2>Branch &amp; bound <span class="grad">finishing its argument</span></h2>
+  <pre style="max-width:1000px">
+    Nodes    |    Current Node    |     Objective Bounds      |  Gap
+ Expl Unexpl |  Obj  Depth IntInf | <span class="f">Incumbent</span>    <span class="g">BestBd</span>   | 
+H    0     0                      396000.0  278908.0   29.6%   <span class="c">← first feasible plan</span>
+H    0     0                      330000.0  278908.0   15.5%
+*    4     0                      295800.0  295800.0   <span class="g">0.00%</span>   <span class="c">← proven: no branch can beat it</span></pre>
+  <div class="cards">
+    <div class="card"><div class="label">Incumbent</div><p>The best <b style="color:var(--text)">feasible</b> plan found so far. Always a real answer.</p></div>
+    <div class="card"><div class="label">Best bound</div><p>What the relaxations say is the floor. Nothing can be cheaper than this.</p></div>
+    <div class="card"><div class="label">Gap</div><p>The distance between them. <b class="accent-gold">Trust the gap, not your enumeration instincts.</b></p></div>
+  </div>
+</section>
+
+<!-- 10 · Logic as algebra -->
+<section class="slide">
+  <div class="kicker">Logic as Algebra · Business Rules Become Inequalities</div>
+  <h2>Once you have binaries, <span class="grad">rules are one line</span></h2>
+  <pre style="max-width:1100px">
+open at most two                        open.sum() <= 2
+if Albany opens, Hartford must too      open['Albany'] <= open['Hartford']       <span class="c">if-then</span>
+Worcester or Providence, not both       open['Worcester'] + open['Providence'] <= 1   <span class="c">either/or</span>
+Boston served from exactly one          x[w,'Boston'] <= demand * assign[w,'Boston'];  assign.sum() == 1
+project 7 requires project 3            x[7] <= x[3]                             <span class="c">tonight's homework</span></pre>
+  <p class="sub">Every rule a manager says in a meeting has a shape on this slide.</p>
+</section>
+
+<!-- 11 · The political constraint -->
+<section class="slide">
+  <div class="kicker">Live · Colab Part 3</div>
+  <h2>A political constraint <span class="grad">with a price tag</span></h2>
+  <div class="math">
+    "open at most two" &nbsp;→&nbsp; <span class="accent-g">$295,800</span> &nbsp;<span style="color:var(--text2)">(costs nothing — already two)</span><br>
+    "Albany must open" &nbsp;→&nbsp; <span class="accent-r">$326,800</span> &nbsp;<span style="color:var(--text2)">(three warehouses)</span><br><br>
+    the Albany decision costs <span class="accent-gold">$31,000 a year</span>
+  </div>
+  <p class="sub">"We can do that. It costs $31,000 a year." — the single most useful sentence a modeler says in a meeting.</p>
+</section>
+
+<!-- 12 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <h2>Break</h2>
+  <p class="sub">While you're up: open the <b class="accent-gold">Branch &amp; Bound Explorer</b> (Explorers → Integer) and step through one tree. You'll need it after the break.</p>
+</section>
+
+<!-- 13 · Vote 2 -->
+<section class="slide">
+  <div class="kicker">Vote In Chat · One Letter</div>
+  <h2>Let the solver open <span class="grad">0.4 of a warehouse</span>. The cost is…</h2>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Lower than the integer plan</div></div>
+    <div class="card"><div class="label">B</div><div class="title">The same</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Higher</div></div>
+    <div class="card"><div class="label">D</div><div class="title">Infeasible</div></div>
+  </div>
+  <p class="sub">vtype = continuous. Everything else unchanged.</p>
+</section>
+
+<!-- 14 · Relax and compare -->
+<section class="slide">
+  <div class="kicker">Colab Part 2 · The Price of Reality</div>
+  <h2>Cheaper, <span class="grad">and impossible</span></h2>
+  <pre style="max-width:1000px">
+LP relaxation   <span class="g">$278,908</span>   open = Worcester <span class="r">0.32</span> · Hartford <span class="r">0.86</span> · Manchester <span class="r">0.40</span>
+Integer plan    <span class="f">$295,800</span>   open = Hartford, Manchester
+
+the price of reality   <span class="f">$16,892</span> a year</pre>
+  <p class="sub">The relaxation pays 86% of Hartford's lease for 86% of a building. It is a <b style="color:var(--text)">bound</b>, never a plan — and branch &amp; bound's whole job is closing that $16,892 gap.</p>
+</section>
+
+<!-- 15 · Branch & bound -->
+<section class="slide">
+  <div class="kicker">How the Solver Thinks · Explorer Walk-Through</div>
+  <h2>Relax · Bound · <span class="grad">Branch · Prune</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Relax</div><p>Drop the integer rule. Solve the LP. If every binary came out 0 or 1, you are done.</p></div>
+    <div class="card"><div class="label">Bound</div><p>The LP value is a floor for everything under this node. No integer plan below can beat it.</p></div>
+    <div class="card"><div class="label">Branch</div><p>Pick a fractional one — Worcester 0.32 — and split: a world where it is 0, a world where it is 1.</p></div>
+    <div class="card"><div class="label">Prune</div><p>Any node whose bound is worse than the incumbent is dead. Whole subtrees vanish unexplored.</p></div>
+  </div>
+  <p class="sub">That pruning is why 2<sup>60</sup> combinations finish before you lift your finger — usually.</p>
+</section>
+
+<!-- 16 · Lab -->
+<section class="slide">
+  <div class="kicker">9:05 – 9:30 · Lab · Colab Part 1 With a Twist</div>
+  <h2>Each team adds <span class="grad">one constraint</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Twist 1</div><div class="title">Single sourcing</div><p>Every customer from exactly one warehouse. Needs a new binary family.</p></div>
+    <div class="card"><div class="label">Twist 2</div><div class="title">Worcester or Providence</div><p>Not both. One line.</p></div>
+    <div class="card"><div class="label">Twist 3</div><div class="title">Capacity −25%</div><p>At every warehouse. Does a third one open?</p></div>
+    <div class="card"><div class="label">Twist 4</div><div class="title">Shipping ×2</div><p>Leases just got relatively cheap. Who opens now?</p></div>
+  </div>
+  <p class="sub">Report one sentence: "the twist cost $X and changed Y." Cite the number from your solve.</p>
+</section>
+
+<!-- 17 · The cliff -->
+<section class="slide">
+  <div class="kicker">Colab Part 4 · The Computational Cliff</div>
+  <h2>Five binaries: 32. Sixty: <span class="grad">1.15 × 10<sup>18</sup></span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    5 → 32 combinations &nbsp;·&nbsp; 30 → a billion &nbsp;·&nbsp; 60 → more than grains of sand on Earth<br>
+    <span style="color:var(--text2)">a 60-item knapsack: solved to proven optimality in 0.00 s, gap 0.0%</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">Why it works</div><p>Branch &amp; bound prunes with bounds. It never enumerates. Most of the tree dies without being visited.</p></div>
+    <div class="card"><div class="label">Why it sometimes doesn't</div><p>A loose M makes the relaxation useless: bounds are weak, nothing prunes, the tree explodes. <b class="accent-gold">Tight M values are the difference between models that solve and models that stall.</b></p></div>
+    <div class="card"><div class="label">The number to read first</div><p>The MIP gap. 0.5% in ten seconds often beats 0.00% in ten hours — say which you delivered.</p></div>
+  </div>
+</section>
+
+<!-- 18 · AI angle -->
+<section class="slide">
+  <div class="kicker">The AI Angle · Copilots Love Big M</div>
+  <h2>Ask the copilot for the model. <span class="grad">Then check every M.</span></h2>
+  <ul class="list">
+    <li>LLM-drafted integer models default to <span class="accent-gold">M = 1,000,000</span>. It runs. It solves slowly, or returns 0.9999 and calls it 1.</li>
+    <li>Ask: "what is the largest this sum can physically be?" That number is your M. Usually it is a capacity, a demand, or a budget.</li>
+    <li>Every if-then and either/or: read it back as a sentence. If the sentence is not in the business, delete the constraint.</li>
+    <li>Session 12 is a full lab on this. The habit starts tonight.</li>
+  </ul>
+</section>
+
+<!-- 19 · Homework -->
+<section class="slide">
+  <div class="kicker">Homework #5 · Due Wed Oct 28 · 7:40 PM · Canvas</div>
+  <h2>The <span class="grad">project-selection knapsack</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    $10M of capital · 12 candidate projects · 60 staff-months<br>
+    <span style="color:var(--text2)">Project 7 requires Project 3 &nbsp;·&nbsp; Projects 5 and 9 are mutually exclusive</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">1</div><p>Formulate: one binary per project, two resource constraints, two logical rules as inequalities.</p></div>
+    <div class="card"><div class="label">2</div><p>Solve at $10M with GRB.BINARY. Portfolio, NPV, capital used, staff-months used.</p></div>
+    <div class="card"><div class="label">3</div><p>Re-solve at $8M. Three to four sentences: what fell out, what came in, and why ratio alone does not decide. <b style="color:var(--text)">It often is not the lowest NPV-per-dollar.</b></p></div>
+  </div>
+  <p class="sub">Table and TODO scaffold at the bottom of tonight's notebook. Two weeks. Submit on Canvas.</p>
+</section>
+
+<!-- 20 · Next week -->
+<section class="slide">
+  <div class="kicker">Next Week · Session 7 · Wed Oct 21</div>
+  <h2>Scheduling, CP-SAT, and <span class="grad">the midterm case launches</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Before next week</div><p>Join your team on Canvas (People → Groups → Teams). Submit HW #4 by 7:40 PM.</p></div>
+    <div class="card"><div class="label">The case</div><p><b class="accent-gold">Beacon Outfitters</b>: 12 stores, 8 SKUs, 4 weeks, case packs, a cold snap, not enough parkas. Brief at <b style="color:var(--text)">isom-839.vercel.app/case</b>.</p></div>
+    <div class="card"><div class="label">New solver</div><p>Google's CP-SAT — built for scheduling logic that is clumsy in MIP. Six baristas, fifteen shifts, no clopens.</p></div>
+  </div>
+  <p class="sub">Tonight the model learned to say no. Next week it learns to say <b style="color:var(--text)">who, and when</b>.</p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>
