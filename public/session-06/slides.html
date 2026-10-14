@@ -295,7 +295,7 @@ project 7 requires project 3            x[7] <= x[3]                            
 <g stroke="#6b6459" stroke-width="2" marker-end="url(#arr)">
 <line x1="500" y1="92" x2="300" y2="190"/><line x1="500" y1="92" x2="700" y2="190"/>
 <line x1="300" y1="238" x2="180" y2="330"/><line x1="300" y1="238" x2="420" y2="330"/>
-<line x1="700" y1="238" x2="580" y2="330"/><line x1="700" y1="238" x2="820" y2="330"/>
+<line x1="700" y1="238" x2="610" y2="330"/><line x1="700" y1="238" x2="850" y2="330"/>
 </g>
 <g font-family="JetBrains Mono, monospace" text-anchor="middle">
 <rect x="400" y="30" width="200" height="62" rx="12" fill="#161412" stroke="#f2b135" stroke-width="2"/>
@@ -308,8 +308,8 @@ project 7 requires project 3            x[7] <= x[3]                            
 <rect x="80" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="2" stroke-dasharray="5 4"/><text x="180" y="361" fill="#6b6459" font-size="16">bound $297,900</text>
 <rect x="320" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#34d399" stroke-width="2.5"/><text x="420" y="361" fill="#34d399" font-size="16" font-weight="700">integer · $295,800 ✓</text>
 <text x="180" y="402" fill="#e2725b" font-size="13" font-weight="700">PRUNED</text><text x="420" y="402" fill="#ffd166" font-size="13" font-weight="700">INCUMBENT → OPTIMAL · GAP 0.00%</text>
-<rect x="480" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/><rect x="720" y="330" width="200" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/>
-<text x="580" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text><text x="820" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text>
+<rect x="540" y="330" width="150" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/><rect x="775" y="330" width="150" height="48" rx="12" fill="#161412" stroke="#6b6459" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.5"/>
+<text x="615" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text><text x="850" y="361" fill="#6b6459" font-size="13" opacity="0.8">never visited</text>
 </g></svg>
   <p class="sub" style="font-size:clamp(0.85rem,1.5vw,1.15rem)">Each node solves an LP. Its value is a <b style="color:var(--text)">floor</b> for everything below it — so once an integer plan at $295,800 exists, any node with a bound above that dies unexplored. That pruning is why 2<sup>60</sup> combinations finish before you lift your finger. Step through one live in the <b class="accent-gold">Branch &amp; Bound Explorer</b>.</p>
 </section>
