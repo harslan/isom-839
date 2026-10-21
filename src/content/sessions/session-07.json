@@ -92,8 +92,8 @@
       "description": "The main event. Teams receive the midterm case — a multi-store retail replenishment problem in the spirit of ECCO — due Session 9, November 4.",
       "bulletPoints": [
         "The case: decide weekly replenishment quantities for a store network under warehouse capacity, minimum order quantities, and service-level requirements",
-        "Deliverables: working Colab model, a 5-page decision memo for the COO, and a 10-minute team presentation on November 4",
-        "Tonight: form teams of 3-4, read the case brief together, and draft your decision variables and constraints before you leave"
+        "Deliverables: a Colab model that runs top to bottom, a decision memo of up to five pages to the merchandising VP, and a five-minute team briefing in class on November 4",
+        "Tonight: find your team (pairs, one trio), read the case brief together, and draft your decision variables and constraints before you leave"
       ],
       "isBreak": false
     },
@@ -111,6 +111,15 @@
     }
   ],
   "resources": [
+    {
+      "title": "Session 7 Slide Deck",
+      "url": "/session-07/slides.html",
+      "description": "Tonight's presentation: ECCO's 300,000 orders a month and the 1.09% that is worth millions, the three discrete patterns, the set-covering trap, meet CP-SAT, the clopen in two languages, two chat votes, the barista lab with four twists and what each one cost, and the Beacon Outfitters case launch. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
     {
       "title": "Scheduling with CP-SAT + the Midterm Case — Colab Notebook",
       "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-07/ISOM839_Session7_Scheduling_CPSAT_and_Midterm_Case.ipynb",
@@ -235,7 +244,7 @@
     },
     {
       "icon": "rocket",
-      "text": "The midterm case is live. ECCO turned this exact problem class into several million euros a year across 536 stores — your team has three weeks to show the same thinking on the retail replenishment case, due November 4."
+      "text": "The midterm case is live. ECCO turned this exact problem class into several million euros a year across 536 stores — your team has two weeks to show the same thinking on the retail replenishment case, due November 4."
     }
   ],
   "homework": [

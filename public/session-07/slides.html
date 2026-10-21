@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 7 · Who Works, What Ships</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1000px; line-height: 1.5; font-weight: 600; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 260px; max-width: 400px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; }
+  .defs { display: grid; grid-template-columns: auto auto; gap: 1.4vh 2.5vw; text-align: left; align-items: baseline; max-width: 1100px; }
+  .defs .k { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2vw, 1.5rem); color: var(--text); }
+  .defs .v { font-size: clamp(1rem, 1.9vw, 1.4rem); color: var(--text2); }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .qr { background: #fff; padding: 12px; border-radius: 14px; }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 07</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 7 · Wed Oct 21</div>
+  <h1>Who Works, Who Gets a Truck, <span class="grad">and What Ships</span></h1>
+  <p class="sub">Last week the model learned to say yes or no. Tonight it learns <b style="color:var(--text)">who, and when</b>. You meet a second solver built for scheduling rules, and the midterm case opens.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · Housekeeping -->
+<section class="slide">
+  <div class="kicker">Housekeeping · Two Minutes · isom-839.vercel.app/deadlines</div>
+  <h2>Two dates, <span class="grad">then the case owns the calendar</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Tonight · 7:40 PM · done</div><div class="title">Homework #4 — Min-Cost Flow</div><p>Using your one-time 24-hour late allowance? You still have until tomorrow night. That is why the debrief waits until next week.</p></div>
+    <div class="card"><div class="label">Wed Oct 28 · 7:40 PM</div><div class="title">Homework #5 — Project Knapsack</div><p>Bottom of the Session 6 notebook. Tonight's set-covering slides are its mirror image.</p></div>
+    <div class="card"><div class="label">Wed Nov 4 · 7:40 PM</div><div class="title">The Midterm Case</div><p>Launches tonight. <b>Join your team on Canvas by Friday</b> (People → Groups → Teams). Nothing else is due that week.</p></div>
+  </div>
+</section>
+
+<!-- 3 · ECCO -->
+<section class="slide">
+  <div class="kicker">2026 Edelman Finalist · ECCO Shoes · Store Replenishment</div>
+  <h2>A shoe company stopped ordering by hand. <span class="grad">The model now does it.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The scale</div><p><b>536 stores in 27 countries.</b> Nearly <b>300,000 replenishment orders a month</b>, every one decided by a model.</p></div>
+    <div class="card"><div class="label">Before</div><p>Store and regional planners ordered by hand. Same shoe, same demand, different orders depending on who was on shift. Stock sat in the wrong stores.</p></div>
+    <div class="card"><div class="label">The engine</div><p>A <b>stochastic mixed-integer program</b>. Integers because shoes ship in whole cartons. Stochastic because nobody knows next week's demand for sure.</p></div>
+  </div>
+  <p class="sub">Source: INFORMS, 2026 Franz Edelman Award finalists.</p>
+</section>
+
+<!-- 4 · 1.09% -->
+<section class="slide">
+  <div class="kicker">The Number To Remember</div>
+  <div class="big"><span class="grad">1.09%</span></div>
+  <p class="take">That is how much ECCO cut key operating costs. It sounds tiny. At 300,000 orders a month it is <span class="accent-gold">several million euros a year.</span></p>
+  <p class="sub">Most of the money in optimization is not in a single brilliant decision. It is in thousands of ordinary decisions made a little better, every week, without anyone getting tired.</p>
+</section>
+
+<!-- 5 · Why integer -->
+<section class="slide">
+  <div class="kicker">Why Replenishment Is An Integer Problem</div>
+  <h2>Three things an LP <span class="grad">cannot do</span></h2>
+  <table class="rules">
+    <tr><th>The business rule</th><th>The model piece</th><th>Kind</th></tr>
+    <tr><td>Boots come 6 to a case. You cannot ship 4.</td><td class="code">units = 6 · cases</td><td class="tag">INTEGER</td></tr>
+    <tr><td>A truck either goes to Portland this week or it does not.</td><td class="code">visit[s,w] ∈ {0,1}</td><td class="tag">BINARY</td></tr>
+    <tr><td>If the truck does not go, nothing gets delivered.</td><td class="code">delivered ≤ cap · visit</td><td class="tag">SESSION 6</td></tr>
+  </table>
+  <p class="take">You already know every piece. Tonight you see them work together on a real-sized problem.</p>
+</section>
+
+<!-- 6 · Three patterns -->
+<section class="slide">
+  <div class="kicker">8:00 – 8:20 · The Three Discrete Workhorses</div>
+  <h2>Same yes/no variables. <span class="grad">Different direction of the inequality.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Covering · ≥ 1</div><div class="title">Cover every need</div><p>Pick the fewest or cheapest resources so that <b>every</b> demand is covered at least once. Fire stations, delivery zones, staff rosters.</p></div>
+    <div class="card"><div class="label">Packing · ≤ budget</div><div class="title">Spend the budget well</div><p>Pick the most valuable set that <b>fits</b>. Project portfolios, ad slots, truck loading. This is your Homework #5.</p></div>
+    <div class="card"><div class="label">Partitioning · = 1</div><div class="title">Exactly one each</div><p>Every item goes to <b>exactly one</b> place. Assigning consultants, splitting territories. Homework #3 was this.</p></div>
+  </div>
+  <p class="take">When you read a new problem, ask: is the rule "at least", "at most", or "exactly"? That one word picks the pattern.</p>
+</section>
+
+<!-- 7 · Set covering trap -->
+<section class="slide">
+  <div class="kicker">Set Covering · Four Candidate Hub Sites · Six Delivery Zones</div>
+  <h2>The obvious first pick <span class="grad">costs you a hub</span></h2>
+  <table class="rules">
+    <tr><th>Site</th><th>Z1</th><th>Z2</th><th>Z3</th><th>Z4</th><th>Z5</th><th>Z6</th><th>Covers</th></tr>
+    <tr><td class="code">A</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td></td><td class="tag">4 zones</td></tr>
+    <tr><td class="code">B</td><td>●</td><td>●</td><td></td><td></td><td>●</td><td></td><td class="tag">3 zones</td></tr>
+    <tr><td class="code">C</td><td></td><td></td><td>●</td><td>●</td><td></td><td>●</td><td class="tag">3 zones</td></tr>
+    <tr><td class="code">D</td><td></td><td></td><td></td><td></td><td>●</td><td></td><td class="tag">1 zone</td></tr>
+  </table>
+  <div class="row">
+    <p class="sub"><b class="accent-r">Greedy:</b> take A (covers the most), then B, then C. <b style="color:var(--text)">Three hubs.</b></p>
+    <p class="sub"><b class="accent-g">Optimal:</b> B and C. <b style="color:var(--text)">Two hubs.</b> A is never needed.</p>
+  </div>
+  <div class="math" style="font-size:clamp(0.9rem,1.7vw,1.3rem)">minimize Σ y<sub>j</sub> &nbsp; subject to &nbsp; Σ<sub>j covers i</sub> y<sub>j</sub> ≥ 1 for every zone i</div>
+</section>
+
+<!-- 8 · Shift scheduling as covering -->
+<section class="slide">
+  <div class="kicker">Shift Scheduling Is Set Covering In Disguise</div>
+  <h2>The zones are <span class="grad">hours of the day</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The rows</div><p>Every time block that needs people. Monday open, Monday mid, Monday close, and so on.</p></div>
+    <div class="card"><div class="label">The columns</div><p>Every person who could work that block. A yes/no variable for each <b>person × shift</b> pair.</p></div>
+    <div class="card"><div class="label">The ≥</div><p>Each block needs at least its headcount. Then layer on the <b>person rules</b>: availability, max shifts, rest between shifts.</p></div>
+  </div>
+  <p class="take">The covering part is easy. The person rules are where real schedules get hard, and where a different solver starts to shine.</p>
+</section>
+
+<!-- 9 · Meet CP-SAT -->
+<section class="slide">
+  <div class="kicker">8:20 – 8:35 · Meet CP-SAT · Google OR-Tools · Free</div>
+  <h2>A solver that thinks in <span class="grad">rules, not relaxations</span></h2>
+  <table class="rules">
+    <tr><th></th><th>Gurobi (MIP)</th><th>CP-SAT</th></tr>
+    <tr><td class="tag">How it searches</td><td>Solves LP relaxations, branches on fractions</td><td>Tries assignments, learns from every dead end, prunes with logic (and borrows LP tricks too)</td></tr>
+    <tr><td class="tag">Speaks natively</td><td>Linear costs, flows, continuous quantities</td><td>"Not both", "if this then that", "exactly one", intervals of time</td></tr>
+    <tr><td class="tag">Numbers</td><td>Any real number</td><td><b class="accent-gold">Integers only.</b> Scale $0.90 to 90 cents.</td></tr>
+    <tr><td class="tag">Reach for it when</td><td>Networks, blending, money flowing</td><td>Rosters, timetables, sequencing, "is there any plan at all?"</td></tr>
+  </table>
+  <p class="take">Two solvers in your toolkit beats one. Rule of thumb: lots of logic, try CP-SAT. Lots of continuous cost, stay with Gurobi.</p>
+</section>
+
+<!-- 10 · Three idioms -->
+<section class="slide">
+  <div class="kicker">CP-SAT In Three Steps</div>
+  <h2>Variables, rules, <span class="grad">goal</span></h2>
+<pre><span class="f">from</span> ortools.sat.python <span class="f">import</span> cp_model
+model = cp_model.CpModel()
+
+<span class="c"># 1. a yes/no for every (barista, shift)</span>
+work = model.<span class="g">NewBoolVar</span>(<span class="r">"Ana_Mon_open"</span>)
+
+<span class="c"># 2. rules: plain arithmetic, plus logic</span>
+model.<span class="g">Add</span>(sum(crew) >= <span class="f">2</span>)                     <span class="c"># cover the block</span>
+model.<span class="g">AddBoolOr</span>([close_mon.Not(), open_tue.Not()])  <span class="c"># not both</span>
+model.<span class="g">Add</span>(hours >= <span class="f">8</span>).<span class="g">OnlyEnforceIf</span>(is_full_time) <span class="c"># if-then</span>
+
+<span class="c"># 3. goal, then solve</span>
+model.<span class="g">Minimize</span>(labor_cost)
+status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
+  <p class="sub">No big-M. The if-then you built by hand last week is one method call here.</p>
+</section>
+
+<!-- 11 · The clopen -->
+<section class="slide">
+  <div class="kicker">One Rule, Two Languages</div>
+  <h2>"Nobody closes Monday night <span class="grad">and opens Tuesday morning"</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">As logic · CP-SAT</div><div class="math" style="font-size:clamp(0.9rem,1.6vw,1.2rem)">NOT close<sub>Mon</sub> OR<br>NOT open<sub>Tue</sub></div><p>Reads like the sentence the manager said.</p></div>
+    <div class="card"><div class="label">As algebra · Gurobi</div><div class="math" style="font-size:clamp(0.9rem,1.6vw,1.2rem)">close<sub>Mon</sub> + open<sub>Tue</sub> ≤ 1</div><p>The Session 6 trick. Same rule, same answer.</p></div>
+  </div>
+  <p class="take">Baristas call it a "clopen." It is the most hated shift in retail, and some cities now restrict it by law. Your model can rule it out in one line.</p>
+</section>
+
+<!-- 12 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <div class="big"><span class="grad">Break</span></div>
+  <p class="take">Go get coffee. When you come back, you schedule the people who make it.</p>
+  <p class="sub">While you are up: open the Session 7 notebook in Colab and run the first cell. It installs OR-Tools.</p>
+</section>
+
+<!-- 13 · Vote -->
+<section class="slide">
+  <div class="kicker">Vote In Chat · One Letter · Before We Solve</div>
+  <h2>Six baristas, fifteen shifts. <span class="grad">How many people does the cheapest roster use?</span></h2>
+  <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
+    Hourly wage: &nbsp;Ana $18 · Ben $16 · Chen $17 · Dara $19 · Eli $16 · Fay $18<br>
+    <span style="color:var(--text2)">25 barista-shifts to fill. Max 5 shifts each. No clopens. Some people are unavailable some days.</span>
+  </div>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">All six, spread evenly</div></div>
+    <div class="card"><div class="label">B</div><div class="title">Five</div></div>
+    <div class="card"><div class="label">C</div><div class="title">Four</div></div>
+    <div class="card"><div class="label">D</div><div class="title">It cannot be done</div></div>
+  </div>
+  <p class="sub">Type A, B, C or D. Bonus: if someone sits out, who?</p>
+</section>
+
+<!-- 14 · Lab -->
+<section class="slide">
+  <div class="kicker">8:45 – 9:10 · Lab · Notebook Part 1, Then A Twist</div>
+  <h2>Solve the base roster. <span class="grad">Then each team adds one rule.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Twist 1</div><div class="title">Fairness</div><p>Everyone works at least 2 shifts. What does fairness cost per week?</p></div>
+    <div class="card"><div class="label">Twist 2</div><div class="title">The feud</div><p>Ana and Ben never work the same shift. One line of logic.</p></div>
+    <div class="card"><div class="label">Twist 3</div><div class="title">New labor policy</div><p>Max 4 shifts per person instead of 5. What does the solver tell you?</p></div>
+    <div class="card"><div class="label">Twist 4</div><div class="title">A promise to Dara</div><p>The manager promised Dara at least 3 shifts. Who loses hours?</p></div>
+  </div>
+  <p class="take">Report one sentence: "The twist cost $X and changed Y." If it cost $0, or the solver said no, that is a real finding. Say why.</p>
+</section>
+
+<!-- 15 · Reveal -->
+<section class="slide">
+  <div class="kicker">The Base Roster · OPTIMAL · Under A Tenth Of A Second</div>
+  <h2>Five people, $1,700 a week. <span class="grad">Dara never works.</span></h2>
+  <table class="rules" style="font-size:clamp(0.85rem,1.4vw,1.15rem)">
+    <tr><th></th><th>Open</th><th>Mid</th><th>Close</th></tr>
+    <tr><td class="tag">Mon</td><td>Chen, Fay</td><td>Ben</td><td>Ben, Chen</td></tr>
+    <tr><td class="tag">Tue</td><td>Ana, Fay</td><td>Ana</td><td>Ben, Chen</td></tr>
+    <tr><td class="tag">Wed</td><td>Eli, Fay</td><td>Fay</td><td>Ben, Eli</td></tr>
+    <tr><td class="tag">Thu</td><td>Ana, Fay</td><td>Ana</td><td>Ana, Chen</td></tr>
+    <tr><td class="tag">Fri</td><td>Ben, Eli</td><td>Eli</td><td>Chen, Eli</td></tr>
+  </table>
+  <p class="take">Is that roster fair? No. <span class="accent-gold">Fairness is a constraint you have not written yet.</span> The model only cares about what you tell it to care about.</p>
+</section>
+
+<!-- 16 · Twist results -->
+<section class="slide">
+  <div class="kicker">What The Twists Cost</div>
+  <h2>Some rules are expensive. <span class="grad">Most are not.</span></h2>
+  <table class="rules">
+    <tr><th>Rule added</th><th>Weekly cost</th><th>What happened</th></tr>
+    <tr><td>Friday close needs 3</td><td class="code">+$76</td><td>Dara picks up one shift. The solver reshuffles the whole week, not just Friday.</td></tr>
+    <tr><td>Everyone ≥ 2 shifts</td><td class="code accent-g">+$8</td><td>Fairness costs less than one latte a day.</td></tr>
+    <tr><td>Ana and Ben never together</td><td class="code accent-g">$0</td><td>Free. The best roster already kept them apart.</td></tr>
+    <tr><td>Dara promised 3 shifts</td><td class="code">+$12</td><td>Ana and Fay each lose hours.</td></tr>
+    <tr><td>Max 4 shifts each</td><td class="code accent-r">INFEASIBLE</td><td>25 shifts, 6 people × 4 = 24 slots. No plan exists. Hire, or cut a requirement.</td></tr>
+  </table>
+  <p class="take">"Infeasible" is an answer, not an error. It tells the manager the policy and the staffing cannot both be true.</p>
+</section>
+
+<!-- 17 · Case launch -->
+<section class="slide">
+  <div class="kicker">9:10 – 9:35 · The Main Event · Midterm Case</div>
+  <h2>Beacon Outfitters: <span class="grad">four weeks of replenishment</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The network</div><p><b>12 stores</b> across New England, from Back Bay to Burlington. One distribution center in Worcester. A truck that costs money every time it visits.</p></div>
+    <div class="card"><div class="label">The products</div><p><b>8 SKUs</b>, from wool beanies to down parkas. Each ships in its own <b>case pack</b>. Each has a margin and a cost to sit on a shelf.</p></div>
+    <div class="card"><div class="label">The problem</div><p>A <b>cold snap</b> hits in weeks 3 and 4. Demand for outerwear jumps. The DC does not have enough of some products to go around.</p></div>
+  </div>
+  <p class="take">The merchandising VP's question: what do we ship, where, when, and what is it worth?</p>
+  <p class="sub">Brief, data dictionary and rubric: <b class="accent-gold">isom-839.vercel.app/case</b></p>
+</section>
+
+<!-- 18 · Five questions -->
+<section class="slide">
+  <div class="kicker">What The VP Will Ask You On Nov 4</div>
+  <h2>Five questions. <span class="grad">Every one ends in a dollar figure.</span></h2>
+  <table class="rules">
+    <tr><td class="tag">01 · The plan</td><td>Cases of each SKU to each store each week. Which stores get a truck, which weeks.</td></tr>
+    <tr><td class="tag">02 · The money</td><td>Four-week profit vs. doing nothing, and vs. "ship what the forecast asks for."</td></tr>
+    <tr><td class="tag">03 · The bottleneck</td><td>Which SKU really limits profit? What are 100 more units of it worth?</td></tr>
+    <tr><td class="tag">04 · The trucks</td><td>Which stores deserve a truck every week, and which every other week?</td></tr>
+    <tr><td class="tag">05 · The cold snap</td><td>If the forecast is 20% too high, or 20% too low, does your plan survive?</td></tr>
+  </table>
+</section>
+
+<!-- 19 · Vote 2 -->
+<section class="slide">
+  <div class="kicker">Vote In Chat · Before You Open The Data</div>
+  <h2>Which product will <span class="grad">limit Beacon's profit most?</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">A</div><div class="title">Down parka</div><p>$134 margin, scarce at the DC.</p></div>
+    <div class="card"><div class="label">B</div><div class="title">Wool beanie</div><p>$18 margin, huge cold-snap demand.</p></div>
+    <div class="card"><div class="label">C</div><div class="title">Insulated glove</div><p>$28 margin, 12 to a case.</p></div>
+    <div class="card"><div class="label">D</div><div class="title">None of them</div><p>It is shelf space or trucks.</p></div>
+  </div>
+  <p class="sub">Write your guess down. Your model gives the real answer by Nov 4. Being wrong here is the point.</p>
+</section>
+
+<!-- 20 · Sort the decisions -->
+<section class="slide">
+  <div class="kicker">The ECCO Question · Team Huddle · 10 Minutes</div>
+  <h2>Before you code: <span class="grad">sort every decision</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Integer</div><p><b>Cases shipped</b> per store × SKU × week. The one line that makes this an IP.</p></div>
+    <div class="card"><div class="label">Binary</div><p><b>Truck visits</b> per store × week. Fixed cost, and it switches truck capacity on.</p></div>
+    <div class="card"><div class="label">Continuous</div><p><b>Units sold, lost, and left on the shelf.</b> These follow from what ships.</p></div>
+  </div>
+  <p class="take">Then name at least four constraint families in business English. Inventory flow. Demand. Shelf. Truck. DC supply. If you cannot say it as a sentence, do not code it yet.</p>
+</section>
+
+<!-- 21 · Deliverables & timeline -->
+<section class="slide">
+  <div class="kicker">Deliverables · 25 Points · Pairs, One Trio</div>
+  <h2>The model is the easy part. <span class="grad">The memo is where the grade lives.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Tonight</div><div class="title">Launch</div><p>Join your team on Canvas by Friday. Load the data. Run the summary statistics cell.</p></div>
+    <div class="card"><div class="label">Session 8 · Oct 28</div><div class="title">Five-minute check-in</div><p>Bring a one-page outline: variables, objective, four constraint families. A wrong model shape gets fixed here, for free.</p></div>
+    <div class="card"><div class="label">Session 9 · Nov 4</div><div class="title">Due and briefed</div><p>Notebook that runs top to bottom. Memo to the VP, up to five pages. A five-minute briefing in class.</p></div>
+  </div>
+  <div class="math" style="font-size:clamp(0.85rem,1.6vw,1.2rem)">Model correctness <span class="accent-gold">10</span> &nbsp;·&nbsp; Business insight <span class="accent-gold">8</span> &nbsp;·&nbsp; Briefing clarity <span class="accent-gold">7</span></div>
+</section>
+
+<!-- 22 · AI angle -->
+<section class="slide">
+  <div class="kicker">The AI Angle · Use Your Copilot, Keep Your Judgment</div>
+  <h2>An LLM can write the model. <span class="grad">You have to break it.</span></h2>
+  <ul class="list">
+    <li>Paste one constraint family in plain English and ask for the gurobipy or CP-SAT line. Fast and usually right.</li>
+    <li>Then test it like an auditor: ship nothing, does profit equal selling only opening stock? Set a store's shelf to zero, does it get nothing?</li>
+    <li>Read every constraint back as a sentence. If the VP never said that sentence, delete it.</li>
+    <li>Your memo must explain the numbers. A copilot cannot tell you which constraint binds. Your model can.</li>
+  </ul>
+</section>
+
+<!-- 23 · Next week -->
+<section class="slide">
+  <div class="kicker">9:35 – 9:40 · Next Week · Session 8 · Wed Oct 28</div>
+  <h2>When the world <span class="grad">stops being linear</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Bring</div><p>Your one-page case outline for the check-in. Homework #5, submitted by 7:40 PM.</p></div>
+    <div class="card"><div class="label">The topic</div><p>Risk grows with the square of exposure. Demand curves bend as prices rise. <b>Markowitz portfolios, pricing, and convexity.</b></p></div>
+    <div class="card"><div class="label">Office hours</div><p>Team check-ins by appointment this week. Email with ISOM 839 in the subject line.</p></div>
+  </div>
+  <p class="take">Tonight the model learned who works and what ships. Next week it learns to handle curves.</p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>
