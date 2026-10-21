@@ -157,6 +157,15 @@
       "badge": "Case",
       "badgeType": "video",
       "linkText": "Rewatch the case"
+    },
+    {
+      "title": "Cluster, Then Optimize: Gurobi's Customer Assignment",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/customer_assignment/customer_assignment.ipynb",
+      "description": "50,000 customers are too many to optimize one by one, so K-means shrinks them into 50 clusters first, then a binary model picks up to 8 of 20 sites to serve them. Machine learning in service of the decision. Try it: rerun with 20 and with 200 clusters. How much does the plan change, and how much longer does Gurobi take? Runs on the free license.",
+      "icon": "code",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
     }
   ],
   "activities": [

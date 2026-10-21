@@ -182,6 +182,15 @@
       "badge": "Case",
       "badgeType": "video",
       "linkText": "Watch the case"
+    },
+    {
+      "title": "Gurobi's Intro Tutorial: The Resource Assignment Problem",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/milp_tutorial/introduction_to_modeling.ipynb",
+      "description": "Three people, three jobs, one matching score each — the smallest possible assignment model, explained line by line in gurobipy. Part 2 adds a budget, so a job can go unfilled: a 'gap' variable with a penalty. That gap is the same idea as lost sales in the midterm case. Good review if Homework #3 felt fast. (Some images in the notebook may not load in Colab; the code runs fine.)",
+      "icon": "check",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
     }
   ],
   "activities": [
