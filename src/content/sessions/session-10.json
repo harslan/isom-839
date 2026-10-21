@@ -151,6 +151,15 @@
       "badge": "Deep Dive",
       "badgeType": "reference",
       "linkText": "Open the book"
+    },
+    {
+      "title": "Yield Management: Pricing Seats Over Three Periods",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/yield_management/yield_management.ipynb",
+      "description": "An airline sets prices for three booking periods without knowing future demand, then re-plans after each. Decisions over time under uncertainty — the same idea as tonight's MDP, built as a stochastic program. Needs your free Gurobi academic license; it is too large for the pip trial license. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "trending-up",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
     }
   ],
   "activities": [

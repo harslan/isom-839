@@ -139,6 +139,24 @@
       "linkText": "Open in Colab"
     },
     {
+      "title": "Cell Tower Coverage: Set Covering With a Budget",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/cell_tower_coverage/cell_tower.ipynb",
+      "description": "Tonight's hub slide asked for the fewest sites that cover everyone. Flip it: a telecom can only afford a few towers, so which sites reach the most people? Same yes/no variables, the 'maximal covering' cousin of set covering. 15 binary variables, solves instantly. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "shield",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Workforce Scheduling: Fewest Temps, Fairest Shifts",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/workforce/workforce_scheduling.ipynb",
+      "description": "The grown-up barista lab. First minimize temporary hires, then, without hiring more, make everyone's shift count as even as possible — fairness as a second objective instead of a constraint. Compare it with tonight's 'fairness costs $8' result. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "users",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "The Midterm Case Brief — Beacon Outfitters",
       "url": "/case",
       "description": "The situation, the five questions the VP is asking, the data dictionary, deliverables, the 25-point rubric, and the timeline. Read it before you open the notebook.",

@@ -169,6 +169,33 @@
       "badge": "Walkthrough",
       "badgeType": "interactive",
       "linkText": "Open the example"
+    },
+    {
+      "title": "Portfolio Selection: Markowitz in gurobipy",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/portfolio_selection_optimization/portfolio_selection_optimization.ipynb",
+      "description": "Real stock-return data, a quadratic risk term, and the efficient frontier traced point by point — tonight's lecture topic as a second, fully worked example. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "trending-up",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Agricultural Pricing: When Revenue Bends",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/agricultural_pricing/agricultural_pricing.ipynb",
+      "description": "Set prices for milk, butter and cheese when demand falls as prices rise. Revenue becomes price × demand(price), a curve — the pricing half of tonight's lecture on a real-world-style dataset. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "trending-up",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Midterm Warm-Up: Factory Planning",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/factory_planning/factory_planning_1.ipynb",
+      "description": "Six months, seven products, machines, market limits and storage. Inventory flows month to month exactly the way stock flows week to week at Beacon Outfitters — a good place to check your case formulation's shape without seeing the case answer. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "check",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
     }
   ],
   "activities": [

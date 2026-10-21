@@ -166,6 +166,15 @@
       "badge": "Extra Practice",
       "badgeType": "reference",
       "linkText": "Open in Colab"
+    },
+    {
+      "title": "Fantasy Basketball: Predict Points, Then Pick the Lineup",
+      "url": "https://colab.research.google.com/github/Gurobi/modeling-examples/blob/master/fantasy_basketball/fantasy_basketball_part1.ipynb",
+      "description": "Part 1 trains a model to predict each player's fantasy points; Part 2 (same folder) feeds those predictions into a salary-capped lineup optimizer. Predict-then-decide in its cleanest form, and a fun sequel to Session 7's Dream Team. From Gurobi's modeling examples (Apache 2.0).",
+      "icon": "code",
+      "badge": "Extra Practice",
+      "badgeType": "reference",
+      "linkText": "Open in Colab"
     }
   ],
   "activities": [
