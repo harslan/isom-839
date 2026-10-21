@@ -29,7 +29,7 @@
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 260px; max-width: 400px; flex: 1; text-align: left; }
   .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
   .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
-  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p { color: var(--text2); font-size: clamp(1rem, 1.55vw, 1.25rem); line-height: 1.5; }
   .card p b { color: var(--text); }
   pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
   pre .c { color: #6b6459; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
@@ -37,7 +37,7 @@
   .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
   .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
   ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
-  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(1rem, 1.7vw, 1.4rem); }
   table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
   table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
   table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
@@ -51,6 +51,8 @@
   .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
   .qr { background: #fff; padding: 12px; border-radius: 14px; }
   .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .step { visibility: hidden; opacity: 0; transition: opacity 0.35s ease; }
+  .step.shown { visibility: visible; opacity: 1; }
   .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
 </style>
 </head>
@@ -63,14 +65,15 @@
 <section class="slide active">
   <div class="pill">ISOM 839 · Session 7 · Wed Oct 21</div>
   <h1>Who Works, Who Gets a Truck, <span class="grad">and What Ships</span></h1>
-  <p class="sub">Last week the model learned to say yes or no. Tonight it learns <b style="color:var(--text)">who, and when</b>. You meet a second solver built for scheduling rules, and the midterm case opens.</p>
+  <p class="sub">Six baristas. Dara is the most expensive. <b style="color:var(--text)">By 9 PM you will know if she gets a single shift.</b> Then the midterm case opens.</p>
+  <p class="sub" style="font-size:clamp(0.95rem,1.6vw,1.2rem)">Quick show of hands: who has ever worked a "clopen" — closing at night, opening the next morning?</p>
   <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
 </section>
 
 <!-- 2 · Housekeeping -->
 <section class="slide">
   <div class="kicker">Housekeeping · Two Minutes · isom-839.vercel.app/deadlines</div>
-  <h2>Two dates, <span class="grad">then the case owns the calendar</span></h2>
+  <h2>One done, two coming, <span class="grad">then the case owns the calendar</span></h2>
   <div class="cards">
     <div class="card"><div class="label">Tonight · 7:40 PM · done</div><div class="title">Homework #4 — Min-Cost Flow</div><p>Using your one-time 24-hour late allowance? You still have until tomorrow night. That is why the debrief waits until next week.</p></div>
     <div class="card"><div class="label">Wed Oct 28 · 7:40 PM</div><div class="title">Homework #5 — Project Knapsack</div><p>Bottom of the Session 6 notebook. Tonight's set-covering slides are its mirror image.</p></div>
@@ -80,21 +83,22 @@
 
 <!-- 3 · ECCO -->
 <section class="slide">
-  <div class="kicker">2026 Edelman Finalist · ECCO Shoes · Store Replenishment</div>
+  <div class="kicker">7:40 – 8:00 · 2026 Edelman Finalist · ECCO Shoes · Store Replenishment</div>
   <h2>A shoe company stopped ordering by hand. <span class="grad">The model now does it.</span></h2>
   <div class="cards">
     <div class="card"><div class="label">The scale</div><p><b>536 stores in 27 countries.</b> Nearly <b>300,000 replenishment orders a month</b>, every one decided by a model.</p></div>
     <div class="card"><div class="label">Before</div><p>Store and regional planners ordered by hand. Same shoe, same demand, different orders depending on who was on shift. Stock sat in the wrong stores.</p></div>
     <div class="card"><div class="label">The engine</div><p>A <b>stochastic mixed-integer program</b>. Integers because shoes ship in whole cartons. Stochastic because nobody knows next week's demand for sure.</p></div>
   </div>
-  <p class="sub">Source: INFORMS, 2026 Franz Edelman Award finalists.</p>
+  <p class="take">Guess in chat: by how much did ECCO cut its key operating costs? <span class="accent-gold">1%? 10%? 30%?</span></p>
+  <p class="sub" style="font-size:clamp(0.8rem,1.2vw,0.95rem)">Source: INFORMS, 2026 Franz Edelman Award finalists.</p>
 </section>
 
 <!-- 4 · 1.09% -->
 <section class="slide">
   <div class="kicker">The Number To Remember</div>
   <div class="big"><span class="grad">1.09%</span></div>
-  <p class="take">That is how much ECCO cut key operating costs. It sounds tiny. At 300,000 orders a month it is <span class="accent-gold">several million euros a year.</span></p>
+  <p class="take">That is how much ECCO cut key operating costs. It sounds tiny. On a cost base spread over 536 stores, it is <span class="accent-gold">several million euros a year.</span></p>
   <p class="sub">Most of the money in optimization is not in a single brilliant decision. It is in thousands of ordinary decisions made a little better, every week, without anyone getting tired.</p>
 </section>
 
@@ -106,15 +110,15 @@
     <tr><th>The business rule</th><th>The model piece</th><th>Kind</th></tr>
     <tr><td>Boots come 6 to a case. You cannot ship 4.</td><td class="code">units = 6 · cases</td><td class="tag">INTEGER</td></tr>
     <tr><td>A truck either goes to Portland this week or it does not.</td><td class="code">visit[s,w] ∈ {0,1}</td><td class="tag">BINARY</td></tr>
-    <tr><td>If the truck does not go, nothing gets delivered.</td><td class="code">delivered ≤ cap · visit</td><td class="tag">SESSION 6</td></tr>
+    <tr><td>If the truck does not go, nothing gets delivered.</td><td class="code">delivered ≤ cap · visit</td><td class="tag">LINK (Session 6)</td></tr>
   </table>
   <p class="take">You already know every piece. Tonight you see them work together on a real-sized problem.</p>
 </section>
 
 <!-- 6 · Three patterns -->
 <section class="slide">
-  <div class="kicker">8:00 – 8:20 · The Three Discrete Workhorses</div>
-  <h2>Same yes/no variables. <span class="grad">Different direction of the inequality.</span></h2>
+  <div class="kicker">8:00 – 8:20 · Three Patterns</div>
+  <h2>Same yes/no variables. <span class="grad">Three signs: ≥, ≤, =</span></h2>
   <div class="cards">
     <div class="card"><div class="label">Covering · ≥ 1</div><div class="title">Cover every need</div><p>Pick the fewest or cheapest resources so that <b>every</b> demand is covered at least once. Fire stations, delivery zones, staff rosters.</p></div>
     <div class="card"><div class="label">Packing · ≤ budget</div><div class="title">Spend the budget well</div><p>Pick the most valuable set that <b>fits</b>. Project portfolios, ad slots, truck loading. This is your Homework #5.</p></div>
@@ -126,7 +130,7 @@
 <!-- 7 · Set covering trap -->
 <section class="slide">
   <div class="kicker">Set Covering · Four Candidate Hub Sites · Six Delivery Zones</div>
-  <h2>The obvious first pick <span class="grad">costs you a hub</span></h2>
+  <h2>Fewest hubs that cover all six zones? <span class="grad">Shout it out.</span></h2>
   <table class="rules">
     <tr><th>Site</th><th>Z1</th><th>Z2</th><th>Z3</th><th>Z4</th><th>Z5</th><th>Z6</th><th>Covers</th></tr>
     <tr><td class="code">A</td><td>●</td><td>●</td><td>●</td><td>●</td><td></td><td></td><td class="tag">4 zones</td></tr>
@@ -134,11 +138,11 @@
     <tr><td class="code">C</td><td></td><td></td><td>●</td><td>●</td><td></td><td>●</td><td class="tag">3 zones</td></tr>
     <tr><td class="code">D</td><td></td><td></td><td></td><td></td><td>●</td><td></td><td class="tag">1 zone</td></tr>
   </table>
-  <div class="row">
+  <div class="row step">
     <p class="sub"><b class="accent-r">Greedy:</b> take A (covers the most), then B, then C. <b style="color:var(--text)">Three hubs.</b></p>
     <p class="sub"><b class="accent-g">Optimal:</b> B and C. <b style="color:var(--text)">Two hubs.</b> A is never needed.</p>
   </div>
-  <div class="math" style="font-size:clamp(0.9rem,1.7vw,1.3rem)">minimize Σ y<sub>j</sub> &nbsp; subject to &nbsp; Σ<sub>j covers i</sub> y<sub>j</sub> ≥ 1 for every zone i</div>
+  <div class="math step" style="font-size:clamp(0.9rem,1.7vw,1.3rem)">minimize Σ y<sub>j</sub> &nbsp; subject to &nbsp; Σ<sub>j covers i</sub> y<sub>j</sub> ≥ 1 for every zone i<br><span style="color:var(--text2);font-size:0.85em">In words: pick the fewest sites so every zone has at least one.</span></div>
 </section>
 
 <!-- 7b · Dream team -->
@@ -148,12 +152,12 @@
   <table class="rules">
     <tr><th>The rule</th><th>Pattern?</th></tr>
     <tr><td>At least 3 point guards, 4 shooting guards, 4 forwards, 3 centers. Some players count for two.</td><td class="tag">?</td></tr>
-    <tr><td>Holloway will not play if Grant is picked.</td><td class="tag">?</td></tr>
+    <tr><td>Holloway will not play if Grant is picked. (So: not both.)</td><td class="tag">?</td></tr>
     <tr><td>Ortiz and Kerr come as a pair, or not at all.</td><td class="tag">?</td></tr>
     <tr><td>At most 3 players from one franchise. Four Celtics are on the list.</td><td class="tag">?</td></tr>
     <tr><td>Team average rebounds at least 7. Is an average even linear?</td><td class="tag">?</td></tr>
   </table>
-  <p class="take">Covering · if-then · pair · packing · <span class="accent-gold">and a fixed team of 12 turns the average into a sum: total rebounds ≥ 84.</span></p>
+  <p class="take step">Covering (≥) · not-both, from Session 6 · pair (x₂ = x₁₉) · packing (≤) · <span class="accent-gold">and a fixed team of 12 turns the average into a sum: total rebounds ≥ 84.</span></p>
   <p class="sub">The full model, the price of every rule, and the injury report: the Dream Team notebook on tonight's session page.</p>
 </section>
 
@@ -172,10 +176,10 @@
 <!-- 9 · Meet CP-SAT -->
 <section class="slide">
   <div class="kicker">8:20 – 8:35 · Meet CP-SAT · Google OR-Tools · Free</div>
-  <h2>A solver that thinks in <span class="grad">rules, not relaxations</span></h2>
+  <h2>A solver that thinks in <span class="grad">rules, not fractions</span></h2>
   <table class="rules">
     <tr><th></th><th>Gurobi (MIP)</th><th>CP-SAT</th></tr>
-    <tr><td class="tag">How it searches</td><td>Solves LP relaxations, branches on fractions</td><td>Tries assignments, learns from every dead end, prunes with logic (and borrows LP tricks too)</td></tr>
+    <tr><td class="tag">How it searches</td><td>Solves a looser version that allows fractions, then fixes the fractions one by one</td><td>Tries assignments, and remembers every dead end so it never repeats one</td></tr>
     <tr><td class="tag">Speaks natively</td><td>Linear costs, flows, continuous quantities</td><td>"Not both", "if this then that", "exactly one", intervals of time</td></tr>
     <tr><td class="tag">Numbers</td><td>Any real number</td><td><b class="accent-gold">Integers only.</b> Scale $0.90 to 90 cents.</td></tr>
     <tr><td class="tag">Reach for it when</td><td>Networks, blending, money flowing</td><td>Rosters, timetables, sequencing, "is there any plan at all?"</td></tr>
@@ -196,7 +200,7 @@ work = model.<span class="g">NewBoolVar</span>(<span class="r">"Ana_Mon_open"</s
 <span class="c"># 2. rules: plain arithmetic, plus logic</span>
 model.<span class="g">Add</span>(sum(crew) >= <span class="f">2</span>)                     <span class="c"># cover the block</span>
 model.<span class="g">AddBoolOr</span>([close_mon.Not(), open_tue.Not()])  <span class="c"># not both</span>
-model.<span class="g">Add</span>(hours >= <span class="f">8</span>).<span class="g">OnlyEnforceIf</span>(is_full_time) <span class="c"># if-then</span>
+model.<span class="g">Add</span>(dara_shifts >= <span class="f">3</span>).<span class="g">OnlyEnforceIf</span>(promised) <span class="c"># if-then</span>
 
 <span class="c"># 3. goal, then solve</span>
 model.<span class="g">Minimize</span>(labor_cost)
@@ -226,10 +230,10 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
 <!-- 13 · Vote -->
 <section class="slide">
   <div class="kicker">Vote In Chat · One Letter · Before We Solve</div>
-  <h2>Six baristas, fifteen shifts. <span class="grad">How many people does the cheapest roster use?</span></h2>
+  <h2>Six baristas, 15 shifts, 25 seats to fill. <span class="grad">How many people does the cheapest roster use?</span></h2>
   <div class="math" style="font-size:clamp(0.9rem,1.8vw,1.35rem)">
     Hourly wage: &nbsp;Ana $18 · Ben $16 · Chen $17 · Dara $19 · Eli $16 · Fay $18<br>
-    <span style="color:var(--text2)">25 barista-shifts to fill. Max 5 shifts each. No clopens. Some people are unavailable some days.</span>
+    <span style="color:var(--text2)">Max 5 shifts each · no clopens · some days off-limits</span>
   </div>
   <div class="cards">
     <div class="card"><div class="label">A</div><div class="title">All six, spread evenly</div></div>
@@ -242,7 +246,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
 
 <!-- 14 · Lab -->
 <section class="slide">
-  <div class="kicker">8:45 – 9:10 · Lab · Notebook Part 1, Then A Twist</div>
+  <div class="kicker">8:45 – 9:10 · Lab · Session 7 Notebook, Part 1</div>
   <h2>Solve the base roster. <span class="grad">Then each team adds one rule.</span></h2>
   <div class="cards">
     <div class="card"><div class="label">Twist 1</div><div class="title">Fairness</div><p>Everyone works at least 2 shifts. What does fairness cost per week?</p></div>
@@ -250,7 +254,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
     <div class="card"><div class="label">Twist 3</div><div class="title">New labor policy</div><p>Max 4 shifts per person instead of 5. What does the solver tell you?</p></div>
     <div class="card"><div class="label">Twist 4</div><div class="title">A promise to Dara</div><p>The manager promised Dara at least 3 shifts. Who loses hours?</p></div>
   </div>
-  <p class="take">Report one sentence: "The twist cost $X and changed Y." If it cost $0, or the solver said no, that is a real finding. Say why.</p>
+  <p class="take">We run the base and the Friday demo together. Then write your rule in the <span class="accent-gold" style="font-family:'JetBrains Mono',monospace">my_twist()</span> cell and report: "The twist cost $X and changed Y." $0, or "no plan exists," is a real finding too.</p>
 </section>
 
 <!-- 15 · Reveal -->
@@ -265,7 +269,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
     <tr><td class="tag">Thu</td><td>Ana, Fay</td><td>Ana</td><td>Ana, Chen</td></tr>
     <tr><td class="tag">Fri</td><td>Ben, Eli</td><td>Eli</td><td>Chen, Eli</td></tr>
   </table>
-  <p class="take">Is that roster fair? No. <span class="accent-gold">Fairness is a constraint you have not written yet.</span> The model only cares about what you tell it to care about.</p>
+  <p class="take">Is that roster fair? No. Ana works a 12-hour Thursday, and Eli a 12-hour Friday. <span class="accent-gold">Nobody told the model not to.</span> It only cares about what you tell it to care about.</p>
 </section>
 
 <!-- 16 · Twist results -->
@@ -274,11 +278,11 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
   <h2>Some rules are expensive. <span class="grad">Most are not.</span></h2>
   <table class="rules">
     <tr><th>Rule added</th><th>Weekly cost</th><th>What happened</th></tr>
-    <tr><td>Friday close needs 3</td><td class="code">+$76</td><td>Dara picks up one shift. The solver reshuffles the whole week, not just Friday.</td></tr>
-    <tr><td>Everyone ≥ 2 shifts</td><td class="code accent-g">+$8</td><td>Fairness costs less than one latte a day.</td></tr>
-    <tr><td>Ana and Ben never together</td><td class="code accent-g">$0</td><td>Free. The best roster already kept them apart.</td></tr>
-    <tr><td>Dara promised 3 shifts</td><td class="code">+$12</td><td>Ana and Fay each lose hours.</td></tr>
-    <tr><td>Max 4 shifts each</td><td class="code accent-r">INFEASIBLE</td><td>25 shifts, 6 people × 4 = 24 slots. No plan exists. Hire, or cut a requirement.</td></tr>
+    <tr><td>Demo · Friday close needs 3</td><td class="code">+$76</td><td>Dara picks up one shift. The solver reshuffles the whole week, not just Friday.</td></tr>
+    <tr><td>1 · Everyone ≥ 2 shifts</td><td class="code accent-g">+$8</td><td>Fairness costs $8 a week. Less than two lattes.</td></tr>
+    <tr><td>2 · Ana and Ben never together</td><td class="code accent-g">$0</td><td>Free. The best roster already kept them apart.</td></tr>
+    <tr><td>3 · Max 4 shifts each</td><td class="code accent-r">INFEASIBLE</td><td>25 seats, 6 people × 4 = 24. No plan exists. Hire, or cut a requirement.</td></tr>
+    <tr><td>4 · Dara promised 3 shifts</td><td class="code">+$12</td><td>Ana and Fay each lose hours.</td></tr>
   </table>
   <p class="take">"Infeasible" is an answer, not an error. It tells the manager the policy and the staffing cannot both be true.</p>
 </section>
@@ -324,12 +328,12 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
 
 <!-- 20 · Sort the decisions -->
 <section class="slide">
-  <div class="kicker">The ECCO Question · Team Huddle · 10 Minutes</div>
+  <div class="kicker">Team Huddle · 10 Minutes</div>
   <h2>Before you code: <span class="grad">sort every decision</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">Integer</div><p><b>Cases shipped</b> per store × SKU × week. The one line that makes this an IP.</p></div>
-    <div class="card"><div class="label">Binary</div><p><b>Truck visits</b> per store × week. Fixed cost, and it switches truck capacity on.</p></div>
-    <div class="card"><div class="label">Continuous</div><p><b>Units sold, lost, and left on the shelf.</b> These follow from what ships.</p></div>
+    <div class="card"><div class="label">Integer</div><p class="step"><b>Cases shipped</b> per store × SKU × week. You cannot ship half a case.</p></div>
+    <div class="card"><div class="label">Binary</div><p class="step"><b>Truck visits</b> per store × week. A fixed cost, and it switches truck capacity on.</p></div>
+    <div class="card"><div class="label">Continuous</div><p class="step"><b>Units sold, lost, and left on the shelf.</b> These follow from what ships.</p></div>
   </div>
   <p class="take">Then name at least four constraint families in business English. Inventory flow. Demand. Shelf. Truck. DC supply. If you cannot say it as a sentence, do not code it yet.</p>
 </section>
@@ -337,7 +341,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
 <!-- 21 · Deliverables & timeline -->
 <section class="slide">
   <div class="kicker">Deliverables · 25 Points · Pairs, One Trio</div>
-  <h2>The model is the easy part. <span class="grad">The memo is where the grade lives.</span></h2>
+  <h2>The model earns 10 points. <span class="grad">Explaining it earns 15.</span></h2>
   <div class="cards">
     <div class="card"><div class="label">Tonight</div><div class="title">Launch</div><p>Join your team on Canvas by Friday. Load the data. Run the summary statistics cell.</p></div>
     <div class="card"><div class="label">Session 8 · Oct 28</div><div class="title">Five-minute check-in</div><p>Bring a one-page outline: variables, objective, four constraint families. A wrong model shape gets fixed here, for free.</p></div>
@@ -348,7 +352,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
 
 <!-- 22 · AI angle -->
 <section class="slide">
-  <div class="kicker">The AI Angle · Use Your Copilot, Keep Your Judgment</div>
+  <div class="kicker">The AI Angle · 60 Seconds · Use Your Copilot, Keep Your Judgment</div>
   <h2>An LLM can write the model. <span class="grad">You have to break it.</span></h2>
   <ul class="list">
     <li>Paste one constraint family in plain English and ask for the gurobipy or CP-SAT line. Fast and usually right.</li>
@@ -374,15 +378,22 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
   const slides = [...document.querySelectorAll('.slide')];
   const hud = document.getElementById('hud');
   const bar = document.getElementById('bar');
-  let i = 0;
+  let i = 0, i0 = 0;
+  function next() {
+    const hidden = slides[i].querySelector('.step:not(.shown)');
+    if (hidden) { hidden.classList.add('shown'); return; }
+    show(i + 1);
+  }
   function show(n) {
     i = Math.max(0, Math.min(slides.length - 1, n));
+    slides[i].querySelectorAll('.step').forEach((el) => el.classList.toggle('shown', n < i0));
+    i0 = i;
     slides.forEach((s, k) => s.classList.toggle('active', k === i));
     hud.textContent = (i + 1) + ' / ' + slides.length;
     bar.style.width = ((i + 1) / slides.length * 100) + '%';
   }
   addEventListener('keydown', (e) => {
-    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) next();
     else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
     else if (e.key === 'Home') show(0);
     else if (e.key === 'End') show(slides.length - 1);
@@ -390,7 +401,7 @@ status = cp_model.<span class="g">CpSolver</span>().Solve(model)</pre>
       document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
     }
   });
-  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) next(); });
   show(0);
 </script>
 </body>
