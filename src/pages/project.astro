@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GradientText from '../components/GradientText.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Icon from '../components/Icon.astro';
+import { gurobiExamples, gurobiExampleCount, colabUrl } from '../data/gurobi-examples';
 
 const problemIdeas = [
   {
@@ -356,6 +357,36 @@ const faqs = [
         </div>
       ))}
     </div>
+  </section>
+
+  <!-- Worked examples from Gurobi -->
+  <section id="worked-examples" class="py-16 px-8 max-w-[1200px] mx-auto">
+    <SectionHeader number="03b" label="Worked Examples" title={`${gurobiExampleCount} Worked Models to Start From`} description="Gurobi's open modeling examples, sorted by the decision they make. Each one opens in Colab and runs top to bottom. Find the one closest to your idea, run it, then rebuild it around your own data and your own decision-maker." />
+    <p class="font-mono text-[0.75rem] text-text-muted -mt-6 mb-8">
+      The session tag says which part of the course the model uses. Most run on the free pip license; if you see "Model too large," switch to your free academic license. Starting from an example is fine — copying one is not a project. Say which one you adapted and what you changed.
+    </p>
+    <div class="grid md:grid-cols-2 gap-6">
+      {gurobiExamples.map((cat) => (
+        <div class="bg-bg-card border border-border-subtle rounded-2xl p-6 fade-in">
+          <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase mb-4">{cat.domain}</div>
+          <ul class="space-y-4">
+            {cat.examples.map((ex) => (
+              <li>
+                <a href={colabUrl(ex)} target="_blank" rel="noopener" class="group no-underline block">
+                  <div class="flex items-baseline gap-2 flex-wrap">
+                    <span class="text-text-primary font-semibold text-[0.95rem] group-hover:text-accent-cyan transition-colors">{ex.title}</span>
+                    <span class="font-mono text-[0.65rem] text-text-muted uppercase tracking-[1px]">{ex.session} · {ex.level}</span>
+                  </div>
+                  <p class="text-sm text-text-secondary leading-relaxed mt-1">{ex.decision}</p>
+                  {ex.note && <p class="text-xs text-accent-purple mt-1">{ex.note}</p>}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="text-sm text-text-muted mt-8">From <a href="https://gurobi.github.io/modeling-examples/" class="text-accent-cyan no-underline" target="_blank" rel="noopener">Gurobi's modeling examples</a> (Apache 2.0).</p>
   </section>
 
   <!-- Starter Resources -->
