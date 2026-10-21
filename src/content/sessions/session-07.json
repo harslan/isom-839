@@ -114,7 +114,7 @@
     {
       "title": "Session 7 Slide Deck",
       "url": "/session-07/slides.html",
-      "description": "Tonight's presentation: ECCO's 300,000 orders a month and the 1.09% that is worth millions, the three discrete patterns, the set-covering trap, meet CP-SAT, the clopen in two languages, two chat votes, the barista lab with four twists and what each one cost, and the Beacon Outfitters case launch. Arrow keys to navigate, F for fullscreen.",
+      "description": "Tonight's presentation: ECCO's 300,000 orders a month and the 1.09% that is worth millions, the three discrete patterns, the set-covering trap, the dream-team roster rules, meet CP-SAT, the clopen in two languages, two chat votes, the barista lab with four twists and what each one cost, and the Beacon Outfitters case launch. Arrow keys to navigate, F for fullscreen.",
       "icon": "presentation",
       "badge": "Slides",
       "badgeType": "interactive",
@@ -126,6 +126,15 @@
       "description": "The barista shift-scheduling lab in Google's CP-SAT (coverage, availability, no clopens, a Friday spike), then the midterm case: loads the five Beacon Outfitters data files, prints the first summary statistics, and lays out the model skeleton for the Session 8 check-in.",
       "icon": "code",
       "badge": "Hands-On",
+      "badgeType": "interactive",
+      "linkText": "Open in Colab"
+    },
+    {
+      "title": "Extra Practice: The Dream Team — Colab Notebook",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-07/ISOM839_Session7_Dream_Team_Roster.ipynb",
+      "description": "Pick 12 of 20 players for Team USA at the 2028 LA Olympics: position minimums (covering), a feud (if-then), a pair rule, a franchise cap, and the trick that makes an average linear. Then price every rule in points per game, watch the LP pick 10% of a player, and find out how fragile the optimal roster is. Five exercises, including choosing two alternates and a CP-SAT rebuild. Adapted from the Dream Team case in Bertsimas & Freund, with new players and numbers.",
+      "icon": "code",
+      "badge": "Practice",
       "badgeType": "interactive",
       "linkText": "Open in Colab"
     },
