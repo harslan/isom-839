@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 8 · When the World Curves</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b; --blue: #7cb7ff;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .sub b { color: var(--text); }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1000px; line-height: 1.5; font-weight: 600; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 400px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
+  .card svg { width: 100%; height: auto; display: block; margin-bottom: 10px; }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #8a8275; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  ul.list b { color: var(--text); }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td b { color: var(--text); }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; white-space: nowrap; }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+  .fig { width: min(62vw, 720px); height: auto; }
+  .fig-sm { width: min(40vw, 470px); height: auto; }
+  .steps { display: flex; gap: 1vw; justify-content: center; flex-wrap: wrap; max-width: 1240px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.4vw; flex: 1; min-width: 190px; text-align: left; }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 700; }
+  .step .t { font-weight: 700; font-size: clamp(1rem, 1.6vw, 1.25rem); margin: 4px 0 6px; }
+  .step p { color: var(--text2); font-size: clamp(0.9rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .step.now { border-color: var(--gold); }
+  .vote { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; margin-right: 0.6em; }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 08</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 · Title -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 8 · Wed Oct 28</div>
+  <h1>When the World <span class="grad">Stops Being a Straight Line</span></h1>
+  <p class="sub">Seven weeks of lines and corners. Tonight the lines bend. Risk, pricing, and the one idea that tells you whether a curved problem is <b>easy or a nightmare</b>.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 · Housekeeping -->
+<section class="slide">
+  <div class="kicker">Housekeeping · Two Minutes · isom-839.vercel.app/deadlines</div>
+  <h2>Tonight has <span class="grad">two jobs</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Tonight · 7:40 PM · done</div><div class="title">Homework #5 — Project Knapsack</div><p>Submitted. Using your one-time 24-hour late allowance? You have until tomorrow night.</p></div>
+    <div class="card"><div class="label">Tonight · during the lab</div><div class="title">Case check-ins · 5 min per team</div><p>I come to each team while the lab runs. Show me your one-page outline: <b>variables, objective, four constraint families.</b></p></div>
+    <div class="card"><div class="label">Wed Nov 4 · 7:40 PM</div><div class="title">Midterm Case due + briefing</div><p>Notebook, memo to the VP, and a 5-minute briefing in class. Nothing else is due that week.</p></div>
+  </div>
+</section>
+
+<!-- 3 · Road map -->
+<section class="slide">
+  <div class="kicker">Tonight In Four Stops</div>
+  <h2>One road, <span class="grad">four stops</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Lines break</div><p>Three business stories where straight lines lie.</p></div>
+    <div class="step"><div class="n">2</div><div class="t">Bowl or mountains?</div><p>The one question that decides if a curved problem is easy.</p></div>
+    <div class="step"><div class="n">3</div><div class="t">Markowitz</div><p>A Nobel Prize on a napkin. Then you build it on real stocks.</p></div>
+    <div class="step"><div class="n">4</div><div class="t">Pricing</div><p>Why there is always a sweet-spot price. Homework #7 Option B.</p></div>
+  </div>
+  <p class="take">If you remember one picture from tonight, make it <span class="accent-gold">the bowl.</span></p>
+</section>
+
+<!-- 4 · Opening story -->
+<section class="slide">
+  <div class="kicker">7:40 – 8:00 · Opening Story</div>
+  <h2>Your robo-advisor does <span class="grad">tonight's math</span> every night</h2>
+  <div class="cards">
+    <div class="card"><div class="label">What you see</div><p>You answer a few questions. The app shows "Moderate risk" and a pie chart of funds.</p></div>
+    <div class="card"><div class="label">What runs underneath</div><p>An optimizer picks the weights. <b>Most return for the risk you said you can stomach.</b></p></div>
+    <div class="card"><div class="label">Why it is not an LP</div><p>Risk does not add up in a straight line. Double your bet and the swings get <b>four times</b> as big in variance terms.</p></div>
+  </div>
+  <p class="take">Same three pieces as always: decisions, goal, rules. Only the goal is curved now.</p>
+</section>
+
+<!-- 5 · Three curves -->
+<section class="slide">
+  <div class="kicker">Where Straight Lines Lie</div>
+  <h2>Three curves <span class="grad">every manager meets</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Risk</div>
+      <svg viewBox="0 0 220 120"><line x1="20" y1="105" x2="210" y2="105" stroke="#6b6459"/><line x1="20" y1="105" x2="20" y2="10" stroke="#6b6459"/><path d="M20,105 Q120,100 200,15" fill="none" stroke="#e2725b" stroke-width="4"/><text x="120" y="118" fill="#a8a196" font-size="11" text-anchor="middle">size of the bet</text></svg>
+      <p>Bet twice as much, variance grows <b>four times</b>. It curves up.</p></div>
+    <div class="card"><div class="label">Ad spend</div>
+      <svg viewBox="0 0 220 120"><line x1="20" y1="105" x2="210" y2="105" stroke="#6b6459"/><line x1="20" y1="105" x2="20" y2="10" stroke="#6b6459"/><path d="M20,105 Q60,20 200,15" fill="none" stroke="#34d399" stroke-width="4"/><text x="120" y="118" fill="#a8a196" font-size="11" text-anchor="middle">dollars spent</text></svg>
+      <p>The second million buys fewer customers than the first. It <b>flattens out</b>.</p></div>
+    <div class="card"><div class="label">Price</div>
+      <svg viewBox="0 0 220 120"><line x1="20" y1="105" x2="210" y2="105" stroke="#6b6459"/><line x1="20" y1="105" x2="20" y2="10" stroke="#6b6459"/><path d="M20,105 Q115,-55 200,105" fill="none" stroke="#f2b135" stroke-width="4"/><text x="120" y="118" fill="#a8a196" font-size="11" text-anchor="middle">price</text></svg>
+      <p>Raise the price and revenue rises, peaks, then <b>falls</b>. A hill.</p></div>
+  </div>
+  <p class="take">An LP draws straight lines through all three. It would happily bet everything, spend everything, or charge infinity.</p>
+</section>
+
+<!-- 6 · Bowl vs mountains -->
+<section class="slide">
+  <div class="kicker">8:00 – 8:20 · The Great Divide · Convex vs Non-Convex</div>
+  <h2>Drop a marble. <span class="grad">Where does it stop?</span></h2>
+  <div class="row">
+    <svg class="fig-sm" viewBox="0 0 400 230">
+      <path d="M30,30 Q200,330 370,30" fill="none" stroke="#34d399" stroke-width="5"/>
+      <circle cx="78" cy="88" r="11" fill="#ffd166"/>
+      <path d="M95,110 Q130,150 175,168" fill="none" stroke="#ffd166" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#ah)"/>
+      <circle cx="200" cy="180" r="6" fill="#34d399"/>
+      <text x="200" y="215" fill="#f5f2ec" font-size="17" text-anchor="middle" font-family="Space Grotesk">One bottom. Always found.</text>
+      <text x="200" y="22" fill="#34d399" font-size="14" text-anchor="middle" font-family="JetBrains Mono" letter-spacing="2">CONVEX · A BOWL</text>
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#ffd166"/></marker></defs>
+    </svg>
+    <svg class="fig-sm" viewBox="0 0 400 230">
+      <path d="M20,40 C60,40 70,120 100,120 C130,120 140,60 175,60 C215,60 235,175 275,175 C315,175 330,50 380,40" fill="none" stroke="#e2725b" stroke-width="5"/>
+      <circle cx="100" cy="108" r="11" fill="#ffd166"/>
+      <text x="100" y="148" fill="#ffd166" font-size="14" text-anchor="middle" font-family="Space Grotesk">stuck here</text>
+      <circle cx="275" cy="175" r="6" fill="#34d399"/>
+      <text x="275" y="200" fill="#34d399" font-size="14" text-anchor="middle" font-family="Space Grotesk">the real bottom</text>
+      <text x="200" y="225" fill="#f5f2ec" font-size="17" text-anchor="middle" font-family="Space Grotesk">Many valleys. Which one is it?</text>
+      <text x="200" y="22" fill="#e2725b" font-size="14" text-anchor="middle" font-family="JetBrains Mono" letter-spacing="2">NON-CONVEX · MOUNTAINS</text>
+    </svg>
+  </div>
+  <p class="take">In a bowl, any bottom you find is <span class="accent-gold">the</span> bottom. In the mountains at night, you can never be sure.</p>
+</section>
+
+<!-- 7 · Why it matters -->
+<section class="slide">
+  <div class="kicker">Why Every Solver Vendor Cares</div>
+  <h2>Bowl = <span class="grad">fast and trustworthy</span></h2>
+  <table class="rules">
+    <tr><th></th><th>Convex (bowl)</th><th>Non-convex (mountains)</th></tr>
+    <tr><td class="tag">Speed</td><td><b>Seconds,</b> even with thousands of variables</td><td>Can take hours, or forever</td></tr>
+    <tr><td class="tag">The answer</td><td>Guaranteed best. Done.</td><td>"Best one I found." Maybe not the best.</td></tr>
+    <tr><td class="tag">Same as</td><td>Your LPs. Every LP is a bowl with flat sides.</td><td>Session 6. Yes/no variables make it jumpy.</td></tr>
+  </table>
+  <p class="take">So the first question for any curved problem is not "how do I solve it?" It is <span class="accent-gold">"is it a bowl?"</span></p>
+</section>
+
+<!-- 8 · Checklist -->
+<section class="slide">
+  <div class="kicker">The Bowl Checklist · Keep This Slide</div>
+  <h2>Minimize a bowl, or <span class="grad">maximize a hill</span></h2>
+  <table class="rules">
+    <tr><th>The goal</th><th>Shape</th><th>Easy?</th></tr>
+    <tr><td><b>Minimize</b> portfolio risk (variance)</td><td>Bowl</td><td class="tag accent-g">✓ YES</td></tr>
+    <tr><td><b>Maximize</b> revenue on a straight demand line</td><td>Hill</td><td class="tag accent-g">✓ YES</td></tr>
+    <tr><td><b>Maximize</b> sales with diminishing returns to ads</td><td>Hill</td><td class="tag accent-g">✓ YES</td></tr>
+    <tr><td><b>Maximize</b> risk (or minimize a hill)</td><td>Upside-down</td><td class="tag accent-r">✗ NO</td></tr>
+    <tr><td>Fixed cost: pay $50K the moment you open</td><td>A jump</td><td class="tag accent-r">✗ NO (use Session 6)</td></tr>
+  </table>
+  <p class="take">Direction matters. The same bowl is easy to go down and impossible to "go down" upside-down.</p>
+</section>
+
+<!-- 9 · Chat vote -->
+<section class="slide">
+  <div class="kicker">Chat Vote · Type One Letter · Y = Bowl, N = Not</div>
+  <h2>Easy bowl <span class="grad">or not?</span></h2>
+  <ul class="list">
+    <li><span class="vote">A</span>Minimize the total squared distance from a warehouse to 20 stores.</li>
+    <li><span class="vote">B</span>Maximize profit when each extra unit is a little cheaper to make than the last (economies of scale).</li>
+    <li><span class="vote">C</span>Minimize cost, but a truck is either rented ($900) or not.</li>
+  </ul>
+  <p class="sub">Type <b>A-Y</b> or <b>A-N</b>, and so on. Thirty seconds.</p>
+</section>
+
+<!-- 10 · Answers -->
+<section class="slide">
+  <div class="kicker">Answers</div>
+  <h2>Two traps, <span class="grad">one bowl</span></h2>
+  <table class="rules">
+    <tr><th></th><th>Answer</th><th>Why</th></tr>
+    <tr><td class="tag">A</td><td class="accent-g"><b>Bowl</b></td><td>Squared distance curves up. Minimizing it is the classic bowl.</td></tr>
+    <tr><td class="tag">B</td><td class="accent-r"><b>Not</b></td><td>Falling unit cost makes total cost bend the wrong way. The marble can roll off in many directions.</td></tr>
+    <tr><td class="tag">C</td><td class="accent-r"><b>Not</b></td><td>Yes/no means a jump. That is Session 6, and Gurobi's branch and bound handles it.</td></tr>
+  </table>
+  <p class="take">Rule of thumb: <span class="accent-gold">squares and smooth curves</span> are usually friendly. <span class="accent-gold">Jumps and economies of scale</span> are not.</p>
+</section>
+
+<!-- 11 · Diversification number -->
+<section class="slide">
+  <div class="kicker">8:20 – 8:35 · Why Diversification Is Real Math</div>
+  <h2>Two shaky stocks make <span class="grad">a calmer pair</span></h2>
+  <div class="row">
+    <div class="card" style="max-width:300px"><div class="label">Stock A alone</div><p class="big" style="font-size:clamp(2rem,5vw,3.6rem);color:var(--red)">30%</p><p>yearly swings (volatility)</p></div>
+    <div class="card" style="max-width:300px"><div class="label">Stock B alone</div><p class="big" style="font-size:clamp(2rem,5vw,3.6rem);color:var(--red)">30%</p><p>yearly swings (volatility)</p></div>
+    <div class="card" style="max-width:300px"><div class="label">Half and half</div><p class="big" style="font-size:clamp(2rem,5vw,3.6rem);color:var(--green)">23%</p><p>if they move together only a little (correlation 0.2)</p></div>
+  </div>
+  <p class="take">Umbrella shop and sunscreen shop. On any given day one of them is having a good day.</p>
+  <p class="sub">Same expected return. Less swing. That free calm is the whole reason portfolios exist.</p>
+</section>
+
+<!-- 12 · Covariance in plain words -->
+<section class="slide">
+  <div class="kicker">The One New Ingredient · Σ (Sigma)</div>
+  <h2>Σ is a table of <span class="grad">who moves with whom</span></h2>
+  <table class="rules">
+    <tr><th></th><th>AAPL</th><th>MSFT</th><th>JNJ</th></tr>
+    <tr><td class="code">AAPL</td><td><b>own swing</b></td><td class="accent-r">move together a lot</td><td class="accent-g">loosely related</td></tr>
+    <tr><td class="code">MSFT</td><td class="accent-r">move together a lot</td><td><b>own swing</b></td><td class="accent-g">loosely related</td></tr>
+    <tr><td class="code">JNJ</td><td class="accent-g">loosely related</td><td class="accent-g">loosely related</td><td><b>own swing</b></td></tr>
+  </table>
+  <ul class="list">
+    <li><b>Return</b> of the portfolio = weighted average. A straight line. Easy.</li>
+    <li><b>Risk</b> of the portfolio = every pair of weights times "how they move together". Weight × weight = a square. <b>That is the curve.</b></li>
+  </ul>
+</section>
+
+<!-- 13 · Markowitz formulation -->
+<section class="slide">
+  <div class="kicker">Markowitz 1952 · Nobel Prize 1990</div>
+  <h2>Same three pieces. <span class="grad">Words first, then math.</span></h2>
+  <table class="rules">
+    <tr><th>Piece</th><th>In words</th><th>In math</th></tr>
+    <tr><td class="tag">Decide</td><td>What share of my money goes in each stock?</td><td class="code">w₁ … w₅</td></tr>
+    <tr><td class="tag">Goal</td><td>Make the swings as small as possible</td><td class="code">minimize wᵀ Σ w</td></tr>
+    <tr><td class="tag">Rule 1</td><td>Earn at least my target return</td><td class="code">μᵀw ≥ target</td></tr>
+    <tr><td class="tag">Rule 2</td><td>Invest all the money</td><td class="code">w₁ + … + w₅ = 1</td></tr>
+    <tr><td class="tag">Rule 3</td><td>No short selling</td><td class="code">w ≥ 0</td></tr>
+  </table>
+  <p class="take">The rules are all straight lines. <span class="accent-gold">Only the goal is curved, and it is a bowl.</span> So it is easy.</p>
+</section>
+
+<!-- 14 · Break -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:45</div>
+  <div class="big"><span class="grad">Break</span></div>
+  <p class="take">Open the Session 8 notebook in Colab and run the first cell now.</p>
+  <p class="sub">It installs CVXPY and yfinance. Takes about a minute. Real stock data is next.</p>
+</section>
+
+<!-- 15 · CVXPY -->
+<section class="slide">
+  <div class="kicker">8:45 – 9:00 · Meet CVXPY · Free · Born At Stanford</div>
+  <h2>Write it <span class="grad">the way you write the math</span></h2>
+<pre><span class="f">import</span> cvxpy <span class="f">as</span> cp
+
+w = cp.<span class="g">Variable</span>(<span class="f">5</span>)                            <span class="c"># decide: 5 weights</span>
+
+goal  = cp.<span class="g">Minimize</span>(cp.<span class="g">quad_form</span>(w, Sigma))   <span class="c"># goal: smallest swings (wᵀΣw)</span>
+rules = [mu @ w >= <span class="f">0.15</span>,                     <span class="c"># earn at least 15%</span>
+         cp.<span class="g">sum</span>(w) == <span class="f">1</span>,                      <span class="c"># invest it all</span>
+         w >= <span class="f">0</span>]                               <span class="c"># no shorting</span>
+
+cp.<span class="g">Problem</span>(goal, rules).<span class="g">solve</span>()
+<span class="f">print</span>(w.value)                               <span class="c"># the portfolio</span></pre>
+  <p class="take">Decide, goal, rules, solve. The same four beats as gurobipy.</p>
+</section>
+
+<!-- 16 · DCP spell-checker -->
+<section class="slide">
+  <div class="kicker">CVXPY's Superpower</div>
+  <h2>A <span class="grad">spell-checker</span> for bowls</h2>
+  <div class="cards">
+    <div class="card"><div class="label">You write</div><p><b>Minimize</b> a bowl, or <b>maximize</b> a hill.</p><p class="accent-g" style="margin-top:8px"><b>CVXPY solves it.</b></p></div>
+    <div class="card"><div class="label">You write</div><p><b>Maximize</b> a bowl by mistake.</p><p class="accent-r" style="margin-top:8px"><b>CVXPY refuses: "Problem does not follow DCP rules."</b></p></div>
+    <div class="card"><div class="label">Why that is good</div><p>It never hands you a fake "optimal" answer from the mountains. <b>A refusal is a feature.</b></p></div>
+  </div>
+  <table class="rules">
+    <tr><th></th><th>Reach for CVXPY</th><th>Reach for gurobipy</th></tr>
+    <tr><td class="tag">When</td><td>Smooth curves: risk, pricing, fitting</td><td>Lots of yes/no decisions, networks, big MIPs</td></tr>
+  </table>
+</section>
+
+<!-- 17 · Lab steps -->
+<section class="slide">
+  <div class="kicker">9:00 – 9:30 · Lab · Session 8 Notebook, Part 2</div>
+  <h2>Build the most famous chart in finance <span class="grad">in four steps</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Get the data</div><p>Two years of prices for AAPL, MSFT, JPM, XOM, JNJ. Blocked? The cell falls back to saved numbers.</p></div>
+    <div class="step"><div class="n">2</div><div class="t">Read the table</div><p>Which pairs move together? Which barely relate? Those low numbers are free calm.</p></div>
+    <div class="step"><div class="n">3</div><div class="t">Solve 30 times</div><p>Same model, 30 different targets. Each one is a point on the curve.</p></div>
+    <div class="step"><div class="n">4</div><div class="t">Plot and read</div><p>Every stock sits below the curve. That gap is diversification, in dollars.</p></div>
+  </div>
+  <p class="sub">While you work, I visit each team for the <b>5-minute case check-in.</b> Have your outline open.</p>
+</section>
+
+<!-- 18 · What you should see -->
+<section class="slide">
+  <div class="kicker">What You Should See · Saved-Data Version (Live Data Will Differ A Bit)</div>
+  <h2>The calmest portfolio is calmer than <span class="grad">the calmest stock</span></h2>
+  <svg class="fig" viewBox="0 0 680 380">
+    <g stroke="#2a2621"><line x1="70" y1="276" x2="620" y2="276"/><line x1="70" y1="223" x2="620" y2="223"/><line x1="70" y1="169" x2="620" y2="169"/><line x1="70" y1="116" x2="620" y2="116"/><line x1="70" y1="62" x2="620" y2="62"/></g>
+    <line x1="70" y1="330" x2="620" y2="330" stroke="#6b6459"/><line x1="70" y1="330" x2="70" y2="30" stroke="#6b6459"/>
+    <g fill="#a8a196" font-family="JetBrains Mono" font-size="12" text-anchor="middle"><text x="70" y="350">10%</text><text x="207" y="350">15%</text><text x="345" y="350">20%</text><text x="482" y="350">25%</text><text x="620" y="350">30%</text></g>
+    <g fill="#a8a196" font-family="JetBrains Mono" font-size="12" text-anchor="end"><text x="62" y="334">0%</text><text x="62" y="280">5%</text><text x="62" y="227">10%</text><text x="62" y="173">15%</text><text x="62" y="120">20%</text><text x="62" y="66">25%</text></g>
+    <text x="345" y="374" fill="#a8a196" font-size="13" text-anchor="middle" font-family="Space Grotesk">risk (yearly volatility) →</text>
+    <text x="20" y="180" fill="#a8a196" font-size="13" text-anchor="middle" font-family="Space Grotesk" transform="rotate(-90 20 180)">expected return →</text>
+    <path d="M150,236 L150,228 L152,221 L155,214 L159,207 L164,199 L170,192 L177,185 L185,178 L193,170 L203,163 L213,156 L224,149 L236,142 L248,134 L261,127 L274,120 L288,113 L302,105 L316,98 L332,91 L354,84 L382,77 L416,69 L455,62" fill="none" stroke="#f2b135" stroke-width="4"/>
+    <line x1="207" y1="287" x2="207" y2="162" stroke="#34d399" stroke-width="2" stroke-dasharray="6 5"/>
+    <text x="215" y="232" fill="#34d399" font-size="14" font-family="Space Grotesk">same risk, +12 points of return</text>
+    <g font-family="JetBrains Mono" font-size="13" fill="#f5f2ec">
+      <circle cx="510" cy="94" r="7" fill="#7cb7ff"/><text x="520" y="98">AAPL</text>
+      <circle cx="455" cy="62" r="7" fill="#7cb7ff"/><text x="465" y="58">MSFT</text>
+      <circle cx="400" cy="137" r="7" fill="#7cb7ff"/><text x="410" y="141">JPM</text>
+      <circle cx="455" cy="266" r="7" fill="#7cb7ff"/><text x="465" y="270">XOM</text>
+      <circle cx="207" cy="287" r="7" fill="#7cb7ff"/><text x="217" y="300">JNJ</text>
+    </g>
+    <circle cx="150" cy="236" r="8" fill="#34d399"/>
+    <text x="80" y="262" fill="#34d399" font-size="13" font-family="Space Grotesk">calmest mix</text>
+    <text x="440" y="200" fill="#f2b135" font-size="15" font-family="Space Grotesk">efficient frontier</text>
+  </svg>
+  <p class="sub">Calmest mix: <b>12.9% risk, 8.8% return.</b> JNJ alone: 15% risk, 4% return. At JNJ's risk level, the curve earns about <b>16%</b>.</p>
+</section>
+
+<!-- 19 · Discussion -->
+<section class="slide">
+  <div class="kicker">Discussion · Then Back To Business</div>
+  <h2>You manage <span class="grad">$10 billion</span>. Do you trust these weights?</h2>
+  <ul class="list">
+    <li>Did the optimizer pile into the "boring" stocks? Why would it?</li>
+    <li>What rules would you add first? <b>Sector caps, max 20% per stock, limits on trading, ESG screens.</b></li>
+    <li>Which of those are straight lines? <span class="accent-gold">Almost all of them.</span> The curve lives only in the goal, so it stays a bowl.</li>
+    <li>Which one breaks the bowl? <b>"Hold at most 10 stocks."</b> That is a yes/no rule. Hello again, Session 6.</li>
+  </ul>
+</section>
+
+<!-- 20 · Pricing parabola -->
+<section class="slide">
+  <div class="kicker">9:30 – 9:40 · The Other Great Curve · Pricing</div>
+  <h2>Too cheap leaves money. Too pricey loses buyers. <span class="grad">The top is in between.</span></h2>
+  <svg class="fig" viewBox="0 0 680 380">
+    <g stroke="#2a2621"><line x1="70" y1="215" x2="620" y2="215"/><line x1="70" y1="99" x2="620" y2="99"/></g>
+    <line x1="70" y1="330" x2="620" y2="330" stroke="#6b6459"/><line x1="70" y1="330" x2="70" y2="30" stroke="#6b6459"/>
+    <g fill="#a8a196" font-family="JetBrains Mono" font-size="12" text-anchor="middle"><text x="70" y="350">$0</text><text x="208" y="350">$20</text><text x="345" y="350">$40</text><text x="482" y="350">$60</text><text x="620" y="350">$80</text></g>
+    <g fill="#a8a196" font-family="JetBrains Mono" font-size="12" text-anchor="end"><text x="62" y="334">0</text><text x="62" y="219">$10K</text><text x="62" y="103">$20K</text></g>
+    <text x="345" y="374" fill="#a8a196" font-size="13" text-anchor="middle" font-family="Space Grotesk">price →</text>
+    <text x="20" y="180" fill="#a8a196" font-size="13" text-anchor="middle" font-family="Space Grotesk" transform="rotate(-90 20 180)">weekly revenue →</text>
+    <path d="M70,330 L98,277 L125,230 L152,189 L180,153 L208,122 L235,97 L262,78 L290,64 L318,56 L345,53 L372,56 L400,64 L428,78 L455,97 L482,122 L510,153 L538,189 L565,230 L592,277 L620,330" fill="none" stroke="#f2b135" stroke-width="4"/>
+    <line x1="345" y1="53" x2="345" y2="330" stroke="#34d399" stroke-width="2" stroke-dasharray="6 5"/>
+    <circle cx="345" cy="53" r="8" fill="#34d399"/>
+    <text x="358" y="40" fill="#34d399" font-size="15" font-family="Space Grotesk">sweet spot: $40 → $24,000</text>
+    <text x="110" y="180" fill="#a8a196" font-size="13" font-family="Space Grotesk">too cheap</text>
+    <text x="540" y="180" fill="#a8a196" font-size="13" font-family="Space Grotesk">too pricey</text>
+  </svg>
+  <div class="math" style="font-size:clamp(0.9rem,1.7vw,1.3rem)">demand = 1200 − 15·p &nbsp;→&nbsp; revenue = p · (1200 − 15·p) &nbsp;→&nbsp; top at p* = a / 2b = <span class="accent-gold">$40</span></div>
+</section>
+
+<!-- 21 · Homework 7 Option B -->
+<section class="slide">
+  <div class="kicker">Homework #7 · Option B · Open Tonight · Due Wed Dec 2, 7:40 PM</div>
+  <h2>Pick one: <span class="grad">pricing tonight, or the inventory MDP in Session 10</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Revenue</div><p>Find the best price two ways: with calculus and with CVXPY. They must agree.</p></div>
+    <div class="step"><div class="n">2</div><div class="t">Profit</div><p>Add the $12 unit cost. Which way does the price move, and why?</p></div>
+    <div class="step"><div class="n">3</div><div class="t">Plot</div><p>Revenue and profit curves on one chart, both peaks marked.</p></div>
+    <div class="step"><div class="n">4</div><div class="t">Manager paragraph</div><p>Try b = 10, 15, 20. What happens to price as customers get pickier?</p></div>
+  </div>
+  <p class="sub">Scaffold is at the bottom of the Session 8 notebook. Same points and rubric as Option A.</p>
+</section>
+
+<!-- 22 · AI angle -->
+<section class="slide">
+  <div class="kicker">The AI Angle · Copilot Writes, You Check The Shape</div>
+  <h2>Ask the copilot. <span class="grad">Then ask "is it a bowl?"</span></h2>
+  <ul class="list">
+    <li>Describe the goal in plain English and ask for the CVXPY line. Usually right, and fast.</li>
+    <li>Then run it. If CVXPY says "does not follow DCP rules", the copilot built a mountain. <b>Do not work around it. Rethink it.</b></li>
+    <li>Sanity test: put all money in one stock. Does your risk number equal that stock's own volatility squared?</li>
+    <li>A chatbot can give you a price. Only your model can show <b>why</b> that price, and what moves it.</li>
+  </ul>
+</section>
+
+<!-- 23 · Takeaways -->
+<section class="slide">
+  <div class="kicker">Three Things To Take Home</div>
+  <h2>Tonight <span class="grad">in three sentences</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">1 · The bowl</div><p>Minimize a bowl or maximize a hill and the solver finds the true best, fast. <b>Check the shape before you solve.</b></p></div>
+    <div class="card"><div class="label">2 · Markowitz</div><p>"Don't put all your eggs in one basket" is a bowl you can solve. The frontier shows <b>which portfolios are worth holding.</b></p></div>
+    <div class="card"><div class="label">3 · Pricing</div><p>Revenue is price times demand, and that makes a hill. <b>The best price is a math answer, not a gut call.</b></p></div>
+  </div>
+</section>
+
+<!-- 24 · Next week -->
+<section class="slide">
+  <div class="kicker">Next Week · Session 9 · Wed Nov 4</div>
+  <h2>From choosing to <span class="grad">predicting behavior</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Due</div><p><b>Midterm Case</b> by 7:40 PM: notebook, memo to the VP, and a 5-minute briefing in class.</p></div>
+    <div class="card"><div class="label">The topic</div><p><b>Markov chains.</b> How customers move between states, and why Google's PageRank is one in disguise.</p></div>
+    <div class="card"><div class="label">Office hours</div><p>Case questions this week by appointment. Email with ISOM 839 in the subject line.</p></div>
+  </div>
+  <p class="take">Tonight the model learned to handle curves. Next week it learns to watch people move.</p>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a')) show(i + 1); });
+  show(0);
+</script>
+</body>
+</html>

@@ -25,7 +25,7 @@
     },
     {
       "title": "Optimize prices on a demand curve",
-      "description": "Model price-demand relationships and see why revenue = price × demand(price) is a quadratic — meaning pricing is inherently a nonlinear optimization problem, from airline seats to Uber surge to your Homework #6."
+      "description": "Model price-demand relationships and see why revenue = price × demand(price) is a quadratic — meaning pricing is inherently a nonlinear optimization problem, from airline seats to Uber surge to Homework #7 Option B."
     }
   ],
   "agenda": [
@@ -98,7 +98,8 @@
         "Download real market data with yfinance in Colab",
         "Compute mean returns and the covariance matrix with numpy/pandas",
         "Solve the Markowitz QP across 30 target returns; plot risk vs. return",
-        "Find your minimum-variance portfolio and interpret the weights — what did the optimizer decide about big tech vs. energy vs. healthcare?"
+        "Find your minimum-variance portfolio and interpret the weights — what did the optimizer decide about big tech vs. energy vs. healthcare?",
+        "Midterm case check-ins: I visit each team for 5 minutes during the lab, so have your one-page outline open"
       ],
       "isBreak": false
     },
@@ -109,7 +110,7 @@
       "description": "The second great nonlinear problem in business: pricing. If demand falls linearly with price, revenue = p × (a − b·p) is a downward parabola — and finding the peak is a one-variable nonlinear optimization. Uber, airlines, and Amazon solve versions of this millions of times a day.",
       "bulletPoints": [
         "The revenue parabola: why there's always a sweet-spot price, and it's rarely the highest one",
-        "Homework #6 walkthrough: revenue-maximizing pricing with a linear demand curve",
+        "Homework #7 Option B walkthrough: revenue-maximizing pricing with a linear demand curve",
         "Next week: Markov chains and customer journeys — and your MIDTERM CASE is due"
       ],
       "isBreak": false
@@ -117,9 +118,18 @@
   ],
   "resources": [
     {
+      "title": "Session 8 Slide Deck",
+      "url": "/session-08/slides.html",
+      "description": "Tonight's presentation: three curves every manager meets, bowl or mountains (convex vs non-convex), the bowl checklist and a chat vote, why two shaky stocks make a calmer pair, Markowitz in words then math, CVXPY in eight lines, the efficient frontier you should see in the lab, the $40 sweet-spot price, and Homework #7 Option B. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
       "title": "Portfolios, Pricing & Curves — Colab Notebook",
       "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-08/ISOM839_Session8_Nonlinear_Portfolios_Pricing.ipynb",
-      "description": "Convex vs non-convex in one picture, the efficient frontier from two years of real prices (with a saved-statistics fallback), the pricing parabola in CVXPY, and the Homework #7 Option B scaffold with its demand-curve parameters.",
+      "description": "Bowl or mountains in one picture, the efficient frontier from two years of real prices (with a saved-statistics fallback), a 2-minute 'cap every stock at 30%' twist, the $40 pricing sweet spot in CVXPY, and the Homework #7 Option B scaffold. Every code cell has a 'What you should see' check.",
       "icon": "code",
       "badge": "Hands-On",
       "badgeType": "interactive",
@@ -224,7 +234,7 @@
       ],
       "codeBlock": {
         "language": "python",
-        "code": "import yfinance as yf\nimport numpy as np\nimport cvxpy as cp\n\ntickers = [\"AAPL\", \"MSFT\", \"JPM\", \"XOM\", \"JNJ\"]\nprices = yf.download(tickers, period=\"2y\")[\"Close\"]\nrets = prices.pct_change().dropna()\n\nmu = rets.mean().values * 252          # annualized expected returns\nSigma = rets.cov().values * 252        # annualized covariance matrix\nn = len(tickers)\n\nw = cp.Variable(n)\ntarget = cp.Parameter(nonneg=True)\nprob = cp.Problem(\n    cp.Minimize(cp.quad_form(w, Sigma)),\n    [mu @ w >= target, cp.sum(w) == 1, w >= 0],\n)\n\nfrontier = []\nfor r in np.linspace(mu.min(), mu.max(), 30):\n    target.value = r\n    prob.solve()\n    frontier.append((np.sqrt(prob.value), r))   # (risk, return)\n\nrisk, ret = zip(*frontier)\nprint(f\"Minimum-variance portfolio volatility: {min(risk):.1%}\")"
+        "code": "import yfinance as yf\nimport numpy as np\nimport cvxpy as cp\n\ntickers = [\"AAPL\", \"MSFT\", \"JPM\", \"XOM\", \"JNJ\"]\nprices = yf.download(tickers, period=\"2y\")[\"Close\"]\nrets = prices.pct_change().dropna()\n\nmu = rets.mean().values * 252          # annualized expected returns\nSigma = rets.cov().values * 252        # annualized covariance matrix\nn = len(tickers)\n\nw = cp.Variable(n)\ntarget = cp.Parameter(nonneg=True)\nprob = cp.Problem(\n    cp.Minimize(cp.quad_form(w, Sigma)),\n    [mu @ w >= target, cp.sum(w) == 1, w >= 0],\n)\n\nfrontier = []\nfor r in np.linspace(mu.min(), mu.max(), 30):\n    target.value = r\n    prob.solve()\n    frontier.append((np.sqrt(prob.value), mu @ w.value))   # (risk, actual return)\n\nrisk, ret = zip(*frontier)\nprint(f\"Minimum-variance portfolio volatility: {min(risk):.1%}\")"
       },
       "discussionNote": "Look at your minimum-variance portfolio's weights. Did the optimizer concentrate in the 'boring' stocks or spread evenly? Now imagine you manage $10B: what real-world constraints (liquidity, sector caps, turnover limits, ESG mandates) would you add before trusting these weights — and which of those additions would break convexity?"
     }
