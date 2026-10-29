@@ -241,7 +241,7 @@
   "homework": [
     {
       "label": "Homework #5",
-      "text": "Project-selection knapsack: your division has $10M of capital and 12 candidate projects, each with an investment cost, an expected NPV, and staffing needs — the table and a TODO scaffold are in the Homework #5 cell of the Session 6 notebook. Build a binary IP in gurobipy that maximizes total NPV subject to the budget and at most 60 staff-months, with two logical rules: Project 7 requires Project 3 (if-then), and Projects 5 and 9 are mutually exclusive (either/or). Report the chosen portfolio, then re-solve with an $8M budget and write 3-4 sentences on which projects fell out and what that says about their bang-for-buck. Due Wednesday, October 28 by 7:40 PM on Canvas.",
+      "text": "Project-selection knapsack: your division has $10M of capital and 12 candidate projects, each with an investment cost, an expected NPV, and staffing needs — the table and a TODO scaffold are in the Homework #5 cell of the Session 6 notebook. Build a binary IP in gurobipy that maximizes total NPV subject to the budget and at most 60 staff-months, with two logical rules: Project 7 requires Project 3 (if-then), and Projects 5 and 9 are mutually exclusive (either/or). Report the chosen portfolio, then re-solve with an $8M budget and write 3-4 sentences on which projects fell out and what that says about their bang-for-buck. Due Friday, October 30 by 11:59 PM on Canvas (extended from Oct 28).",
       "submitUrl": "https://canvas.suffolk.edu/courses/18439/assignments/261898"
     }
   ],
