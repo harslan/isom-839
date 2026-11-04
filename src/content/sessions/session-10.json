@@ -2,8 +2,8 @@
   "number": 10,
   "slug": "session-10",
   "title": "Markov Decision Processes: Deciding Over Time",
-  "subtitle": "Last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies — the Bellman equation, value iteration, and the classic inventory problem that launched a field.",
-  "duration": "120 Minutes",
+  "subtitle": "Tonight opens with the midterm case briefings. Then: last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies — the Bellman equation, value iteration, and the classic inventory problem that launched a field.",
+  "duration": "140 Minutes",
   "icon": "clock",
   "tags": [
     "MDPs",
@@ -30,9 +30,21 @@
   ],
   "agenda": [
     {
-      "time": "7:40 PM - 8:00 PM",
+      "time": "7:40 PM - 8:30 PM",
+      "title": "MIDTERM CASE BRIEFINGS: 5 Minutes Per Team",
+      "duration": "50 minutes",
+      "description": "Moved from November 4. Each team delivers a tight 5-minute results briefing on the Beacon Outfitters case, the kind you'd give a VP, not a professor. Lead with the decision and the dollars; the model is your supporting evidence, not the headline.",
+      "bulletPoints": [
+        "Shape: the decision and the dollars, the bottleneck in one number, the plan in a picture, what moves if demand is ±20%, the ask (see isom-839.vercel.app/case)",
+        "One minute of Q&A per team: which input, if wrong by 20%, would flip your recommendation?",
+        "Peer scoring: each team rates the next team on clarity and decision-focus"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:30 PM - 8:45 PM",
       "title": "From 'What Happens' to 'What Do We DO?'",
-      "duration": "20 minutes",
+      "duration": "15 minutes",
       "description": "Last session you watched customers drift through states. But Amazon doesn't just watch inventory drift — it decides, every night, how much of 400 million SKUs to reorder. A ride-share platform decides where to reposition drivers. A gas-fired power plant decides when to fire up. Sequential decisions under uncertainty: the hardest and most valuable problem class in this course.",
       "bulletPoints": [
         "Opening story: how Amazon's ordering systems make billions of reorder decisions a year — each one a state-action choice with uncertain demand ahead",
@@ -43,7 +55,7 @@
       "isBreak": false
     },
     {
-      "time": "8:00 PM - 8:20 PM",
+      "time": "8:45 PM - 9:05 PM",
       "title": "The Bellman Equation: One Line That Runs the World",
       "duration": "20 minutes",
       "description": "Richard Bellman, RAND Corporation, 1950s: the value of being in a state is the best you can do right now plus the discounted value of wherever that choice takes you. We build the intuition with a two-state example on the whiteboard before any code.",
@@ -56,7 +68,15 @@
       "isBreak": false
     },
     {
-      "time": "8:20 PM - 8:35 PM",
+      "time": "9:05 PM - 9:15 PM",
+      "title": "Break",
+      "duration": "10 minutes",
+      "description": "Stretch and refuel — you're about to teach a computer to manage a warehouse.",
+      "bulletPoints": [],
+      "isBreak": true
+    },
+    {
+      "time": "9:15 PM - 9:30 PM",
       "title": "Value Iteration: The Algorithm",
       "duration": "15 minutes",
       "description": "Value iteration in pseudocode, then numpy. Start with V = 0 everywhere, sweep the Bellman update over all states, repeat until nothing changes. The values converge, and the optimal policy falls out of the argmax for free.",
@@ -69,17 +89,9 @@
       "isBreak": false
     },
     {
-      "time": "8:35 PM - 8:45 PM",
-      "title": "Break",
-      "duration": "10 minutes",
-      "description": "Stretch and refuel — you're about to teach a computer to manage a warehouse.",
-      "bulletPoints": [],
-      "isBreak": true
-    },
-    {
-      "time": "8:45 PM - 9:15 PM",
+      "time": "9:30 PM - 9:55 PM",
       "title": "Lab: Value Iteration on an Inventory MDP",
-      "duration": "30 minutes",
+      "duration": "25 minutes",
       "description": "Hands-on activity. The classic MDP: each day a shop chooses how many units to order, demand arrives randomly, sales earn margin, and stockouts cost goodwill. Build the model in numpy, run value iteration, and read the optimal ordering policy like an operations manager.",
       "bulletPoints": [
         "State: units on hand (0–10). Action: units to order (0–5). Random demand: 0–3 units per day",
@@ -90,24 +102,12 @@
       "isBreak": false
     },
     {
-      "time": "9:15 PM - 9:30 PM",
-      "title": "Powell's Bridge: Four Classes of Policies, From OR to RL",
-      "duration": "15 minutes",
-      "description": "Princeton's Warren Powell spent a career unifying the tribes — operations research, control theory, reinforcement learning — who all solve sequential decisions with different vocabulary. His framework: every method you'll ever meet is one of four policy classes. Suddenly the whole landscape has a map.",
-      "bulletPoints": [
-        "The four classes: policy function approximations (simple rules), cost function approximations (tweaked deterministic models), value function approximations (tonight's value iteration and Q-learning), and direct lookahead (planning forward)",
-        "Tonight's value iteration and modern deep RL are the same class — RL is approximate dynamic programming with neural networks as the approximator",
-        "Practical wisdom: in industry, a well-tuned simple rule (order-up-to, surge threshold) often beats a fancy learned policy — start simple, escalate only when the data justifies it",
-        "Powell's book 'Sequential Decision Analytics and Modeling' is free online — see resources"
-      ],
-      "isBreak": false
-    },
-    {
-      "time": "9:30 PM - 9:40 PM",
-      "title": "Wrap-Up, Homework #8 & Schedule Note",
-      "duration": "10 minutes",
+      "time": "9:55 PM - 10:00 PM",
+      "title": "Wrap-Up: Powell's Bridge Preview & Homework",
+      "duration": "5 minutes",
       "description": "Homework #8 assigned: extend tonight's inventory MDP with holding costs and watch the optimal policy shift. SCHEDULE NOTE — no class next Wednesday, November 25 (Thanksgiving break). We meet next on December 2, when prediction meets prescription: deep learning meets optimization.",
       "bulletPoints": [
+        "Preview of Powell's four classes of policies, the bridge from OR to reinforcement learning",
         "Homework #8: add holding costs to the inventory MDP — due December 2",
         "NO CLASS NOV 25 — Thanksgiving. Next class: Wednesday, December 2",
         "Preview: 'Predict, Then Decide' — feeding machine-learning forecasts into the optimization models you now command"

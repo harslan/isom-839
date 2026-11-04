@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 9 · Where Do Customers Go?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b; --blue: #7cb7ff;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .sub b { color: var(--text); }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1000px; line-height: 1.5; font-weight: 600; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 400px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
+  .card svg { width: 100%; height: auto; display: block; margin-bottom: 10px; }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  pre .c { color: #8a8275; } pre .f { color: #ffd166; } pre .g { color: #34d399; } pre .r { color: #e2725b; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  ul.list b { color: var(--text); }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td b { color: var(--text); }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; white-space: nowrap; }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+  .fig { width: min(62vw, 720px); height: auto; }
+  .fig-sm { width: min(40vw, 470px); height: auto; }
+  .steps { display: flex; gap: 1vw; justify-content: center; flex-wrap: wrap; max-width: 1240px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.4vw; flex: 1; min-width: 190px; text-align: left; }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 700; }
+  .step .t { font-weight: 700; font-size: clamp(1rem, 1.6vw, 1.25rem); margin: 4px 0 6px; }
+  .step p { color: var(--text2); font-size: clamp(0.9rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .step.now { border-color: var(--gold); }
+  .vote { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; margin-right: 0.6em; }
+
+  .btn { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.8rem, 1.2vw, 1rem); letter-spacing: 1px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--gold); background: var(--gold); color: #0d0c0a; font-weight: 700; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--gold); }
+  .btn:hover { filter: brightness(1.1); }
+  input[type=range] { width: 100%; accent-color: var(--gold); height: 28px; cursor: pointer; margin: 6px 0; }
+  .interactive { cursor: default; }
+  .reveal { opacity: 0; transition: opacity .5s ease; } .reveal.on { opacity: 1; }
+
+  /* ---------- Session 9 additions ---------- */
+  .chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 1100px; min-height: 140px; align-content: flex-start; }
+  .chip { font-family: 'JetBrains Mono', monospace; padding: 14px 22px; border-radius: 14px; background: var(--card); border: 1px solid var(--border); font-size: clamp(1rem, 2vw, 1.45rem); color: var(--text); }
+  .chip b { color: var(--gold); margin-right: 8px; }
+  .chip.first { border-color: var(--gold); }
+  .ctrl { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  .ctrl .lbl { font-family: 'JetBrains Mono', monospace; color: var(--text2); font-size: 0.9rem; }
+  .btn.sm { padding: 8px 16px; font-size: 0.85rem; }
+  table.mini { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.85rem, 1.3vw, 1.05rem); width: 100%; }
+  table.mini th { color: var(--muted); font-weight: 400; text-align: right; padding: 4px 6px; font-size: 0.75em; letter-spacing: 1px; text-transform: uppercase; }
+  table.mini th:first-child, table.mini td:first-child { text-align: left; }
+  table.mini td { padding: 5px 6px; text-align: right; color: var(--text); border-top: 1px solid var(--border); }
+  .dot-a { color: var(--green); } .dot-r { color: var(--gold); } .dot-l { color: var(--copper); } .dot-c { color: var(--red); }
+  .timer { font-family: 'JetBrains Mono', monospace; font-size: clamp(4rem, 14vw, 9.5rem); font-weight: 700; line-height: 1; color: var(--text); transition: color .3s; }
+  .beats { display: flex; gap: 8px; max-width: 1150px; width: 100%; }
+  .beat { flex: 1; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--card); text-align: left; transition: all .3s; }
+  .beat .bt { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.8rem; }
+  .beat .bh { font-weight: 700; font-size: clamp(0.85rem, 1.3vw, 1.05rem); }
+  .beat.now { border-color: var(--gold); background: rgba(242,177,53,0.12); transform: translateY(-3px); }
+  .beat.done { opacity: 0.4; }
+  .who { font-size: clamp(1.6rem, 4vw, 3rem); font-weight: 700; }
+  .nodeg { cursor: pointer; }
+  .winner { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; padding: 3px 10px; border-radius: 999px; background: var(--green); color: #0d0c0a; margin-left: 8px; vertical-align: middle; }
+  .bars { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .barrow { display: grid; grid-template-columns: 70px 1fr 56px; gap: 10px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--text2); }
+  .bartrack { position: relative; height: 20px; background: #221f1a; border-radius: 6px; overflow: visible; }
+  .barfill { height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--gold), var(--copper)); width: 0; transition: width .25s; }
+  .bartick { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--green); border-radius: 2px; opacity: 0; transition: opacity .4s; }
+  .bartick.on { opacity: 1; }
+  .tiles { display: flex; flex-wrap: wrap; gap: 4px; min-height: 104px; align-content: flex-start; }
+  .tile { width: 22px; height: 22px; border-radius: 5px; display: inline-grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0d0c0a; animation: pop .18s ease; }
+  .tile.inline { animation: none; vertical-align: middle; margin-right: 2px; }
+  .tile.t0 { background: var(--green); } .tile.t1 { background: var(--gold); } .tile.t2 { background: var(--copper); }
+  .tile.more { background: transparent; color: var(--muted); width: auto; padding: 0 4px; }
+  @keyframes pop { from { transform: scale(0.3); opacity: 0; } to { transform: none; opacity: 1; } }
+  .drip { animation: drip 1.5s linear infinite; opacity: 0; } .drip.d2 { animation-delay: .5s; } .drip.d3 { animation-delay: 1s; }
+  @keyframes drip { 0% { transform: translateY(-10px); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(28px); opacity: 0; } }
+  .payrows { display: flex; flex-direction: column; gap: 14px; width: min(92vw, 1150px); }
+  .payrow { display: grid; grid-template-columns: 260px 1fr 230px; gap: 16px; align-items: center; text-align: left; }
+  .paylab { color: var(--text2); font-size: clamp(0.9rem, 1.4vw, 1.1rem); }
+  .payamt { font-family: 'JetBrains Mono', monospace; color: var(--text2); font-size: clamp(0.8rem, 1.2vw, 1rem); }
+  .blocks { display: flex; gap: 4px; }
+  .blk { height: 30px; flex: 0 0 auto; width: 34px; border-radius: 6px; display: grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0d0c0a; }
+  .blk.a { background: var(--green); } .blk.r { background: var(--gold); }
+  @media (max-width: 900px) { .payrow { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 09</div>
+<div class="hud" id="hud"></div>
+
+<!-- 1 -->
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 9 · Wed Nov 4</div>
+  <h1>Where Do <span class="grad">Customers Go?</span></h1>
+  <p class="sub">One small table shows where customers go. One formula turns it into <b>dollars</b>. Tonight we see each idea on a slide, then <b>do it in the notebook</b> right away.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+</section>
+
+<!-- 2 -->
+<section class="slide">
+  <div class="kicker">7:40 – 7:45 · Housekeeping · isom-839.vercel.app/deadlines</div>
+  <h2>Tonight is <span class="grad">just for learning</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Tonight · 7:40 PM · done</div><div class="title">Midterm Case submitted</div><p>Notebook and memo to the VP are in on Canvas. Thank you!</p></div>
+    <div class="card"><div class="label">Moved · Wed Nov 18</div><div class="title">Case briefings</div><p>First thing on <b>Nov 18</b>: 5 minutes per team. You get two extra weeks to polish the story.</p></div>
+    <div class="card"><div class="label">Wed Nov 11</div><div class="title">No class · Veterans Day</div><p>Enjoy the break.</p></div>
+    <div class="card"><div class="label">Coming up</div><div class="title">Proposal · Homework #6</div><p>Proposal: <b>Thu Nov 12</b>. Homework #6: <b>Wed Nov 18</b>. Both start from tonight.</p></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="slide">
+  <div class="kicker">Tonight's Plan · Open The Session 9 Colab Now</div>
+  <h2>See it, <span class="grad">then do it</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Where do customers go?</div><p>One table, one line of code. <b>→ Notebook Part 1</b></p></div>
+    <div class="step"><div class="n">2</div><div class="t">The long run</div><p>Leave it running and watch what happens. <b>→ Notebook Part 2</b></p></div>
+    <div class="step"><div class="n">3</div><div class="t">Customers in dollars</div><p>Lifetime value, and a $2 decision with a twist. <b>→ Notebook Part 3</b></p></div>
+    <div class="step"><div class="n">★</div><div class="t">Bonus</div><p>Who gets credit for a sale, and how Google was born.</p></div>
+  </div>
+  <p class="take">Each round: <span class="accent-gold">a few slides, then 5–20 minutes in the notebook.</span> Every code cell ends with a ✅ "What you should see" box.</p>
+</section>
+
+<!-- 4 -->
+<section class="slide">
+  <div class="kicker">7:45 – 7:50 · Opening Story</div>
+  <h2>Hands up: who has cancelled a subscription… <span class="grad">and come back?</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">What you did</div><p>Cancelled Netflix when your show ended. Came back for the next season. Maybe twice.</p></div>
+    <div class="card"><div class="label">What the company sees</div><p>Not "lost," but a <b>state</b>: paused. Winning back a lapsed customer usually costs a fraction of finding a new one.</p></div>
+    <div class="card"><div class="label">Tonight's question</div><p>If I know which state each customer is in <b>today</b>, where will they be in a year, and <b>what is that worth?</b></p></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="slide">
+  <div class="kicker">Chat Vote · Type One Letter</div>
+  <h2>Each month, <span class="grad">80%</span> of active customers stay active.</h2>
+  <p class="sub">Start with <b>10,000</b> new customers, all active. After <b>12 months</b>, how many are still active?</p>
+  <ul class="list">
+    <li><span class="vote">A</span>About 8,000</li>
+    <li><span class="vote">B</span>About 5,000</li>
+    <li><span class="vote">C</span>About 2,800</li>
+    <li><span class="vote">D</span>About 700</li>
+  </ul>
+  <p class="sub">Hold that thought. We'll find out in ten minutes.</p>
+</section>
+
+<!-- 6 -->
+<section class="slide">
+  <div class="kicker">7:50 – 8:05 · Round 1 · The Markov Property</div>
+  <h2>The goldfish rule: only <span class="grad">where you are now</span> matters</h2>
+  <div class="cards">
+    <div class="card"><div class="label">Chutes &amp; Ladders</div><p>Your next square depends on <b>your square and the spin</b>. Not on how you got there. That board game <b>is</b> a Markov chain. With tonight's math you can work out the average game length: about 39 spins.</p></div>
+    <div class="card"><div class="label">A customer</div><p>Next month depends on <b>this month's state</b>, not her whole history. A goldfish memory.</p></div>
+    <div class="card"><div class="label">"Too simple!"</div><p>Then put more into the state: <b>"Active, year 1"</b> vs <b>"Active, year 3"</b>. Choosing the states is the art, the same way choosing variables was in Session 2.</p></div>
+  </div>
+  <p class="take">A bold shortcut. <span class="accent-gold">Surprisingly often, good enough to make money.</span></p>
+</section>
+
+<!-- 7 -->
+<section class="slide">
+  <div class="kicker">States Come From Behavior Data</div>
+  <h2>Four states, <span class="grad">one monthly shuffle</span></h2>
+  <svg class="fig" viewBox="0 0 790 320" style="width:min(80vw,900px)">
+    <defs><marker id="ahS" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a8a196"/></marker></defs>
+    <g fill="none" stroke="#a8a196" stroke-width="2.2" marker-end="url(#ahS)">
+      <line x1="165" y1="163" x2="223" y2="163"/>
+      <line x1="365" y1="163" x2="423" y2="163"/>
+      <line x1="565" y1="163" x2="623" y2="163"/>
+      <path d="M275,200 Q195,262 117,201"/>
+      <path d="M475,200 Q395,262 317,201"/>
+      <path d="M500,200 Q295,350 97,201"/>
+      <path d="M95,126 Q395,-30 690,125" stroke="#e2725b" stroke-dasharray="5 5"/>
+      <path d="M295,126 Q495,40 690,125" stroke="#e2725b" stroke-dasharray="5 5"/>
+    </g>
+    <g font-family="JetBrains Mono, monospace" font-size="15" fill="#ffd166" text-anchor="middle">
+      <text x="194" y="152">.15</text><text x="394" y="152">.20</text><text x="594" y="152">.30</text>
+      <text x="195" y="250">.30</text><text x="395" y="250">.10</text><text x="295" y="292">.10</text>
+      <text x="395" y="40">.02</text><text x="495" y="76">.10</text>
+    </g>
+    <g font-family="Space Grotesk, sans-serif" text-anchor="middle">
+      <rect x="27" y="128" width="136" height="70" rx="14" fill="#161412" stroke="#34d399" stroke-width="2.5"/>
+      <text x="95" y="158" fill="#f5f2ec" font-size="19" font-weight="700">Active</text><text x="95" y="182" fill="#34d399" font-size="14">stays 80%</text>
+      <rect x="227" y="128" width="136" height="70" rx="14" fill="#161412" stroke="#f2b135" stroke-width="2.5"/>
+      <text x="295" y="158" fill="#f5f2ec" font-size="19" font-weight="700">At-Risk</text><text x="295" y="182" fill="#f2b135" font-size="14">stays 40%</text>
+      <rect x="427" y="128" width="136" height="70" rx="14" fill="#161412" stroke="#e08e3c" stroke-width="2.5"/>
+      <text x="495" y="158" fill="#f5f2ec" font-size="19" font-weight="700">Lapsed</text><text x="495" y="182" fill="#e08e3c" font-size="14">stays 50%</text>
+      <rect x="627" y="128" width="136" height="70" rx="14" fill="#161412" stroke="#e2725b" stroke-width="2.5"/>
+      <text x="695" y="158" fill="#f5f2ec" font-size="19" font-weight="700">Churned</text><text x="695" y="182" fill="#e2725b" font-size="14">one-way door</text>
+    </g>
+  </svg>
+  <p class="sub"><b>Active</b>: used it in the last 30 days · <b>At-Risk</b>: usage fell by half · <b>Lapsed</b>: paused, pays $0 · <b>Churned</b>: cancelled for good. (One small arrow, Active → Lapsed at .03, is left off so the picture stays readable.)</p>
+</section>
+
+<!-- 8 -->
+<section class="slide">
+  <div class="kicker">The Transition Matrix · P</div>
+  <h2>One table holds <span class="grad">the whole story</span></h2>
+  <table class="rules">
+    <tr><th>From ↓ &nbsp; To →</th><th>Active</th><th>At-Risk</th><th>Lapsed</th><th>Churned</th><th>Row sum</th></tr>
+    <tr><td><b class="dot-a">Active</b></td><td class="code">0.80</td><td class="code">0.15</td><td class="code">0.03</td><td class="code">0.02</td><td class="tag">1 ✓</td></tr>
+    <tr><td><b class="dot-r">At-Risk</b></td><td class="code">0.30</td><td class="code">0.40</td><td class="code">0.20</td><td class="code">0.10</td><td class="tag">1 ✓</td></tr>
+    <tr><td><b class="dot-l">Lapsed</b></td><td class="code">0.10</td><td class="code">0.10</td><td class="code">0.50</td><td class="code">0.30</td><td class="tag">1 ✓</td></tr>
+    <tr><td><b class="dot-c">Churned</b></td><td class="code">0</td><td class="code">0</td><td class="code">0</td><td class="code">1.00</td><td class="tag">1 ✓</td></tr>
+  </table>
+  <p class="take">Read a row out loud: <span class="accent-gold">"Of every 100 active customers, 80 stay, 15 wobble, 3 go quiet, 2 leave."</span></p>
+  <p class="sub">Every row must add up to 1, because everyone has to go <i>somewhere</i>. Check that first. It is the most common Markov bug in real work.</p>
+</section>
+
+<!-- 9 -->
+<section class="slide">
+  <div class="kicker">Round 1 · The Crystal Ball · Click To Play</div>
+  <h2>Watch <span class="grad">200 customers</span> live a year</h2>
+  <div class="row interactive">
+    <svg id="dotSvg" viewBox="0 0 720 300" style="width:min(58vw,700px);height:auto"></svg>
+    <div class="card" style="max-width:340px">
+      <div class="label" id="dotMonth">Month 0</div>
+      <table class="mini" id="dotTable"></table>
+      <div class="ctrl" style="margin-top:14px;justify-content:flex-start">
+        <button class="btn sm" id="dotStep">Next month</button>
+        <button class="btn ghost sm" id="dotPlay">Play 12 months</button>
+        <button class="btn ghost sm" id="dotReset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <p class="take">Each dot rolls its own dice. Yet the crowd tracks the matrix. <span class="accent-gold">Individuals are random; crowds are predictable.</span></p>
+</section>
+
+<!-- 10 -->
+<section class="slide">
+  <div class="kicker">8:05 – 8:20 · Your Turn · Notebook Part 1</div>
+  <h2>Now you do it: <span class="grad">Part 1</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1.1</div><div class="t">Write the table</div><p>Run it.<br><span class="accent-g">✅ Row sums: 1 1 1 1</span></p></div>
+    <div class="step"><div class="n">1.2</div><div class="t">One month</div><p><b>x @ P</b> = everyone takes one step.<br><span class="accent-g">✅ 8,000 · 1,500 · 300 · 200</span></p></div>
+    <div class="step"><div class="n">1.3</div><div class="t">36 months</div><p>A loop and a chart.<br><span class="accent-g">✅ Month 12 = the vote answer!</span></p></div>
+    <div class="step"><div class="n">🔧</div><div class="t">Your turn</div><p>Active row → 0.85 / 0.10.<br><span class="accent-g">✅ about 3,555 active</span></p></div>
+  </div>
+  <p class="take">Shift + Enter, top to bottom. <span class="accent-gold">If your output matches the ✅ box, move on.</span></p>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="kicker">Vote Answer · You Just Computed It In Step 1.3</div>
+  <h2><span class="grad">x = x @ P</span>, twelve times</h2>
+  <div class="row">
+    <table class="rules">
+      <tr><th>Month</th><th>Active</th><th>At-Risk</th><th>Lapsed</th><th>Churned</th></tr>
+      <tr><td class="code">0</td><td class="code">10,000</td><td class="code">0</td><td class="code">0</td><td class="code">0</td></tr>
+      <tr><td class="code">1</td><td class="code">8,000</td><td class="code">1,500</td><td class="code">300</td><td class="code">200</td></tr>
+      <tr><td class="code">3</td><td class="code">6,122</td><td class="code">1,833</td><td class="code">917</td><td class="code">1,128</td></tr>
+      <tr><td class="code">6</td><td class="code">4,635</td><td class="code">1,512</td><td class="code">987</td><td class="code">2,866</td></tr>
+      <tr><td class="code"><b>12</b></td><td class="code" style="color:var(--goldlight)"><b>2,829</b></td><td class="code">936</td><td class="code">643</td><td class="code">5,592</td></tr>
+      <tr><td class="code">24</td><td class="code">1,068</td><td class="code">354</td><td class="code">243</td><td class="code">8,335</td></tr>
+    </table>
+    <div class="card" style="max-width:380px">
+      <div class="label">The answer is C</div>
+      <p><b>2,829</b> still active. 80% a month sounds great; compounded, it is a <b>leaky bucket</b>. Over half the cohort is gone by month 11.</p>
+      <div class="label" style="margin-top:14px">Why not D (about 700)?</div>
+      <p>0.8<sup>12</sup> × 10,000 = 687 is what you get if <b>nobody ever comes back</b>. The way back from At-Risk and Lapsed is worth about <b>2,100 customers</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="kicker">8:20 – 8:35 · Round 2 · Steady State · Click A Starting Point</div>
+  <h2>Leave it running: the chain <span class="grad">forgets where it started</span></h2>
+  <div class="row interactive">
+    <svg id="ssSvg" viewBox="0 0 470 290" style="width:min(46vw,540px);height:auto"></svg>
+    <div class="card" style="max-width:380px">
+      <div class="label">A made-up Boston coffee market</div>
+      <p>Each month, <b>90%</b> of Dunkin' regulars stay and 10% switch. Starbucks regulars: <b>80%</b> stay, 20% switch.</p>
+      <div class="ctrl" style="margin:14px 0;justify-content:flex-start">
+        <button class="btn sm" data-ss="1">100% Dunkin'</button>
+        <button class="btn sm" data-ss="0.5">50 / 50</button>
+        <button class="btn sm" data-ss="0">100% Starbucks</button>
+        <button class="btn ghost sm" id="ssReset">Clear</button>
+      </div>
+      <p id="ssMsg">Pick a start. Then pick another.</p>
+    </div>
+  </div>
+  <p class="take">Every start lands on <span class="accent-gold">⅔ Dunkin'</span> = 0.20 ÷ (0.10 + 0.20). Long-run market share comes from <b>switching rates</b>, not today's share.</p>
+</section>
+
+<!-- 13 -->
+<section class="slide">
+  <div class="kicker">Round 2 · Absorbing States</div>
+  <h2>Everyone churns <span class="grad">eventually</span></h2>
+  <div class="row">
+    <svg viewBox="0 0 200 215" style="width:min(24vw,230px);height:auto" aria-label="A leaky bucket">
+      <path d="M47,92 L153,92 L144,170 L56,170 Z" fill="#7cb7ff" fill-opacity="0.45"/>
+      <path d="M38,40 L162,40 L146,172 L54,172 Z" fill="none" stroke="#f2b135" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M38,40 Q100,8 162,40" fill="none" stroke="#a8a196" stroke-width="3"/>
+      <circle class="drip" cx="100" cy="182" r="5" fill="#7cb7ff"/>
+      <circle class="drip d2" cx="100" cy="182" r="5" fill="#7cb7ff"/>
+      <circle class="drip d3" cx="100" cy="182" r="5" fill="#7cb7ff"/>
+    </svg>
+    <div style="max-width:620px;text-align:left">
+      <p class="take">Churned is a one-way door. Leave the chain running and <span class="accent-r">everyone</span> ends up there.</p>
+      <p class="sub" style="margin-top:2vh">Like a leaky bucket: every bucket empties. That is not news. What matters is <b>how much water comes out first</b>.</p>
+      <p class="sub" style="margin-top:2vh">For customers: <b>how many months do they pay before they leave?</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 -->
+<section class="slide">
+  <div class="kicker">8:35 – 8:40 · Your Turn · Notebook Part 2</div>
+  <h2>Now you do it: <span class="grad">Part 2</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">2.1</div><div class="t">Coffee wars</div><p>Three starts, 24 months each.<br><span class="accent-g">✅ All three lines meet at 66.7%</span></p></div>
+    <div class="step"><div class="n">2.2</div><div class="t">The one-way door</div><p>How long until everyone churns?<br><span class="accent-g">✅ 116 months · half gone by month 11</span></p></div>
+  </div>
+  <p class="take">Five minutes. Then <span class="accent-gold">a break, and the money question.</span></p>
+</section>
+
+<!-- 15 -->
+<section class="slide">
+  <div class="kicker">8:40 – 8:50</div>
+  <div class="big"><span class="grad">Break</span></div>
+  <p class="take">Stuck on Part 1 or 2? Grab me now.</p>
+  <p class="sub">After the break: how much is a customer worth, and which campaign should you fund?</p>
+</section>
+
+<!-- 16 -->
+<section class="slide">
+  <div class="kicker">8:50 – 9:10 · Round 3 · Customers In Dollars · Click To Play</div>
+  <h2>Meet Maya. <span class="grad">What is one customer worth?</span></h2>
+  <div class="row interactive" style="align-items:stretch">
+    <div class="card" style="max-width:560px;min-width:min(88vw,500px)">
+      <div class="label">Maya's life, one tile per month</div>
+      <div id="mayaTiles" class="tiles"></div>
+      <p id="mayaMsg" style="margin-top:10px">She just signed up. Each month she rolls the dice with her row of the table.</p>
+      <div class="ctrl" style="justify-content:flex-start;margin-top:12px">
+        <button class="btn sm" id="mayaOne">Live Maya's life</button>
+        <button class="btn ghost sm" id="mayaMany">Live 10,000 lives</button>
+      </div>
+      <p style="margin-top:12px;font-size:0.9rem"><span class="tile t0 inline">A</span> Active $15 &nbsp; <span class="tile t1 inline">R</span> At-Risk $15 &nbsp; <span class="tile t2 inline">L</span> Lapsed $0</p>
+    </div>
+    <div class="card" style="max-width:430px">
+      <div class="label">What 10,000 customers paid, over their whole lives</div>
+      <svg id="mayaHist" viewBox="0 0 400 225" style="width:100%;height:auto"></svg>
+      <p id="mayaAvg">Live 10,000 lives to see the spread.</p>
+    </div>
+  </div>
+  <p class="take" id="mayaTake">Every life is different. <span class="accent-gold">So what is "a customer" worth?</span></p>
+</section>
+
+<!-- 17 -->
+<section class="slide">
+  <div class="kicker">Round 3 · The Shortcut</div>
+  <h2>The average, <span class="grad">without rolling a single die</span></h2>
+  <div class="row">
+    <div class="card" style="max-width:400px"><div class="label">Warm-up: one state</div><p>Stay 80% each month, nowhere else to go?</p><p class="math" style="font-size:clamp(1rem,2vw,1.5rem)">1 ÷ (1 − 0.8) = 5 months</p><div class="label" style="margin-top:14px">Many states: same idea, matrix-sized</div><p class="math" style="font-size:clamp(1rem,2vw,1.5rem)">N = (I − Q)<sup>−1</sup></p><p><b>Q</b> = the table without Churned. <b>I</b> = the matrix version of the number 1.</p></div>
+    <table class="rules">
+      <tr><th>A new Active customer spends…</th><th>Months</th><th>Pays</th></tr>
+      <tr><td><b class="dot-a">in Active</b></td><td class="code">10.07</td><td class="code">$15</td></tr>
+      <tr><td><b class="dot-r">in At-Risk</b></td><td class="code">2.81</td><td class="code">$15</td></tr>
+      <tr><td><b class="dot-l">in Lapsed</b></td><td class="code">1.73</td><td class="code">$0</td></tr>
+      <tr><td><b>Total lifetime</b></td><td class="code">14.6</td><td class="code"></td></tr>
+      <tr><td><b>Lifetime value</b></td><td class="code" colspan="2" style="color:var(--goldlight);font-size:1.4em"><b>$193.17</b></td></tr>
+    </table>
+  </div>
+  <p class="take">(10.07 + 2.81) × $15 = <b>$193</b>, the same as the 10,000 lives. <span class="accent-gold">The most you should ever pay to win a new customer.</span></p>
+</section>
+
+<!-- 18 -->
+<section class="slide">
+  <div class="kicker">Chat Vote First · Then Drag The Cost</div>
+  <h2>Two campaigns. <span class="grad">Which one should you fund?</span></h2>
+  <div class="row interactive" style="align-items:stretch">
+    <div class="card" style="max-width:330px"><div class="label">A · Keep the Active happy</div><p>Active retention <b>0.80 → 0.85</b>. You pay for every <b>Active</b> customer, every month.</p><p style="margin-top:12px" id="campA"></p></div>
+    <div class="card" style="max-width:330px"><div class="label">B · Rescue the At-Risk</div><p>At-Risk recovery <b>0.30 → 0.40</b>. You pay only for <b>At-Risk</b> customers, each month.</p><p style="margin-top:12px" id="campB"></p></div>
+    <div class="card" style="max-width:330px"><div class="label">Cost per targeted customer per month</div>
+      <p class="big" id="costBig" style="font-size:clamp(2.2rem,5vw,3.6rem);color:var(--goldlight)">$0.00</p>
+      <input type="range" id="costR" min="0" max="4" step="0.05" value="0">
+      <p id="costMsg">Start at $0: that is the gross value of each campaign. Now drag to the real price: <b>$2</b>.</p></div>
+  </div>
+  <p class="take" id="costTake">Vote first: <span class="vote">A</span> or <span class="vote">B</span>?</p>
+</section>
+
+<!-- 19 -->
+<section class="slide">
+  <div class="kicker">The Plot Twist</div>
+  <h2>Gross says A. <span class="grad">Net says B.</span></h2>
+  <div class="payrows">
+    <div class="payrow"><div class="paylab"><b>A</b> pays $2 on every <b class="dot-a">Active</b> month</div><div class="blocks" id="blocksA"></div><div class="payamt">12.6 months × $2 = <b class="accent-r">$25.11</b></div></div>
+    <div class="payrow"><div class="paylab"><b>B</b> pays $2 only on <b class="dot-r">At-Risk</b> months</div><div class="blocks" id="blocksB"></div><div class="payamt">2.6 months × $2 = <b class="accent-r">$5.25</b></div></div>
+  </div>
+  <table class="rules">
+    <tr><th>Campaign</th><th>Lifetime value gain</th><th>Cost</th><th>Net per customer</th></tr>
+    <tr><td><b>A · Keep the Active happy</b></td><td class="code">+$30.83</td><td class="code accent-r">−$25.11</td><td class="code">+$5.71</td></tr>
+    <tr><td><b>B · Rescue the At-Risk</b></td><td class="code">+$12.90</td><td class="code accent-r">−$5.25</td><td class="code accent-g"><b>+$7.64</b></td></tr>
+  </table>
+  <p class="take">A is the bigger lever, but you pay for it on everyone. B is paid only <span class="accent-gold">at the moment of risk.</span></p>
+</section>
+
+<!-- 20 -->
+<section class="slide">
+  <div class="kicker">9:10 – 9:35 · Your Turn · Notebook Part 3</div>
+  <h2>Now you do it: <span class="grad">Part 3</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">3.0</div><div class="t">Meet Maya</div><p>One life, then 10,000.<br><span class="accent-g">✅ Maya: AAAAAAA, $105 · average ≈ $192</span></p></div>
+    <div class="step"><div class="n">3.1</div><div class="t">The shortcut</div><p>N = (I − Q)<sup>−1</sup>.<br><span class="accent-g">✅ 10.07 · 2.81 · 1.73 = 14.6</span></p></div>
+    <div class="step"><div class="n">3.2</div><div class="t">Into dollars</div><p>Months × what each state pays.<br><span class="accent-g">✅ $193.17</span></p></div>
+    <div class="step"><div class="n">3.3</div><div class="t">The $2 decision</div><p>Run it. Nothing to type.<br><span class="accent-g">✅ Net A $5.71 · Net B $7.64</span></p></div>
+    <div class="step"><div class="n">🔧</div><div class="t">Your turn</div><p>Try other prices.<br><span class="accent-g">✅ The winner flips near $1.81</span></p></div>
+  </div>
+  <p class="take">Done early? Run the <span class="accent-gold">Bonus: PageRank</span> cell. It is next on the slides.</p>
+</section>
+
+<!-- 21 -->
+<section class="slide">
+  <div class="kicker">9:35 – 9:45 · Bonus · Who Gets The Credit? · Click A Channel To Remove It</div>
+  <h2>Instagram or email: <span class="grad">who closed the sale?</span></h2>
+  <div class="row interactive">
+    <svg id="attSvg" viewBox="0 0 700 300" style="width:min(52vw,620px);height:auto"></svg>
+    <div class="card" style="max-width:380px">
+      <div class="label">Conversion rate</div>
+      <p class="big" id="attBig" style="font-size:clamp(2.2rem,5vw,3.6rem)">28.0%</p>
+      <p id="attMsg">Click a channel to delete it from every journey.</p>
+      <table class="mini" style="margin-top:12px">
+        <tr><th>Channel</th><th>Last click</th><th>Removal effect</th></tr>
+        <tr><td>Instagram</td><td>9%</td><td style="color:var(--goldlight)">26%</td></tr>
+        <tr><td>Email</td><td>29%</td><td>28%</td></tr>
+        <tr><td>Search</td><td>62%</td><td>45%</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="take">Last click says Instagram earns 9%. <span class="accent-gold">Delete it and 38% of sales vanish.</span> It starts journeys that other channels finish.</p>
+</section>
+
+<!-- 22 -->
+<section class="slide">
+  <div class="kicker">Bonus · The Biggest Markov Chain Ever Built · Also In The Notebook</div>
+  <h2>PageRank: <span class="grad">a steady state</span> worth trillions</h2>
+  <div class="row interactive">
+    <svg id="prSvg" viewBox="0 0 460 300" style="width:min(42vw,500px);height:auto"></svg>
+    <div class="card" style="max-width:400px">
+      <div class="label">A random surfer: 85% click a link, 15% jump anywhere</div>
+      <div class="bars" id="prBars"></div>
+      <div class="ctrl" style="margin-top:14px;justify-content:flex-start">
+        <button class="btn sm" id="prOne">Surf 1 click</button>
+        <button class="btn sm" id="prMany">Surf 2,000 clicks</button>
+        <button class="btn ghost sm" id="prReset">Reset</button>
+      </div>
+      <p id="prMsg" style="margin-top:10px">Share of time the surfer spends on each page. Green tick = exact steady state.</p>
+    </div>
+  </div>
+  <p class="take">Review and Shop both get 3 links. Shop wins, because Review sends <b>all</b> its votes to Shop. <span class="accent-gold">It is not how many link to you. It is who.</span></p>
+</section>
+
+<!-- 23 -->
+<section class="slide">
+  <div class="kicker">9:45 – 9:55 · Homework #6 · Due Wed Nov 18, 7:40 PM</div>
+  <h2>Same four steps, <span class="grad">5,000 streaming subscribers</span></h2>
+  <table class="rules">
+    <tr><th>Homework step</th><th>What you do</th><th>Copy from tonight</th></tr>
+    <tr><td><b>1 · Estimate the table</b></td><td>The moves are lined up for you. Count them, divide each row by its total.</td><td class="tag">Part 1.1</td></tr>
+    <tr><td><b>2 · Project 24 months</b></td><td>Start 5,000 in New. Loop <b>x @ P</b>. Plot.</td><td class="tag">Part 1.3</td></tr>
+    <tr><td><b>3 · Lifetime value</b></td><td>Four paying states this time. Each pays $12.99.</td><td class="tag">Part 3.1 – 3.2</td></tr>
+    <tr><td><b>4 · Win-back: go or no-go?</b></td><td>Change the Dormant row. Gain minus cost ($3 a month). Decide.</td><td class="tag">Part 3.3</td></tr>
+  </table>
+  <p class="take">Open the homework section together now. <span class="accent-gold">Every step has hints right above the TODO.</span></p>
+</section>
+
+<!-- 24 -->
+<section class="slide">
+  <div class="kicker">9:55 – 10:00 · Three Things To Take Home</div>
+  <h2>Tonight in <span class="grad">three sentences</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1 · The matrix</div><p>One table of "where next" plus <b>x @ P</b> shows next month, next year, and the long run. Rows sum to 1.</p></div>
+    <div class="step"><div class="n">2 · The dollars</div><p><b>(I − Q)<sup>−1</sup></b> turns retention into lifetime value. Spend where customers wobble, not on everyone.</p></div>
+    <div class="step"><div class="n">3 · The credit</div><p>Remove a node and measure what breaks. Attribution and PageRank are the <b>same idea</b>.</p></div>
+  </div>
+</section>
+
+<!-- 25 -->
+<section class="slide">
+  <div class="kicker">Next Class · Wed Nov 18 · No Class Nov 11</div>
+  <h2>Nov 18: <span class="grad">your briefings, then you take the wheel</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">First · 5 min per team</div><p><b>Midterm case briefings.</b> Decision and dollars first, the parka bottleneck, the plan, what moves if demand is ±20%, the ask. Shape on <b>isom-839.vercel.app/case</b>.</p></div>
+    <div class="card"><div class="label">Then · Session 10</div><p><b>Markov decision processes.</b> Tonight the chain told us what happens. Next time we add actions and rewards and choose.</p></div>
+    <div class="card"><div class="label">Due that night</div><p><b>Homework #6</b> by 7:40 PM. Proposal is due before that: <b>Thu Nov 12</b>.</p></div>
+  </div>
+  <p class="take">Great work tonight. <span class="accent-gold">See you on November 18.</span></p>
+</section>
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud');
+  const bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length;
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+  }
+  addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') { if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) { e.preventDefault(); e.target.blur(); } }
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a, .interactive, button, input')) show(i + 1); });
+
+  // ---------- helpers ----------
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function txt(parent, x, y, str, fill, size, anchor, fam) { const t = el('text', { x, y, fill, 'font-size': size || 14, 'text-anchor': anchor || 'middle', 'font-family': fam || 'Space Grotesk, sans-serif' }, parent); t.textContent = str; return t; }
+  function inv(A) { // Gauss-Jordan inverse of a small square matrix
+    const n = A.length, M = A.map((r, k) => [...r, ...r.map((_, j) => (k === j ? 1 : 0))]);
+    for (let c = 0; c < n; c++) {
+      let p = c; for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+      [M[c], M[p]] = [M[p], M[c]];
+      const d = M[c][c]; for (let j = 0; j < 2 * n; j++) M[c][j] /= d;
+      for (let r = 0; r < n; r++) if (r !== c) { const f = M[r][c]; for (let j = 0; j < 2 * n; j++) M[r][j] -= f * M[c][j]; }
+    }
+    return M.map(r => r.slice(n));
+  }
+  const money = v => (v < 0 ? '−$' : '$') + Math.abs(v).toFixed(2);
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
+  };
+
+  // ---------- 200 customers ----------
+  (function () {
+    const svg = document.getElementById('dotSvg');
+    const P = [[.8, .15, .03, .02], [.3, .4, .2, .1], [.1, .1, .5, .3], [0, 0, 0, 1]];
+    const names = ['Active', 'At-Risk', 'Lapsed', 'Churned'], cols = ['#34d399', '#f2b135', '#e08e3c', '#e2725b'], cls = ['dot-a', 'dot-r', 'dot-l', 'dot-c'];
+    const ZW = 180, N = 200;
+    for (let z = 0; z < 4; z++) {
+      el('rect', { x: z * ZW + 4, y: 34, width: ZW - 8, height: 262, rx: 12, fill: '#14120f', stroke: cols[z], 'stroke-opacity': 0.4 }, svg);
+      txt(svg, z * ZW + 90, 22, names[z].toUpperCase(), cols[z], 14, 'middle', 'JetBrains Mono, monospace');
+    }
+    const layer = el('g', {}, svg);
+    let dots = [], month = 0, busy = false, playing = 0;
+    const slot = (z, k) => ({ x: z * ZW + 18 + (k % 10) * 16, y: 50 + Math.floor(k / 10) * 12.2 });
+    function layout() { const cnt = [0, 0, 0, 0]; dots.forEach(d => { const p = slot(d.s, cnt[d.s]++); d.tx = p.x; d.ty = p.y; }); }
+    function place(d) { d.c.setAttribute('cx', d.x.toFixed(1)); d.c.setAttribute('cy', d.y.toFixed(1)); }
+    function update() {
+      const cnt = [0, 0, 0, 0]; dots.forEach(d => cnt[d.s]++);
+      let x = [N, 0, 0, 0]; for (let m = 0; m < month; m++) x = [0, 1, 2, 3].map(j => x.reduce((s, v, k) => s + v * P[k][j], 0));
+      document.getElementById('dotMonth').textContent = 'Month ' + month;
+      document.getElementById('dotTable').innerHTML = '<tr><th>State</th><th>Live dots</th><th>Matrix says</th></tr>' +
+        names.map((n, k) => '<tr><td class="' + cls[k] + '">' + n + '</td><td>' + cnt[k] + '</td><td>' + x[k].toFixed(1) + '</td></tr>').join('');
+    }
+    function init() {
+      layer.innerHTML = ''; dots = []; month = 0;
+      for (let k = 0; k < N; k++) { const d = { s: 0, x: 0, y: 0 }; d.c = el('circle', { r: 5, fill: cols[0] }, layer); dots.push(d); }
+      layout(); dots.forEach(d => { d.x = d.tx; d.y = d.ty; place(d); }); update();
+    }
+    function step(done) {
+      if (busy) return; busy = true; month++;
+      dots.forEach(d => { d.fx = d.x; d.fy = d.y; const r = Math.random(); let acc = 0, ns = d.s; for (let j = 0; j < 4; j++) { acc += P[d.s][j]; if (r < acc) { ns = j; break; } } d.s = ns; d.c.setAttribute('fill', cols[ns]); });
+      layout();
+      const t0 = performance.now(), D = 650;
+      function anim(t) {
+        const u = Math.min(1, (t - t0) / D), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+        dots.forEach(d => { d.x = d.fx + (d.tx - d.fx) * e; d.y = d.fy + (d.ty - d.fy) * e; place(d); });
+        if (u < 1) requestAnimationFrame(anim); else { busy = false; update(); if (done) done(); }
+      }
+      requestAnimationFrame(anim);
+    }
+    function next() { if (playing <= 0) return; playing--; step(() => setTimeout(next, 250)); }
+    document.getElementById('dotStep').onclick = () => { playing = 0; step(); };
+    document.getElementById('dotPlay').onclick = () => { if (playing > 0 || busy) return; playing = 12; next(); };
+    document.getElementById('dotReset').onclick = () => { playing = 0; const go = () => (busy ? setTimeout(go, 100) : init()); go(); };
+    init();
+  })();
+
+  // ---------- steady state: coffee ----------
+  (function () {
+    const svg = document.getElementById('ssSvg');
+    const L = 56, R = 450, T = 20, B = 240, X = m => L + m / 24 * (R - L), Y = s => B - s * (B - T);
+    [0, 1 / 3, 2 / 3, 1].forEach(v => { el('line', { x1: L, y1: Y(v), x2: R, y2: Y(v), stroke: '#2a2621' }, svg); txt(svg, L - 8, Y(v) + 4, Math.round(v * 100) + '%', '#a8a196', 12, 'end', 'JetBrains Mono, monospace'); });
+    [0, 6, 12, 18, 24].forEach(m => txt(svg, X(m), B + 18, m, '#a8a196', 12, 'middle', 'JetBrains Mono, monospace'));
+    txt(svg, (L + R) / 2, B + 40, 'month →', '#a8a196', 13);
+    txt(svg, 14, (T + B) / 2, "Dunkin' share", '#a8a196', 13).setAttribute('transform', 'rotate(-90 14 ' + (T + B) / 2 + ')');
+    el('line', { x1: L, y1: Y(2 / 3), x2: R, y2: Y(2 / 3), stroke: '#34d399', 'stroke-dasharray': '6 5', 'stroke-width': 2 }, svg);
+    txt(svg, R - 4, Y(2 / 3) - 8, 'steady state 66.7%', '#34d399', 13, 'end');
+    const layer = el('g', {}, svg);
+    const colors = { '1': '#ffd166', '0.5': '#7cb7ff', '0': '#e08e3c' };
+    const label = { '1': "100% Dunkin'", '0.5': '50 / 50', '0': '100% Starbucks' };
+    document.querySelectorAll('[data-ss]').forEach(b => b.onclick = () => {
+      const s0 = parseFloat(b.dataset.ss); let s = s0, d = 'M' + X(0) + ',' + Y(s).toFixed(1), path = [s];
+      for (let m = 1; m <= 24; m++) { s = 0.9 * s + 0.2 * (1 - s); path.push(s); d += ' L' + X(m).toFixed(1) + ',' + Y(s).toFixed(1); }
+      const p = el('path', { d, fill: 'none', stroke: colors[b.dataset.ss], 'stroke-width': 4 }, layer);
+      const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.getBoundingClientRect();
+      p.style.transition = 'stroke-dashoffset 1.6s ease'; p.style.strokeDashoffset = 0;
+      document.getElementById('ssMsg').innerHTML = 'From <b>' + label[b.dataset.ss] + '</b>: month 3 = ' + (path[3] * 100).toFixed(0) + '%, month 12 = ' + (path[12] * 100).toFixed(1) + '%, month 24 = <b style="color:var(--green)">' + (path[24] * 100).toFixed(1) + '%</b>.';
+    });
+    document.getElementById('ssReset').onclick = () => { layer.innerHTML = ''; document.getElementById('ssMsg').textContent = 'Pick a start. Then pick another.'; };
+  })();
+
+  // ---------- the $2 decision ----------
+  (function () {
+    const P = [[.8, .15, .03, .02], [.3, .4, .2, .1], [.1, .1, .5, .3], [0, 0, 0, 1]];
+    const life = M => inv([0, 1, 2].map(r => [0, 1, 2].map(c => (r === c ? 1 : 0) - M[r][c])))[0];
+    const clv = n => (n[0] + n[1]) * 15;
+    const n0 = life(P);
+    const Pa = P.map(r => [...r]); Pa[0][0] += 0.05; Pa[0][1] -= 0.05;
+    const Pb = P.map(r => [...r]); Pb[1][0] += 0.10; Pb[1][1] -= 0.10;
+    const na = life(Pa), nb = life(Pb);
+    const gA = clv(na) - clv(n0), gB = clv(nb) - clv(n0), mA = na[0], mB = nb[1];
+    const cross = (gA - gB) / (mA - mB);
+    const r = document.getElementById('costR');
+    function draw() {
+      const c = +r.value, netA = gA - c * mA, netB = gB - c * mB, aWins = netA >= netB;
+      document.getElementById('costBig').textContent = '$' + c.toFixed(2);
+      const card = (g, m, net, win) => 'Lifetime value lift <b>+' + money(g) + '</b><br>Cost <b>' + money(-c * m) + '</b> <span style="color:var(--muted)">(' + m.toFixed(2) + ' months × $' + c.toFixed(2) + ')</span><br>Net <b style="color:' + (net >= 0 ? 'var(--green)' : 'var(--red)') + '">' + (net >= 0 ? '+' : '') + money(net) + '</b>' + (win ? '<span class="winner">WINS</span>' : '');
+      document.getElementById('campA').innerHTML = card(gA, mA, netA, aWins);
+      document.getElementById('campB').innerHTML = card(gB, mB, netB, !aWins);
+      const take = document.getElementById('costTake');
+      if (c === 0) take.innerHTML = 'At $0, <b>A wins easily</b>: it is the bigger lever. Did you vote A? Now drag to $2.';
+      else if (c < cross) take.innerHTML = 'Still A… but the gap is closing. Each dollar costs A <b>' + mA.toFixed(1) + '</b> months of payments and B only <b>' + mB.toFixed(1) + '</b>.';
+      else take.innerHTML = '🎯 <span class="accent-g">Above $' + cross.toFixed(2) + ', B wins.</span> At the real price of $2, rescuing the wobblers beats pampering everyone.';
+    }
+    r.addEventListener('input', draw); draw();
+  })();
+
+  // ---------- attribution ----------
+  (function () {
+    const svg = document.getElementById('attSvg');
+    svg.innerHTML = '<defs><marker id="ahA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a8a196"/></marker></defs>';
+    const pos = { Start: [70, 150], IG: [300, 60], Email: [300, 150], Search: [300, 240], Conv: [600, 90], Null: [600, 215] };
+    const rad = { Start: 40, IG: 36, Email: 36, Search: 36, Conv: 40, Null: 40 };
+    const E = [
+      ['Start', 'IG', .5, 0, true], ['Start', 'Email', .2, 0, true], ['Start', 'Search', .3, 0, true],
+      ['IG', 'Email', .3, -26], ['IG', 'Search', .2, -70], ['Email', 'Search', .25, -26], ['Search', 'Email', .10, -26],
+      ['IG', 'Conv', .05, 0, true], ['Email', 'Conv', .20, 0, true], ['Search', 'Conv', .35, 0, true],
+      ['IG', 'Null', .45, 0], ['Email', 'Null', .55, 0], ['Search', 'Null', .55, 0],
+    ];
+    const edgeLayer = el('g', {}, svg), nodeLayer = el('g', {}, svg);
+    const edges = E.map(([a, b, p, bend, lab]) => {
+      const [x1, y1] = pos[a], [x2, y2] = pos[b], mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      const dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy), cx = mx - dy / L * bend, cy = my + dx / L * bend;
+      const s = (px, py, qx, qy, r) => { const l = Math.hypot(qx - px, qy - py); return [px + (qx - px) / l * r, py + (qy - py) / l * r]; };
+      const [sx, sy] = s(x1, y1, cx, cy, rad[a]), [ex, ey] = s(x2, y2, cx, cy, rad[b] + 3);
+      const path = el('path', { d: 'M' + sx + ',' + sy + ' Q' + cx + ',' + cy + ' ' + ex + ',' + ey, fill: 'none', stroke: b === 'Conv' ? '#34d399' : '#6b6459', 'stroke-width': 1.2 + p * 7, 'marker-end': 'url(#ahA)', 'stroke-opacity': 0.85 }, edgeLayer);
+      let t = null;
+      if (lab) { const lx = 0.25 * sx + 0.5 * cx + 0.25 * ex, ly = 0.25 * sy + 0.5 * cy + 0.25 * ey; t = txt(edgeLayer, lx, ly - 7, p.toFixed(2).replace(/^0/, ''), '#ffd166', 13, 'middle', 'JetBrains Mono, monospace'); }
+      return { a, b, path, t };
+    });
+    const removed = new Set();
+    const nice = { IG: 'Instagram', Email: 'Email', Search: 'Search' };
+    const nodes = {};
+    Object.entries(pos).forEach(([k, [x, y]]) => {
+      const g = el('g', { class: k in nice ? 'nodeg' : '' }, nodeLayer);
+      const col = k === 'Conv' ? '#34d399' : k === 'Null' ? '#6b6459' : k === 'Start' ? '#a8a196' : '#f2b135';
+      el('circle', { cx: x, cy: y, r: rad[k], fill: '#161412', stroke: col, 'stroke-width': 2.5 }, g);
+      txt(g, x, y + 5, { Start: 'Start', IG: 'Instagram', Email: 'Email', Search: 'Search', Conv: 'Sale', Null: 'No sale' }[k], '#f5f2ec', k in nice ? 13 : 15);
+      if (k in nice) g.addEventListener('click', () => { removed.has(k) ? removed.delete(k) : removed.add(k); draw(); });
+      nodes[k] = g;
+    });
+    const T = ['Start', 'IG', 'Email', 'Search'];
+    function conv(rem) {
+      const Q = T.map(() => T.map(() => 0)), r = T.map(() => 0);
+      E.forEach(([a, b, p]) => { const i = T.indexOf(a); if (i < 0) return; if (rem.has(b)) return; if (b === 'Conv') r[i] += p; else { const j = T.indexOf(b); if (j >= 0) Q[i][j] += p; } });
+      const Ni = inv(Q.map((row, i) => row.map((v, j) => (i === j ? 1 : 0) - v)));
+      return Ni[0].reduce((s, v, j) => s + v * r[j], 0);
+    }
+    const base = conv(new Set());
+    function draw() {
+      const c = conv(removed);
+      Object.keys(nice).forEach(k => nodes[k].setAttribute('opacity', removed.has(k) ? 0.22 : 1));
+      edges.forEach(e => { const off = removed.has(e.a) || removed.has(e.b); e.path.setAttribute('stroke-opacity', off ? 0.08 : 0.85); if (e.t) e.t.setAttribute('opacity', off ? 0.15 : 1); });
+      document.getElementById('attBig').textContent = (c * 100).toFixed(1) + '%';
+      document.getElementById('attBig').style.color = removed.size ? 'var(--red)' : 'var(--text)';
+      document.getElementById('attMsg').innerHTML = removed.size
+        ? 'Without <b>' + [...removed].map(k => nice[k]).join(' + ') + '</b>: conversions fall <b style="color:var(--red)">' + ((1 - c / base) * 100).toFixed(0) + '%</b>. That drop is the removal effect. Click again to restore.'
+        : 'Click a channel to delete it from every journey.';
+    }
+    draw();
+  })();
+
+  // ---------- PageRank surfer ----------
+  (function () {
+    const svg = document.getElementById('prSvg');
+    svg.innerHTML = '<defs><marker id="ahP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#a8a196"/></marker></defs>';
+    const pages = ['Blog', 'Review', 'Shop', 'News', 'Hobby'];
+    const pos = { Blog: [130, 72], Review: [370, 72], Shop: [300, 228], News: [110, 232], Hobby: [36, 150] };
+    const links = { Blog: ['Review', 'Shop'], Review: ['Shop'], Shop: ['Review', 'Blog'], News: ['Blog', 'Review', 'Shop'], Hobby: ['News'] };
+    const exact = { Blog: 0.214, Review: 0.305, Shop: 0.396, News: 0.056, Hobby: 0.030 };
+    const edgeLayer = el('g', {}, svg), nodeLayer = el('g', {}, svg);
+    const radius = s => 22 + 55 * s;
+    const circles = {}, edgeEls = [];
+    Object.entries(links).forEach(([a, bs]) => bs.forEach(b => { const p = el('path', { fill: 'none', stroke: '#6b6459', 'stroke-width': 2, 'marker-end': 'url(#ahP)' }, edgeLayer); edgeEls.push({ a, b, p }); }));
+    pages.forEach(k => { const [x, y] = pos[k]; const g = el('g', {}, nodeLayer); circles[k] = el('circle', { cx: x, cy: y, r: radius(0.2), fill: '#161412', stroke: '#f2b135', 'stroke-width': 2.5 }, g); txt(g, x, y + 4, k, '#f5f2ec', 12); });
+    const surfer = el('circle', { r: 7, fill: '#7cb7ff', stroke: '#0d0c0a', 'stroke-width': 2 }, nodeLayer);
+    let visits, total, cur;
+    const barsBox = document.getElementById('prBars');
+    barsBox.innerHTML = pages.map(k => '<div class="barrow"><span>' + k + '</span><div class="bartrack"><div class="barfill" id="pf-' + k + '"></div><div class="bartick" id="pt-' + k + '" style="left:' + (exact[k] / 0.5 * 100) + '%"></div></div><span id="pv-' + k + '">–</span></div>').join('');
+    function drawEdges() {
+      edgeEls.forEach(({ a, b, p }) => {
+        const [x1, y1] = pos[a], [x2, y2] = pos[b], dx = x2 - x1, dy = y2 - y1, L = Math.hypot(dx, dy);
+        const cx = (x1 + x2) / 2 - dy / L * 18, cy = (y1 + y2) / 2 + dx / L * 18;
+        const ra = +circles[a].getAttribute('r'), rb = +circles[b].getAttribute('r') + 3;
+        const s = (px, py, qx, qy, r) => { const l = Math.hypot(qx - px, qy - py); return [px + (qx - px) / l * r, py + (qy - py) / l * r]; };
+        const [sx, sy] = s(x1, y1, cx, cy, ra), [ex, ey] = s(x2, y2, cx, cy, rb);
+        p.setAttribute('d', 'M' + sx.toFixed(1) + ',' + sy.toFixed(1) + ' Q' + cx.toFixed(1) + ',' + cy.toFixed(1) + ' ' + ex.toFixed(1) + ',' + ey.toFixed(1));
+      });
+    }
+    function render() {
+      pages.forEach(k => {
+        const sh = total ? visits[k] / total : 0.2;
+        circles[k].setAttribute('r', radius(sh).toFixed(1));
+        document.getElementById('pf-' + k).style.width = Math.min(100, sh / 0.5 * 100) + '%';
+        document.getElementById('pv-' + k).textContent = total ? (sh * 100).toFixed(1) + '%' : '–';
+        document.getElementById('pt-' + k).classList.toggle('on', total >= 800);
+      });
+      const [x, y] = pos[cur]; surfer.setAttribute('cx', x + 10); surfer.setAttribute('cy', y - radius(total ? visits[cur] / total : 0.2) + 4);
+      drawEdges();
+      const msg = document.getElementById('prMsg');
+      if (total >= 800) msg.innerHTML = 'After <b>' + total.toLocaleString() + '</b> clicks the bars sit on the green ticks: <b>Shop ' + (visits.Shop / total * 100).toFixed(1) + '%</b> vs exact 39.6%. That steady state <b>is</b> the ranking.';
+      else if (total) msg.innerHTML = '<b>' + total + '</b> clicks so far. Too few to trust. Keep surfing.';
+    }
+    function hop() {
+      if (Math.random() < 0.85) { const out = links[cur]; cur = out[Math.floor(Math.random() * out.length)]; }
+      else cur = pages[Math.floor(Math.random() * pages.length)];
+      visits[cur]++; total++;
+    }
+    function reset() { visits = Object.fromEntries(pages.map(k => [k, 0])); total = 0; cur = 'Hobby'; document.getElementById('prMsg').innerHTML = 'Share of time the surfer spends on each page. Green tick = exact steady state.'; render(); }
+    let running = false;
+    document.getElementById('prOne').onclick = () => { if (running) return; hop(); render(); };
+    document.getElementById('prMany').onclick = () => {
+      if (running) return; running = true; let frames = 0;
+      (function f() { for (let k = 0; k < 50; k++) hop(); render(); if (++frames < 40) requestAnimationFrame(f); else running = false; })();
+    };
+    document.getElementById('prReset').onclick = () => { if (!running) reset(); };
+    reset();
+  })();
+
+  // ---------- Meet Maya ----------
+  (function () {
+    const P = [[.8, .15, .03, .02], [.3, .4, .2, .1], [.1, .1, .5, .3], [0, 0, 0, 1]];
+    const PAY = [15, 15, 0], MAXT = 72;
+    const step = s => { const r = Math.random(); let acc = 0; for (let j = 0; j < 4; j++) { acc += P[s][j]; if (r < acc) return j; } return s; };
+    function life() { let s = 0, paid = 0; const path = []; while (s !== 3) { path.push(s); paid += PAY[s]; s = step(s); } return { path, paid }; }
+    const tiles = document.getElementById('mayaTiles'), msg = document.getElementById('mayaMsg');
+    let busy = false;
+    document.getElementById('mayaOne').onclick = () => {
+      if (busy) return; busy = true; tiles.innerHTML = '';
+      const L = life(); let k = 0, paid = 0;
+      const iv = setInterval(() => {
+        if (k < L.path.length && k < MAXT) {
+          const s = L.path[k]; paid += PAY[s];
+          const t = document.createElement('span'); t.className = 'tile t' + s; t.textContent = 'ARL'[s]; tiles.appendChild(t);
+          msg.innerHTML = 'Month ' + (k + 1) + ' · paid so far <b style="color:var(--goldlight)">$' + paid + '</b>'; k++;
+        } else {
+          clearInterval(iv); busy = false;
+          if (L.path.length > MAXT) { const t = document.createElement('span'); t.className = 'tile more'; t.textContent = '+' + (L.path.length - MAXT) + ' more'; tiles.appendChild(t); }
+          msg.innerHTML = 'Maya stayed <b>' + L.path.length + ' months</b> and paid <b style="color:var(--goldlight)">$' + L.paid + '</b>, then churned. Click again: a different Maya every time.';
+        }
+      }, 130);
+    };
+    const svg = document.getElementById('mayaHist');
+    document.getElementById('mayaMany').onclick = () => {
+      const N = 10000, W = 30, NB = 30, bins = new Array(NB).fill(0), vals = [];
+      for (let k = 0; k < N; k++) { const v = life().paid; vals.push(v); bins[Math.min(NB - 1, Math.floor(v / W))]++; }
+      vals.sort((a, b) => a - b);
+      const avg = vals.reduce((s, v) => s + v, 0) / N, med = vals[N / 2], low = vals.filter(v => v <= 60).length / N;
+      const L = 34, R = 392, T = 12, B = 190, mx = Math.max(...bins), X = v => L + v / (W * NB) * (R - L);
+      svg.innerHTML = '';
+      el('line', { x1: L, y1: B, x2: R, y2: B, stroke: '#6b6459' }, svg);
+      bins.forEach((c, k) => { const h = c / mx * (B - T); const r = el('rect', { x: X(k * W) + 1, y: B, width: (R - L) / NB - 2, height: 0, fill: '#f2b135', rx: 2 }, svg); setTimeout(() => { r.setAttribute('y', B - h); r.setAttribute('height', h); }, 20 + k * 25); r.style.transition = 'all .35s ease'; });
+      [0, 300, 600, 900].forEach(v => txt(svg, X(v), B + 16, '$' + v + (v === 900 ? '+' : ''), '#a8a196', 12, v === 900 ? 'end' : v === 0 ? 'start' : 'middle', 'JetBrains Mono, monospace'));
+      el('line', { x1: X(avg), y1: T, x2: X(avg), y2: B, stroke: '#34d399', 'stroke-width': 3, 'stroke-dasharray': '6 4' }, svg);
+      txt(svg, X(avg) + 6, T + 14, 'average $' + avg.toFixed(0), '#34d399', 13, 'start');
+      txt(svg, (L + R) / 2, B + 34, 'what one customer paid, whole life', '#a8a196', 12);
+      document.getElementById('mayaAvg').innerHTML = 'Average <b style="color:var(--green)">$' + avg.toFixed(2) + '</b> · median <b>$' + med + '</b> · <b>' + Math.round(low * 100) + '%</b> paid $60 or less.';
+      document.getElementById('mayaTake').innerHTML = '<span class="accent-gold">Almost nobody is worth exactly the average.</span> But the average is what a business plans with. Next: a shortcut that gets it without rolling a single die.';
+    };
+  })();
+
+  // ---------- twist blocks ----------
+  (function () {
+    const fill = (id, months, cls, letter) => {
+      const box = document.getElementById(id); const whole = Math.floor(months), part = months - whole;
+      for (let k = 0; k < whole; k++) { const d = document.createElement('div'); d.className = 'blk ' + cls; d.textContent = '$2'; box.appendChild(d); }
+      if (part > 0.05) { const d = document.createElement('div'); d.className = 'blk ' + cls; d.style.width = (34 * part) + 'px'; box.appendChild(d); }
+    };
+    fill('blocksA', 12.56, 'a'); fill('blocksB', 2.63, 'r');
+  })();
+
+  show(0);
+</script>
+</body>
+</html>

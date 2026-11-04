@@ -2,8 +2,8 @@
   "number": 9,
   "slug": "session-09",
   "title": "Markov Chains: Modeling Customer Journeys",
-  "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Plus: MIDTERM CASE DUE — team briefings tonight.",
-  "duration": "120 Minutes",
+  "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Each idea goes from slide to notebook right away. Midterm case due tonight; team briefings move to November 18.",
+  "duration": "140 Minutes",
   "icon": "users",
   "tags": [
     "Markov Chains",
@@ -30,96 +30,101 @@
   ],
   "agenda": [
     {
-      "time": "7:40 PM - 8:00 PM",
-      "title": "The $200 Billion Question: Where Do Customers Go?",
+      "time": "7:40 PM - 7:50 PM",
+      "title": "Where Do Customers Go?",
+      "duration": "10 minutes",
+      "description": "Housekeeping (case submitted tonight, briefings moved to Nov 18), then the opening question: who has cancelled a subscription and come back? Every subscription business lives on transitions between customer states, and tonight's math prices those transitions.",
+      "bulletPoints": [
+        "Tonight's rhythm: see each idea on a slide, then do it in the notebook right away",
+        "Chat vote: 80% of active customers stay each month. After a year, how many of 10,000 are left?",
+        "Open the Session 9 Colab now"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:50 PM - 8:20 PM",
+      "title": "Round 1: States, the Transition Matrix & Notebook Part 1",
+      "duration": "30 minutes",
+      "description": "The goldfish rule (the Markov property), four customer states, and one table that holds the whole story. Watch 200 customers live a year on screen, then build the same model yourself.",
+      "bulletPoints": [
+        "The Markov property: next month depends only on where you are now",
+        "The transition matrix: one row per state, every row adds to 1",
+        "x @ P: everyone takes one step; a loop shows the next 36 months",
+        "Notebook Part 1: you compute the answer to the class vote (2,829)"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "8:20 PM - 8:40 PM",
+      "title": "Round 2: The Long Run & Notebook Part 2",
       "duration": "20 minutes",
-      "description": "Netflix loses a subscriber. Was it forever, or a pause? Spotify sees a free user go quiet. Starbucks watches a gold-tier member drop to two visits a month. Every subscription and loyalty business lives or dies on transitions between customer states — and tonight's math prices those transitions.",
+      "description": "Leave a chain running and it forgets where it started. A made-up Dunkin' vs Starbucks market shows the steady state; our subscription chain shows why a one-way door makes the long run boring and lifetime the real question.",
       "bulletPoints": [
-        "Opening story: why streaming services obsess over 'resurrection rates' as much as churn — lapsed customers who return cost a fraction of new acquisitions",
-        "The Markov property: the future depends only on the current state — a bold, useful simplification",
-        "States for a business: Active, At-Risk, Lapsed, Churned — how analysts actually define them from behavioral data",
-        "Tonight's arc: transition matrices → steady state → CLV → attribution → your midterm briefings"
+        "Steady state: long-run share comes from switching rates, not today's share",
+        "Absorbing states: Churned is a one-way door",
+        "Notebook Part 2: three starts meet at 66.7%; half the customers are gone by month 11"
       ],
       "isBreak": false
     },
     {
-      "time": "8:00 PM - 8:20 PM",
-      "title": "Transition Matrices & Steady State",
-      "duration": "20 minutes",
-      "description": "The mechanics, live in numpy. A transition matrix P holds one row per state; multiplying a population vector by P advances the world one time step. Do it enough times and the system forgets where it started — that's the steady state.",
-      "bulletPoints": [
-        "Building P: rows sum to 1, entries estimated from historical cohort data (e.g., 70% of Active customers stay Active next month)",
-        "Projection: the population after k months is x₀Pᵏ — three lines of numpy",
-        "Steady state as the eigenvector of P for eigenvalue 1 — and the power-iteration shortcut",
-        "Absorbing states: 'Churned' as a one-way door, and why absorbing chains unlock lifetime-value math"
-      ],
-      "isBreak": false
-    },
-    {
-      "time": "8:20 PM - 8:35 PM",
-      "title": "CLV, Attribution & the PageRank Connection",
-      "duration": "15 minutes",
-      "description": "Three killer applications in fifteen minutes. Customer lifetime value from expected time before absorption. Marketing attribution via the removal effect — delete a channel from the journey chain and measure how many conversions vanish. And the biggest Markov chain ever built: Google's PageRank, which models a random web surfer and ranks pages by steady-state visit probability.",
-      "bulletPoints": [
-        "CLV = margin per period × expected periods spent in paying states before churning",
-        "Removal effect: if deleting 'paid search' from the journey chain drops conversion probability 35%, paid search earns 35% of the credit — far fairer than last-click attribution",
-        "PageRank: a $2 trillion company founded on the steady state of a Markov chain over the web graph",
-        "Limits of the Markov property: seasonality, memory, and when you need richer models"
-      ],
-      "isBreak": false
-    },
-    {
-      "time": "8:35 PM - 8:45 PM",
+      "time": "8:40 PM - 8:50 PM",
       "title": "Break",
       "duration": "10 minutes",
-      "description": "Breathe. Midterm teams: queue up your briefing slides — presentations start at 9:10.",
+      "description": "Stuck on Part 1 or 2? Grab the instructor now.",
       "bulletPoints": [],
       "isBreak": true
     },
     {
-      "time": "8:45 PM - 9:10 PM",
-      "title": "Lab: Customer Journey Chain in numpy",
-      "duration": "25 minutes",
-      "description": "Hands-on activity. Build a four-state customer transition matrix for a subscription business, project the customer base forward, compute the steady state, then add an absorbing Churned state and calculate expected customer lifetime value in dollars.",
+      "time": "8:50 PM - 9:30 PM",
+      "title": "Round 3: Customers in Dollars & Notebook Part 3",
+      "duration": "40 minutes",
+      "description": "How many months does a customer stay? The matrix version of 1 ÷ (1 − r) answers it, and months times price gives lifetime value. Then a $2 decision with a plot twist.",
       "bulletPoints": [
-        "Encode Active / At-Risk / Lapsed / Churned with realistic monthly transition probabilities",
-        "Project 10,000 new customers forward 12 months with matrix powers",
-        "Find the steady state via power iteration and confirm with eigenvectors",
-        "Compute CLV with the fundamental matrix (I − Q)⁻¹ and test a retention-improvement scenario"
+        "N = (I − Q)⁻¹: expected months in each state before churning",
+        "Lifetime value of a new customer: $193.17, the ceiling on acquisition cost",
+        "The $2 decision: lifting Active retention wins on gross value, but rescuing At-Risk customers wins once the cost is subtracted",
+        "Notebook Part 3: find the price where the winner flips (about $1.81)"
       ],
       "isBreak": false
     },
     {
-      "time": "9:10 PM - 9:35 PM",
-      "title": "MIDTERM CASE BRIEFINGS: 5 Minutes Per Team",
-      "duration": "25 minutes",
-      "description": "Your midterm case is due tonight. Each team delivers a tight 5-minute results briefing — the kind you'd give a VP, not a professor. Lead with the decision and the dollars; the model is your supporting evidence, not the headline.",
+      "time": "9:30 PM - 9:45 PM",
+      "title": "Bonus: Attribution & PageRank",
+      "duration": "15 minutes",
+      "description": "Two demos of the same idea: measure a node's importance by what breaks when you take it out. Remove a marketing channel from the journey chain, then release a random surfer on a five-page web.",
       "bulletPoints": [
-        "Format: 1 minute problem framing, 2 minutes recommendation with numbers, 2 minutes on what the model revealed that intuition missed",
-        "Every team states one sensitivity: which input, if wrong by 20%, would flip your recommendation?",
-        "Peer scoring: each team rates one other briefing on clarity and decision-focus",
-        "Written case deliverable submitted on Blackboard before class tonight"
+        "Removal effect: last click gives Instagram 9% of the credit; removing it erases 38% of sales",
+        "PageRank: the steady state of a random surfer; the bonus cell in the notebook does it in 8 lines"
       ],
       "isBreak": false
     },
     {
-      "time": "9:35 PM - 9:40 PM",
-      "title": "Wrap-Up, Homework #7 & Schedule Note",
-      "duration": "5 minutes",
-      "description": "Homework #7 assigned: a churn Markov model. IMPORTANT SCHEDULE NOTE — no class next Wednesday, November 11 (Veterans Day). We meet next on November 18 for Markov Decision Processes, where chains learn to make decisions.",
+      "time": "9:45 PM - 10:00 PM",
+      "title": "Homework #6 Walk-Through & Wrap-Up",
+      "duration": "15 minutes",
+      "description": "Open the homework section together. Each of its four steps maps to a part of tonight's notebook, with hints right above every TODO.",
       "bulletPoints": [
-        "Homework #7: churn Markov model — details below, due November 18",
-        "NO CLASS NOV 11 — Veterans Day. Next class: Wednesday, November 18",
-        "Preview: MDPs add actions and rewards to chains — from 'what happens' to 'what should we DO'"
+        "Homework #6: churn Markov model on 5,000 streaming subscribers, due November 18",
+        "Final project proposal due Thursday, November 12",
+        "NO CLASS NOV 11 (Veterans Day). Next class, November 18: midterm case briefings first, then Markov decision processes"
       ],
       "isBreak": false
     }
   ],
   "resources": [
     {
+      "title": "Session 9 Slide Deck",
+      "url": "/session-09/slides.html",
+      "description": "Tonight's presentation, built as see it, then do it: the goldfish rule, 200 customers living a year on screen, a chat vote on the leaky bucket, the Dunkin' vs Starbucks steady state, lifetime value as the matrix version of 1/(1−r), the $2 campaign decision with a plot twist, click-to-remove attribution, a random surfer building PageRank, and a Homework #6 walk-through. 'Your turn' slides point to each notebook part. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
       "title": "Markov Chains: Customer Journeys — Colab Notebook",
       "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-09/ISOM839_Session9_Markov_Chains_Customer_Journeys.ipynb",
-      "description": "The four-state journey lab: row-sum check, 36-month projection, steady state, CLV from the fundamental matrix, two interventions compared — then the Homework #6 scaffold that loads the 5,000-subscriber streaming cohort.",
+      "description": "Plain-language notebook in three parts that match the slides: where customers go (the transition matrix and x @ P), the long run (steady state), and customers in dollars (lifetime value and the $2 decision), plus a PageRank bonus. Every code cell ends with a 'What you should see' check. The Homework #6 scaffold at the bottom loads the 5,000-subscriber streaming cohort and has hints above every TODO.",
       "icon": "code",
       "badge": "Hands-On",
       "badgeType": "interactive",
@@ -170,27 +175,27 @@
       "description": "Build a complete customer-journey model for a $15/month subscription business: encode the transition matrix, project the customer base, find the steady state, and convert churn math into a defensible CLV number a CFO would accept.",
       "steps": [
         {
-          "title": "Encode the journey",
-          "description": "Create a 4×4 numpy transition matrix over Active, At-Risk, Lapsed, and Churned (absorbing). Verify every row sums to 1 — the most common Markov bug in the wild."
+          "title": "Part 1 · Where do customers go?",
+          "description": "Write the 4×4 table and check every row adds to 1. Move 10,000 Active customers forward one month with x @ P, then 36 months with a loop. Month 12 is the answer to the class vote."
         },
         {
-          "title": "Project the cohort",
-          "description": "Start 10,000 customers in Active and multiply by P twelve times. How many are still active after a year? After three?"
+          "title": "Part 2 · The long run",
+          "description": "Run a two-brand coffee market from three different starts and watch them meet at the steady state. Then count how long it takes everyone in the subscription chain to churn."
         },
         {
-          "title": "Find the steady state",
-          "description": "Run power iteration until the distribution stops changing. With an absorbing Churned state, where does everyone end up eventually — and what does the transient behavior tell you instead?"
+          "title": "Part 3 · Customers in dollars",
+          "description": "Compute N = (I − Q)⁻¹ for expected months in each state, turn months into lifetime value, and compare two $2-a-month campaigns on gain, cost, and net."
         },
         {
-          "title": "Compute CLV",
-          "description": "Extract the transient submatrix Q, compute the fundamental matrix N = (I − Q)⁻¹, and multiply expected months in revenue-generating states by monthly margin. Then improve Active retention by 5 points and re-run — how much is that worth per customer?"
+          "title": "Bonus · PageRank",
+          "description": "Build the random-surfer matrix for five pages and find the ranking with the same one line of code."
         }
       ],
       "codeBlock": {
         "language": "python",
         "code": "import numpy as np\n\nstates = [\"Active\", \"At-Risk\", \"Lapsed\", \"Churned\"]\nP = np.array([\n    [0.80, 0.15, 0.03, 0.02],   # Active\n    [0.30, 0.40, 0.20, 0.10],   # At-Risk\n    [0.10, 0.10, 0.50, 0.30],   # Lapsed\n    [0.00, 0.00, 0.00, 1.00],   # Churned (absorbing)\n])\n\n# Project 10,000 new customers 12 months forward\nx = np.array([10_000.0, 0, 0, 0])\nfor _ in range(12):\n    x = x @ P\nprint(dict(zip(states, x.round())))\n\n# CLV via the fundamental matrix N = (I - Q)^-1\nQ = P[:3, :3]                         # transient states only\nN = np.linalg.inv(np.eye(3) - Q)      # expected months in each state\nmargin = np.array([15.0, 15.0, 0.0])  # $/month by state (Lapsed pays $0)\nclv = N @ margin\nprint(f\"CLV of a new Active customer: ${clv[0]:,.2f}\")"
       },
-      "discussionNote": "Your model says a new customer is worth a specific dollar amount — so what's the maximum you'd pay to acquire one? Now compare two interventions costing $2 per customer per month: one lifts Active retention from 0.80 to 0.85, the other lifts At-Risk recovery from 0.30 to 0.40. Re-run the numbers. Which wins, and would your marketing team have guessed right?"
+      "discussionNote": "Your model says a new customer is worth $193.17, so that is the most you would pay to acquire one. Campaign A (keep Active customers happy) wins on gross value; campaign B (rescue At-Risk customers) wins once the $2 monthly cost is subtracted. Why? And what does that tell you about where to spend a retention budget?"
     }
   ],
   "takeaways": [
@@ -222,7 +227,7 @@
   ],
   "nextSession": {
     "title": "Markov Decision Processes: Deciding Over Time",
-    "description": "We meet next on November 18 (no class Nov 11 — Veterans Day). Chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration — with inventory management as the classic playground and a bridge from OR to reinforcement learning.",
+    "description": "We meet next on November 18 (no class Nov 11, Veterans Day). It opens with the midterm case briefings, five minutes per team. Then: chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration, with inventory management as the classic playground.",
     "tags": [
       "MDPs",
       "Dynamic Programming",
