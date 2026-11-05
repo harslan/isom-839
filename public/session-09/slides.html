@@ -114,6 +114,32 @@
   .blk { height: 30px; flex: 0 0 auto; width: 34px; border-radius: 6px; display: grid; place-items: center; font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; color: #0d0c0a; }
   .blk.a { background: var(--green); } .blk.r { background: var(--gold); }
   @media (max-width: 900px) { .payrow { grid-template-columns: 1fr; } }
+
+  /* ---------- step-by-step reveals ---------- */
+  .build { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+  .build.on { opacity: 1; transform: none; }
+  .answers { display: flex; gap: 1.6vw; justify-content: center; flex-wrap: wrap; max-width: 1200px; }
+  .ans { flex: 1; min-width: 250px; max-width: 370px; background: var(--card); border: 2px solid var(--border); border-radius: 20px; padding: 2.6vh 1.8vw; text-align: left; }
+  .ans .who { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); }
+  .ans .num { font-family: 'JetBrains Mono', monospace; font-size: clamp(2.6rem, 6vw, 4.4rem); font-weight: 700; line-height: 1.1; margin: 6px 0; }
+  .ans .verdict { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .ans p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .ans p b { color: var(--text); }
+  .ans.wrong .num { color: var(--red); opacity: 0.85; }
+  .ans.wrong { border-color: rgba(226,114,91,0.35); }
+  .ans.wrong .verdict { color: var(--red); }
+  .ans.right { border-color: var(--green); }
+  .ans.right .num, .ans.right .verdict { color: var(--green); }
+  .people { display: grid; grid-template-columns: repeat(10, 1fr); gap: clamp(5px, 0.8vw, 10px); width: min(36vw, 380px); }
+  .person { aspect-ratio: 1; border-radius: 50%; background: #2a2621; transition: background .6s ease; }
+  .people.lit .person.stay { background: var(--green); }
+  .people.lit .person.back { background: var(--gold); }
+  .legend { text-align: left; display: flex; flex-direction: column; gap: 2.2vh; max-width: 470px; }
+  .legend .lg { display: flex; gap: 14px; align-items: flex-start; }
+  .legend .sw { width: 22px; height: 22px; border-radius: 50%; flex: 0 0 auto; margin-top: 6px; }
+  .legend .lt { font-size: clamp(1.05rem, 1.9vw, 1.45rem); color: var(--text2); line-height: 1.4; }
+  .legend .lt b { color: var(--text); }
+  .legend .big2 { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.6rem); display: block; }
 </style>
 </head>
 <body>
@@ -302,25 +328,39 @@
 
 <!-- 11 -->
 <section class="slide">
-  <div class="kicker">Vote Answer · You Just Computed It In Step 1.3</div>
-  <h2>80% a month sounds great. <span class="grad">After a year, 28% are left.</span></h2>
+  <div class="kicker">Vote Answer · Click To Reveal Each Answer</div>
+  <h2>After a year, how many of 10,000 are <span class="grad">still active?</span></h2>
+  <div class="answers">
+    <div class="ans wrong build"><div class="who">Your gut</div><div class="num">~8,000</div><div class="verdict">✗ Too optimistic</div><p>"80% stay" sounds like "most stay." But it happens <b>every month</b>: 1 in 5 slips away, again and again.</p></div>
+    <div class="ans wrong build"><div class="who">The shortcut</div><div class="num">687</div><div class="verdict">✗ Too pessimistic</div><p>0.8<sup>12</sup> × 10,000 assumes anyone who slips is <b>gone forever</b>. Real customers come back.</p></div>
+    <div class="ans right build"><div class="who">The model</div><div class="num">2,829</div><div class="verdict">✓ Answer C</div><p>Counts the losses <b>and</b> the comebacks. You computed it yourself in Step 1.3.</p></div>
+  </div>
+  <p class="take build">The gut is too optimistic. The shortcut is too pessimistic. <span class="accent-gold">Only the model gets it right.</span></p>
+</section>
+
+<!-- 13b -->
+<section class="slide">
+  <div class="kicker">What The Shortcut Missed · Click To Reveal</div>
+  <h2>Of the 2,829 still active, <span class="grad">3 out of 4 are comebacks</span></h2>
   <div class="row">
-    <table class="rules">
-      <tr><th>Month</th><th>Active</th><th>At-Risk</th><th>Lapsed</th><th>Churned</th></tr>
-      <tr><td class="code">0</td><td class="code">10,000</td><td class="code">0</td><td class="code">0</td><td class="code">0</td></tr>
-      <tr><td class="code">1</td><td class="code">8,000</td><td class="code">1,500</td><td class="code">300</td><td class="code">200</td></tr>
-      <tr><td class="code">3</td><td class="code">6,122</td><td class="code">1,833</td><td class="code">917</td><td class="code">1,128</td></tr>
-      <tr><td class="code">6</td><td class="code">4,635</td><td class="code">1,512</td><td class="code">987</td><td class="code">2,866</td></tr>
-      <tr><td class="code"><b>12</b></td><td class="code" style="color:var(--goldlight)"><b>2,829</b></td><td class="code">936</td><td class="code">643</td><td class="code">5,592</td></tr>
-      <tr><td class="code">24</td><td class="code">1,068</td><td class="code">354</td><td class="code">243</td><td class="code">8,335</td></tr>
-    </table>
-    <div class="card" style="max-width:380px">
-      <div class="label">The answer is C</div>
-      <p><b>2,829</b> still active. Small monthly losses pile up like a <b>leaky bucket</b>. Over half are gone by month 11.</p>
-      <div class="label" style="margin-top:14px">Why not D (about 700)?</div>
-      <p>0.8<sup>12</sup> × 10,000 = 687 is what you get if <b>nobody ever comes back</b>. The way back from At-Risk and Lapsed is worth about <b>2,100 customers</b>.</p>
+    <div class="people" id="peopleGrid"></div>
+    <div class="legend">
+      <div class="lg build"><span class="sw" style="background:var(--green)"></span><span class="lt"><span class="big2 accent-g">687</span>stayed Active <b>every single month</b>. About 1 in 4.</span></div>
+      <div class="lg build"><span class="sw" style="background:var(--gold)"></span><span class="lt"><span class="big2 accent-gold">2,142</span><b>slipped</b> to At-Risk or Lapsed at least once, then <b>came back</b>. About 3 in 4.</span></div>
     </div>
   </div>
+  <p class="take build">Look around: of the 17 of you, <span class="accent-gold">about 5</span> would still be active a year from now.</p>
+</section>
+
+<!-- 13c -->
+<section class="slide">
+  <div class="kicker">Why Getting It Wrong Is Expensive</div>
+  <h2>Each wrong answer leads to <span class="grad">a costly mistake</span></h2>
+  <div class="cards">
+    <div class="card build" style="max-width:540px;font-size:1.08em"><div class="label">Believe the gut · 8,000 active</div><div class="title">Your revenue plan is off by more than half</div><p>You expect about <b>$120,000 a month</b> (8,000 × $15). The real paying base is 2,829 Active + 936 At-Risk = 3,765 customers: about <b style="color:var(--goldlight)">$56,500 a month</b>. Budgets, hiring and capacity are all built on the wrong number.</p></div>
+    <div class="card build" style="max-width:540px;font-size:1.08em"><div class="label">Believe the shortcut · 687 active</div><div class="title">You cut the program that works</div><p>If anyone who slips is gone for good, win-back efforts look pointless. Yet <b>3 of every 4</b> active customers are comebacks. That's why tonight's $2 twist will favor <b style="color:var(--goldlight)">rescuing At-Risk customers</b>.</p></div>
+  </div>
+  <p class="take build">People reason in straight lines. <span class="accent-gold">Compounding is a curve, and customers come back. The model sees both.</span></p>
 </section>
 
 <!-- 12 -->
@@ -568,15 +608,18 @@
   }
   addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') { if (['ArrowLeft','ArrowRight','ArrowUp','ArrowDown',' '].includes(e.key)) { e.preventDefault(); e.target.blur(); } }
-    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) show(i + 1);
-    else if (['ArrowLeft', 'PageUp'].includes(e.key)) show(i - 1);
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) next();
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) prev();
     else if (e.key === 'Home') show(0);
     else if (e.key === 'End') show(slides.length - 1);
     else if (e.key.toLowerCase() === 'f') {
       document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
     }
   });
-  addEventListener('click', (e) => { if (!e.target.closest('a, .interactive, button, input')) show(i + 1); });
+  addEventListener('click', (e) => { if (!e.target.closest('a, .interactive, button, input')) next(); });
+  // step-by-step reveals: .build elements appear one per click before the slide advances
+  function next() { const waiting = slides[i].querySelectorAll('.build:not(.on)'); if (waiting.length) { waiting[0].classList.add('on'); slides[i].dispatchEvent(new Event('build')); } else show(i + 1); }
+  function prev() { const shown = slides[i].querySelectorAll('.build.on'); if (shown.length) { shown[shown.length - 1].classList.remove('on'); slides[i].dispatchEvent(new Event('build')); } else show(i - 1); }
 
   // ---------- helpers ----------
   const NS = 'http://www.w3.org/2000/svg';
@@ -856,6 +899,17 @@
       if (part > 0.05) { const d = document.createElement('div'); d.className = 'blk ' + cls; d.style.width = (34 * part) + 'px'; box.appendChild(d); }
     };
     fill('blocksA', 12.56, 'a'); fill('blocksB', 2.63, 'r');
+  })();
+
+  // ---------- comebacks grid ----------
+  (function () {
+    const g = document.getElementById('peopleGrid'), slide = g.closest('.slide');
+    g.innerHTML = Array.from({ length: 100 }, (_, k) => '<div class="person ' + (k < 24 ? 'stay' : 'back') + '"></div>').join('');
+    const legend = slide.querySelectorAll('.lg.build');
+    slide.addEventListener('build', () => {
+      g.querySelectorAll('.person.stay').forEach(p => p.style.background = legend[0].classList.contains('on') ? 'var(--green)' : '');
+      g.querySelectorAll('.person.back').forEach(p => p.style.background = legend[1].classList.contains('on') ? 'var(--gold)' : '');
+    });
   })();
 
   show(0);
