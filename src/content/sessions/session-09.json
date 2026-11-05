@@ -141,7 +141,7 @@
     },
     {
       "title": "The Anatomy of a Search Engine (Brin & Page, 1998)",
-      "url": "http://infolab.stanford.edu/~backrub/google.html",
+      "url": "https://stanford.io/2Xz7Khb",
       "description": "The original Stanford paper where two grad students described PageRank — a Markov chain over the web graph. Read Section 2.1 and recognize tonight's steady-state math inside a $2 trillion origin story.",
       "icon": "search",
       "badge": "Classic Paper",
