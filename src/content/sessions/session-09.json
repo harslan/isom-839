@@ -152,7 +152,7 @@
       "title": "ChannelAttribution: Tonight's Attribution Demo, as a Real Tool",
       "url": "https://pypi.org/project/ChannelAttribution/",
       "description": "Remember the slide where you deleted Instagram and 38% of sales vanished? That's the removal effect, and this is the free package marketing teams use to run it on real customer journeys. Feed it paths like 'Instagram > Email > Search > sale' and it gives every channel its fair share of credit, side by side with last-click. One line to install in Colab: pip install ChannelAttribution.",
-      "icon": "github",
+      "icon": "code",
       "badge": "Real Tool",
       "badgeType": "code",
       "linkText": "See the package"
