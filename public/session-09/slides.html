@@ -484,10 +484,27 @@
 
 <!-- 17 -->
 <section class="slide">
-  <div class="kicker">Round 3 · The Shortcut</div>
-  <h2>The average, <span class="grad">without rolling a single die</span></h2>
+  <div class="kicker">Round 3 · The Shortcut, Part 1 · Click To Reveal</div>
+  <h2>How long does a customer stay? <span class="grad">Start with one simple case.</span></h2>
+  <div class="steps" style="max-width:1100px">
+    <div class="step build"><div class="n">1</div><div class="t">The setup</div><p>Each month, <b>4 in 5</b> customers stay and <b>1 in 5</b> leave. Nobody comes back.</p></div>
+    <div class="step build"><div class="n">2</div><div class="t">The intuition</div><p>If 1 in 5 leave every month, the average customer lasts <b>5 months</b>. (1 in 10 leaving? 10 months.)</p></div>
+    <div class="step build"><div class="n">3</div><div class="t">The formula</div><p class="math" style="font-size:clamp(1rem,2vw,1.5rem);color:var(--text)">1 ÷ (1 − 0.8) = 5</p><p>"1 − 0.8" is the share who leave each month.</p></div>
+  </div>
+  <p class="take build">Average stay = <span class="accent-gold">1 ÷ (share who leave each month)</span>. Remember this. The next slide is the same idea, bigger.</p>
+</section>
+
+<section class="slide">
+  <div class="kicker">Round 3 · The Shortcut, Part 2 · The Fundamental Matrix</div>
+  <h2>Same idea, when customers <span class="grad">move between several states</span></h2>
   <div class="row">
-    <div class="card" style="max-width:400px"><div class="label">Warm-up: one state</div><p>Stay 80% each month, nowhere else to go?</p><p class="math" style="font-size:clamp(1rem,2vw,1.5rem)">1 ÷ (1 − 0.8) = 5 months</p><div class="label" style="margin-top:14px">Many states: same idea, matrix-sized</div><p class="math" style="font-size:clamp(1rem,2vw,1.5rem)">N = (I − Q)<sup>−1</sup></p><p><b>Q</b> = the table without Churned. <b>I</b> = the matrix version of the number 1.</p><p style="margin-top:8px">In plain words: <b>N counts the months</b> a customer spends in each state, on average.</p></div>
+    <div class="card" style="max-width:420px">
+      <div class="label">The real name</div>
+      <p class="math" style="font-size:clamp(1.1rem,2.2vw,1.7rem);color:var(--text)">N = (I − Q)<sup>−1</sup></p>
+      <p>The <b>fundamental matrix</b>: the matrix version of 1 ÷ (1 − 0.8).</p>
+      <p style="margin-top:8px"><b>Q</b> = our table without Churned. <b>I</b> = the matrix version of the number 1.</p>
+      <p style="margin-top:8px">In plain words: <b>N counts the months</b> a customer spends in each state, on average.</p>
+    </div>
     <table class="rules">
       <tr><th>A new Active customer spends…</th><th>Months</th><th>Pays</th></tr>
       <tr><td><b class="dot-a">in Active</b></td><td class="code">10.07</td><td class="code">$15</td></tr>
@@ -497,7 +514,7 @@
       <tr><td><b>Lifetime value</b></td><td class="code" colspan="2" style="color:var(--goldlight);font-size:1.4em"><b>$193.17</b></td></tr>
     </table>
   </div>
-  <p class="take">(10.07 + 2.81) × $15 = <b>$193</b>, the same as the 10,000 lives. <span class="accent-gold">The most you should ever pay to win a new customer.</span></p>
+  <p class="take">(10.07 + 2.81) × $15 = <b>$193</b>, the same as Maya's 10,000 lives, with <span class="accent-gold">no dice at all.</span> The most you should ever pay to win a new customer.</p>
 </section>
 
 <!-- 18 -->
@@ -505,8 +522,8 @@
   <div class="kicker">Chat Vote First · Then Drag The Cost</div>
   <h2>Two campaigns. <span class="grad">Which one should you fund?</span></h2>
   <div class="row interactive" style="align-items:stretch">
-    <div class="card" style="max-width:330px"><div class="label">A · Keep the Active happy</div><p>Active retention <b>0.80 → 0.85</b>. You pay for every <b>Active</b> customer, every month.</p><p style="margin-top:12px" id="campA"></p></div>
-    <div class="card" style="max-width:330px"><div class="label">B · Rescue the At-Risk</div><p>At-Risk recovery <b>0.30 → 0.40</b>. You pay only for <b>At-Risk</b> customers, each month.</p><p style="margin-top:12px" id="campB"></p></div>
+    <div class="card" style="max-width:330px"><div class="label">A · Keep the Active happy</div><p>Like a <b>thank-you perk for every happy customer</b>. Active stays 0.80 → 0.85. You pay $2 for every Active customer, every month.</p><p style="margin-top:12px" id="campA"></p></div>
+    <div class="card" style="max-width:330px"><div class="label">B · Rescue the At-Risk</div><p>Like a <b>rescue offer, only for customers who are slipping</b>. At-Risk recovery 0.30 → 0.40. You pay $2 only for At-Risk customers.</p><p style="margin-top:12px" id="campB"></p></div>
     <div class="card" style="max-width:330px"><div class="label">Cost per targeted customer per month</div>
       <p class="big" id="costBig" style="font-size:clamp(2.2rem,5vw,3.6rem);color:var(--goldlight)">$0.00</p>
       <input type="range" id="costR" min="0" max="4" step="0.05" value="0">
