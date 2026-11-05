@@ -64,7 +64,7 @@ export const gradingDetail = [
     component: 'Midterm Case Competition',
     weight: 25,
     icon: 'award',
-    detail: 'Pairs (one trio, since we are 17). A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9); each team gives a five-minute results briefing in class on Nov 18 (Session 10). Nothing else is due that week. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
+    detail: 'Pairs (one trio, since we are 17). A retail replenishment optimization case launches Oct 21 (Session 7) and is due Nov 4 (Session 9), where each team gives a five-minute results briefing. Nothing else is due that week. Graded on model correctness, business insight, and clarity — the best model that no one understands loses to a good model everyone does.',
   },
   {
     component: 'Final Project & Presentation',

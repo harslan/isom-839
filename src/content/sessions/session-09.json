@@ -2,7 +2,7 @@
   "number": 9,
   "slug": "session-09",
   "title": "Markov Chains: Modeling Customer Journeys",
-  "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Each idea goes from slide to notebook right away. Midterm case due tonight; team briefings move to November 18.",
+  "subtitle": "Every customer is somewhere in a journey — browsing, buying, lapsing, returning. Tonight we model those journeys as Markov chains, compute lifetime value and churn, and see how the same math built Google. Plus: MIDTERM CASE DUE — team briefings tonight.",
   "duration": "140 Minutes",
   "icon": "users",
   "tags": [
@@ -33,7 +33,7 @@
       "time": "7:40 PM - 7:50 PM",
       "title": "Where Do Customers Go?",
       "duration": "10 minutes",
-      "description": "Housekeeping (case submitted tonight, briefings moved to Nov 18), then the opening question: who has cancelled a subscription and come back? Every subscription business lives on transitions between customer states, and tonight's math prices those transitions.",
+      "description": "Housekeeping (case submitted tonight, team briefings at 9:10), then the opening question: who has cancelled a subscription and come back? Every subscription business lives on transitions between customer states, and tonight's math prices those transitions.",
       "bulletPoints": [
         "Tonight's rhythm: see each idea on a slide, then do it in the notebook right away",
         "Chat vote: 80% of active customers stay each month. After a year, how many of 10,000 are left?",
@@ -75,38 +75,27 @@
       "isBreak": true
     },
     {
-      "time": "8:50 PM - 9:30 PM",
-      "title": "Round 3: Customers in Dollars & Notebook Part 3",
-      "duration": "40 minutes",
+      "time": "8:50 PM - 9:10 PM",
+      "title": "Round 3: Customers in Dollars",
+      "duration": "20 minutes",
       "description": "How many months does a customer stay? The matrix version of 1 ÷ (1 − r) answers it, and months times price gives lifetime value. Then a $2 decision with a plot twist.",
       "bulletPoints": [
         "N = (I − Q)⁻¹: expected months in each state before churning",
         "Lifetime value of a new customer: $193.17, the ceiling on acquisition cost",
         "The $2 decision: lifting Active retention wins on gross value, but rescuing At-Risk customers wins once the cost is subtracted",
-        "Notebook Part 3: find the price where the winner flips (about $1.81)"
+        "Notebook Part 3 and the PageRank bonus: finish at home, they set up Homework #6"
       ],
       "isBreak": false
     },
     {
-      "time": "9:30 PM - 9:45 PM",
-      "title": "Bonus: Attribution & PageRank",
-      "duration": "15 minutes",
-      "description": "Two demos of the same idea: measure a node's importance by what breaks when you take it out. Remove a marketing channel from the journey chain, then release a random surfer on a five-page web.",
+      "time": "9:10 PM - 10:00 PM",
+      "title": "MIDTERM CASE BRIEFINGS: 5 Minutes Per Team",
+      "duration": "50 minutes",
+      "description": "Your midterm case is due tonight. Each team delivers a tight 5-minute results briefing, the kind you'd give a VP, not a professor. Lead with the decision and the dollars; the model is your supporting evidence, not the headline.",
       "bulletPoints": [
-        "Removal effect: last click gives Instagram 9% of the credit; removing it erases 38% of sales",
-        "PageRank: the steady state of a random surfer; the bonus cell in the notebook does it in 8 lines"
-      ],
-      "isBreak": false
-    },
-    {
-      "time": "9:45 PM - 10:00 PM",
-      "title": "Homework #6 Walk-Through & Wrap-Up",
-      "duration": "15 minutes",
-      "description": "Open the homework section together. Each of its four steps maps to a part of tonight's notebook, with hints right above every TODO.",
-      "bulletPoints": [
-        "Homework #6: churn Markov model on 5,000 streaming subscribers, due November 18",
-        "Final project proposal due Thursday, November 12",
-        "NO CLASS NOV 11 (Veterans Day). Next class, November 18: midterm case briefings first, then Markov decision processes"
+        "Shape: the decision and the dollars, the bottleneck in one number, the plan in a picture, what moves if demand is ±20%, the ask (see isom-839.vercel.app/case)",
+        "One minute of Q&A per team: which input, if wrong by 20%, would flip your recommendation?",
+        "Last 2 minutes: Homework #6 (due Nov 18), proposal (Thu Nov 12), no class Nov 11"
       ],
       "isBreak": false
     }
@@ -227,7 +216,7 @@
   ],
   "nextSession": {
     "title": "Markov Decision Processes: Deciding Over Time",
-    "description": "We meet next on November 18 (no class Nov 11, Veterans Day). It opens with the midterm case briefings, five minutes per team. Then: chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration, with inventory management as the classic playground.",
+    "description": "We meet next on November 18 (no class Nov 11, Veterans Day). Chains tell you what will happen; MDPs tell you what to DO about it. States, actions, rewards, the Bellman equation, and value iteration, with inventory management as the classic playground.",
     "tags": [
       "MDPs",
       "Dynamic Programming",
