@@ -2,8 +2,8 @@
   "number": 10,
   "slug": "session-10",
   "title": "Markov Decision Processes: Deciding Over Time",
-  "subtitle": "Last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies — the Bellman equation, value iteration, and the classic inventory problem that launched a field.",
-  "duration": "120 Minutes",
+  "subtitle": "Last session's chains told us what happens. Tonight we take the wheel: states, actions, rewards, and policies. The Bellman equation, value iteration, and a tiny shop whose ordering playbook your code writes on its own.",
+  "duration": "140 Minutes",
   "icon": "clock",
   "tags": [
     "MDPs",
@@ -30,85 +30,95 @@
   ],
   "agenda": [
     {
-      "time": "7:40 PM - 8:00 PM",
-      "title": "From 'What Happens' to 'What Do We DO?'",
+      "time": "7:40 PM - 7:50 PM",
+      "title": "From Watching to Steering",
+      "duration": "10 minutes",
+      "description": "Session 9 was the weather report; tonight you sail. Housekeeping, then the same decision businesses make again and again: a situation, a choice, an uncertain tomorrow, and money on the line. Chat vote: a tiny shop has 1 unit on the shelf and the truck is here. How many do you order?",
+      "bulletPoints": [
+        "Housekeeping: Homework #6 in tonight, no class Nov 25, Homework #7 (pick one) due Dec 2, milestone Dec 9",
+        "Sequential decisions everywhere: reorders, airline seats, ride-share drivers, retention discounts, watch-and-wait medicine",
+        "Chat vote: 1 unit on the shelf, order 0, 2, 4 or 5? Your code answers it in Part 3"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "7:50 PM - 8:10 PM",
+      "title": "Round 1: Five Words & Notebook Part 1",
       "duration": "20 minutes",
-      "description": "Last session you watched customers drift through states. But Amazon doesn't just watch inventory drift — it decides, every night, how much of 400 million SKUs to reorder. A ride-share platform decides where to reposition drivers. A gas-fired power plant decides when to fire up. Sequential decisions under uncertainty: the hardest and most valuable problem class in this course.",
+      "description": "State, action, chance, reward, policy, plus the patience dial γ. A chain has one transition table; a decision has one table per choice. The gift problem: should a $4 gift go to every customer, none, or only the unhappy ones?",
       "bulletPoints": [
-        "Opening story: how Amazon's ordering systems make billions of reorder decisions a year — each one a state-action choice with uncertain demand ahead",
-        "The new ingredients: actions change the transition probabilities, and rewards score every (state, action) pair",
-        "The policy: a complete playbook mapping every state to an action — what we're actually solving for",
-        "Discounting: why $1 of profit next month is worth γ < 1 dollars today"
+        "A policy is a GPS, not printed directions: a best move for every state",
+        "Discounting: γ = 0.95 means a business looks about 1 ÷ (1 − γ) = 20 steps ahead",
+        "Notebook Part 1: write the gift problem down; the one-month manager never sends a gift"
       ],
       "isBreak": false
     },
     {
-      "time": "8:00 PM - 8:20 PM",
-      "title": "The Bellman Equation: One Line That Runs the World",
-      "duration": "20 minutes",
-      "description": "Richard Bellman, RAND Corporation, 1950s: the value of being in a state is the best you can do right now plus the discounted value of wherever that choice takes you. We build the intuition with a two-state example on the whiteboard before any code.",
+      "time": "8:10 PM - 8:40 PM",
+      "title": "Round 2: The Bellman Equation & Value Iteration (Notebook Part 2)",
+      "duration": "30 minutes",
+      "description": "Plan backward: the fastest drive to New York starts at New York. The Bellman equation in plain English, one step by hand, then value iteration live on the slides: each sweep looks one month further, and at sweep 3 gifting the unhappy starts to pay.",
       "bulletPoints": [
-        "V(s) = max over actions of [ reward(s,a) + γ · expected V(next state) ] — read it aloud until it feels obvious",
-        "Why recursion beats brute force: with 50 states, 5 actions, and 12 periods, enumeration is astronomically large — dynamic programming collapses it",
-        "Fun history: Bellman chose the name 'dynamic programming' partly because it sounded impressive enough to protect his funding",
-        "The fixed point: optimal values are self-consistent — which suggests an algorithm: guess, apply the equation, repeat"
+        "V(state) = best over choices [ reward now + γ × average V(next state) ]",
+        "By hand: gifting an unhappy customer loses $4 today and wins about $1.27 overall",
+        "Why not brute force? The shop has 5,598,720 playbooks; value iteration needs about 300 sweeps",
+        "Notebook Part 2: value iteration converges in 151 sweeps; checking all 4 playbooks confirms 'gift the unhappy' ($73.66)"
       ],
       "isBreak": false
     },
     {
-      "time": "8:20 PM - 8:35 PM",
-      "title": "Value Iteration: The Algorithm",
-      "duration": "15 minutes",
-      "description": "Value iteration in pseudocode, then numpy. Start with V = 0 everywhere, sweep the Bellman update over all states, repeat until nothing changes. The values converge, and the optimal policy falls out of the argmax for free.",
-      "bulletPoints": [
-        "The sweep: for every state, evaluate every action, keep the best — a nested loop over a small table",
-        "Convergence: the discount factor γ contracts errors every sweep, so iteration provably converges",
-        "Extracting the policy: argmax at each state gives the playbook; policies typically stabilize before values fully converge",
-        "Scaling reality: tables work to ~millions of states; beyond that, you approximate — which is exactly where deep RL enters (Session 11 foreshadowing)"
-      ],
-      "isBreak": false
-    },
-    {
-      "time": "8:35 PM - 8:45 PM",
+      "time": "8:40 PM - 8:50 PM",
       "title": "Break",
       "duration": "10 minutes",
-      "description": "Stretch and refuel — you're about to teach a computer to manage a warehouse.",
+      "description": "Stretch and refuel. You're about to teach a computer to run a shop.",
       "bulletPoints": [],
       "isBreak": true
     },
     {
-      "time": "8:45 PM - 9:15 PM",
-      "title": "Lab: Value Iteration on an Inventory MDP",
-      "duration": "30 minutes",
-      "description": "Hands-on activity. The classic MDP: each day a shop chooses how many units to order, demand arrives randomly, sales earn margin, and stockouts cost goodwill. Build the model in numpy, run value iteration, and read the optimal ordering policy like an operations manager.",
+      "time": "8:50 PM - 9:15 PM",
+      "title": "Round 3 Lab: Run the Shop (Notebook Part 3)",
+      "duration": "25 minutes",
+      "description": "The classic inventory MDP. Each morning the shop decides how many units to order, customers arrive at random, sales earn money, and turned-away customers cost goodwill. Build it, run value iteration, read the playbook, and score every order to answer the class vote.",
       "bulletPoints": [
-        "State: units on hand (0–10). Action: units to order (0–5). Random demand: 0–3 units per day",
-        "Rewards: $10 margin per sale, $8 per unit ordered, $15 stockout penalty per lost sale",
-        "Run value iteration to convergence and extract the policy table",
-        "Interpret: the optimal policy is an order-up-to rule — the (s, S) structure inventory theory predicted decades ago, rediscovered by your code"
+        "State 0–10 units, order 0–5, 0–3 customers a day, +$10 a sale, −$8 a unit bought, −$15 per customer turned away, γ = 0.95",
+        "Value iteration converges in 292 sweeps; the playbook is 'top up to 3', an order-up-to (base-stock) rule nobody told the code",
+        "Vote answer: at 1 unit, order 2 ($56.00), scored with Q(state, action)",
+        "A simulated month: the playbook turns no one away; 'order the average' runs out on busy days"
       ],
       "isBreak": false
     },
     {
-      "time": "9:15 PM - 9:30 PM",
-      "title": "Powell's Bridge: Four Classes of Policies, From OR to RL",
-      "duration": "15 minutes",
-      "description": "Princeton's Warren Powell spent a career unifying the tribes — operations research, control theory, reinforcement learning — who all solve sequential decisions with different vocabulary. His framework: every method you'll ever meet is one of four policy classes. Suddenly the whole landscape has a map.",
+      "time": "9:15 PM - 9:38 PM",
+      "title": "Round 4: Turn the Knobs (Notebook Part 4)",
+      "duration": "23 minutes",
+      "description": "A live slider runs value iteration on the slide. Which costs move the playbook? The penalty alone doesn't (a cost only moves the line when it's in a tug-of-war); a $5 truck fee produces 'wait, then fill the truck', the (s, S) pattern; busy days plus a holding cost make the penalty matter.",
       "bulletPoints": [
-        "The four classes: policy function approximations (simple rules), cost function approximations (tweaked deterministic models), value function approximations (tonight's value iteration and Q-learning), and direct lookahead (planning forward)",
-        "Tonight's value iteration and modern deep RL are the same class — RL is approximate dynamic programming with neural networks as the approximator",
-        "Practical wisdom: in industry, a well-tuned simple rule (order-up-to, surge threshold) often beats a fancy learned policy — start simple, escalate only when the data justifies it",
-        "Powell's book 'Sequential Decision Analytics and Modeling' is free online — see resources"
+        "Penalty $15 → $40: nothing moves, like a shadow price of zero on a slack constraint",
+        "Truck fee $5: order 5 when the shelf is at 2 or fewer; trucks per week 5.25 → 2.10, profit per day −$0.75 → +$1.50 (read from the steady state, Session 9's tool)",
+        "Busy days and a $4 holding cost: penalty $15 tops up to 4, penalty $40 to 5",
+        "The patience dial: γ = 0.8 vs 0.99 takes 68 vs 1,485 sweeps, same playbook"
       ],
       "isBreak": false
     },
     {
-      "time": "9:30 PM - 9:40 PM",
-      "title": "Wrap-Up, Homework #8 & Schedule Note",
+      "time": "9:38 PM - 9:48 PM",
+      "title": "Powell's Map: Four Classes of Policies",
       "duration": "10 minutes",
-      "description": "Homework #8 assigned: extend tonight's inventory MDP with holding costs and watch the optimal policy shift. SCHEDULE NOTE — no class next Wednesday, November 25 (Thanksgiving break). We meet next on December 2, when prediction meets prescription: deep learning meets optimization.",
+      "description": "Warren Powell's framework sorts every method for sequential decisions into four kinds: rules of thumb, plans with a buffer, value functions, and lookahead. Tonight is a value function approximation; deep RL is the same idea when the table gets too big.",
       "bulletPoints": [
-        "Homework #8: add holding costs to the inventory MDP — due December 2",
+        "PFA (a rule of thumb), CFA (an optimization plan with a buffer), VFA (tonight's V(state)), DLA (think a few moves ahead)",
+        "AlphaGo mixed a learned value of each board (VFA) with look-ahead search (DLA)",
+        "The curse of dimensionality: 10 products already need 25.9 billion states, so we learn V instead of storing it"
+      ],
+      "isBreak": false
+    },
+    {
+      "time": "9:48 PM - 10:00 PM",
+      "title": "Homework #7 Option A, Wrap-Up & Schedule Note",
+      "duration": "12 minutes",
+      "description": "Homework #7 Option A walk-through: a new shop where shelf space costs money. Tonight's words in plain English. No class next Wednesday, November 25 (Thanksgiving); we meet again on December 2.",
+      "bulletPoints": [
+        "Homework #7: pick Option A (inventory MDP with holding costs) or the Session 8 pricing curve, due December 2",
         "NO CLASS NOV 25 — Thanksgiving. Next class: Wednesday, December 2",
         "Preview: 'Predict, Then Decide' — feeding machine-learning forecasts into the optimization models you now command"
       ],
@@ -117,9 +127,18 @@
   ],
   "resources": [
     {
-      "title": "MDPs: Deciding Over Time — Colab Notebook",
+      "title": "Session 10 Slide Deck",
+      "url": "/session-10/slides.html",
+      "description": "Tonight's presentation, built as see it, then do it: five words for decisions over time, a patience dial for γ, the gift problem, planning backward on a road trip, the Bellman equation in plain English, value iteration running sweep by sweep on the slide, the shop lab and the class-vote scoreboard, a live knobs panel that re-solves the shop as you drag the sliders, Powell's four classes of policies, and a Homework #7 Option A walk-through. 'Your turn' slides point to each notebook part. Arrow keys to navigate, F for fullscreen.",
+      "icon": "presentation",
+      "badge": "Slides",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
+      "title": "You Take the Wheel: MDPs — Colab Notebook",
       "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-10/ISOM839_Session10_MDP_Deciding_Over_Time.ipynb",
-      "description": "Value iteration from scratch on the inventory MDP, the (s, S) policy it rediscovers, discounting experiments, and the Homework #7 Option A scaffold with a wider demand distribution where the holding cost actually moves the threshold.",
+      "description": "Plain-language notebook in four parts that match the slides: the gift problem as data, the Bellman equation and value iteration (with a brute-force check of every playbook), the shop lab that writes the order-up-to playbook and answers the class vote, and the knobs (penalty, truck fee, holding cost, γ). Every code cell ends with a 'What you should see' check. The Homework #7 Option A scaffold at the bottom has a ready-made shop and a top-up helper.",
       "icon": "code",
       "badge": "Hands-On",
       "badgeType": "interactive",
@@ -166,31 +185,31 @@
     {
       "number": 1,
       "icon": "box",
-      "title": "Teach a Computer to Run a Warehouse",
-      "description": "Implement value iteration from scratch on a small inventory MDP: a shop with limited shelf space, random daily demand, ordering costs, and stockout penalties. Converge the values, extract the optimal ordering policy, and discover that your code independently reinvented classic inventory theory.",
+      "title": "Teach a Computer to Run a Shop",
+      "description": "Implement value iteration on a small inventory MDP: a shop with limited shelf space, random daily customers, a purchase cost, and a goodwill penalty for turning customers away. Converge the values, extract the ordering playbook, and discover that your code independently found a classic rule of inventory theory. Then turn the knobs and see which costs actually move it.",
       "steps": [
         {
-          "title": "Define the MDP",
-          "description": "States: 0–10 units on hand. Actions: order 0–5 units (capped by shelf space). Demand: uniform on {0,1,2,3}. Rewards: $10 margin per sale, $8 cost per unit ordered, $15 penalty per unit of unmet demand."
+          "title": "Describe the shop",
+          "description": "States: 0–10 units on the shelf. Actions: order 0–5 units, arriving right away (no overfilling the shelf). Customers: 0, 1, 2 or 3 a day, equally likely. Money: +$10 per sale, −$8 per unit bought, −$15 per customer turned away. γ = 0.95."
         },
         {
           "title": "Write the Bellman update",
-          "description": "For each state and action, compute expected reward plus γ times the expected value of the next inventory level, averaging over the demand distribution."
+          "description": "For each shelf level and each order, average over the number of customers: today's money plus γ times the value of tomorrow's shelf. Keep the best order."
         },
         {
           "title": "Iterate to convergence",
-          "description": "Sweep all states repeatedly until the largest value change drops below 1e-6. Track how many sweeps it takes — and try γ = 0.8 vs. 0.99 to see discounting change convergence speed."
+          "description": "Sweep all shelf levels until the largest value change drops below 1e-6 (292 sweeps). Score every order at 1 unit to answer the class vote."
         },
         {
-          "title": "Extract and interpret the policy",
-          "description": "Take the argmax action per state and print the policy table. You should see an order-up-to pattern: order more when stock is low, nothing when it's high. Where is the threshold, and which cost parameter moves it?"
+          "title": "Read the playbook, then turn the knobs",
+          "description": "The playbook is 'top up to 3'. Raise the penalty to $40 (nothing moves — why?), add a $5 truck fee (wait, then fill the truck), and try busy days with a $4 holding cost (now the penalty matters)."
         }
       ],
       "codeBlock": {
         "language": "python",
-        "code": "import numpy as np\n\nMAX_INV, MAX_ORDER = 10, 5\ndemands = np.array([0, 1, 2, 3])          # equally likely\nPRICE, COST, PENALTY, GAMMA = 10, 8, 15, 0.95\n\nV = np.zeros(MAX_INV + 1)\nfor sweep in range(1000):\n    V_new = np.full(MAX_INV + 1, -np.inf)\n    policy = np.zeros(MAX_INV + 1, dtype=int)\n    for s in range(MAX_INV + 1):\n        for a in range(min(MAX_ORDER, MAX_INV - s) + 1):\n            stock = s + a\n            q = 0.0\n            for d in demands:               # expectation over demand\n                sold = min(stock, d)\n                reward = PRICE * sold - COST * a - PENALTY * (d - sold)\n                q += 0.25 * (reward + GAMMA * V[stock - sold])\n            if q > V_new[s]:\n                V_new[s], policy[s] = q, a\n    if np.max(np.abs(V_new - V)) < 1e-6:\n        break\n    V = V_new\n\nprint(f\"Converged in {sweep} sweeps\")\nfor s in range(MAX_INV + 1):\n    print(f\"Stock {s:2d} -> order {policy[s]}\")"
+        "code": "import numpy as np\n\nshop = dict(shelf=10, max_order=5, demand=[0, 1, 2, 3], prob=[0.25] * 4,\n            price=10, cost=8, penalty=15, gamma=0.95, hold=0, fee=0)\n\ndef one_day(shop, stock, order, customers):\n    on_shelf = stock + order\n    sold = min(on_shelf, customers)\n    left = on_shelf - sold\n    money = (shop['price'] * sold - shop['cost'] * order\n             - shop['penalty'] * (customers - sold) - shop['hold'] * left\n             - (shop['fee'] if order > 0 else 0))\n    return money, left\n\ndef value_iteration(shop, tol=1e-6, **changes):\n    shop = {**shop, **changes}               # e.g. value_iteration(shop, fee=5)\n    V = np.zeros(shop['shelf'] + 1)\n    for sweep in range(1, 100_000):\n        V_new, policy = np.zeros_like(V), np.zeros(len(V), dtype=int)\n        for s in range(len(V)):\n            q = [sum(p * (m + shop['gamma'] * V[left])\n                     for d, p in zip(shop['demand'], shop['prob'])\n                     for m, left in [one_day(shop, s, a, d)])\n                 for a in range(min(shop['max_order'], shop['shelf'] - s) + 1)]\n            V_new[s], policy[s] = max(q), int(np.argmax(q))\n        if np.max(np.abs(V_new - V)) < tol:\n            return V_new, policy, sweep\n        V = V_new\n\nV, policy, sweeps = value_iteration(shop)\nprint(f\"Converged in {sweeps} sweeps\")          # 292\nprint(\"Order at shelf 0..10:\", policy.tolist())  # [3, 2, 1, 0, 0, ...]"
       },
-      "discussionNote": "Your policy almost certainly shows a threshold: below some stock level, order up to a target; above it, order nothing. Inventory theorists proved this (s, S) structure is optimal back in the 1950s — your value iteration just rediscovered it numerically. Now the manager's question: raise the stockout penalty from $15 to $40 (a premium brand protecting customer experience) and re-run. How does the threshold move, and how would you explain the change to a CFO who only sees the higher inventory bill?"
+      "discussionNote": "Your playbook tops the shelf up to 3, the busiest possible day, so no customer is ever turned away. Inventory theorists call this an order-up-to (base-stock) rule; your code found it from five numbers. Now the manager's question: add a $5 delivery fee per truck and re-run. The playbook becomes 'wait until 2 or fewer, then order a full truck', the (s, S) pattern Herbert Scarf proved optimal in 1960. Shelves look fuller (3.5 units at night instead of 1.5) and the CFO frowns. How do you explain it? Trucks per week drop from 5.25 to 2.10 and profit goes from −$0.75 to +$1.50 a day, about $820 a year."
     }
   ],
   "takeaways": [
@@ -200,7 +219,7 @@
     },
     {
       "icon": "wrench",
-      "text": "Value iteration is dynamic programming you can write in 30 lines of numpy: sweep the Bellman update until values converge, take the argmax, and the optimal policy falls out. For inventory, it rediscovers the classic order-up-to rule on its own."
+      "text": "Value iteration is dynamic programming you can write in about 30 lines of numpy: sweep the Bellman update until values converge, take the best action, and the optimal policy falls out. For the shop it rediscovers the classic order-up-to rule on its own, and a truck fee turns it into the (s, S) rule."
     },
     {
       "icon": "network",
