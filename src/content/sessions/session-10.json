@@ -172,6 +172,15 @@
       "linkText": "Open in Colab"
     },
     {
+      "title": "Bonus Slides — Transformers and TabICL, in Plain English",
+      "url": "/deep-learning-studio/transformers-tabicl.html",
+      "description": "15 slides in two parts. Part 1: what a transformer is, why we needed it, how attention works (a question, a name tag and a message), and four things a manager can use. Part 2: how TabICL is built in three stages (columns, rows, examples), how it was pretrained on made-up tables, and when to use it. Three live demos. Press N for notes.",
+      "icon": "presentation",
+      "badge": "Bonus",
+      "badgeType": "interactive",
+      "linkText": "Open slides"
+    },
+    {
       "title": "Powell: Sequential Decision Analytics and Modeling (Free Book)",
       "url": "https://castle.princeton.edu/sdamodeling/",
       "description": "Warren Powell's free online book unifying OR, dynamic programming, and reinforcement learning under one framework. Chapter 1 alone will change how you see every 'AI decision-making' headline.",

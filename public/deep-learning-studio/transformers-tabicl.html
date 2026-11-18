@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Transformers and TabICL, in Plain English</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b; --blue: #7cb7ff;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .sub b { color: var(--text); }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1050px; line-height: 1.5; font-weight: 600; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 400px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
+  .card.hl { border-color: var(--gold); }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  ul.list b { color: var(--text); }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td b { color: var(--text); }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; white-space: nowrap; }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+  .steps { display: flex; gap: 1vw; justify-content: center; flex-wrap: wrap; max-width: 1240px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.4vw; flex: 1; min-width: 190px; text-align: left; }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 700; }
+  .step .t { font-weight: 700; font-size: clamp(1rem, 1.6vw, 1.25rem); margin: 4px 0 6px; }
+  .step p { color: var(--text2); font-size: clamp(0.9rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .vote { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; margin-right: 0.6em; }
+  .btn { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.8rem, 1.2vw, 1rem); letter-spacing: 1px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--gold); background: var(--gold); color: #0d0c0a; font-weight: 700; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--gold); }
+  .btn.sm { padding: 8px 16px; font-size: 0.85rem; }
+  .btn.on { background: var(--gold); color: #0d0c0a; }
+  .btn:hover { filter: brightness(1.1); }
+  input[type=range] { width: 100%; accent-color: var(--gold); height: 28px; cursor: pointer; margin: 2px 0 6px; }
+  .interactive { cursor: default; }
+  .ctrl { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  table.mini { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.85rem, 1.3vw, 1.05rem); width: 100%; }
+  table.mini th { color: var(--muted); font-weight: 400; text-align: right; padding: 4px 8px; font-size: 0.75em; letter-spacing: 1px; text-transform: uppercase; }
+  table.mini th:first-child, table.mini td:first-child { text-align: left; }
+  table.mini td { padding: 5px 8px; text-align: right; color: var(--text); border-top: 1px solid var(--border); }
+  table.mini tr.flip td { background: rgba(242,177,53,0.12); }
+  .build { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+  .build.on { opacity: 1; transform: none; }
+  .answers { display: flex; gap: 1.6vw; justify-content: center; flex-wrap: wrap; max-width: 1200px; }
+  .ans { flex: 1; min-width: 250px; max-width: 370px; background: var(--card); border: 2px solid var(--border); border-radius: 20px; padding: 2.6vh 1.8vw; text-align: left; }
+  .ans .who { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); }
+  .ans .num { font-family: 'JetBrains Mono', monospace; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.1; margin: 6px 0; }
+  .ans .verdict { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .ans p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .ans p b { color: var(--text); }
+  .ans.wrong .num { color: var(--red); opacity: 0.85; } .ans.wrong { border-color: rgba(226,114,91,0.35); } .ans.wrong .verdict { color: var(--red); }
+  .ans.right { border-color: var(--green); } .ans.right .num, .ans.right .verdict { color: var(--green); }
+  .flows { display: flex; flex-direction: column; gap: 1.3vh; width: min(92vw, 1100px); }
+  .flow { display: grid; grid-template-columns: 54px 200px 1fr 1fr; gap: 1.2vw; align-items: center; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2vh 1.2vw; }
+  .flow .ic { font-size: clamp(1.5rem, 2.4vw, 2rem); text-align: center; }
+  .flow .nm { font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.3rem); }
+  .flow .st, .flow .ac { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.12rem); line-height: 1.35; }
+  .flow .st b, .flow .ac b { color: var(--goldlight); font-family: 'JetBrains Mono', monospace; font-size: 0.75em; letter-spacing: 2px; display: block; }
+  .words { display: flex; flex-direction: column; gap: 1.2vh; width: min(92vw, 1150px); }
+  .word { display: grid; grid-template-columns: 60px 170px 1fr 1.1fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.4vh 1.4vw; text-align: left; }
+  .word .ic { font-size: clamp(1.6rem, 2.6vw, 2.1rem); text-align: center; }
+  .word .w { font-weight: 700; font-size: clamp(1.1rem, 1.9vw, 1.45rem); color: var(--goldlight); }
+  .word .q { color: var(--text); font-size: clamp(1rem, 1.6vw, 1.25rem); }
+  .word .ex { color: var(--text2); font-size: clamp(0.95rem, 1.5vw, 1.15rem); line-height: 1.4; }
+  .word .ex b { color: var(--text); }
+  .eq { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.15rem, 2.6vw, 2.1rem); line-height: 1.6; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 2.4vw; }
+  .eq .v { color: var(--goldlight); } .eq .r { color: var(--green); } .eq .g { color: var(--blue); } .eq .n { color: var(--copper); } .eq .m { color: var(--red); }
+  .eqkey { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; max-width: 1200px; }
+  .eqkey div { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4vh 1.2vw; text-align: left; flex: 1; min-width: 200px; font-size: clamp(0.92rem, 1.4vw, 1.12rem); color: var(--text2); line-height: 1.4; }
+  .eqkey div b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 1.05em; margin-bottom: 4px; }
+  .calc { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.95rem, 1.75vw, 1.35rem); line-height: 1.7; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.8vw; }
+  .calc .lab { color: var(--text2); font-family: 'Space Grotesk', sans-serif; }
+  .scores { display: flex; flex-direction: column; gap: 10px; width: min(80vw, 880px); }
+  .srow { display: grid; grid-template-columns: 120px 1fr 110px; gap: 14px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.9rem, 1.4vw, 1.1rem); color: var(--text2); text-align: left; }
+  .strack { height: 30px; background: #221f1a; border-radius: 8px; position: relative; overflow: hidden; }
+  .sfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; background: linear-gradient(90deg, #5a4a2a, var(--copper)); }
+  .srow.best .sfill { background: linear-gradient(90deg, #1f6b52, var(--green)); }
+  .srow.best { color: var(--green); font-weight: 700; }
+  .playbook { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; width: min(88vw, 1050px); }
+  .pb { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 4px; font-family: 'JetBrains Mono', monospace; text-align: center; }
+  .pb .s { color: var(--muted); font-size: 0.85rem; } .pb .s b { color: var(--text); font-size: 1.45rem; display: block; }
+  .pb .a { font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 700; color: var(--goldlight); margin: 6px 0 2px; }
+  .pb .u { font-size: 0.9rem; color: var(--text2); }
+  .pb.zero .a { color: var(--muted); }
+  .pb .v { font-size: 0.95rem; color: var(--green); margin-top: 6px; font-weight: 700; }
+  .knobs { display: grid; grid-template-columns: 330px 1fr; gap: 2.4vw; width: min(94vw, 1250px); align-items: start; }
+  .knob { text-align: left; margin-bottom: 1.2vh; }
+  .knob .kl { display: flex; justify-content: space-between; font-size: clamp(0.92rem, 1.35vw, 1.08rem); color: var(--text2); }
+  .knob .kl b { font-family: 'JetBrains Mono', monospace; color: var(--goldlight); }
+  .rule { font-size: clamp(1.1rem, 2vw, 1.55rem); font-weight: 700; color: var(--text); text-align: left; min-height: 2.4em; }
+  .rule .x { color: var(--goldlight); }
+  .kstats { display: flex; gap: 12px; flex-wrap: wrap; }
+  .kstat { flex: 1; min-width: 120px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; text-align: left; }
+  .kstat .kn { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: var(--text); }
+  .kstat .kt { font-size: 0.92rem; color: var(--text2); }
+  .powell { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; width: min(94vw, 1250px); }
+  .pw { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.2vh 1.2vw; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+  .pw .ic { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .pw .ab { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; }
+  .pw .nm { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+  .pw p { color: var(--text2); font-size: clamp(0.88rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .pw p b { color: var(--text); }
+  .pw.tonight { border-color: var(--green); }
+  .pw .tn { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; color: #0d0c0a; background: var(--green); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+  .scale { display: flex; flex-direction: column; gap: 1.4vh; width: min(92vw, 1000px); }
+  .sc { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6vh 1.6vw; text-align: left; }
+  .sc .a { font-size: clamp(1rem, 1.7vw, 1.3rem); color: var(--text); }
+  .sc .b { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 1.9vw, 1.45rem); color: var(--goldlight); font-weight: 700; }
+  .sc .b small { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 400; color: var(--text2); font-size: 0.7em; }
+
+  /* ---------- Session 10 extras ---------- */
+  .tags { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .tagcard { flex: 1; min-width: 250px; max-width: 390px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; text-align: left; }
+  .tagcard .ic { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .tagcard .t { font-weight: 700; font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin: 6px 0 8px; }
+  .tagcard p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .tagcard p b { color: var(--text); }
+  .pricetag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #0d0c0a; background: var(--goldlight); border-radius: 6px 14px 14px 6px; padding: 2px 12px 2px 10px; margin: 3px 4px 3px 0; font-size: 0.95em; }
+  .game { display: grid; grid-template-columns: 1fr 1.25fr; gap: 2vw; width: min(94vw, 1250px); align-items: start; }
+  .gshelf { display: flex; gap: 5px; margin: 8px 0 4px; }
+  .gshelf span { width: 26px; height: 40px; border-radius: 6px; background: #221f1a; border: 1px solid #4a443b; }
+  .gshelf span.full { background: var(--gold); border-color: var(--gold); }
+  .gbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .gbtns .btn { min-width: 52px; }
+  .gbtns .btn:disabled { opacity: 0.25; cursor: not-allowed; }
+  .gbig { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+  .gscore { display: flex; gap: 12px; margin-bottom: 10px; }
+  .gscore div { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; text-align: left; }
+  .gscore .gl { font-size: 0.8rem; color: var(--text2); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .recipe { display: flex; flex-direction: column; gap: 1.1vh; width: min(92vw, 1100px); }
+  .rstep { display: grid; grid-template-columns: 56px 1fr 1.2fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.3vh 1.4vw; text-align: left; }
+  .rstep .n { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); font-size: clamp(1.3rem, 2.4vw, 1.9rem); text-align: center; }
+  .rstep .w { font-weight: 700; font-size: clamp(1.02rem, 1.7vw, 1.3rem); }
+  .rstep .e { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.1rem); line-height: 1.4; }
+  .rstep .e b { color: var(--text); }
+  aside.notes { display: none; }
+  #notesPanel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 34vh; overflow: auto; background: rgba(20,18,15,0.97); border-top: 2px solid var(--gold); padding: 14px 28px 40px; z-index: 20; display: none; text-align: left; font-size: 1.05rem; line-height: 1.55; color: var(--text); }
+  #notesPanel.on { display: block; }
+  #notesPanel .nh { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 6px; }
+  #notesPanel b { color: var(--goldlight); }
+</style>
+</head>
+<body>
+
+<style>
+  .sent { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 1340px; }
+  .tok { font-size: clamp(1rem, 2vw, 1.65rem); font-weight: 600; padding: 8px 12px; border-radius: 12px; background: var(--card); border: 2px solid var(--border); transition: all .35s ease; position: relative; }
+  .tok.src { border-color: var(--gold); color: var(--goldlight); }
+  .tok small { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.55em; font-weight: 400; color: var(--text2); min-height: 1.2em; text-align: center; }
+  .qkv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2vw; width: min(92vw, 1150px); }
+  .stack { display: flex; flex-direction: column; gap: 10px; width: min(52vw, 660px); }
+  .lay { border-radius: 12px; padding: 12px 16px; text-align: left; border: 1px solid var(--border); background: var(--card); font-size: clamp(1.05rem, 1.75vw, 1.4rem); line-height: 1.4; }
+  .lay b { color: var(--goldlight); } .lay.att { border-color: var(--gold); } .lay.ff { border-color: var(--green); } .lay.rep { border-style: dashed; color: var(--text2); text-align: center; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6vw; width: min(94vw, 1250px); align-items: start; }
+  .two .card { max-width: none; }
+  .two ul { list-style: none; } .two li { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.45; padding-left: 1.5em; position: relative; margin-bottom: 8px; }
+  .two li::before { position: absolute; left: 0; } .two .yes li::before { content: "✓"; color: var(--green); } .two .no li::before { content: "!"; color: var(--copper); font-weight: 700; }
+  .two li b { color: var(--text); }
+  .stagebtn { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .cap { min-height: 5.2em; max-width: 1050px; }
+</style>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // TRANSFORMERS + TABICL</div>
+<div class="hud" id="hud"></div>
+
+<section class="slide active">
+  <div class="pill">ISOM 839 · Deep Learning Studio · Go Deeper</div>
+  <h1>Transformers and TabICL, <span class="grad">in Plain English</span></h1>
+  <p class="sub">The engine inside ChatGPT, and how the same engine learned to <b>read a spreadsheet</b>.</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University · Arrow keys to move, N for notes</p>
+  <aside class="notes">Two parts. Part 1 (slides 2–8): what a transformer is, why we needed it, how it works, why a manager should care. Part 2 (slides 9–15): how TabICL is built and when to use it. About 15 minutes.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 1 · Why We Needed It · Click To Reveal</div>
+  <h2>The old way read <span class="grad">one word at a time</span></h2>
+  <div class="cards">
+    <div class="card build"><div class="label">Before 2017 · recurrent networks</div><div class="title">📞 The telephone game</div><p>Read word 1, pass a summary to word 2, pass it on to word 3… By word 50, the start of the sentence is <b>a faded memory</b>.</p></div>
+    <div class="card build"><div class="label">Problem 1</div><div class="title">🐌 Slow</div><p>Word 50 has to wait for words 1 to 49. You can't split the work across many chips.</p></div>
+    <div class="card build"><div class="label">Problem 2</div><div class="title">🧠 Forgetful</div><p>Long-distance links get lost: "The <b>keys</b> that I left on the table next to the door <b>are</b>…"</p></div>
+  </div>
+  <p class="take build">2017: eight researchers at Google publish <b>"Attention Is All You Need."</b> <span class="accent-gold">Their idea: let every word look at every other word, all at once.</span> They called it the transformer.</p>
+  <aside class="notes">The telephone game is the key image: information passed along a chain degrades. The transformer removes the chain. Everything sees everything directly, and all at the same time, so it also runs fast on GPUs.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">The Core Idea · Attention · Press The Buttons</div>
+  <h2>What does <span class="grad">"it"</span> mean?</h2>
+  <div class="sent interactive" id="sent"></div>
+  <div class="ctrl interactive"><button class="btn sm" id="sTired">…because it was too tired</button><button class="btn ghost sm" id="sWide">…because it was too wide</button></div>
+  <p class="take" id="sMsg"></p>
+  <p class="sub">The percentages show how much the word <b>"it"</b> pays attention to each other word. (An illustration of the idea, not numbers from a real model.)</p>
+  <aside class="notes">Press the two buttons. One changed word at the end ("tired" vs "wide") flips what "it" refers to: the animal or the street. You did that instantly by looking at the whole sentence. <b>Attention is how a transformer does the same thing: every word decides which other words matter to it.</b></aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">How Attention Works · Click To Reveal</div>
+  <h2>A question, a name tag, <span class="grad">and a message</span></h2>
+  <div class="qkv">
+    <div class="card build"><div class="label">1 · Query</div><div class="title">❓ Every word asks a question</div><p>"it" asks: <b>"Who am I referring to?"</b></p></div>
+    <div class="card build"><div class="label">2 · Key</div><div class="title">🏷️ Every word wears a name tag</div><p>"animal" wears: <b>"I'm a living thing that can get tired."</b> The better a tag answers the question, the more attention it gets.</p></div>
+    <div class="card build"><div class="label">3 · Value</div><div class="title">✉️ Every word carries a message</div><p>"it" collects the messages, <b>weighted by attention</b> (the weights add up to 100%), and updates what it means.</p></div>
+  </div>
+  <p class="take build">Like a meeting where everyone can hear everyone: <span class="accent-gold">you listen most to the people who answer your question.</span></p>
+  <p class="sub build">Questions, tags and messages are all just lists of numbers, and <b>the network learns how to write them</b> during training. Several questions at once = "multi-head" attention.</p>
+  <aside class="notes">Keep the real words (query, key, value) but teach the picture: question, name tag, message. Each word is a list of numbers; matching a question to a tag is a multiplication that gives a score; the scores become percentages. That is the whole mechanism.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">The Whole Machine</div>
+  <h2>Talk, think, <span class="grad">repeat</span></h2>
+  <div class="row">
+    <div class="stack">
+      <div class="lay"><b>Words become numbers</b> + a position tag (1st, 2nd, 3rd…) so order isn't lost</div>
+      <div class="lay att"><b>Talk:</b> attention. Every word gathers what it needs from the others.</div>
+      <div class="lay ff"><b>Think:</b> a small network (the Dense layers you built) updates each word on its own.</div>
+      <div class="lay rep">↻ repeat this pair many times (GPT-class models: dozens of layers)</div>
+      <div class="lay"><b>Answer:</b> a chance for every possible next word</div>
+    </div>
+    <div class="card" style="max-width:460px">
+      <div class="label">What each round adds</div>
+      <p><b>Early layers:</b> grammar. Which word goes with which.</p>
+      <p style="margin-top:8px"><b>Middle layers:</b> meaning. "it" = the animal.</p>
+      <p style="margin-top:8px"><b>Late layers:</b> the task. What should come next.</p>
+      <p style="margin-top:12px">Each word starts as a dictionary entry and ends as <b>that word in this sentence</b>.</p>
+    </div>
+  </div>
+  <aside class="notes">A transformer is a stack of two alternating steps: attention (words talk to each other) and a small feed-forward network (each word thinks alone). The early/middle/late description is a helpful simplification of what researchers observe, not a strict rule.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">How It Learns · The Same Loop As The Studio</div>
+  <h2>Hide a word. <span class="grad">Guess it.</span> A trillion times.</h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Guess</div><p>"The cat sat on the ___" → the model gives a chance to every word.</p></div>
+    <div class="step"><div class="n">2</div><div class="t">Measure the miss</div><p>The real word was "mat." How much chance did it get?</p></div>
+    <div class="step"><div class="n">3</div><div class="t">Nudge the knobs</div><p>Billions of knobs, each turned a tiny bit.</p></div>
+    <div class="step"><div class="n">4</div><div class="t">Repeat</div><p>Across a large share of the text on the internet.</p></div>
+  </div>
+  <p class="take"><b>GPT</b> = <span class="accent-gold">G</span>enerative <span class="accent-gold">P</span>re-trained <span class="accent-gold">T</span>ransformer. Now you can read all three words.</p>
+  <p class="sub">To guess the next word well, it has to pick up grammar, facts, and some reasoning along the way. Nobody programs those in.</p>
+  <aside class="notes">Same four boxes as the Studio: guess, measure the miss, nudge, repeat. The only differences are scale (billions of knobs, enormous text) and the task (predict the next piece of text).</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">One Engine, Many Kinds Of Data · Click To Reveal</div>
+  <h2>Anything you can cut into pieces, <span class="grad">a transformer can read</span></h2>
+  <div class="words">
+    <div class="word build"><div class="ic">💬</div><div class="w">Text</div><div class="q">Pieces: words</div><div class="ex">ChatGPT, Claude, Gemini</div></div>
+    <div class="word build"><div class="ic">🖼️</div><div class="w">Pictures</div><div class="q">Pieces: small patches</div><div class="ex">Vision transformers, DINOv3</div></div>
+    <div class="word build"><div class="ic">🎵</div><div class="w">Sound</div><div class="q">Pieces: slices of the spectrogram</div><div class="ex">Whisper (speech to text)</div></div>
+    <div class="word build"><div class="ic">🧬</div><div class="w">Proteins</div><div class="q">Pieces: amino acids</div><div class="ex">AlphaFold (protein shapes)</div></div>
+    <div class="word build"><div class="ic">📋</div><div class="w">Tables</div><div class="q">Pieces: cells and rows</div><div class="ex"><b>TabICL, TabPFN</b>. That's Part 2.</div></div>
+  </div>
+  <aside class="notes">The pieces are called tokens. The engine doesn't care what the pieces are, as long as they can be turned into numbers. That is why one idea from 2017 spread across text, vision, audio, biology and now spreadsheets.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Why It's Useful To Know · Four Things A Manager Can Use</div>
+  <h2>Knowing the engine <span class="grad">explains the behavior</span></h2>
+  <div class="cards" style="max-width:1250px">
+    <div class="card"><div class="label">1 · The context window</div><p>It can only attend to <b>what's in front of it</b>. No document in the prompt, no knowledge of your document. Give it the right context.</p></div>
+    <div class="card"><div class="label">2 · Examples in the prompt work</div><p>Show three examples and it follows the pattern, with no retraining. That's <b>in-context learning</b>, and it's exactly TabICL's trick.</p></div>
+    <div class="card"><div class="label">3 · Length costs money</div><p>Everything looks at everything. <b>Twice the text is about four times the comparisons.</b> That's why long prompts are slower and cost more.</p></div>
+    <div class="card"><div class="label">4 · Likely is not the same as true</div><p>It was trained to produce what's <b>likely</b> to come next. Usually that's right. Sometimes it's a confident mistake. Check what matters.</p></div>
+  </div>
+  <aside class="notes">These four follow directly from how the machine works. Ask the class which one they have already run into with ChatGPT.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Part 2 · TabICL · The Problem</div>
+  <h2>A spreadsheet is <span class="grad">not a sentence</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Difference 1</div><div class="title">🔀 No natural order</div><p>Shuffle the rows or the columns and it's the same table. Shuffle a sentence and it's nonsense.</p></div>
+    <div class="card"><div class="label">Difference 2</div><div class="title">📏 Every column speaks its own language</div><p>"70" is a lot for support calls and normal for a monthly bill. A number means nothing without its column.</p></div>
+    <div class="card hl"><div class="label">The goal</div><div class="title">💬 The table is the prompt</div><p>Hand over rows <b>with answers</b> and rows <b>without</b>. Get predictions back in one pass. No training, no tuning.</p></div>
+  </div>
+  <p class="take">TabICL = <span class="accent-gold">Tab</span>ular <span class="accent-gold">I</span>n-<span class="accent-gold">C</span>ontext <span class="accent-gold">L</span>earning. Built by researchers at Inria in France, open source.</p>
+  <aside class="notes">Text transformers get order for free and treat every word the same way. Tables break both assumptions. TabICL's design is an answer to these two differences.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">How TabICL Is Built · Three Transformers In A Row · Press The Buttons</div>
+  <h2>Three stages: <span class="grad">columns, rows, examples</span></h2>
+  <svg id="stSvg" viewBox="0 0 900 290" style="width:min(90vw,1120px);height:auto"></svg>
+  <div class="stagebtn interactive"><button class="btn sm" data-st="1">1 · Columns</button><button class="btn ghost sm" data-st="2">2 · Rows</button><button class="btn ghost sm" data-st="3">3 · Examples</button></div>
+  <p class="sub cap" id="stCap"></p>
+  <aside class="notes">Press 1, 2, 3 in order. Stage 1: attention runs down each column, so every number is read relative to its own column. Stage 2: attention runs across each row, and each customer is boiled down to one fingerprint (512 numbers in the original paper). Stage 3: the answers are attached to the labeled fingerprints, and each new row attends to the labeled rows to form its prediction. Three transformers, each using the attention idea from Part 1.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Stage 3 Up Close · A Smart Weighted Vote · Drag The Sliders</div>
+  <h2>The new customer <span class="grad">asks the labeled ones</span></h2>
+  <div class="play interactive" style="display:grid;grid-template-columns:1.15fr 1fr;gap:2vw;width:min(94vw,1200px);align-items:start">
+    <svg id="vtSvg" viewBox="0 0 560 400" style="width:100%;height:auto"></svg>
+    <div class="card" style="max-width:none">
+      <div class="knob"><div class="kl">New customer: support calls <b id="vtXv"></b></div><input type="range" id="vtX" min="0" max="6" step="0.1" value="3.0"></div>
+      <div class="knob"><div class="kl">New customer: years with us <b id="vtYv"></b></div><input type="range" id="vtY" min="0" max="6" step="0.1" value="2.9"></div>
+      <div class="knob"><div class="kl">How sharply it focuses <b id="vtFv"></b></div><input type="range" id="vtF" min="0.3" max="3" step="0.1" value="0.8"></div>
+      <div class="kstats" style="margin:10px 0">
+        <div class="kstat"><div class="kn" id="vtP"></div><div class="kt">predicted chance of leaving</div></div>
+        <div class="kstat"><div class="kn" id="vtTop"></div><div class="kt">attention on its 3 closest examples</div></div>
+      </div>
+      <p>🔴 left · 🟢 stayed · ⭐ the new customer. Thicker line = more attention. The prediction is the <b>attention-weighted vote</b> of the labeled customers.</p>
+    </div>
+  </div>
+  <p class="sub">A simplified picture. In the real model, "similar" is judged on the learned fingerprints, across many layers, so it can weigh which columns matter and how they combine.</p>
+  <aside class="notes">Drag the new customer around: its prediction follows its neighbors. Slide "focus" up and it listens only to the closest few; slide it down and it averages everyone. The real TabICL learned its own notion of "similar" during pretraining, which is what makes it far better than a plain nearest-neighbor vote.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">How It Got Smart · Pretraining · Click To Reveal</div>
+  <h2>It practiced on <span class="grad">millions of made-up tables</span></h2>
+  <div class="steps">
+    <div class="step build"><div class="n">1</div><div class="t">Invent a world</div><p>A random cause-and-effect recipe: "age affects income, income affects churn…"</p></div>
+    <div class="step build"><div class="n">2</div><div class="t">Generate a table</div><p>Run the recipe to make fake rows. The true answers are known.</p></div>
+    <div class="step build"><div class="n">3</div><div class="t">Hide some answers</div><p>The model predicts them from the rows that still have answers.</p></div>
+    <div class="step build"><div class="n">4</div><div class="t">Nudge and repeat</div><p>Small tables first (about 1,000 rows), then up to 60,000.</p></div>
+  </div>
+  <p class="take build">It never saw your data. <span class="accent-gold">It learned how to learn from a table.</span></p>
+  <p class="sub build">Like a doctor who trained on thousands of textbook cases before meeting you. The original model took about <b>20 days on three GPUs</b> to pretrain. You pay none of that: you just call it.</p>
+  <aside class="notes">The fake tables come from random "structural causal models" plus tree-based generators. Because each fake table's true answers are known, the model can be graded and nudged, exactly like the Studio loop. Curriculum: easy (small tables) first, then larger ones.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">What Happens When You Call It</div>
+  <h2>Three lines of code, <span class="grad">one pass</span></h2>
+  <div class="row">
+    <pre>from tabicl import TabICLClassifier
+
+model = TabICLClassifier()
+model.fit(X_train, y_train)     # just stores your rows
+model.predict_proba(X_new)      # all the thinking happens here</pre>
+    <div class="card" style="max-width:420px">
+      <div class="label">Inside predict</div>
+      <p><b>1.</b> Your labeled rows and new rows go in together.</p>
+      <p style="margin-top:6px"><b>2.</b> Columns → rows → examples, in one pass.</p>
+      <p style="margin-top:6px"><b>3.</b> It repeats this on a few shuffled copies of the columns (8 by default) and averages, because a table has no natural column order.</p>
+      <p style="margin-top:6px"><b>4.</b> Out come the chances. No knobs were trained.</p>
+    </div>
+  </div>
+  <p class="take">That's why <code>fit</code> took almost no time in the Great Tabular Race: <span class="accent-gold">there is nothing to fit.</span></p>
+  <aside class="notes">This is the code from the bonus Colab. The shuffled-columns averaging is a small ensemble; it restores the "column order doesn't matter" property that tables have.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Why It's Useful, And Where To Be Careful</div>
+  <h2>A superb first try, <span class="grad">with honest limits</span></h2>
+  <div class="two">
+    <div class="card yes"><div class="label">Why you'd reach for it</div><ul>
+      <li><b>No training, no tuning.</b> An answer in seconds.</li>
+      <li><b>Strong on small and medium tables</b>, where neural networks used to lose. Its makers report beating heavily tuned XGBoost-style models on about 80% of the TabArena benchmark datasets.</li>
+      <li><b>Open source, runs on your machine.</b> Your data doesn't have to leave the building.</li>
+      <li>The current version handles <b>yes/no, categories and numbers</b> (classification and regression).</li>
+    </ul></div>
+    <div class="card no"><div class="label">Where to be careful</div><ul>
+      <li><b>Size:</b> benchmarked from about 300 to 100,000 rows. Rows cost grows fast: twice the rows, about four times the work.</li>
+      <li><b>Wide tables:</b> accuracy can slip beyond roughly 100 columns.</li>
+      <li><b>Text columns</b> are treated as categories. It doesn't read their meaning.</li>
+      <li><b>Explaining it</b> is harder than explaining a checklist.</li>
+      <li>Benchmarks come from its makers. <b>Test it on your own data</b> against XGBoost.</li>
+    </ul></div>
+  </div>
+  <aside class="notes">Balanced view. For a class project with a few thousand rows it is an excellent first model. For millions of rows, heavy text, or a regulator who wants every decision explained, start elsewhere and compare.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">What To Take Home</div>
+  <h2>One idea, <span class="grad">two machines</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">The idea</div><p><b>Attention:</b> every piece looks at every other piece and decides what matters. Question, name tag, message.</p></div>
+    <div class="card"><div class="label">Machine 1 · ChatGPT</div><p>Pieces = words. Trained to guess the next word. Examples in the prompt steer it.</p></div>
+    <div class="card hl"><div class="label">Machine 2 · TabICL</div><p>Pieces = cells and rows. Trained on made-up tables to learn from examples. <b>Your table is the prompt.</b></p></div>
+  </div>
+  <div class="ctrl">
+    <a class="btn" style="text-decoration:none" target="_blank" rel="noopener" href="https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-10/ISOM839_Session10_Bonus_Deep_Learning_Race.ipynb">Try TabICL: the Great Tabular Race →</a>
+    <a class="btn ghost" style="text-decoration:none" href="/deep-learning-studio">Back to the Studio →</a>
+  </div>
+  <aside class="notes">Close: the same attention idea reads sentences and spreadsheets. The Colab lets them race TabICL against XGBoost and a neural network on the same customers.</aside>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud'), bar = document.getElementById('bar');
+  let i = 0;
+  const panel = document.createElement('div'); panel.id = 'notesPanel'; document.body.appendChild(panel);
+  function fill() { const n = slides[i].querySelector('aside.notes'); panel.innerHTML = '<div class="nh">PRESENTER NOTES · SLIDE ' + (i + 1) + ' · PRESS N TO HIDE</div>' + (n ? n.innerHTML : '<i>No notes for this slide.</i>'); }
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length; bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+    if (panel.classList.contains('on')) fill();
+  }
+  function next() { const w = slides[i].querySelectorAll('.build:not(.on)'); if (w.length) w[0].classList.add('on'); else show(i + 1); }
+  function prev() { const s = slides[i].querySelectorAll('.build.on'); if (s.length) s[s.length - 1].classList.remove('on'); else show(i - 1); }
+  addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON') { if (['ArrowLeft', 'ArrowRight', ' '].includes(e.key)) { e.preventDefault(); e.target.blur(); } }
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) next();
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) prev();
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (e.key.toLowerCase() === 'n') { panel.classList.toggle('on'); fill(); }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a, .interactive, button, input')) next(); });
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+  function txt(parent, x, y, str, fill, size, anchor, weight, fam) { const t = el('text', { x, y, fill, 'font-size': size || 14, 'text-anchor': anchor || 'middle', 'font-weight': weight || 400, 'font-family': fam || 'Space Grotesk, sans-serif' }, parent); t.textContent = str; return t; }
+
+  // ---------- "it" attention ----------
+  (function () {
+    const base = ['The', 'animal', "didn't", 'cross', 'the', 'street', 'because', 'it', 'was', 'too'];
+    const W = { tired: [1, 62, 3, 6, 1, 12, 3, 0, 2, 2, 8], wide: [1, 14, 3, 8, 1, 60, 3, 0, 2, 2, 6] };
+    const box = document.getElementById('sent');
+    function draw(end) {
+      const words = base.concat([end]), w = W[end]; box.innerHTML = '';
+      words.forEach((word, k) => {
+        const d = document.createElement('div'); d.className = 'tok' + (word === 'it' ? ' src' : '');
+        const a = w[k] / 100;
+        if (word !== 'it') { d.style.background = 'rgba(242,177,53,' + (a * 0.85).toFixed(2) + ')'; if (a > 0.3) { d.style.borderColor = '#f2b135'; d.style.color = '#0d0c0a'; } }
+        d.innerHTML = word + '<small>' + (word === 'it' ? 'asks' : w[k] + '%') + '</small>'; box.appendChild(d);
+      });
+      document.getElementById('sMsg').innerHTML = end === 'tired'
+        ? 'Streets don\'t get tired. <span class="accent-gold">"it" pays most attention to "animal."</span>'
+        : 'Animals aren\'t "too wide" to cross. <span class="accent-gold">"it" pays most attention to "street."</span>';
+      document.getElementById('sTired').classList.toggle('ghost', end !== 'tired'); document.getElementById('sWide').classList.toggle('ghost', end !== 'wide');
+    }
+    document.getElementById('sTired').onclick = () => draw('tired'); document.getElementById('sWide').onclick = () => draw('wide'); draw('tired');
+  })();
+
+  // ---------- TabICL three stages ----------
+  (function () {
+    const svg = document.getElementById('stSvg');
+    const cols = ['years', 'plan', 'bill', 'calls', 'left?'];
+    const rows = [['5', 'yearly', '$45', '0', 'no'], ['1', 'monthly', '$95', '4', 'yes'], ['3', 'monthly', '$70', '1', 'no'], ['0.5', 'monthly', '$88', '3', 'yes'], ['6', 'yearly', '$60', '1', 'no'], ['1', 'monthly', '$92', '3', '?']];
+    const caps = {
+      1: '<b>Stage 1 · Understand each column.</b> Attention runs <b>down each column</b>. Every number is read relative to its own column: is $95 a high bill here, or normal? Each cell becomes a list of numbers that says what it means <i>in this table</i>. (A "Set Transformer," because a column is a set with no order.)',
+      2: '<b>Stage 2 · Summarize each row.</b> Attention runs <b>across each row</b>, so a customer\'s cells can combine: "short tenure <i>and</i> high bill <i>and</i> many calls." Each row is boiled down to one <b>fingerprint</b>: a few hundred numbers that describe that customer (512 in the original paper).',
+      3: '<b>Stage 3 · Learn from the examples.</b> The known answers are attached to the labeled fingerprints. The new row <b>attends to the labeled rows</b> (never to other new rows) and forms its prediction from the ones it resembles. This is in-context learning, done by the deepest of the three transformers (12 layers in the original paper). Percentages here are an illustration.' };
+    const X0 = 150, Y0 = 34, CW = 120, RH = 36;
+    function draw(st) {
+      svg.innerHTML = '';
+      el('defs', {}, svg).innerHTML = '<marker id="sa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f2b135"/></marker>';
+      cols.forEach((c, j) => txt(svg, X0 + j * CW + CW / 2, 22, c, j === 4 ? '#34d399' : '#f2b135', 14, 'middle', 700, 'JetBrains Mono, monospace'));
+      rows.forEach((r, k) => {
+        const y = Y0 + k * RH, isNew = k === 5;
+        txt(svg, X0 - 14, y + 24, isNew ? 'new ⭐' : 'customer ' + (k + 1), isNew ? '#ffd166' : '#a8a196', 13, 'end');
+        r.forEach((v, j) => {
+          let fill = '#161412', stroke = '#3a352d', tc = '#f5f2ec';
+          if (st === 1 && j === 2) { fill = 'rgba(242,177,53,0.22)'; stroke = '#f2b135'; }
+          if (st === 2 && k === 1 && j < 4) { fill = 'rgba(242,177,53,0.22)'; stroke = '#f2b135'; }
+          if (st === 3 && j === 4 && !isNew) { fill = v === 'yes' ? 'rgba(226,114,91,0.3)' : 'rgba(52,211,153,0.25)'; stroke = v === 'yes' ? '#e2725b' : '#34d399'; }
+          if (isNew) stroke = '#ffd166';
+          el('rect', { x: X0 + j * CW + 3, y: y + 3, width: CW - 6, height: RH - 6, rx: 7, fill, stroke }, svg);
+          txt(svg, X0 + j * CW + CW / 2, y + 24, v, tc, 15, 'middle', v === '?' ? 700 : 400, 'JetBrains Mono, monospace');
+        });
+      });
+      if (st === 1) { el('line', { x1: X0 + 2 * CW + CW / 2 + 48, y1: Y0 + 6, x2: X0 + 2 * CW + CW / 2 + 48, y2: Y0 + 6 * RH - 8, stroke: '#f2b135', 'stroke-width': 3, 'marker-end': 'url(#sa)', 'marker-start': 'url(#sa)' }, svg); txt(svg, 820, 120, 'is $95 high', '#ffd166', 14, 'middle', 700); txt(svg, 820, 140, 'for this column?', '#ffd166', 14, 'middle', 700); }
+      if (st === 2) { el('line', { x1: X0 + 10, y1: Y0 + RH + RH - 2, x2: X0 + 4 * CW - 10, y2: Y0 + RH + RH - 2, stroke: '#f2b135', 'stroke-width': 3, 'marker-end': 'url(#sa)' }, svg); el('rect', { x: X0 + 5 * CW + 14, y: Y0 + RH + 4, width: 120, height: RH - 8, rx: 14, fill: '#f2b135' }, svg); txt(svg, X0 + 5 * CW + 74, Y0 + RH + 24, 'fingerprint', '#0d0c0a', 13, 'middle', 700); }
+      if (st === 3) { const w = [0.05, 0.42, 0.08, 0.40, 0.05]; w.forEach((a, k) => { el('path', { d: 'M ' + (X0 + 5 * CW + 6) + ' ' + (Y0 + 5 * RH + 18) + ' C ' + (X0 + 5 * CW + 70 + a * 60) + ' ' + (Y0 + 5 * RH) + ', ' + (X0 + 5 * CW + 70 + a * 60) + ' ' + (Y0 + k * RH + 18) + ', ' + (X0 + 5 * CW + 8) + ' ' + (Y0 + k * RH + 18), fill: 'none', stroke: '#f2b135', 'stroke-width': 1 + a * 12, opacity: 0.35 + a * 1.4, 'marker-end': 'url(#sa)' }, svg); txt(svg, X0 + 5 * CW + 118, Y0 + k * RH + 23, Math.round(a * 100) + '%', '#ffd166', 13, 'start', 700, 'JetBrains Mono, monospace'); }); txt(svg, X0 + 4 * CW + CW / 2, Y0 + 6 * RH + 22, '→ leaves: 82%', '#e2725b', 15, 'middle', 700, 'JetBrains Mono, monospace'); }
+      document.getElementById('stCap').innerHTML = caps[st];
+      document.querySelectorAll('[data-st]').forEach(b => b.classList.toggle('ghost', +b.dataset.st !== st));
+    }
+    document.querySelectorAll('[data-st]').forEach(b => b.onclick = () => draw(+b.dataset.st)); draw(1);
+  })();
+
+  // ---------- weighted vote ----------
+  (function () {
+    const pts = [[0.5, 5.2, 0], [1.2, 4.1, 0], [0.8, 2.8, 0], [2.0, 5.5, 0], [2.6, 3.6, 0], [1.6, 1.2, 0], [3.4, 4.8, 0], [3.2, 2.2, 1], [4.4, 1.0, 1], [5.2, 2.4, 1], [4.8, 3.8, 1], [5.6, 0.8, 1], [3.9, 0.4, 1], [2.4, 0.6, 1]];
+    const svg = document.getElementById('vtSvg'), X = document.getElementById('vtX'), Y = document.getElementById('vtY'), F = document.getElementById('vtF');
+    const px = v => 60 + v / 6 * 470, py = v => 350 - v / 6 * 320;
+    function draw() {
+      const x = +X.value, y = +Y.value, f = +F.value; svg.innerHTML = '';
+      el('rect', { x: 60, y: 30, width: 470, height: 320, fill: '#14120f', stroke: '#4a443b' }, svg);
+      txt(svg, 295, 388, 'support calls  (few → many)', '#a8a196', 15); const t = txt(svg, 22, 190, 'years with us  (new → loyal)', '#a8a196', 15); t.setAttribute('transform', 'rotate(-90 22 190)');
+      let w = pts.map(p => Math.exp(-f * ((p[0] - x) ** 2 + (p[1] - y) ** 2))); const s = w.reduce((a, b) => a + b, 0); w = w.map(v => v / s);
+      const pLeave = pts.reduce((a, p, k) => a + w[k] * p[2], 0);
+      pts.forEach((p, k) => { if (w[k] > 0.01) el('line', { x1: px(x), y1: py(y), x2: px(p[0]), y2: py(p[1]), stroke: '#f2b135', 'stroke-width': 1 + w[k] * 22, opacity: 0.25 + Math.min(0.7, w[k] * 2) }, svg); });
+      pts.forEach((p, k) => { el('circle', { cx: px(p[0]), cy: py(p[1]), r: 9, fill: p[2] ? '#e2725b' : '#34d399' }, svg); if (w[k] >= 0.08) txt(svg, px(p[0]), py(p[1]) - 14, Math.round(w[k] * 100) + '%', '#ffd166', 13, 'middle', 700, 'JetBrains Mono, monospace'); });
+      txt(svg, px(x), py(y) + 9, '⭐', '#ffd166', 26);
+      document.getElementById('vtXv').textContent = x.toFixed(1); document.getElementById('vtYv').textContent = y.toFixed(1); document.getElementById('vtFv').textContent = f.toFixed(1);
+      const P = document.getElementById('vtP'); P.textContent = Math.round(pLeave * 100) + '%'; P.style.color = pLeave > 0.5 ? '#e2725b' : '#34d399';
+      document.getElementById('vtTop').textContent = Math.round([...w].sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a + b, 0) * 100) + '%';
+    }
+    [X, Y, F].forEach(s => s.addEventListener('input', draw)); draw();
+  })();
+
+  const start = parseInt((location.hash || '').slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+</script>
+</body>
+</html>
