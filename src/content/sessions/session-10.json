@@ -154,6 +154,24 @@
       "linkText": "Open the cheat sheet"
     },
     {
+      "title": "Bonus Slides — Is Deep Learning Still Relevant?",
+      "url": "/session-10/bonus-deep-learning.html",
+      "description": "A 12-slide bonus in plain English: why trees ruled business tables, how tabular foundation models like TabICL and TabPFN predict without training (the dataset is the prompt), what their makers claim, the twist that they are deep learning, the three floors of deep learning today, six reasons it still matters, and a 'which tool when' guide for your project. Press N for notes.",
+      "icon": "presentation",
+      "badge": "Bonus",
+      "badgeType": "interactive",
+      "linkText": "Open bonus slides"
+    },
+    {
+      "title": "Bonus Colab — The Great Tabular Race",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-10/ISOM839_Session10_Bonus_Deep_Learning_Race.ipynb",
+      "description": "Race logistic regression, XGBoost, a neural network and the TabICL foundation model on 25,000 synthetic subscribers, test whether the foundation model is 'cheating' by shuffling the answers, and watch who wins as the data grows. Then back to tonight: a small neural network learns the price tags of a two-product shop from just 20 of its 121 situations, and its playbook matches the best one in 97% of them. About 25 minutes; a T4 GPU runtime makes it faster.",
+      "icon": "code",
+      "badge": "Bonus",
+      "badgeType": "code",
+      "linkText": "Open in Colab"
+    },
+    {
       "title": "Powell: Sequential Decision Analytics and Modeling (Free Book)",
       "url": "https://castle.princeton.edu/sdamodeling/",
       "description": "Warren Powell's free online book unifying OR, dynamic programming, and reinforcement learning under one framework. Chapter 1 alone will change how you see every 'AI decision-making' headline.",

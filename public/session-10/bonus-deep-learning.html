@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 10 Bonus · Is Deep Learning Still Relevant?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0c0a; --bg2: #14120f; --card: #161412;
+    --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459;
+    --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --red: #e2725b; --blue: #7cb7ff;
+    --border: rgba(255,240,214,0.09);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow: hidden; }
+  .slide { position: absolute; inset: 0; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 6vh 8vw; gap: 3vh; }
+  .slide.active { display: flex; animation: fadeIn 0.45s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.2vw, 0.95rem); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 4.6rem); font-weight: 700; line-height: 1.08; }
+  h2 { font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.12; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: clamp(1.05rem, 2.1vw, 1.55rem); color: var(--text2); max-width: 1000px; line-height: 1.55; }
+  .sub b { color: var(--text); }
+  .take { font-size: clamp(1.1rem, 2.2vw, 1.65rem); color: var(--text); max-width: 1050px; line-height: 1.5; font-weight: 600; }
+  .big { font-size: clamp(2.6rem, 9vw, 6.5rem); font-weight: 700; line-height: 1.05; }
+  .cards { display: flex; gap: 1.4vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; min-width: 240px; max-width: 400px; flex: 1; text-align: left; }
+  .card .label { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card .title { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .card p { color: var(--text2); font-size: clamp(0.95rem, 1.4vw, 1.15rem); line-height: 1.5; }
+  .card p b { color: var(--text); }
+  .card.hl { border-color: var(--gold); }
+  pre { background: #12100d; border: 1px solid var(--border); border-radius: 14px; padding: 2.6vh 2vw; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.72rem, 1.4vw, 1.08rem); line-height: 1.6; color: #e8e2d6; max-width: 900px; overflow: auto; }
+  .hud { position: fixed; bottom: 18px; right: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); z-index: 10; }
+  .brand { position: fixed; bottom: 18px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); letter-spacing: 2px; z-index: 10; }
+  .bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--copper)); transition: width 0.3s ease; z-index: 10; }
+  ul.list { text-align: left; max-width: 1000px; color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.45rem); line-height: 1.65; list-style: none; }
+  ul.list li { padding-left: 1.6em; position: relative; margin-bottom: 1.3vh; }
+  ul.list li::before { content: "▸"; position: absolute; left: 0; color: var(--gold); }
+  ul.list b { color: var(--text); }
+  table.rules { border-collapse: collapse; max-width: 1200px; text-align: left; font-size: clamp(0.95rem, 1.6vw, 1.3rem); }
+  table.rules th { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 400; padding: 0 2vw 1.2vh 0; }
+  table.rules td { padding: 1.3vh 2vw 1.3vh 0; border-top: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  table.rules td b { color: var(--text); }
+  table.rules td.code { font-family: 'JetBrains Mono', monospace; color: var(--text); white-space: nowrap; }
+  table.rules td.tag { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.85em; white-space: nowrap; }
+  .pill { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.7rem, 1.1vw, 0.9rem); letter-spacing: 2px; padding: 8px 20px; border: 1px solid var(--gold); border-radius: 999px; color: var(--gold); }
+  .accent-g { color: var(--green); } .accent-r { color: var(--red); } .accent-gold { color: var(--goldlight); }
+  .row { display: flex; gap: 3vw; align-items: center; justify-content: center; flex-wrap: wrap; }
+  .math { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 2.2vw, 1.7rem); color: var(--text); line-height: 1.8; }
+  .steps { display: flex; gap: 1vw; justify-content: center; flex-wrap: wrap; max-width: 1240px; }
+  .step { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.4vw; flex: 1; min-width: 190px; text-align: left; }
+  .step .n { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: clamp(1.4rem, 2.6vw, 2.2rem); font-weight: 700; }
+  .step .t { font-weight: 700; font-size: clamp(1rem, 1.6vw, 1.25rem); margin: 4px 0 6px; }
+  .step p { color: var(--text2); font-size: clamp(0.9rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .vote { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; margin-right: 0.6em; }
+  .btn { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.8rem, 1.2vw, 1rem); letter-spacing: 1px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--gold); background: var(--gold); color: #0d0c0a; font-weight: 700; cursor: pointer; }
+  .btn.ghost { background: transparent; color: var(--gold); }
+  .btn.sm { padding: 8px 16px; font-size: 0.85rem; }
+  .btn.on { background: var(--gold); color: #0d0c0a; }
+  .btn:hover { filter: brightness(1.1); }
+  input[type=range] { width: 100%; accent-color: var(--gold); height: 28px; cursor: pointer; margin: 2px 0 6px; }
+  .interactive { cursor: default; }
+  .ctrl { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  table.mini { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.85rem, 1.3vw, 1.05rem); width: 100%; }
+  table.mini th { color: var(--muted); font-weight: 400; text-align: right; padding: 4px 8px; font-size: 0.75em; letter-spacing: 1px; text-transform: uppercase; }
+  table.mini th:first-child, table.mini td:first-child { text-align: left; }
+  table.mini td { padding: 5px 8px; text-align: right; color: var(--text); border-top: 1px solid var(--border); }
+  table.mini tr.flip td { background: rgba(242,177,53,0.12); }
+  .build { opacity: 0; transform: translateY(14px); transition: opacity .45s ease, transform .45s ease; }
+  .build.on { opacity: 1; transform: none; }
+  .answers { display: flex; gap: 1.6vw; justify-content: center; flex-wrap: wrap; max-width: 1200px; }
+  .ans { flex: 1; min-width: 250px; max-width: 370px; background: var(--card); border: 2px solid var(--border); border-radius: 20px; padding: 2.6vh 1.8vw; text-align: left; }
+  .ans .who { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); }
+  .ans .num { font-family: 'JetBrains Mono', monospace; font-size: clamp(2.4rem, 5.5vw, 4rem); font-weight: 700; line-height: 1.1; margin: 6px 0; }
+  .ans .verdict { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.35rem); margin-bottom: 8px; }
+  .ans p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .ans p b { color: var(--text); }
+  .ans.wrong .num { color: var(--red); opacity: 0.85; } .ans.wrong { border-color: rgba(226,114,91,0.35); } .ans.wrong .verdict { color: var(--red); }
+  .ans.right { border-color: var(--green); } .ans.right .num, .ans.right .verdict { color: var(--green); }
+  .flows { display: flex; flex-direction: column; gap: 1.3vh; width: min(92vw, 1100px); }
+  .flow { display: grid; grid-template-columns: 54px 200px 1fr 1fr; gap: 1.2vw; align-items: center; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.2vh 1.2vw; }
+  .flow .ic { font-size: clamp(1.5rem, 2.4vw, 2rem); text-align: center; }
+  .flow .nm { font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.3rem); }
+  .flow .st, .flow .ac { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.12rem); line-height: 1.35; }
+  .flow .st b, .flow .ac b { color: var(--goldlight); font-family: 'JetBrains Mono', monospace; font-size: 0.75em; letter-spacing: 2px; display: block; }
+  .words { display: flex; flex-direction: column; gap: 1.2vh; width: min(92vw, 1150px); }
+  .word { display: grid; grid-template-columns: 60px 170px 1fr 1.1fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 1.4vh 1.4vw; text-align: left; }
+  .word .ic { font-size: clamp(1.6rem, 2.6vw, 2.1rem); text-align: center; }
+  .word .w { font-weight: 700; font-size: clamp(1.1rem, 1.9vw, 1.45rem); color: var(--goldlight); }
+  .word .q { color: var(--text); font-size: clamp(1rem, 1.6vw, 1.25rem); }
+  .word .ex { color: var(--text2); font-size: clamp(0.95rem, 1.5vw, 1.15rem); line-height: 1.4; }
+  .word .ex b { color: var(--text); }
+  .eq { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.15rem, 2.6vw, 2.1rem); line-height: 1.6; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 2.4vw; }
+  .eq .v { color: var(--goldlight); } .eq .r { color: var(--green); } .eq .g { color: var(--blue); } .eq .n { color: var(--copper); } .eq .m { color: var(--red); }
+  .eqkey { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; max-width: 1200px; }
+  .eqkey div { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.4vh 1.2vw; text-align: left; flex: 1; min-width: 200px; font-size: clamp(0.92rem, 1.4vw, 1.12rem); color: var(--text2); line-height: 1.4; }
+  .eqkey div b { display: block; font-family: 'JetBrains Mono', monospace; font-size: 1.05em; margin-bottom: 4px; }
+  .calc { font-family: 'JetBrains Mono', monospace; font-size: clamp(0.95rem, 1.75vw, 1.35rem); line-height: 1.7; text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 2vh 1.8vw; }
+  .calc .lab { color: var(--text2); font-family: 'Space Grotesk', sans-serif; }
+  .scores { display: flex; flex-direction: column; gap: 10px; width: min(80vw, 880px); }
+  .srow { display: grid; grid-template-columns: 120px 1fr 110px; gap: 14px; align-items: center; font-family: 'JetBrains Mono', monospace; font-size: clamp(0.9rem, 1.4vw, 1.1rem); color: var(--text2); text-align: left; }
+  .strack { height: 30px; background: #221f1a; border-radius: 8px; position: relative; overflow: hidden; }
+  .sfill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px; background: linear-gradient(90deg, #5a4a2a, var(--copper)); }
+  .srow.best .sfill { background: linear-gradient(90deg, #1f6b52, var(--green)); }
+  .srow.best { color: var(--green); font-weight: 700; }
+  .playbook { display: grid; grid-template-columns: repeat(11, 1fr); gap: 6px; width: min(88vw, 1050px); }
+  .pb { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px 4px; font-family: 'JetBrains Mono', monospace; text-align: center; }
+  .pb .s { color: var(--muted); font-size: 0.85rem; } .pb .s b { color: var(--text); font-size: 1.45rem; display: block; }
+  .pb .a { font-size: clamp(1.1rem, 2vw, 1.6rem); font-weight: 700; color: var(--goldlight); margin: 6px 0 2px; }
+  .pb .u { font-size: 0.9rem; color: var(--text2); }
+  .pb.zero .a { color: var(--muted); }
+  .pb .v { font-size: 0.95rem; color: var(--green); margin-top: 6px; font-weight: 700; }
+  .knobs { display: grid; grid-template-columns: 330px 1fr; gap: 2.4vw; width: min(94vw, 1250px); align-items: start; }
+  .knob { text-align: left; margin-bottom: 1.2vh; }
+  .knob .kl { display: flex; justify-content: space-between; font-size: clamp(0.92rem, 1.35vw, 1.08rem); color: var(--text2); }
+  .knob .kl b { font-family: 'JetBrains Mono', monospace; color: var(--goldlight); }
+  .rule { font-size: clamp(1.1rem, 2vw, 1.55rem); font-weight: 700; color: var(--text); text-align: left; min-height: 2.4em; }
+  .rule .x { color: var(--goldlight); }
+  .kstats { display: flex; gap: 12px; flex-wrap: wrap; }
+  .kstat { flex: 1; min-width: 120px; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; text-align: left; }
+  .kstat .kn { font-family: 'JetBrains Mono', monospace; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: 700; color: var(--text); }
+  .kstat .kt { font-size: 0.92rem; color: var(--text2); }
+  .powell { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; width: min(94vw, 1250px); }
+  .pw { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.2vh 1.2vw; text-align: left; display: flex; flex-direction: column; gap: 8px; }
+  .pw .ic { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .pw .ab { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-size: 0.8rem; letter-spacing: 2px; }
+  .pw .nm { font-weight: 700; font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
+  .pw p { color: var(--text2); font-size: clamp(0.88rem, 1.3vw, 1.05rem); line-height: 1.45; }
+  .pw p b { color: var(--text); }
+  .pw.tonight { border-color: var(--green); }
+  .pw .tn { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; letter-spacing: 2px; color: #0d0c0a; background: var(--green); border-radius: 999px; padding: 3px 10px; align-self: flex-start; }
+  .scale { display: flex; flex-direction: column; gap: 1.4vh; width: min(92vw, 1000px); }
+  .sc { display: grid; grid-template-columns: 1fr 1.3fr; gap: 2vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6vh 1.6vw; text-align: left; }
+  .sc .a { font-size: clamp(1rem, 1.7vw, 1.3rem); color: var(--text); }
+  .sc .b { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 1.9vw, 1.45rem); color: var(--goldlight); font-weight: 700; }
+  .sc .b small { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 400; color: var(--text2); font-size: 0.7em; }
+
+  /* ---------- Session 10 extras ---------- */
+  .tags { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .tagcard { flex: 1; min-width: 250px; max-width: 390px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; text-align: left; }
+  .tagcard .ic { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .tagcard .t { font-weight: 700; font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin: 6px 0 8px; }
+  .tagcard p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .tagcard p b { color: var(--text); }
+  .pricetag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #0d0c0a; background: var(--goldlight); border-radius: 6px 14px 14px 6px; padding: 2px 12px 2px 10px; margin: 3px 4px 3px 0; font-size: 0.95em; }
+  .game { display: grid; grid-template-columns: 1fr 1.25fr; gap: 2vw; width: min(94vw, 1250px); align-items: start; }
+  .gshelf { display: flex; gap: 5px; margin: 8px 0 4px; }
+  .gshelf span { width: 26px; height: 40px; border-radius: 6px; background: #221f1a; border: 1px solid #4a443b; }
+  .gshelf span.full { background: var(--gold); border-color: var(--gold); }
+  .gbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .gbtns .btn { min-width: 52px; }
+  .gbtns .btn:disabled { opacity: 0.25; cursor: not-allowed; }
+  .gbig { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+  .gscore { display: flex; gap: 12px; margin-bottom: 10px; }
+  .gscore div { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; text-align: left; }
+  .gscore .gl { font-size: 0.8rem; color: var(--text2); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .recipe { display: flex; flex-direction: column; gap: 1.1vh; width: min(92vw, 1100px); }
+  .rstep { display: grid; grid-template-columns: 56px 1fr 1.2fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.3vh 1.4vw; text-align: left; }
+  .rstep .n { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); font-size: clamp(1.3rem, 2.4vw, 1.9rem); text-align: center; }
+  .rstep .w { font-weight: 700; font-size: clamp(1.02rem, 1.7vw, 1.3rem); }
+  .rstep .e { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.1rem); line-height: 1.4; }
+  .rstep .e b { color: var(--text); }
+  aside.notes { display: none; }
+  #notesPanel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 34vh; overflow: auto; background: rgba(20,18,15,0.97); border-top: 2px solid var(--gold); padding: 14px 28px 40px; z-index: 20; display: none; text-align: left; font-size: 1.05rem; line-height: 1.55; color: var(--text); }
+  #notesPanel.on { display: block; }
+  #notesPanel .nh { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 6px; }
+  #notesPanel b { color: var(--goldlight); }
+</style>
+</head>
+<body>
+
+<style>
+  .floors { display: flex; flex-direction: column; gap: 1.1vh; width: min(90vw, 1000px); }
+  .floor { display: grid; grid-template-columns: 110px 160px 1fr 1fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.6vh 1.4vw; text-align: left; }
+  .floor .fn { font-family: 'JetBrains Mono', monospace; color: var(--gold); font-weight: 700; font-size: clamp(1rem, 1.8vw, 1.35rem); }
+  .floor .fw { font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.35rem); }
+  .floor .fd, .floor .fp { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.1rem); line-height: 1.4; }
+  .floor .fp b, .floor .fd b { color: var(--text); }
+  .floor.you { border-color: var(--green); }
+  .stat { font-family: 'JetBrains Mono', monospace; font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 700; color: var(--goldlight); line-height: 1.05; margin: 4px 0 8px; }
+</style>
+<div class="bar" id="bar"></div>
+<div class="brand">ISOM 839 // SESSION 10 BONUS</div>
+<div class="hud" id="hud"></div>
+
+<section class="slide active">
+  <div class="pill">ISOM 839 · Session 10 Bonus · 10 Minutes</div>
+  <h1>Is Deep Learning <span class="grad">Still Relevant?</span></h1>
+  <p class="sub">A new kind of model reads your spreadsheet and predicts <b>without being trained on it</b>. So why would anyone still learn neural networks?</p>
+  <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University · Arrow keys to move, N for notes</p>
+  <aside class="notes">Optional bonus for the end of class, or for students to read on their own. Opening line: <b>"There's a model that beats tuned XGBoost without training on your data. Should we stop teaching neural networks?"</b></aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">The Old Rule · Click To Reveal</div>
+  <h2>For a decade: on business tables, <span class="grad">the trees won</span></h2>
+  <div class="cards">
+    <div class="card build"><div class="label">The data</div><div class="title">📋 Tables are small and messy</div><p>A few thousand customers. Mixed columns: prices, yes/no, categories, missing values.</p></div>
+    <div class="card build"><div class="label">The champion</div><div class="title">🌳 XGBoost</div><p>Hundreds of small decision trees. Fast, accurate, little tuning. It won Kaggle competitions on tables for years.</p></div>
+    <div class="card build"><div class="label">The struggler</div><div class="title">🧠 Neural networks</div><p>Brilliant on images and text. On small tables: <b>hungry for data, fussy to tune</b>, often beaten by trees.</p></div>
+  </div>
+  <p class="take build">The advice was simple: <span class="accent-gold">tables → trees. Images and text → neural networks.</span></p>
+  <aside class="notes">Most students have heard "use XGBoost for tabular data." Ask who has used it. This is the world before 2023–2025.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Enter Tabular Foundation Models · TabPFN, TabICL</div>
+  <h2>The intern vs <span class="grad">the veteran</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">Classic machine learning</div><div class="title">🧑‍🎓 The new intern</div><p>Studies <b>only your 300 customers</b>, from scratch. Smart, but has never seen another business.</p></div>
+    <div class="card hl"><div class="label">Foundation model</div><div class="title">🧓 The veteran</div><p>Already practiced on <b>a huge number of made-up tables</b> before arriving. Glances at your 300 rows and spots the pattern.</p></div>
+    <div class="card"><div class="label">The trick</div><div class="title">💬 The dataset is the prompt</div><p>Like giving ChatGPT a few examples in your question. It's called <b>in-context learning</b>: no training on your data at all.</p></div>
+  </div>
+  <aside class="notes">The ChatGPT analogy lands well: you paste a few examples into the prompt and it follows the pattern. TabICL does that with a whole table.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">In-Context Learning, In One Picture</div>
+  <h2>Your table goes in. <span class="grad">A prediction comes out.</span></h2>
+  <svg viewBox="0 0 900 270" style="width:min(84vw,980px);height:auto">
+    <g font-family="JetBrains Mono, monospace" font-size="14">
+      <rect x="10" y="20" width="330" height="230" rx="14" fill="#161412" stroke="#4a443b"/>
+      <text x="26" y="48" fill="#f2b135" font-size="12" letter-spacing="2">YOUR 300 CUSTOMERS (WITH ANSWERS)</text>
+      <text x="26" y="78" fill="#a8a196">tenure plan     calls  left?</text>
+      <text x="26" y="106" fill="#f5f2ec">  2    monthly   3    <tspan fill="#e2725b">yes</tspan></text>
+      <text x="26" y="132" fill="#f5f2ec"> 48    two-year  0    <tspan fill="#34d399">no</tspan></text>
+      <text x="26" y="158" fill="#f5f2ec"> 11    monthly   1    <tspan fill="#34d399">no</tspan></text>
+      <text x="26" y="184" fill="#6b6459">  …    …         …    …</text>
+      <rect x="20" y="198" width="310" height="36" rx="8" fill="#2a2416" stroke="#f2b135"/>
+      <text x="26" y="222" fill="#ffd166">  3    monthly   4    ???</text>
+    </g>
+    <path d="M350 135 L410 135" stroke="#f2b135" stroke-width="3" marker-end="url(#ar)"/>
+    <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f2b135"/></marker></defs>
+    <rect x="420" y="60" width="240" height="150" rx="18" fill="#161412" stroke="#f2b135" stroke-width="2"/>
+    <text x="540" y="112" fill="#f5f2ec" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="700" text-anchor="middle">Pretrained</text>
+    <text x="540" y="138" fill="#f5f2ec" font-family="Space Grotesk, sans-serif" font-size="20" font-weight="700" text-anchor="middle">transformer</text>
+    <text x="540" y="168" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="14" text-anchor="middle">reads all rows at once</text>
+    <path d="M670 135 L730 135" stroke="#f2b135" stroke-width="3" marker-end="url(#ar)"/>
+    <rect x="740" y="90" width="150" height="90" rx="14" fill="#161412" stroke="#34d399" stroke-width="2"/>
+    <text x="815" y="128" fill="#a8a196" font-family="Space Grotesk, sans-serif" font-size="14" text-anchor="middle">chance of leaving</text>
+    <text x="815" y="162" fill="#34d399" font-family="JetBrains Mono, monospace" font-size="28" font-weight="700" text-anchor="middle">high</text>
+  </svg>
+  <div class="steps" style="max-width:1100px">
+    <div class="step"><div class="n">1</div><div class="t">fit() just stores</div><p>Your rows are saved. Nothing is learned yet.</p></div>
+    <div class="step"><div class="n">2</div><div class="t">predict() reads</div><p>It reads every stored row <b>and</b> the new one, then answers in one pass.</p></div>
+    <div class="step"><div class="n">3</div><div class="t">No tuning</div><p>No settings to fiddle with. That's a big part of the appeal.</p></div>
+  </div>
+  <aside class="notes">Point at the highlighted row: the model compares it with all the labeled rows. The learning-how-to-learn happened during pretraining, long before it met your data.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">How Good Are They? · Makers' Own Reports</div>
+  <h2>The trees are <span class="grad">finally being beaten</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">TabICLv2 (open source)</div><div class="stat">~80%</div><p>of the TabArena benchmark datasets: beats <b>heavily tuned</b> XGBoost, CatBoost or LightGBM.</p></div>
+    <div class="card"><div class="label">TabPFN-2.5 (Prior Labs)</div><div class="stat">100%</div><p>win rate against <b>default</b> XGBoost on small and medium classification tables.</p></div>
+    <div class="card"><div class="label">Today's sweet spot</div><div class="stat">≤100K</div><p>training rows and up to about <b>2,000 columns</b>. Beyond that, accuracy can slip.</p></div>
+  </div>
+  <p class="take">These are the makers' own benchmarks. <span class="accent-gold">A good analyst says: "Nice. Let me test it on my data."</span> That's the Colab race.</p>
+  <aside class="notes">Stress the caveat. It's a great habit to teach: vendor benchmarks are a starting claim, not a verdict.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">The Twist</div>
+  <div class="big">They <span class="grad">are</span> deep learning.</div>
+  <p class="sub">TabICL and TabPFN are <b>transformers</b>, the same family as ChatGPT. TabICL reads down the columns, then across the rows, using attention. Deep learning experts designed and pretrained them.</p>
+  <p class="take">Deep learning didn't lose to the foundation models. <span class="accent-gold">It became them.</span> It moved up a floor.</p>
+  <aside class="notes">Pause here. This is the answer to the title question in one line. Then the next slide explains what "moved up a floor" means for them.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Where Will You Work? · Click To Reveal</div>
+  <h2>Deep learning has <span class="grad">three floors</span> now</h2>
+  <div class="floors">
+    <div class="floor build"><div class="fn">Floor 3</div><div class="fw">Use it</div><div class="fd">Call TabICL, an LLM, a vision API.</div><div class="fp">Most managers and analysts. <b>Fast, no training.</b></div></div>
+    <div class="floor you build"><div class="fn">Floor 2</div><div class="fw">Adapt it</div><div class="fd">Fine-tune it on your data, shrink it for speed, <b>plug it into decisions</b>.</div><div class="fp">Analytics people, <b>you in this course</b>. Where most of the value is.</div></div>
+    <div class="floor build"><div class="fn">Floor 1</div><div class="fw">Build it</div><div class="fd">Design and pretrain the networks.</div><div class="fp">Research labs and a few big companies.</div></div>
+  </div>
+  <p class="take build">You don't need to live on floor 1. <span class="accent-gold">But knowing how it works tells you when the elevator is broken.</span></p>
+  <aside class="notes">Ask: "Which floor is your final project on?" Most will say 3 or 2. Floor 2 is where prescriptive analytics lives: predictions plugged into decisions.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">So Why Learn Deep Learning? · Click To Reveal</div>
+  <h2>Six reasons <span class="grad">it still matters</span></h2>
+  <div class="cards" style="max-width:1250px">
+    <div class="card build"><div class="label">1 · Someone builds them</div><p>Every foundation model is a neural network. Fewer people train from scratch; those who do matter more.</p></div>
+    <div class="card build"><div class="label">2 · Size limits</div><p>Millions of transactions or clicks are beyond today's sweet spot. Trees and custom networks rule there.</p></div>
+    <div class="card build"><div class="label">3 · Made-up practice</div><p>They pretrain on <b>fake</b> tables. When your data looks different, you fine-tune: a deep learning skill.</p></div>
+    <div class="card build"><div class="label">4 · Custom goals</div><p>To train on <b>the cost of a decision</b> instead of the error of a forecast, you need a network you can adjust. That's Dec 2.</p></div>
+    <div class="card build"><div class="label">5 · Not just tables</div><p>Images, text, voice, sensors, video. And LLMs themselves. All deep learning.</p></div>
+    <div class="card build"><div class="label">6 · Tonight's price tags</div><p>When the table of price tags is too big to compute, a network <b>learns</b> it. That's deep reinforcement learning.</p></div>
+  </div>
+  <aside class="notes">Reveal one at a time. Reason 6 connects back to tonight; reason 4 sets up December 2. Those two are the ones to stress for this course.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Your Turn · Bonus Colab · The Great Tabular Race</div>
+  <h2>Race them yourself, <span class="grad">then teach a network the price tags</span></h2>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div class="t">Meet the customers</div><p>25,000 subscribers and a hidden rule.<br><span class="accent-g">✅ Churn rate 23.4%</span></p></div>
+    <div class="step"><div class="n">2</div><div class="t">The race at 300</div><p>Logistic, XGBoost, neural net, TabICL.<br><span class="accent-g">✅ The net trained from scratch is last</span></p></div>
+    <div class="step"><div class="n">🕵️</div><div class="t">Is it cheating?</div><p>Shuffle the answers and race again.<br><span class="accent-g">✅ TabICL drops to a coin flip</span></p></div>
+    <div class="step"><div class="n">3</div><div class="t">More data</div><p>Five sizes, one chart.<br><span class="accent-g">✅ The neural net climbs the most</span></p></div>
+    <div class="step"><div class="n">4</div><div class="t">Back to tonight</div><p>A two-product shop.<br><span class="accent-g">✅ The net learns 121 tags from 20</span></p></div>
+  </div>
+  <p class="take">Tip: switch Colab to a <b>T4 GPU</b> for speed. <span class="accent-gold">About 25 minutes, top to bottom.</span></p>
+  <aside class="notes">Link is on the Session 10 page under Resources. Good for anyone who finished the main notebook early, or as optional practice over Thanksgiving.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Notebook Part 4 · Tonight's Idea At Scale · Click To Reveal</div>
+  <h2>A network learns the shop's <span class="grad">price tags</span></h2>
+  <p class="sub">Two products, one shared truck: <b>121 situations</b>. We compute the price tags of only <b>20</b> of them and let a model fill in the rest.</p>
+  <div class="answers">
+    <div class="ans wrong build"><div class="who">A straight line</div><div class="num">−$20</div><div class="verdict">lost per situation</div><p>Its price tags are off by only <b>$1.50</b> on average. But it gets the <b>shape</b> wrong, so it picks the best order in only <b>69%</b> of situations.</p></div>
+    <div class="ans right build"><div class="who">A small neural network</div><div class="num">−$0.03</div><div class="verdict">lost per situation</div><p>Off by <b>$0.62</b> on average, and right where it counts: the best order in <b>97%</b> of situations.</p></div>
+  </div>
+  <p class="take build">Accuracy isn't the goal. <span class="accent-gold">Good decisions are.</span> A small error in the wrong place costs a lot.</p>
+  <aside class="notes">Make the punchline land: the line was less than $1 worse per price tag but about $20 worse per decision. This is exactly the bridge to December 2's decision-focused learning.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Which Tool When? · Keep This Table</div>
+  <h2>A simple guide <span class="grad">for your next project</span></h2>
+  <table class="rules">
+    <tr><th>Your situation</th><th>Smart first choice</th><th>Why</th></tr>
+    <tr><td><b>Small or medium table, need an answer today</b></td><td class="code">TabICL / TabPFN</td><td>No training, no tuning, strong with little data</td></tr>
+    <tr><td><b>Medium or large table</b></td><td class="code">XGBoost</td><td>Fast, tough benchmark; compare against a foundation model</td></tr>
+    <tr><td><b>Must explain every decision</b></td><td class="code">Logistic / small tree</td><td>Easy to read and to defend to a regulator</td></tr>
+    <tr><td><b>Images, text, sensors, huge data</b></td><td class="code">Neural network</td><td>Usually fine-tune a pretrained one</td></tr>
+    <tr><td><b>A custom goal, or a table of price tags too big to compute</b></td><td class="code">Your own network</td><td>You need a model you can train on your objective</td></tr>
+  </table>
+  <p class="take">Always: <span class="accent-gold">try two, test on held-out data, then decide.</span></p>
+  <aside class="notes">A practical takeaway they can use in the final project. Encourage them to compare at least two model types.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">What To Take Home</div>
+  <h2>Deep learning didn't die. <span class="grad">It moved up a floor.</span></h2>
+  <div class="cards">
+    <div class="card"><div class="label">1</div><p><b>Foundation models are deep learning</b>, pretrained so you don't have to train. A superb first try on small and medium tables.</p></div>
+    <div class="card"><div class="label">2</div><p><b>Your own networks still matter</b> for big data, non-table data, custom goals, and price tags too big for a table.</p></div>
+    <div class="card hl"><div class="label">3 · Dec 2</div><p><b>Accuracy is not the goal; decisions are.</b> Next class: predict, then decide, and learning that aims straight at the decision.</p></div>
+  </div>
+  <aside class="notes">Close with the line in the title. Then: "See you December 2."</aside>
+</section>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const hud = document.getElementById('hud'), bar = document.getElementById('bar');
+  let i = 0;
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('active', k === i));
+    hud.textContent = (i + 1) + ' / ' + slides.length; bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    try { history.replaceState(null, '', '#' + (i + 1)); } catch (e) {}
+    if (panel.classList.contains('on')) fill();
+  }
+  function next() { const w = slides[i].querySelectorAll('.build:not(.on)'); if (w.length) w[0].classList.add('on'); else show(i + 1); }
+  function prev() { const s = slides[i].querySelectorAll('.build.on'); if (s.length) s[s.length - 1].classList.remove('on'); else show(i - 1); }
+  const panel = document.createElement('div'); panel.id = 'notesPanel'; document.body.appendChild(panel);
+  function fill() { const n = slides[i].querySelector('aside.notes'); panel.innerHTML = '<div class="nh">PRESENTER NOTES · SLIDE ' + (i + 1) + ' · PRESS N TO HIDE</div>' + (n ? n.innerHTML : '<i>No notes for this slide.</i>'); }
+  addEventListener('keydown', (e) => {
+    if (['ArrowRight', ' ', 'PageDown'].includes(e.key)) next();
+    else if (['ArrowLeft', 'PageUp'].includes(e.key)) prev();
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    else if (e.key.toLowerCase() === 'n') { panel.classList.toggle('on'); fill(); }
+  });
+  addEventListener('click', (e) => { if (!e.target.closest('a, button, input')) next(); });
+  const start = parseInt((location.hash || '').slice(1), 10);
+  show(Number.isFinite(start) ? start - 1 : 0);
+</script>
+</body>
+</html>
