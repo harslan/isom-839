@@ -327,7 +327,7 @@
     <div class="word build"><div class="ic">🎬</div><div class="w">A video</div><div class="q">A stack of pictures</div><div class="ex">16 frames. The new ingredient is <b>time</b>.</div></div>
   </div>
   <p class="take build">Text works the same way: words become numbers too. <span class="accent-gold">That's how ChatGPT reads.</span></p>
-  <aside class="notes">The sound row is the surprise: we don't feed raw sound to the network, we draw it as a picture first. In Notebook 4 that single choice moves accuracy from 20% to 97%.</aside>
+  <aside class="notes">The sound row is the surprise: we don't feed raw sound to the network, we draw it as a picture first. In Notebook 4 that single choice moves accuracy from 20% to 99%.</aside>
 </section>
 
 <section class="slide">
@@ -355,14 +355,14 @@
         <div class="bar2 win"><div>Network, 865 knobs</div><div class="tr"><div class="fl" style="width:97%"></div></div><div class="v">0.80</div></div>
         <div class="bar2"><div>Perfect crystal ball</div><div class="tr"><div class="fl" style="width:100%"></div></div><div class="v">0.81</div></div>
       </div>
-      <p style="margin-top:10px"><b>Decide:</b> send the $10 offer when the chance of leaving is above 22%. Offer everyone: <b>break even</b>. Let the network pick: about <b class="accent-g">$17,400</b>.</p></div>
+      <p style="margin-top:10px"><b>Decide:</b> send the $10 offer when the chance of leaving is above 22%. Offer everyone: <b>break even</b>. Let the network pick: about <b class="accent-g">$17,300</b>.</p></div>
     <div class="card build"><div class="label">2 · How many croissants? (profit over 500 days)</div>
       <div class="bars">
-        <div class="bar2"><div>"Same as last week"</div><div class="tr"><div class="fl" style="width:20%"></div></div><div class="v">$144.1K</div></div>
-        <div class="bar2"><div>Bake the forecast</div><div class="tr"><div class="fl" style="width:86%"></div></div><div class="v">$157.9K</div></div>
+        <div class="bar2"><div>"Same as last week"</div><div class="tr"><div class="fl" style="width:20%"></div></div><div class="v">$144K</div></div>
+        <div class="bar2"><div>Bake the forecast</div><div class="tr"><div class="fl" style="width:86%"></div></div><div class="v">$158K</div></div>
         <div class="bar2 win"><div>Trained on dollars</div><div class="tr"><div class="fl" style="width:100%"></div></div><div class="v">$160.7K</div></div>
       </div>
-      <p style="margin-top:10px">The dollars-trained network is <b>less accurate</b> (misses by 23 a day instead of 18) and <b class="accent-g">more profitable</b>. It bakes +9 extra on weekdays, +31 on weekends.</p></div>
+      <p style="margin-top:10px">The dollars-trained network is <b>less accurate</b> (misses by 23 a day instead of 18) and <b class="accent-g">more profitable</b>. It adds only a few extra on weekdays and about 30 on weekends.</p></div>
   </div>
   <p class="take build">The most accurate forecast is not the best decision. <span class="accent-gold">Train for the decision you want to make.</span></p>
   <aside class="notes">Left: more knobs help a bit, but the money comes from using the prediction to choose who gets the offer. Right: the key idea of the course. Running out costs $3, a leftover costs $1, so we wrote a loss in dollars. Nobody told the network weekends are unpredictable; it learned where a buffer pays.</aside>
@@ -396,9 +396,9 @@
     <div class="card build"><div class="label">4 · Which of six instruments? (guessing = 17%)</div>
       <div class="bars">
         <div class="bar2"><div>Raw sound numbers</div><div class="tr"><div class="fl" style="width:20%"></div></div><div class="v">20%</div></div>
-        <div class="bar2 win"><div>Sound as a picture</div><div class="tr"><div class="fl" style="width:97%"></div></div><div class="v">97%</div></div>
+        <div class="bar2 win"><div>Sound as a picture</div><div class="tr"><div class="fl" style="width:99%"></div></div><div class="v">99%</div></div>
       </div>
-      <p style="margin-top:10px">Forty times fewer knobs, and far better. <b>Step 1 did the work.</b><br><b>Decide:</b> "play next" = closest fingerprints. 98% match the instrument, only 50% the mood: a fingerprint captures what you trained for.</p></div>
+      <p style="margin-top:10px">Forty times fewer knobs, and far better. <b>Step 1 did the work.</b><br><b>Decide:</b> "play next" = closest fingerprints. Nearly all match the instrument, only 50% the mood: a fingerprint captures what you trained for.</p></div>
     <div class="card build"><div class="label">5 · Entering, leaving or passing by? (guessing = 33%)</div>
       <div class="bars">
         <div class="bar2"><div>One frame</div><div class="tr"><div class="fl" style="width:58%"></div></div><div class="v">58%</div></div>
@@ -441,7 +441,7 @@
   <div class="kicker">What To Take Home</div>
   <h2>Three lessons <span class="grad">that kept repeating</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">1 · Step 1 matters most</div><p>Sound as raw numbers: 20%. Sound as a picture: 97%. <b>The right numbers beat a bigger network.</b></p></div>
+    <div class="card"><div class="label">1 · Step 1 matters most</div><p>Sound as raw numbers: 20%. Sound as a picture: 99%. <b>The right numbers beat a bigger network.</b></p></div>
     <div class="card"><div class="label">2 · Shape follows the data</div><p>One frame: 58%. The whole video: 100%. <b>If the answer lives in time, the network must see time.</b></p></div>
     <div class="card hl"><div class="label">3 · Train for the decision</div><p>Less accurate, more profitable croissants. Fingerprints that hear instruments but not mood. <b>You get what you train for.</b></p></div>
   </div>
