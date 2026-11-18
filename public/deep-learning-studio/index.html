@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Learning Studio · ISOM 839</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg: #0d0c0a; --card: #161412; --text: #f5f2ec; --text2: #a8a196; --muted: #6b6459; --gold: #f2b135; --goldlight: #ffd166; --copper: #e08e3c; --green: #34d399; --border: rgba(255,240,214,0.09); }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; line-height: 1.5; }
+  main { max-width: 1120px; margin: 0 auto; padding: 48px 24px 72px; }
+  .kicker { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+  h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); line-height: 1.08; margin: 10px 0 14px; }
+  .grad { background: linear-gradient(90deg, var(--gold), var(--copper)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { color: var(--text2); font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 820px; }
+  .lead b { color: var(--text); }
+  .recipe { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 10px; }
+  .recipe div { flex: 1; min-width: 150px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; }
+  .recipe b { display: block; color: var(--goldlight); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; letter-spacing: 1px; }
+  .recipe span { color: var(--text2); font-size: 0.95rem; }
+  .deck { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--gold); border-radius: 18px; padding: 18px 22px; margin: 26px 0; }
+  .deck p { color: var(--text2); max-width: 640px; } .deck p b { color: var(--text); }
+  a.btn { display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; text-decoration: none; padding: 11px 20px; border-radius: 999px; background: var(--gold); color: #0d0c0a; white-space: nowrap; }
+  a.btn:hover { filter: brightness(1.1); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px; }
+  .nb { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .nb.done { border-color: var(--green); }
+  .nb .top { display: flex; justify-content: space-between; align-items: center; }
+  .nb .ic { font-size: 2rem; }
+  .nb .lab { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+  .nb h2 { font-size: 1.3rem; line-height: 1.2; }
+  .nb p { color: var(--text2); font-size: 0.98rem; } .nb p b { color: var(--text); }
+  .nb .find { color: var(--text); font-size: 0.95rem; border-left: 3px solid var(--gold); padding-left: 10px; }
+  .nb .row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; gap: 10px; flex-wrap: wrap; }
+  label.chk { font-size: 0.9rem; color: var(--text2); cursor: pointer; display: flex; gap: 8px; align-items: center; }
+  label.chk input { accent-color: var(--green); width: 18px; height: 18px; }
+  .progress { margin: 26px 0 14px; font-family: 'JetBrains Mono', monospace; color: var(--text2); }
+  .progress b { color: var(--green); }
+  .foot { margin-top: 34px; color: var(--muted); font-size: 0.9rem; }
+  .foot a { color: var(--text2); }
+</style>
+</head>
+<body>
+<main>
+  <div class="kicker">ISOM 839 · Prescriptive Analytics · Prof. Hasan Arslan</div>
+  <h1>Deep Learning Studio: <span class="grad">One Recipe, Five Senses</span></h1>
+  <p class="lead">Build five neural networks in Google Colab: one for <b>yes/no</b>, one for <b>numbers</b>, one for <b>pictures</b>, one for <b>music</b>, one for <b>video</b>. No setup, no typing: press Shift + Enter and watch each one learn. Every notebook follows the same five steps and ends with a business decision.</p>
+
+  <div class="recipe">
+    <div><b>1 · NUMBERS</b><span>Turn the data into numbers</span></div>
+    <div><b>2 · SHAPE</b><span>Pick a network that fits the data</span></div>
+    <div><b>3 · TRAIN</b><span>Guess, measure, nudge, repeat</span></div>
+    <div><b>4 · TEST</b><span>Grade it on unseen data</span></div>
+    <div><b>5 · DECIDE</b><span>Turn the prediction into a decision</span></div>
+  </div>
+
+  <div class="deck">
+    <p><b>Start here: the 16-slide explainer.</b> What a neuron is, how training works (with a live playground you can drag), and what all five notebooks found. Press N for presenter notes.</p>
+    <a class="btn" href="slides.html">Open the slides</a>
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div class="grid" id="grid"></div>
+
+  <p class="foot">Each notebook takes about 20 minutes and runs on a free Colab account. A T4 GPU (Runtime → Change runtime type) makes notebooks 3 and 5 faster. Back to the <a href="/">course site</a>.</p>
+</main>
+<script>
+  const base = 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/deep-learning-studio/';
+  const items = [
+    { id: 'c1', ic: '🙋', lab: '1 · Classification', title: 'Who is about to leave?', file: 'DL_Studio_1_Classification.ipynb',
+      what: 'Your first network: one neuron, then layers. A customer record becomes a chance of leaving.', find: 'Decide who gets a win-back offer: about $17,400 instead of breaking even.' },
+    { id: 'c2', ic: '🥐', lab: '2 · Regression', title: 'How many croissants tomorrow?', file: 'DL_Studio_2_Regression.ipynb',
+      what: 'Forecast a bakery\'s sales from the weekday and the weather. Then train the network on dollars instead of accuracy.', find: 'Less accurate, more profitable: the most accurate forecast is not the best order.' },
+    { id: 'c3', ic: '👕', lab: '3 · Pictures', title: 'Teach a network to see', file: 'DL_Studio_3_Pictures.ipynb',
+      what: 'Sort 10 kinds of clothing from photos, peek inside the network, then borrow pretrained "eyes" for flowers.', find: 'A "how sure?" cutoff splits work between robot and human; 40 photos per class are enough with borrowed eyes.' },
+    { id: 'c4', ic: '🎵', lab: '4 · Music', title: 'Teach a network to listen', file: 'DL_Studio_4_Music.ipynb',
+      what: 'Six instruments you can hear. Turn sound into a picture and reuse the picture network. Then: happy or sad?', find: 'Raw sound: 20%. Sound as a picture: 97%. Fingerprints power "play next".' },
+    { id: 'c5', ic: '🎬', lab: '5 · Video', title: 'Who\'s coming in?', file: 'DL_Studio_5_Video.ipynb',
+      what: 'A door camera: entering, leaving or passing by? One frame, a long exposure, then the whole clip.', find: 'Direction lives in time: 58% → 67% → 100%. Count people and open a second register.' },
+  ];
+  let done = {};
+  try { done = JSON.parse(localStorage.getItem('dl-studio-done') || '{}'); } catch (e) {}
+  function render() {
+    const n = items.filter(x => done[x.id]).length;
+    document.getElementById('progress').innerHTML = 'Your progress: <b>' + n + ' of 5</b> built ' + '●'.repeat(n) + '○'.repeat(5 - n) + (n === 5 ? ' 🏁 You finished the Studio!' : '');
+    document.getElementById('grid').innerHTML = items.map(x =>
+      '<div class="nb' + (done[x.id] ? ' done' : '') + '"><div class="top"><div class="lab">' + x.lab + '</div><div class="ic">' + x.ic + '</div></div>' +
+      '<h2>' + x.title + '</h2><p>' + x.what + '</p><p class="find">' + x.find + '</p>' +
+      '<div class="row"><label class="chk"><input type="checkbox" data-id="' + x.id + '"' + (done[x.id] ? ' checked' : '') + '> I built this one</label>' +
+      '<a class="btn" target="_blank" rel="noopener" href="' + base + x.file + '">Open in Colab</a></div></div>').join('');
+    document.querySelectorAll('input[data-id]').forEach(c => c.onchange = () => { done[c.dataset.id] = c.checked; try { localStorage.setItem('dl-studio-done', JSON.stringify(done)); } catch (e) {} render(); });
+  }
+  render();
+</script>
+</body>
+</html>
