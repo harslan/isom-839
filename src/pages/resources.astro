@@ -33,6 +33,14 @@ for (const session of sorted) {
       </p>
     </div>
 
+    <a href="/deep-learning-studio" class="group flex flex-wrap items-center justify-between gap-4 bg-gradient-to-br from-accent-purple/[0.08] to-bg-card border border-accent-purple/30 rounded-2xl px-7 py-5 no-underline mb-10 transition-all duration-300 hover:border-accent-purple/60">
+      <div class="min-w-0">
+        <span class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-purple">Featured · Deep Learning Studio</span>
+        <span class="block text-text-primary font-semibold mt-1">Five build-it-yourself Colab notebooks and the "One Recipe, Five Senses" slides</span>
+      </div>
+      <span class="font-mono text-[0.8rem] tracking-wide text-accent-purple whitespace-nowrap transition-transform duration-300 group-hover:translate-x-1">Open the Studio →</span>
+    </a>
+
     {allResources.length > 0 ? (
       <ResourceGrid>
         {allResources.map(({ resource }) => (

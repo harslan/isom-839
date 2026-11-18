@@ -124,7 +124,7 @@
     },
     {
       "title": "Deep Learning Studio — One Recipe, Five Senses",
-      "url": "/deep-learning-studio/index.html",
+      "url": "/deep-learning-studio",
       "description": "Build five neural networks in Colab with the same five steps (numbers, shape, train, test, decide): a churn classifier, a croissant-demand forecaster trained on dollars, a clothing-photo sorter with borrowed pretrained eyes, an instrument listener that turns sound into a picture, and a door-camera video model. Includes a 16-slide explainer with a live neuron playground. About 20 minutes per notebook; press Shift + Enter and watch each one learn.",
       "icon": "brain",
       "badge": "Studio",

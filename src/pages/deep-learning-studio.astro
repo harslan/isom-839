@@ -1,0 +1,207 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GradientText from '../components/GradientText.astro';
+import Icon from '../components/Icon.astro';
+
+const colab = 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/deep-learning-studio/';
+
+const recipe = [
+  { n: '1', name: 'Numbers', text: 'Turn the data into numbers' },
+  { n: '2', name: 'Shape', text: 'Pick a network that fits the data' },
+  { n: '3', name: 'Train', text: 'Guess, measure, nudge, repeat' },
+  { n: '4', name: 'Test', text: 'Grade it on unseen data' },
+  { n: '5', name: 'Decide', text: 'Turn the prediction into a decision' },
+];
+
+const notebooks = [
+  {
+    id: 'c1', emoji: '🙋', label: '1 · Classification', title: 'Who is about to leave?',
+    file: 'DL_Studio_1_Classification.ipynb',
+    description: 'Your first network: one neuron, then layers. A customer record becomes a chance of leaving.',
+    finding: 'Decide who gets a win-back offer: about $17,300 instead of breaking even.',
+    concepts: ['Dense layers', 'One-hot and scaling', 'Early stopping', 'AUC'],
+  },
+  {
+    id: 'c2', emoji: '🥐', label: '2 · Regression', title: 'How many croissants tomorrow?',
+    file: 'DL_Studio_2_Regression.ipynb',
+    description: "Forecast a bakery's sales from the weekday and the weather. Then train the network on dollars instead of accuracy.",
+    finding: 'Less accurate, more profitable: the most accurate forecast is not the best order.',
+    concepts: ['Number output', 'Split by time', 'Custom loss in dollars', 'Newsvendor'],
+  },
+  {
+    id: 'c3', emoji: '👕', label: '3 · Pictures', title: 'Teach a network to see',
+    file: 'DL_Studio_3_Pictures.ipynb',
+    description: 'Sort 10 kinds of clothing from photos, peek inside the network, then borrow pretrained "eyes" for flower photos.',
+    finding: 'A "how sure?" cutoff splits work between robot and human. With borrowed eyes, 40 photos per class are enough.',
+    concepts: ['Conv2D', 'Confidence cutoff', 'Transfer learning', 'Dropout'],
+  },
+  {
+    id: 'c4', emoji: '🎵', label: '4 · Music', title: 'Teach a network to listen',
+    file: 'DL_Studio_4_Music.ipynb',
+    description: 'Six instruments you can hear. Turn sound into a picture and reuse the picture network. Then: happy or sad?',
+    finding: 'Raw sound: 20%. Sound as a picture: 99%. Fingerprints power "play next".',
+    concepts: ['Spectrogram', 'Overfitting', 'Embeddings', 'Recommendations'],
+  },
+  {
+    id: 'c5', emoji: '🎬', label: '5 · Video', title: "Who's coming in?",
+    file: 'DL_Studio_5_Video.ipynb',
+    description: 'A door camera: entering, leaving or passing by? One frame, a long exposure, then the whole clip.',
+    finding: 'Direction lives in time: 58% → 67% → 100%. Count people and open a second register.',
+    concepts: ['Conv3D', 'Time as data', 'Error pile-up', 'Running count'],
+  },
+];
+
+const warmup = [
+  {
+    title: 'Slides: Is deep learning still relevant?',
+    href: '/session-10/bonus-deep-learning.html',
+    text: '12 slides on tabular foundation models (TabICL, TabPFN) and why deep learning "moved up a floor."',
+    cta: 'Open slides',
+    external: false,
+  },
+  {
+    title: 'Colab: The Great Tabular Race',
+    href: 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/session-10/ISOM839_Session10_Bonus_Deep_Learning_Race.ipynb',
+    text: 'Race logistic regression, XGBoost, a neural network and TabICL. Then a network learns a shop\'s price tags.',
+    cta: 'Open in Colab',
+    external: true,
+  },
+];
+---
+
+<BaseLayout title="ISOM 839 | Deep Learning Studio — One Recipe, Five Senses" description="Build five neural networks in Google Colab: classification, regression, pictures, music and video. Same five steps every time.">
+  <section class="py-24 px-8 max-w-[1200px] mx-auto">
+    <div class="text-center mb-14">
+      <div class="font-mono text-[0.75rem] text-accent-cyan tracking-[3px] uppercase mb-6">
+        Build it yourself
+      </div>
+      <h1 class="text-[clamp(2.5rem,6vw,4rem)] font-extrabold mb-4">
+        Deep Learning <GradientText>Studio</GradientText>
+      </h1>
+      <p class="text-text-secondary text-lg max-w-[720px] mx-auto">
+        One recipe, five senses. Build five neural networks in Google Colab: one for yes/no, one for
+        numbers, one for pictures, one for music, one for video. No setup and no typing: press
+        Shift + Enter and watch each one learn. Every notebook ends with a business decision.
+      </p>
+    </div>
+
+    <!-- the recipe -->
+    <div class="grid gap-3 grid-cols-2 md:grid-cols-5 mb-10 fade-in">
+      {recipe.map((r) => (
+        <div class="bg-bg-card border border-border-subtle rounded-xl px-4 py-3">
+          <div class="font-mono text-[0.72rem] tracking-[2px] uppercase text-grad-violet mb-1">{r.n} · {r.name}</div>
+          <div class="text-text-secondary text-sm">{r.text}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- start here: the deck -->
+    <a href="/deep-learning-studio/slides.html" class="group block bg-gradient-to-br from-accent-cyan/[0.07] to-bg-card border border-accent-cyan/30 rounded-2xl px-7 py-6 no-underline mb-12 transition-all duration-300 hover:border-accent-cyan/60 hover:-translate-y-0.5 hover:shadow-[0_10px_40px_rgba(242,177,53,0.15)] fade-in">
+      <div class="flex flex-wrap items-center justify-between gap-5">
+        <div class="flex items-center gap-4 min-w-0">
+          <div class="w-12 h-12 shrink-0 rounded-xl bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center">
+            <Icon name="presentation" class="w-6 h-6 text-accent-cyan" />
+          </div>
+          <div class="min-w-0">
+            <div class="font-mono text-[0.7rem] tracking-[2px] uppercase text-accent-cyan mb-1">Start here · 16 slides</div>
+            <div class="text-xl font-bold text-text-primary mb-1">One Recipe, Five Senses</div>
+            <p class="text-text-secondary text-sm leading-relaxed max-w-[720px]">
+              What a neuron is, how training works (with a live playground you can drag), and what all five notebooks found. Arrow keys to move, F for fullscreen, N for notes.
+            </p>
+          </div>
+        </div>
+        <span class="font-mono text-[0.8rem] tracking-wide text-accent-cyan whitespace-nowrap transition-transform duration-300 group-hover:translate-x-1">
+          Open the slides →
+        </span>
+      </div>
+    </a>
+
+    <!-- progress -->
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <h2 class="text-2xl font-bold">The five notebooks</h2>
+      <div id="studio-progress" class="font-mono text-[0.8rem] text-text-secondary"></div>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2">
+      {notebooks.map((nb) => (
+        <div data-card={nb.id} class="studio-card bg-bg-card border border-border-subtle rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1 hover:border-accent-cyan/40 hover:shadow-[0_0_60px_rgba(242,177,53,0.12)] fade-in flex flex-col">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-accent-cyan/20 to-accent-purple/20 flex items-center justify-center text-2xl">{nb.emoji}</div>
+            <div>
+              <div class="font-mono text-[0.7rem] text-accent-cyan tracking-[2px] uppercase">{nb.label}</div>
+              <h3 class="text-xl font-bold">{nb.title}</h3>
+            </div>
+          </div>
+          <p class="text-text-secondary text-sm leading-relaxed mb-4">{nb.description}</p>
+          <p class="text-text-primary text-sm leading-relaxed mb-5 border-l-2 border-accent-cyan pl-3">{nb.finding}</p>
+          <div class="flex gap-2 flex-wrap mb-6">
+            {nb.concepts.map((c) => (
+              <span class="px-3 py-1 bg-accent-purple/10 rounded-full text-[0.7rem] text-accent-purple">{c}</span>
+            ))}
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-3 mt-auto">
+            <label class="flex items-center gap-2 text-sm text-text-secondary cursor-pointer select-none">
+              <input type="checkbox" data-studio={nb.id} class="w-[18px] h-[18px] accent-[#34d399]" />
+              I built this one
+            </label>
+            <a href={colab + nb.file} target="_blank" rel="noopener" class="font-mono text-[0.8rem] font-bold tracking-wide no-underline px-5 py-2.5 rounded-full bg-accent-cyan text-bg-primary transition-all duration-300 hover:brightness-110">
+              Open in Colab →
+            </a>
+          </div>
+        </div>
+      ))}
+
+      <!-- how to use -->
+      <div class="bg-bg-card/50 border border-dashed border-border-subtle rounded-2xl p-8 fade-in">
+        <div class="font-mono text-[0.65rem] text-text-muted tracking-[2px] uppercase mb-3">How each notebook works</div>
+        <ul class="list-none space-y-2 text-sm text-text-secondary">
+          <li>▶️ <span class="text-text-primary font-semibold">Run me</span> · press Shift + Enter, top to bottom</li>
+          <li>🤔 <span class="text-text-primary font-semibold">Bet first</span> · guess before the result appears</li>
+          <li>✅ <span class="text-text-primary font-semibold">What you should see</span> · small differences are normal</li>
+          <li>✏️ <span class="text-text-primary font-semibold">Your turn</span> · change one thing and re-run</li>
+          <li>🧠 <span class="text-text-primary font-semibold">Check yourself</span> · three questions at the end</li>
+        </ul>
+        <p class="text-text-muted text-sm mt-4">About 20 minutes each on a free Colab account. A T4 GPU (Runtime → Change runtime type) makes notebooks 3 and 5 faster.</p>
+      </div>
+    </div>
+
+    <!-- warm-up from Session 10 -->
+    <div class="mt-16">
+      <div class="font-mono text-[0.7rem] text-text-muted tracking-[2px] uppercase mb-4">Warm-up · from Session 10</div>
+      <div class="grid gap-6 md:grid-cols-2">
+        {warmup.map((w) => (
+          <a href={w.href} target={w.external ? '_blank' : undefined} rel={w.external ? 'noopener' : undefined} class="group block bg-bg-card border border-border-subtle rounded-2xl p-7 no-underline text-inherit transition-all duration-300 hover:border-accent-cyan/40 fade-in">
+            <h3 class="text-lg font-semibold mb-1 transition-colors duration-300 group-hover:text-accent-cyan">{w.title}</h3>
+            <p class="text-text-secondary text-sm mb-3">{w.text}</p>
+            <span class="font-mono text-[0.8rem] text-accent-cyan transition-transform duration-300 inline-block group-hover:translate-x-1">{w.cta} →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    (function () {
+      const KEY = 'dl-studio-done';
+      let done = {};
+      try { done = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+      const boxes = [...document.querySelectorAll('input[data-studio]')];
+      function render() {
+        const n = boxes.filter((b) => done[b.dataset.studio]).length;
+        boxes.forEach((b) => {
+          b.checked = !!done[b.dataset.studio];
+          const card = document.querySelector('[data-card="' + b.dataset.studio + '"]');
+          if (card) card.style.borderColor = b.checked ? 'rgba(52,211,153,0.6)' : '';
+        });
+        document.getElementById('studio-progress').innerHTML =
+          'Your progress: <span style="color:#34d399;font-weight:700">' + n + ' of 5</span> ' + '●'.repeat(n) + '○'.repeat(5 - n) + (n === 5 ? ' 🏁' : '');
+      }
+      boxes.forEach((b) => b.addEventListener('change', () => {
+        done[b.dataset.studio] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {}
+        render();
+      }));
+      render();
+    })();
+  </script>
+</BaseLayout>
