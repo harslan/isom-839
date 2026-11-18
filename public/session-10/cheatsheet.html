@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISOM 839 · Session 10 · MDPs on One Page</title>
+<style>
+  @page { size: letter; margin: 0.35in; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; color: #1d1b18; background: #f4f1ea; font-size: 8.7pt; line-height: 1.25; }
+  .page { max-width: 8.5in; margin: 18px auto; background: #fff; padding: 0.45in 0.5in; box-shadow: 0 2px 18px rgba(0,0,0,.08); }
+  header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 3px solid #d9962a; padding-bottom: 4px; margin-bottom: 7px; }
+  h1 { font-size: 17pt; line-height: 1.1; }
+  h1 span { color: #b8741a; }
+  .meta { font-size: 8.5pt; color: #6b6459; text-align: right; }
+  .grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 6px 12px; }
+  .box { border: 1px solid #e6dfd2; border-radius: 10px; padding: 6px 9px; break-inside: avoid; }
+  .box.wide { grid-column: 1 / -1; }
+  .box.gold { border-color: #d9962a; background: #fffaf0; }
+  h2 { font-size: 9.4pt; text-transform: uppercase; letter-spacing: 1.5px; color: #b8741a; margin-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; font-size: 8.8pt; }
+  td, th { padding: 2px 6px 2px 0; vertical-align: top; text-align: left; }
+  th { font-size: 8pt; color: #8a8275; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+  tr + tr td { border-top: 1px solid #f0ebe1; }
+  td b { color: #1d1b18; }
+  .eq { font-family: Consolas, "JetBrains Mono", monospace; font-size: 10pt; text-align: center; padding: 4px; background: #fff; border-radius: 8px; border: 1px dashed #d9962a; margin: 3px 0; }
+  .eq .v { color: #b8741a; font-weight: 700; } .eq .r { color: #1f8a5b; } .eq .n { color: #b5532d; }
+  pre { font-family: Consolas, "JetBrains Mono", monospace; font-size: 7.6pt; background: #faf7f1; border-radius: 8px; padding: 4px 8px; line-height: 1.25; white-space: pre; }
+  ul { padding-left: 16px; } li { margin: 1px 0; }
+  .small { font-size: 8.3pt; color: #4d4740; }
+  .tag { display: inline-block; background: #ffd166; border-radius: 4px 10px 10px 4px; padding: 0 7px; font-family: Consolas, monospace; font-weight: 700; font-size: 9pt; }
+  .print { position: fixed; top: 14px; right: 14px; background: #1d1b18; color: #fff; border: 0; border-radius: 999px; padding: 8px 16px; font-weight: 600; cursor: pointer; }
+  @media print { body { background: #fff; } .page { box-shadow: none; margin: 0; padding: 0; max-width: none; } .print { display: none; } }
+</style>
+</head>
+<body>
+<button class="print" onclick="window.print()">Print / Save as PDF</button>
+<div class="page">
+  <header>
+    <h1>Decisions Over Time <span>on one page</span></h1>
+    <div class="meta">ISOM 839 · Session 10 · Markov decision processes<br>Prof. Hasan Arslan · Suffolk University</div>
+  </header>
+
+  <div class="grid">
+    <div class="box">
+      <h2>The five words</h2>
+      <table>
+        <tr><th>Word</th><th>Ask yourself</th><th>The shop</th></tr>
+        <tr><td><b>State</b></td><td>Where am I now?</td><td>0–10 units on the shelf</td></tr>
+        <tr><td><b>Action</b></td><td>What can I do?</td><td>Order 0–5</td></tr>
+        <tr><td><b>Chance</b></td><td>What happens next?</td><td>0–3 customers, 25% each</td></tr>
+        <tr><td><b>Reward</b></td><td>What is today worth?</td><td>+$10 sale, −$8 unit, −$15 missed</td></tr>
+        <tr><td><b>Policy</b></td><td>My move in <i>every</i> state?</td><td>"Top up to 3"</td></tr>
+      </table>
+      <p class="small" style="margin-top:4px">A Markov chain has one table of odds. An MDP has <b>one table per action</b>: your choice changes the odds.</p>
+    </div>
+
+    <div class="box gold">
+      <h2>The big idea: price tags</h2>
+      <p>Give every situation a price tag <b>V(state)</b>: what it's worth to be there if you play well from now on.</p>
+      <p style="margin-top:4px">Then every decision is easy: for each choice, take <b>cash now + γ × the price tag of where it lands you</b> (averaged over chance). Pick the biggest.</p>
+      <p style="margin-top:4px"><span class="tag">😊 $73.66</span> <span class="tag">😟 $59.02</span> <span class="tag">shelf of 3: $72</span></p>
+    </div>
+
+    <div class="box wide">
+      <h2>The Bellman equation</h2>
+      <div class="eq"><span class="v">V(state)</span> = best over choices [ <span class="r">reward now</span> + γ × <span class="n">average V(next state)</span> ]</div>
+      <p class="small">Say it out loud: <i>"How good is it to be here? The best of: what I get now, plus what my next spot is worth."</i> The right price tags agree with themselves. Example: an unhappy customer. Leave: $2 + 0.9 × (0.2 × 73.66 + 0.8 × 59.02) ≈ $57.75. Gift: $2 − $4 + 0.9 × (0.6 × 73.66 + 0.4 × 59.02) ≈ <b>$59.02</b>. The gift loses $4 today and wins $1.27 overall.</p>
+    </div>
+
+    <div class="box">
+      <h2>Value iteration</h2>
+<pre>V = zeros(n_states)     # all tags start at $0
+repeat:
+    for each state s:
+        for each action a:
+            Q[s,a] = reward now
+                   + gamma * avg V[next]
+        V_new[s] = max over a of Q[s,a]
+    stop when V_new barely changes
+    V = V_new
+playbook[s] = the a with the best Q[s,a]</pre>
+      <p class="small">After k sweeps, V = the best you can do looking <b>k steps ahead</b>. Gift problem: 151 sweeps. Shop: 292 sweeps.</p>
+    </div>
+
+    <div class="box">
+      <h2>γ, the patience dial</h2>
+      <ul>
+        <li>$1 one step from now counts as γ dollars today; two steps, γ².</li>
+        <li>A business looks about <b>1 ÷ (1 − γ)</b> steps ahead: 0.9 → 10, 0.95 → 20, 0.99 → 100.</li>
+        <li>$10 every step forever is worth 10 ÷ (1 − γ): $100 at γ = 0.9.</li>
+        <li>Bigger γ → more sweeps to converge (shop: 68 at 0.8, 1,485 at 0.99).</li>
+        <li>γ must be below 1, or the price tags never settle.</li>
+      </ul>
+      <h2 style="margin-top:6px">Q(state, action)</h2>
+      <p class="small">The score of one move in one state. At 1 unit on the shelf: order 0 → $43.75, <b>order 2 → $56.00</b>, order 3 → $55.48. Reinforcement learning <b>learns</b> Q by trial and error.</p>
+    </div>
+
+    <div class="box">
+      <h2>Which costs move the playbook?</h2>
+      <table>
+        <tr><th>Knob</th><th>What happened</th></tr>
+        <tr><td><b>Penalty $15 → $40</b></td><td>Nothing. At 3 units nobody is turned away (a zero shadow price).</td></tr>
+        <tr><td><b>Truck fee $5</b></td><td>At 2 or fewer, order a full truck; else wait. The <b>(s, S)</b> pattern. Trucks/week 5.25 → 2.10, profit/day −$0.75 → +$1.50.</td></tr>
+        <tr><td><b>Busy days + holding $4</b></td><td>Now the penalty matters: $15 → top up to 4, $40 → 5.</td></tr>
+      </table>
+      <p class="small" style="margin-top:3px">A cost moves the line only when it's in a <b>tug-of-war</b>.</p>
+    </div>
+
+    <div class="box">
+      <h2>Powell's four kinds of policies</h2>
+      <table>
+        <tr><td><b>PFA</b></td><td>A rule of thumb: "top up to 3", a thermostat</td></tr>
+        <tr><td><b>CFA</b></td><td>An optimization plan with a buffer: safety stock</td></tr>
+        <tr><td><b>VFA</b></td><td>Price tags on states: <b>tonight</b>, Q-learning, deep RL</td></tr>
+        <tr><td><b>DLA</b></td><td>Think a few moves ahead, act, re-plan: chess, GPS</td></tr>
+      </table>
+      <p class="small" style="margin-top:3px">Tables stop scaling fast: 10 products with 11 shelf levels each = 11¹⁰ ≈ 25.9 billion states. Then we <b>learn</b> V (deep RL).</p>
+    </div>
+
+    <div class="box wide" style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><h2>Your own MDP in five steps</h2>
+        <ol style="padding-left:16px">
+          <li><b>States</b>: keep it small (5–50).</li>
+          <li><b>Actions</b>: what can the manager really do?</li>
+          <li><b>Odds</b>: one table per action; rows add to 1.</li>
+          <li><b>Money</b>: cash now for each (state, action).</li>
+          <li><b>γ + Bellman</b>: <code>solve_mdp(P, R, gamma)</code> in the notebook.</li>
+        </ol></div>
+      <div><h2>Common mistakes</h2>
+        <ul>
+          <li>A row of odds that doesn't add to 1.</li>
+          <li>Forgetting to <b>average over chance</b> before adding γ × V.</li>
+          <li>Judging a move by today's cash only (the one-month manager).</li>
+          <li>Assuming every cost matters. Check the tug-of-war.</li>
+          <li>Never asking: <b>does the playbook make business sense?</b></li>
+        </ul></div>
+    </div>
+  </div>
+  <p class="small" style="margin-top:8px;text-align:center">Chains predict. <b>Decision processes choose.</b> · isom-839.vercel.app/sessions/session-10</p>
+</div>
+</body>
+</html>

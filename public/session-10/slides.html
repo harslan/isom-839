@@ -138,6 +138,37 @@
   .sc .a { font-size: clamp(1rem, 1.7vw, 1.3rem); color: var(--text); }
   .sc .b { font-family: 'JetBrains Mono', monospace; font-size: clamp(1rem, 1.9vw, 1.45rem); color: var(--goldlight); font-weight: 700; }
   .sc .b small { display: block; font-family: 'Space Grotesk', sans-serif; font-weight: 400; color: var(--text2); font-size: 0.7em; }
+
+  /* ---------- Session 10 extras ---------- */
+  .tags { display: flex; gap: 1.2vw; flex-wrap: wrap; justify-content: center; max-width: 1240px; }
+  .tagcard { flex: 1; min-width: 250px; max-width: 390px; background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 2.4vh 1.6vw; text-align: left; }
+  .tagcard .ic { font-size: clamp(1.8rem, 3vw, 2.4rem); }
+  .tagcard .t { font-weight: 700; font-size: clamp(1.1rem, 1.8vw, 1.4rem); margin: 6px 0 8px; }
+  .tagcard p { color: var(--text2); font-size: clamp(0.95rem, 1.45vw, 1.15rem); line-height: 1.5; }
+  .tagcard p b { color: var(--text); }
+  .pricetag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: #0d0c0a; background: var(--goldlight); border-radius: 6px 14px 14px 6px; padding: 2px 12px 2px 10px; margin: 3px 4px 3px 0; font-size: 0.95em; }
+  .game { display: grid; grid-template-columns: 1fr 1.25fr; gap: 2vw; width: min(94vw, 1250px); align-items: start; }
+  .gshelf { display: flex; gap: 5px; margin: 8px 0 4px; }
+  .gshelf span { width: 26px; height: 40px; border-radius: 6px; background: #221f1a; border: 1px solid #4a443b; }
+  .gshelf span.full { background: var(--gold); border-color: var(--gold); }
+  .gbtns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .gbtns .btn { min-width: 52px; }
+  .gbtns .btn:disabled { opacity: 0.25; cursor: not-allowed; }
+  .gbig { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: clamp(1.6rem, 3.2vw, 2.4rem); }
+  .gscore { display: flex; gap: 12px; margin-bottom: 10px; }
+  .gscore div { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 8px 12px; text-align: left; }
+  .gscore .gl { font-size: 0.8rem; color: var(--text2); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; text-transform: uppercase; }
+  .recipe { display: flex; flex-direction: column; gap: 1.1vh; width: min(92vw, 1100px); }
+  .rstep { display: grid; grid-template-columns: 56px 1fr 1.2fr; gap: 1.4vw; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.3vh 1.4vw; text-align: left; }
+  .rstep .n { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--gold); font-size: clamp(1.3rem, 2.4vw, 1.9rem); text-align: center; }
+  .rstep .w { font-weight: 700; font-size: clamp(1.02rem, 1.7vw, 1.3rem); }
+  .rstep .e { color: var(--text2); font-size: clamp(0.92rem, 1.4vw, 1.1rem); line-height: 1.4; }
+  .rstep .e b { color: var(--text); }
+  aside.notes { display: none; }
+  #notesPanel { position: fixed; left: 0; right: 0; bottom: 0; max-height: 34vh; overflow: auto; background: rgba(20,18,15,0.97); border-top: 2px solid var(--gold); padding: 14px 28px 40px; z-index: 20; display: none; text-align: left; font-size: 1.05rem; line-height: 1.55; color: var(--text); }
+  #notesPanel.on { display: block; }
+  #notesPanel .nh { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); margin-bottom: 6px; }
+  #notesPanel b { color: var(--goldlight); }
 </style>
 </head>
 <body>
@@ -151,6 +182,7 @@
   <h1>You Take <span class="grad">The Wheel</span></h1>
   <p class="sub">Last time we <b>watched</b> customers move from state to state. Tonight we <b>choose what to do</b> in every state, knowing that today's choice changes tomorrow.</p>
   <p class="sub" style="font-size:clamp(0.85rem,1.4vw,1.1rem)">Markov decision processes · Prof. Hasan Arslan · Prescriptive Analytics · Suffolk University</p>
+  <aside class="notes">Welcome everyone. One sentence to set the night: <b>last time we predicted, tonight we choose.</b> Ask them to open the Session 10 Colab now (link on the session page) while you do housekeeping.</aside>
 </section>
 
 <!-- 2 · housekeeping -->
@@ -163,6 +195,7 @@
     <div class="card"><div class="label">Wed Dec 2 · 7:40 PM</div><div class="title">Homework #7 · pick one</div><p>The <b>pricing curve</b> (Session 8) <b>or</b> tonight's <b>inventory playbook</b>. Same points.</p></div>
     <div class="card"><div class="label">Wed Dec 9</div><div class="title">Project milestone</div><p>First working result and a dry-run deck. Start the model over the break.</p></div>
   </div>
+  <aside class="notes"><b>2 minutes.</b> Homework #6 was due at 7:40. Big one: <b>no class next week</b> (Thanksgiving). Homework #7 is pick-one: tonight's inventory problem or the Session 8 pricing curve. Milestone Dec 9: nudge teams to start their model over the break.</aside>
 </section>
 
 <!-- 3 · plan -->
@@ -173,10 +206,11 @@
     <div class="step"><div class="n">1</div><div class="t">Five new words</div><p>Who gets a $4 gift? <b>→ Notebook Part 1</b></p></div>
     <div class="step"><div class="n">2</div><div class="t">The Bellman equation</div><p>Plan backward. Guess, then repeat. <b>→ Part 2</b></p></div>
     <div class="step"><div class="n">3</div><div class="t">Run the shop</div><p>Your code writes the ordering playbook. <b>→ Part 3</b></p></div>
-    <div class="step"><div class="n">4</div><div class="t">Turn the knobs</div><p>Which costs move the playbook? <b>→ Part 4</b></p></div>
+    <div class="step"><div class="n">4</div><div class="t">Beat the playbook</div><p>A class game, then turn the knobs. <b>→ Part 4</b></p></div>
     <div class="step"><div class="n">★</div><div class="t">The big map</div><p>From tonight's table to AlphaGo.</p></div>
   </div>
   <p class="take">Each round: <span class="accent-gold">a few slides, then time in the notebook.</span> Every code cell ends with a ✅ "What you should see" box.</p>
+  <aside class="notes">Same rhythm as Session 9: a few slides, then the notebook. Point out the ✅ boxes: <b>if your output matches, move on; if not, raise a hand.</b></aside>
 </section>
 
 <!-- 4 · opener -->
@@ -188,6 +222,7 @@
     <div class="card hl"><div class="label">Tonight · Markov decision process</div><div class="title">⛵ Steering</div><p>You can't control the wind, but you <b>choose the sails</b>. Your choice changes the odds of where you end up.</p></div>
     <div class="card"><div class="label">The question</div><div class="title">🧭 What do I do here?</div><p>For <b>every</b> situation I might be in, what is the best move, if I care about <b>today and the days after</b>?</p></div>
   </div>
+  <aside class="notes">Tell the sailing story. A sailor can't control the wind but chooses the sails, and the choice changes where the boat ends up. Ask: <b>"In Session 9, what could the company do about the 80%?"</b> Nothing: we only watched. Tonight we steer.</aside>
 </section>
 
 <!-- 5 · why -->
@@ -202,6 +237,7 @@
     <div class="flow build"><div class="ic">🏥</div><div class="nm">A clinic</div><div class="st"><b>SITUATION</b>Patient is stable but borderline</div><div class="ac"><b>CHOICE</b>Treat now, or watch and wait?</div></div>
   </div>
   <p class="take build">Same shape every time: <span class="accent-gold">a situation, a choice, an uncertain tomorrow, and money on the line.</span></p>
+  <aside class="notes">Click through the five rows. After the last one, ask: <b>"Which of these is closest to your final project?"</b> Take 1–2 answers. The point: the same shape repeats across industries.</aside>
 </section>
 
 <!-- 6 · vote -->
@@ -220,6 +256,7 @@
     <li><span class="vote">D</span>5 · fill the truck</li>
   </ul>
   <p class="sub">Hold that thought. Your code answers it in <b>Notebook Part 3</b>.</p>
+  <aside class="notes">Have everyone type A, B, C or D in the chat. <b>Don't reveal.</b> Say: "Your own code will answer this in about an hour." Most people pick 2 or 5. The answer is B (order 2).</aside>
 </section>
 
 <!-- 7 · five words -->
@@ -234,6 +271,7 @@
     <div class="word build"><div class="ic">📒</div><div class="w">Policy</div><div class="q">What do I do in <i>every</i> state?</div><div class="ex">A playbook: "<b>1 on the shelf → order ?</b>", one line for each state. <b>This is the answer we solve for.</b></div></div>
   </div>
   <p class="take build">State and chance you met in Session 9. <span class="accent-gold">Action, reward and policy are new: they let you steer.</span></p>
+  <aside class="notes">Click one word at a time. Stress <b>policy</b>: we are not solving for one number but for a <b>whole playbook</b>, one move for every state. State and chance are from Session 9; action, reward and policy are new.</aside>
 </section>
 
 <!-- 8 · one table per action -->
@@ -250,6 +288,7 @@
     <div class="card"><div class="label">Each month they pay</div><p>😊 Happy customer: <b>$10</b><br>😟 Unhappy customer: <b>$2</b><br><br>The gift <b>changes the odds</b>. That is the whole idea of an action.</p></div>
   </div>
   <p class="take">Who should get the gift? Everyone? Nobody? <span class="accent-gold">Only the unhappy ones?</span> Write down your guess.</p>
+  <aside class="notes">Key idea: <b>an action changes the odds.</b> Point at the green 0.6. Ask the room to <b>write down a guess</b>: gift everyone, nobody, or only the unhappy? We'll check it after Part 2.</aside>
 </section>
 
 <!-- 9 · policy = GPS -->
@@ -262,6 +301,7 @@
     <div class="card"><div class="label">Why we need it</div><div class="title">🎲 Chance moves you</div><p>You can't know tomorrow's shelf. So you can't write tomorrow's order today. You <b>can</b> write "if 1 on the shelf, order …".</p></div>
   </div>
   <p class="take">Optimization so far gave us <b>one best plan</b>. Tonight gives us <span class="accent-gold">a best move for every situation</span>.</p>
+  <aside class="notes">The GPS analogy usually lands. Printed directions = one plan. GPS = an answer from every corner = a policy. Link back: <b>LP gave us one best plan; tonight we get a best move for every situation.</b></aside>
 </section>
 
 <!-- 10 · discount -->
@@ -277,6 +317,7 @@
     </div>
   </div>
   <p class="take">γ says <b>how far ahead the business looks</b>. Rule of thumb: <span class="accent-gold">it looks about 1 ÷ (1 − γ) steps ahead.</span></p>
+  <aside class="notes">Drag the slider live. At 0.95: $1 next week is about 70¢, and the business looks about 20 days ahead. Drag to 0.5: it only cares about tomorrow. Drag to 0.99: very patient. <b>γ = how far ahead the business looks.</b></aside>
 </section>
 
 <!-- 11 · notebook part 1 -->
@@ -289,11 +330,25 @@
     <div class="step"><div class="n">1.3</div><div class="t">The patience dial</div><p>What is $10 a month forever worth?<br><span class="accent-g">✅ γ = 0.9 → $100</span></p></div>
   </div>
   <p class="take">The one-month manager is <span class="accent-gold">wrong</span>. To see why, we need to look past this month. That's Bellman.</p>
+  <aside class="notes"><b>~10 minutes.</b> Walk the room. Common question in 1.2: "so the gift is bad?" Answer: "That's what a manager who only sees this month thinks. Hold on."</aside>
+</section>
+
+<!-- 11b · the big idea -->
+<section class="slide">
+  <div class="kicker">8:10 · Round 2 · The Big Idea Of Tonight</div>
+  <h2>Put a <span class="grad">price tag</span> on every situation</h2>
+  <div class="tags">
+    <div class="tagcard build"><div class="ic">🏷️</div><div class="t">1 · Price every situation</div><p>What is it worth to <b>be here</b>, if you play well from now on?<br><span class="pricetag">😊 $73.66</span><span class="pricetag">😟 $59.02</span><span class="pricetag">shelf of 3: $72</span><br>That price tag is <b>V(state)</b>.</p></div>
+    <div class="tagcard build"><div class="ic">🧭</div><div class="t">2 · Then deciding is easy</div><p>For each choice: <b>cash now + the price tag of where it lands you</b>. Pick the biggest. No crystal ball needed.</p></div>
+    <div class="tagcard build"><div class="ic">🔁</div><div class="t">3 · Tags must agree</div><p>A situation's tag = the best of (cash now + γ × the tags it leads to). That one rule is the <b>Bellman equation</b>. It lets us compute all the tags.</p></div>
+  </div>
+  <p class="take build">A chess master doesn't calculate 40 moves ahead. <span class="accent-gold">She knows which positions are good.</span> Tonight we compute "which positions are good" for a business.</p>
+  <aside class="notes"><b>This is the most important slide of the night.</b> Say it slowly: if every situation had a price tag, deciding would be easy: take cash now plus the tag of where you land, pick the biggest. Bellman is just the rule that makes the tags consistent. Chess master line to close.</aside>
 </section>
 
 <!-- 12 · road trip -->
 <section class="slide">
-  <div class="kicker">8:10 – 8:25 · Round 2 · Plan Backward · Click To Reveal</div>
+  <div class="kicker">Round 2 · Price Tags From The End · Click To Reveal</div>
   <h2>The fastest way to drive to New York? <span class="grad">Start at New York.</span></h2>
   <svg viewBox="0 0 760 330" style="width:min(80vw,1000px);height:auto">
     <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#6b6459"/></marker>
@@ -326,8 +381,9 @@
       <g class="build"><text x="68" y="128" fill="#34d399">4.5h</text></g>
     </g>
   </svg>
-  <p class="sub build">Each town's number = <b>best next leg + the number already written at the next town</b>. Made-up drive times.</p>
+  <p class="sub build">Each town's price tag = <b>best next leg + the tag already written at the next town</b>. Made-up drive times.</p>
   <p class="take build">The greedy driver grabs the shortest first leg every time: Worcester → Hartford → NYC = <span class="accent-r">5.0h</span>. Planning backward finds <span class="accent-g">4.5h</span>.</p>
+  <aside class="notes">Click 1: NYC is 0. Click 2: Hartford and New Haven, one leg each. Click 3: Worcester and Providence each pick their better leg. Click 4: Boston = 1.0 + 3.5 = 4.5. Then the greedy driver: he grabs the shortest first leg (Worcester), then the shortest next (Hartford), and pays 5.0h. <b>Greedy = the one-month manager.</b></aside>
 </section>
 
 <!-- 13 · bellman equation -->
@@ -343,6 +399,7 @@
     <div><b style="color:var(--copper)">average V(next)</b>The value of where chance may take me, weighted by the odds</div>
   </div>
   <p class="take">Read it out loud: <span class="accent-gold">"How good is it to be here? The best of: what I get now, plus what my next spot is worth."</span></p>
+  <aside class="notes">Read the equation <b>out loud, twice</b>, using the plain words in the boxes. Make them say it with you once: "How good is it to be here? The best of: what I get now, plus what my next spot is worth."</aside>
 </section>
 
 <!-- 14 · by hand -->
@@ -354,6 +411,7 @@
   <div class="calc build"><span class="lab">Send the gift:</span> $2 − $4 + 0.9 × (<b class="accent-g">0.6</b> × 73.66 + 0.4 × 59.02) ≈ <b class="accent-g">$59.02</b></div>
   <p class="take build">The gift loses $4 <b>today</b> but wins <span class="accent-gold">$1.27 overall</span>. It buys a better tomorrow.</p>
   <p class="sub build">And look: <b>$59.02</b> is the number we started with. The values agree with themselves. <b>That's how we find them.</b></p>
+  <aside class="notes">Click through slowly. Work the leave line on the board if you like: 0.2 × 73.66 + 0.8 × 59.02 = 61.95; × 0.9 = 55.75; + 2 = 57.75. Then: <b>the gift costs $4 today and still wins $1.27.</b> Last click: 59.02 comes back out. The tags agree with themselves. That's the hook for value iteration.</aside>
 </section>
 
 <!-- 15 · value iteration live -->
@@ -377,7 +435,8 @@
       <p style="margin-top:10px">Stop when the numbers <b>stop changing</b>.</p>
     </div>
   </div>
-  <p class="take">Sweeps 1–2: "never gift, it costs $4." <span class="accent-gold">Sweep 3: gifting the unhappy starts to pay.</span> Looking further ahead changes the answer.</p>
+  <p class="take build">Sweeps 1–2: "never gift, it costs $4." <span class="accent-gold">Sweep 3: gifting the unhappy starts to pay.</span> Looking further ahead changes the answer.</p>
+  <aside class="notes">Press <b>1 sweep</b> three times, slowly. Sweep 1: "the one-month manager: never gift." Sweep 2: same. <b>Sweep 3: the unhappy column flips to gift</b> (highlighted). Then Run to the end: 151 sweeps, $73.66 and $59.02, the tags from the last slide.</aside>
 </section>
 
 <!-- 16 · why not brute force -->
@@ -390,6 +449,7 @@
     <div class="card"><div class="label">Fun fact</div><div class="title">Why "dynamic programming"?</div><p>Bellman later wrote that he picked the name partly because it sounded impressive, to shield his work from a Defense Secretary who disliked the word "research."</p></div>
   </div>
   <p class="take">Same trick as the road trip: <span class="accent-gold">solve the small pieces once, reuse them everywhere.</span></p>
+  <aside class="notes">Quick slide. 5.6 million playbooks vs about 300 sweeps. Tell the Bellman naming story in one breath, then move on.</aside>
 </section>
 
 <!-- 17 · notebook part 2 -->
@@ -403,6 +463,7 @@
     <div class="step"><div class="n">🔧</div><div class="t">Your turn</div><p>Change the gift's price.<br><span class="accent-g">✅ Answer flips near $0.99 and $6.26</span></p></div>
   </div>
   <p class="take">Then we compare <span class="accent-gold">your guess from the gift slide</span> with the math.</p>
+  <aside class="notes"><b>~12 minutes.</b> The your-turn cell is the fun one: the answer flips near $0.99 (gift everyone) and $6.26 (gift nobody). Ask early finishers why a very cheap gift goes to happy customers too.</aside>
 </section>
 
 <!-- 18 · answer -->
@@ -415,6 +476,7 @@
     <div class="ans right build"><div class="who">Gift the unhappy</div><div class="num">$73.66</div><div class="verdict">✓ The Bellman answer</div><p>Help at the moment it changes the odds most: <b>0.2 → 0.6</b> chance of becoming happy.</p></div>
   </div>
   <p class="take build">Same lesson as Session 9's $2 twist: <span class="accent-gold">targeted help beats perks for everyone.</span> Now the math picks the target for you.</p>
+  <aside class="notes">Reveal one by one. Ask: <b>"Who guessed 'only the unhappy'?"</b> Connect to Session 9's $2 twist: targeted help beats perks for everyone. Then break.</aside>
 </section>
 
 <!-- 19 · break -->
@@ -423,6 +485,7 @@
   <div class="big"><span class="grad">Break</span></div>
   <p class="take">Stuck on Part 1 or 2? Grab me now.</p>
   <p class="sub">After the break: you write the code that runs a shop, and it rediscovers a famous rule of inventory theory on its own.</p>
+  <aside class="notes">10 minutes. Help anyone stuck on Parts 1–2 so nobody starts Part 3 behind.</aside>
 </section>
 
 <!-- 20 · the shop -->
@@ -455,6 +518,7 @@
     </g>
   </svg>
   <p class="take">State 0–10 · action 0–5 · chance 0–3 · γ = 0.95 a day. <span class="accent-gold">Five numbers and a list. That's the whole model.</span></p>
+  <aside class="notes">Back from the break. Walk left to right: state (the shelf), action (the truck), chance (customers). Then the money row. Say: <b>"Five numbers and a list. That's the whole model."</b></aside>
 </section>
 
 <!-- 21 · one day by hand -->
@@ -465,6 +529,27 @@
   <div class="calc build"><span class="lab">Sold:</span> 3 × $10 = <b class="accent-g">+$30</b> &nbsp;·&nbsp; <span class="lab">Bought:</span> 2 × $8 = <b style="color:var(--copper)">−$16</b> &nbsp;·&nbsp; <span class="lab">Missed:</span> 0 × $15 = <b>$0</b></div>
   <div class="calc build"><span class="lab">Today's reward:</span> <b class="accent-gold">+$14</b> &nbsp;·&nbsp; <span class="lab">Tomorrow starts with:</span> <b>0 units</b></div>
   <p class="take build">Bellman does this for <b>every</b> shelf level, <b>every</b> order, <b>every</b> number of customers, then adds <span class="accent-gold">γ × the value of tomorrow's shelf.</span></p>
+  <aside class="notes">One day by hand so the code isn't magic: 3 sold, 2 bought, nobody turned away, +$14, tomorrow starts at 0. Bellman does this for every shelf, every order, every number of customers.</aside>
+</section>
+
+<!-- 21b · watch the values fill in -->
+<section class="slide">
+  <div class="kicker">See It Before You Code It · Value Iteration On The Shop · Click Play</div>
+  <h2>Watch the shop's <span class="grad">price tags fill in</span></h2>
+  <div class="row interactive" style="align-items:flex-start">
+    <svg id="fillSvg" viewBox="0 0 760 330" style="width:min(60vw,760px);height:auto"></svg>
+    <div class="card" style="max-width:330px">
+      <div class="label" id="fillLab">Sweep 0</div>
+      <p id="fillMsg">Every price tag starts at $0. Press play.</p>
+      <div class="ctrl" style="margin-top:14px;justify-content:flex-start">
+        <button class="btn sm" id="fill1">1 sweep</button>
+        <button class="btn ghost sm" id="fillPlay">Play</button>
+        <button class="btn ghost sm" id="fillReset">Reset</button>
+      </div>
+    </div>
+  </div>
+  <p class="take build">Sweep 1 tops up to only <b>2</b>: a third unit might not sell today. <span class="accent-gold">Look one more day ahead and it's 3: an unsold unit sells tomorrow.</span></p>
+  <aside class="notes">Press <b>1 sweep</b> once: the one-day manager tops up to only 2, and the empty shelf is worth −$7.25. Press it again: top up to 3. Ask: <b>"Why did it change?"</b> An unsold unit isn't wasted; it sells tomorrow, and the manager now sees tomorrow. Then Play to the end: 292 sweeps.</aside>
 </section>
 
 <!-- 22 · notebook part 3 -->
@@ -479,6 +564,7 @@
     <div class="step"><div class="n">3.5</div><div class="t">Watch it run</div><p>A month in the shop, day by day.<br><span class="accent-g">✅ Zero customers turned away</span></p></div>
   </div>
   <p class="take">Shift + Enter, top to bottom. <span class="accent-gold">If your output matches the ✅ box, move on.</span></p>
+  <aside class="notes"><b>~15 minutes.</b> 3.4 answers the vote; let them discover it before the next slide. 3.5 shows why 'order the average' fails: on busy days you run out.</aside>
 </section>
 
 <!-- 23 · vote answer -->
@@ -488,6 +574,7 @@
   <div class="scores" id="qScores"></div>
   <p class="sub build">Each score = today's reward + γ × the value of tomorrow's shelf, averaged over customers. Its name is <b>Q(state, action)</b>: you'll meet it again in reinforcement learning.</p>
   <p class="take build">Answer <b>B</b>. Order 0 throws away <span class="accent-r">$12.25</span> of value (turned-away customers). Order 3 or more pays too early: <span class="accent-gold">close, but not best.</span></p>
+  <aside class="notes">Click the bars in. Order 2 wins at $56.00. Introduce the name <b>Q(state, action)</b>: the score of a move. It comes back in Session 12 (reinforcement learning).</aside>
 </section>
 
 <!-- 24 · playbook -->
@@ -497,11 +584,35 @@
   <div class="playbook" id="pbGrid"></div>
   <p class="sub">Green number = <b>V</b>, what the shop is worth with that much on the shelf. Below 3, each extra unit is worth <b>exactly $8</b>: the price you'd otherwise pay.</p>
   <p class="take">Inventory theorists call this an <b>order-up-to</b> (base-stock) rule. <span class="accent-gold">Your code found it by itself, from five numbers.</span></p>
+  <aside class="notes">"Top up to 3, enough for the busiest day." <b>Nobody told the code this rule.</b> Point at the green numbers: below 3, each unit adds exactly $8, the price you'd otherwise pay. Nice sanity check.</aside>
+</section>
+
+<!-- 24b · class game -->
+<section class="slide">
+  <div class="kicker">9:15 · Round 4 · Class Game · Shout Out Each Morning's Order</div>
+  <h2>New rule: every truck costs <span class="grad">$5</span>. Can you beat the playbook?</h2>
+  <div class="game interactive">
+    <div class="card" style="max-width:none">
+      <div class="label" id="gDay">Day 1 of 10 · this morning</div>
+      <div class="gbig" id="gStock">3 units on your shelf</div>
+      <div class="gshelf" id="gShelf"></div>
+      <p style="margin-top:6px">How many do you order? <b>+$10</b> a sale · <b>−$8</b> a unit · <b>−$15</b> a customer turned away · <b>−$5</b> per truck</p>
+      <div class="gbtns" id="gBtns"></div>
+      <div class="ctrl" style="margin-top:12px;justify-content:flex-start"><button class="btn ghost sm" id="gNew">New game</button></div>
+      <p style="margin-top:10px;font-size:0.95rem">Same customers for you and the playbook. Both start with 3 units. After day 10, leftovers are bought back at $8.</p>
+    </div>
+    <div>
+      <div class="gscore"><div><div class="gl">You</div><div class="gbig" id="gYou">$0</div></div><div><div class="gl">The playbook</div><div class="gbig" id="gPb">$0</div></div></div>
+      <table class="mini" id="gLog"></table>
+      <p class="take" id="gMsg" style="margin-top:12px;font-size:clamp(1rem,1.8vw,1.3rem)"></p>
+    </div>
+  </div>
+  <aside class="notes"><b>~5 minutes, high energy.</b> The class shouts an order each morning; you click it. The playbook's orders stay hidden until day 10. Most classes either order every day (paying lots of truck fees) or run out. After the reveal: "Its rule is: wait until 2 or fewer, then fill the truck." Press New game if you want a rematch.</aside>
 </section>
 
 <!-- 25 · knobs -->
 <section class="slide">
-  <div class="kicker">9:15 – 9:30 · Round 4 · Turn The Knobs · Value Iteration Runs Live</div>
+  <div class="kicker">Round 4 · Turn The Knobs · Value Iteration Runs Live As You Drag</div>
   <h2>The costs <span class="grad">write the playbook</span></h2>
   <div class="knobs interactive">
     <div class="card" style="max-width:none">
@@ -522,6 +633,7 @@
       </div>
     </div>
   </div>
+  <aside class="notes">Do the three experiments from the next slide <b>live</b>: (1) penalty 15 → 40: nothing moves; (2) truck fee to $5: the wait-then-fill pattern from the game; (3) Busy + holding $4, then penalty 15 → 40: top-up moves 4 → 5. Then Back to tonight's shop.</aside>
 </section>
 
 <!-- 26 · three experiments -->
@@ -534,6 +646,7 @@
     <div class="card"><div class="label">3 · Busy days + holding $4</div><div class="title build">Now the penalty matters. ⚖️</div><p class="build">Penalty $15: top up to <b>4</b>. Penalty $40: top up to <b>5</b>. Running out and having too much are in a <b>tug-of-war</b>. A cost moves the line only when it pulls on the rope.</p></div>
   </div>
   <p class="take build">The playbook is not a guess or a habit. <span class="accent-gold">It is the costs, written as a rule.</span></p>
+  <aside class="notes">Reveal after the live demo. The big lesson: <b>a cost moves the playbook only when it's in a tug-of-war.</b> Tie experiment 1 to shadow prices: a slack constraint has a zero shadow price.</aside>
 </section>
 
 <!-- 27 · CFO -->
@@ -548,6 +661,7 @@
   </table>
   <p class="take build">Your one-liner for the CFO: <span class="accent-gold">"We carry 2 extra units so we can skip 3 trucks a week. That turns a loss into about $820 a year."</span></p>
   <p class="sub build">These are Session 9's tools: run the playbook as a Markov chain and read its <b>steady state</b>.</p>
+  <aside class="notes">This is the manager's question. Reveal row by row. Practice the one-liner together: "We carry 2 extra units so we can skip 3 trucks a week." Mention these numbers come from the steady state of the playbook's Markov chain: Session 9's tool.</aside>
 </section>
 
 <!-- 28 · notebook part 4 -->
@@ -561,11 +675,12 @@
     <div class="step"><div class="n">🔧</div><div class="t">Patience dial</div><p>γ = 0.8 and 0.99.<br><span class="accent-g">✅ 68 vs 1,485 sweeps, same playbook</span></p></div>
   </div>
   <p class="take">γ changes <b>how long it takes</b> to be sure. <span class="accent-gold">Here it doesn't change what to do.</span></p>
+  <aside class="notes"><b>~8 minutes.</b> Part 4.3 is the warm-up for Homework #7 Option A. If time is short, do 4.1 and 4.2 and leave the rest for home.</aside>
 </section>
 
 <!-- 29 · powell -->
 <section class="slide">
-  <div class="kicker">9:38 – 9:48 · The Big Map · Warren Powell, Princeton</div>
+  <div class="kicker">9:38 – 9:46 · The Big Map · Warren Powell, Princeton</div>
   <h2>Every way to make decisions over time is <span class="grad">one of four kinds</span></h2>
   <div class="powell">
     <div class="pw"><div class="ic">📏</div><div class="ab">PFA · POLICY FUNCTION</div><div class="nm">A rule of thumb</div><p>"Top up to 3." A thermostat. Simple, fast, easy to explain. <b>Tune the number</b>, done.</p></div>
@@ -574,6 +689,7 @@
     <div class="pw"><div class="ic">♟️</div><div class="ab">DLA · DIRECT LOOKAHEAD</div><div class="nm">Think a few moves ahead</div><p>A chess player, a GPS that reroutes every minute. Plan the next few days, <b>do day 1</b>, re-plan tomorrow.</p></div>
   </div>
   <p class="take">AlphaGo mixed two of these: a learned <b>value</b> of each board (VFA) and <b>look-ahead</b> search (DLA). <span class="accent-gold">When someone says "our AI makes decisions," ask: which kind?</span></p>
+  <aside class="notes">Four kinds, one sentence each, with the everyday example. Highlight VFA = tonight. AlphaGo line at the end. Ask: <b>"When a vendor says 'our AI makes decisions,' which of the four would you ask about?"</b></aside>
 </section>
 
 <!-- 30 · scale -->
@@ -586,6 +702,22 @@
     <div class="sc build"><div class="a">🏬 1,000 products</div><div class="b">a 1,042-digit number<small>No computer will ever hold that table.</small></div></div>
   </div>
   <p class="take build">The fix: don't store V in a table. <span class="accent-gold">Learn a formula for it, like a neural network.</span> That's deep reinforcement learning (Session 12), and good forecasts feed it (Session 11).</p>
+  <aside class="notes">Click the three rows. 10 products already need 26 billion states. That's why we learn V instead of storing it: deep RL, Session 12.</aside>
+</section>
+
+<!-- 30b · recipe -->
+<section class="slide">
+  <div class="kicker">Take It To Your Final Project · Notebook Bonus: solve_mdp()</div>
+  <h2>Any decision over time <span class="grad">in five steps</span></h2>
+  <div class="recipe">
+    <div class="rstep"><div class="n">1</div><div class="w">List the situations</div><div class="e">States. Keep it small: <b>5 to 50</b> is plenty for a first model.</div></div>
+    <div class="rstep"><div class="n">2</div><div class="w">List the choices</div><div class="e">Actions. What can the manager actually do in each state?</div></div>
+    <div class="rstep"><div class="n">3</div><div class="w">Write the odds</div><div class="e"><b>One table per choice</b>. Every row adds to 1. Estimate them from data, like Homework #6.</div></div>
+    <div class="rstep"><div class="n">4</div><div class="w">Write the money</div><div class="e">Cash now for each (state, choice). Include costs people forget: fees, goodwill, holding.</div></div>
+    <div class="rstep"><div class="n">5</div><div class="w">Pick γ, run Bellman</div><div class="e">Value iteration gives the <b>price tags</b> and the <b>playbook</b>. Then ask: <b>does it make business sense?</b></div></div>
+  </div>
+  <p class="take">Churn with a win-back offer, machines that wear out, a fare that can open or close: <span class="accent-gold">all fit these five steps.</span></p>
+  <aside class="notes">Tell them: <b>this is a template for the final project.</b> The notebook's bonus has a ready-made solve_mdp() that takes their tables and returns the playbook.</aside>
 </section>
 
 <!-- 31 · homework -->
@@ -597,9 +729,10 @@
     <tr><td><b>1 · Two playbooks</b></td><td>The Homework shop: no holding cost, then <b>$1 a unit a night</b>. Print side by side.</td><td class="tag">Part 3.3</td></tr>
     <tr><td><b>2 · What moved, and why?</b></td><td>Two or three sentences. Which side of the tug-of-war got stronger?</td><td class="tag">Part 4.3</td></tr>
     <tr><td><b>3 · Sweep $0 → $4</b></td><td>A loop over the holding cost. Plot the top-up level against it.</td><td class="tag">Part 4 loop</td></tr>
-    <tr><td><b>4 · For the store manager</b></td><td>One plain-English paragraph: when is "too much" stock the right call?</td><td class="tag">Slide 27</td></tr>
+    <tr><td><b>4 · For the store manager</b></td><td>One plain-English paragraph: when is "too much" stock the right call?</td><td class="tag">The CFO slide</td></tr>
   </table>
   <p class="take">Or pick <b>Option B</b>, the pricing curve from Session 8. <span class="accent-gold">One of the two, same points.</span></p>
+  <aside class="notes">Open the homework cell together for one minute. Every step has a matching part from tonight in the right column. Remind: Option A <b>or</b> the pricing curve, not both.</aside>
 </section>
 
 <!-- 32 · takeaways -->
@@ -610,12 +743,13 @@
     <tr><th>The word</th><th>What it means</th><th>Tonight's example</th></tr>
     <tr><td><b>MDP</b></td><td>A Markov chain where you get to choose</td><td>Gift or not · how many to order</td></tr>
     <tr><td><b>Policy</b></td><td>A playbook: the best move in every state</td><td>"Top up to 3"</td></tr>
-    <tr><td><b>Value V(s)</b></td><td>What a state is worth if you play well from here</td><td>Happy customer: $73.66</td></tr>
+    <tr><td><b>Value V(s)</b></td><td>A state's price tag: what it is worth if you play well from here</td><td>Happy customer: $73.66</td></tr>
     <tr><td><b>Bellman equation</b></td><td>Best of: reward now + γ × value of where you land</td><td>Gift wins by $1.27</td></tr>
     <tr><td><b>Value iteration</b></td><td>Start at zero, apply Bellman, repeat until it stops changing</td><td>151 sweeps · 292 sweeps</td></tr>
     <tr><td><b>γ (gamma)</b></td><td>How much tomorrow counts; how far ahead you look</td><td>0.95 ≈ 20 days ahead</td></tr>
   </table>
   <p class="take">Chains predict. <span class="accent-gold">Decision processes choose.</span></p>
+  <aside class="notes">Read the left column only, quickly. Close with: <b>"Chains predict. Decision processes choose."</b></aside>
 </section>
 
 <!-- 33 · next -->
@@ -623,11 +757,12 @@
   <div class="kicker">Next Class · Wed Dec 2 · No Class Nov 25</div>
   <h2>Dec 2: <span class="grad">predict, then decide</span></h2>
   <div class="cards">
-    <div class="card"><div class="label">Finish at home</div><p>Any notebook part you didn't finish. Part 4 is the warm-up for <b>Homework #7 Option A</b>.</p></div>
+    <div class="card"><div class="label">Finish at home</div><p>Any notebook part you didn't finish. Part 4 is the warm-up for <b>Homework #7 Option A</b>. Keep the <b>one-page cheat sheet</b> on the session page.</p></div>
     <div class="card"><div class="label">Session 11</div><p><b>Deep learning meets optimization.</b> Tonight we knew the odds. Next time a model forecasts them, and the optimizer acts on the forecast.</p></div>
     <div class="card"><div class="label">Due Dec 2 · 7:40 PM</div><p><b>Homework #7</b>, one option. Milestone on <b>Dec 9</b>: a first working result.</p></div>
   </div>
   <p class="take">Happy Thanksgiving. <span class="accent-gold">See you on December 2.</span></p>
+  <aside class="notes">No class next week. Happy Thanksgiving. Next time: predict, then decide.</aside>
 </section>
 
 <script>
@@ -835,6 +970,102 @@
     draw();
   })();
 
+
+  // ---------- watch the shop's price tags fill in ----------
+  (function () {
+    const svg = document.getElementById('fillSvg');
+    const D = [0, 1, 2, 3], N = 10;
+    let V = new Array(N + 1).fill(0), pol = new Array(N + 1).fill(0), k = 0, done = false, timer = null;
+    const y = v => 250 - (v + 20) * 1.38;   // value -20..130 -> pixels
+    function sweep() {
+      const Vn = [], pn = [];
+      for (let s = 0; s <= N; s++) {
+        let best = -1e18, ba = 0;
+        for (let a = 0; a <= Math.min(5, N - s); a++) {
+          let q = 0; const st = s + a;
+          for (const d of D) { const sold = Math.min(st, d), left = st - sold; q += 0.25 * (10 * sold - 8 * a - 15 * (d - sold) + 0.95 * V[left]); }
+          if (q > best + 1e-12) { best = q; ba = a; }
+        }
+        Vn.push(best); pn.push(ba);
+      }
+      let ch = 0; for (let s = 0; s <= N; s++) ch = Math.max(ch, Math.abs(Vn[s] - V[s]));
+      V = Vn; pol = pn; k++; if (ch < 1e-6) done = true;
+    }
+    function draw() {
+      svg.innerHTML = '';
+      el('line', { x1: 40, y1: y(0), x2: 750, y2: y(0), stroke: '#6b6459' }, svg);
+      [0, 50, 100].forEach(v => { el('line', { x1: 40, y1: y(v), x2: 750, y2: y(v), stroke: '#2a2621', 'stroke-dasharray': '4 4' }, svg); txt(svg, 34, y(v) + 5, '$' + v, '#6b6459', 12, 'end', 'JetBrains Mono, monospace'); });
+      for (let s = 0; s <= N; s++) {
+        const x = 52 + s * 63, v = V[s], top = Math.min(y(v), y(0)), h = Math.max(Math.abs(y(v) - y(0)), 1.5);
+        el('rect', { x, y: top, width: 46, height: h, rx: 5, fill: v >= 0 ? '#34d399' : '#e2725b', opacity: 0.85 }, svg);
+        if (k > 0) txt(svg, x + 23, (v >= 0 ? top - 6 : top + h + 14), '$' + Math.round(v), '#f5f2ec', 12, 'middle', 'JetBrains Mono, monospace', 700);
+        txt(svg, x + 23, 284, String(s), '#f5f2ec', 15, 'middle', 'JetBrains Mono, monospace', 700);
+        if (k > 0) txt(svg, x + 23, 314, pol[s] ? '→' + (s + pol[s]) : 'wait', pol[s] ? '#ffd166' : '#6b6459', 13, 'middle', 'JetBrains Mono, monospace', 700);
+      }
+      txt(svg, 40, 20, 'Green bars = price tag V(shelf)', '#a8a196', 13, 'start');
+      txt(svg, 750, 20, 'gold = fill the shelf up to', '#a8a196', 13, 'end');
+      document.getElementById('fillLab').textContent = done ? 'Sweep ' + k + ' · converged' : 'Sweep ' + k + (k ? ' · looks ' + k + ' day' + (k === 1 ? '' : 's') + ' ahead' : '');
+      let msg = 'Every price tag starts at $0. Press play.';
+      if (k === 1) msg = 'The <b>one-day manager</b> tops up to only <b>2</b>. Empty shelf: <b>−$7.25</b>.';
+      else if (k >= 2 && k < 20) msg = 'Two days of sight: top up to <b>3</b>. The tags keep rising as the manager sees further.';
+      else if (k >= 20 && !done) msg = 'The playbook stopped changing long ago. The tags are still settling.';
+      if (done) msg = 'Done in <b>' + k + ' sweeps</b>. Empty shelf: <b>$' + V[0].toFixed(2) + '</b>. Three units: <b>$' + V[3].toFixed(2) + '</b>.';
+      document.getElementById('fillMsg').innerHTML = msg;
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; document.getElementById('fillPlay').textContent = 'Play'; } }
+    document.getElementById('fill1').onclick = () => { stop(); if (!done) sweep(); draw(); };
+    document.getElementById('fillPlay').onclick = () => {
+      if (timer) return stop();
+      document.getElementById('fillPlay').textContent = 'Pause';
+      timer = setInterval(() => { if (done) return stop(); const n = k < 10 ? 1 : k < 60 ? 3 : 12; for (let t = 0; t < n && !done; t++) sweep(); draw(); }, k < 10 ? 450 : 120);
+    };
+    document.getElementById('fillReset').onclick = () => { stop(); V = new Array(N + 1).fill(0); pol = new Array(N + 1).fill(0); k = 0; done = false; draw(); };
+    draw();
+  })();
+
+  // ---------- class game: beat the playbook with a $5 truck fee ----------
+  (function () {
+    const FEE = 5, DAYS = 10, playbook = s => (s <= 2 ? 5 : 0);
+    let day, you, pb, tYou, tPb, rows, dice, over;
+    const fmt = v => (v < 0 ? '−$' : '$') + Math.abs(v);
+    function dayMoney(stock, order, d) { const st = stock + order, sold = Math.min(st, d); return [10 * sold - 8 * order - 15 * (d - sold) - (order > 0 ? FEE : 0), st - sold, d - sold]; }
+    function render() {
+      document.getElementById('gDay').textContent = over ? 'Game over · 10 days played' : 'Day ' + day + ' of ' + DAYS + ' · this morning';
+      document.getElementById('gStock').textContent = you + (you === 1 ? ' unit' : ' units') + ' on your shelf';
+      document.getElementById('gShelf').innerHTML = Array.from({ length: 10 }, (_, k) => '<span class="' + (k < you ? 'full' : '') + '"></span>').join('');
+      const b = document.getElementById('gBtns'); b.innerHTML = '';
+      for (let a = 0; a <= 5; a++) { const bt = document.createElement('button'); bt.className = 'btn sm'; bt.textContent = 'Order ' + a; bt.disabled = over || you + a > 10; bt.onclick = () => play(a); b.appendChild(bt); }
+      document.getElementById('gYou').textContent = fmt(tYou); document.getElementById('gPb').textContent = fmt(tPb);
+      let h = '<tr><th>Day</th><th>Customers</th><th>You ordered</th><th>You $</th><th>Playbook ordered</th><th>Playbook $</th></tr>';
+      rows.slice(-6).forEach(r => { h += '<tr><td>' + r.day + '</td><td>' + r.d + '</td><td>' + r.a + (r.missY ? ' <span class="accent-r">(' + r.missY + ' turned away)</span>' : '') + '</td><td>' + fmt(r.mY) + '</td><td>' + (over ? r.b : '?') + '</td><td>' + fmt(r.mP) + '</td></tr>'; });
+      if (over) h += '<tr><td colspan="3">Buy-back of leftovers at $8</td><td>' + fmt(8 * you) + '</td><td></td><td>' + fmt(8 * pb) + '</td></tr>';
+      document.getElementById('gLog').innerHTML = h;
+      let m = 'The playbook\'s orders stay hidden until the end.';
+      if (over) {
+        const fy = tYou + 8 * you, fp = tPb + 8 * pb;
+        document.getElementById('gYou').textContent = fmt(fy); document.getElementById('gPb').textContent = fmt(fp);
+        m = (fy > fp ? 'You won this time! 🎉 ' : fy === fp ? 'A tie! ' : 'The playbook wins. ') + 'Its rule: <span class="accent-gold">at 2 or fewer, order a full truck; otherwise wait.</span> Over 20,000 simulated games it averages about <b>$38</b>; topping up to 3 daily averages <b>$20</b>.';
+      }
+      document.getElementById('gMsg').innerHTML = m;
+    }
+    function play(a) {
+      if (over) return;
+      const d = dice[day - 1], b = playbook(pb);
+      const [mY, nY, missY] = dayMoney(you, a, d), [mP, nP] = dayMoney(pb, b, d);
+      rows.push({ day, d, a, b, mY, mP, missY }); tYou += mY; tPb += mP; you = nY; pb = nP;
+      day++; if (day > DAYS) over = true; render();
+    }
+    function reset() { day = 1; you = 3; pb = 3; tYou = 0; tPb = 0; rows = []; over = false; dice = Array.from({ length: DAYS }, () => Math.floor(Math.random() * 4)); render(); }
+    document.getElementById('gNew').onclick = reset; reset();
+  })();
+
+  // ---------- presenter notes: press N ----------
+  (function () {
+    const panel = document.createElement('div'); panel.id = 'notesPanel'; document.body.appendChild(panel);
+    function fill() { const n = slides[i].querySelector('aside.notes'); panel.innerHTML = '<div class="nh">PRESENTER NOTES · SLIDE ' + (i + 1) + ' · PRESS N TO HIDE</div>' + (n ? n.innerHTML : '<i>No notes for this slide.</i>'); }
+    addEventListener('keydown', e => { if (e.key.toLowerCase() === 'n' && e.target.tagName !== 'INPUT') { panel.classList.toggle('on'); fill(); } });
+    const _show = show; show = function (n) { _show(n); if (panel.classList.contains('on')) fill(); };
+  })();
   const start = parseInt((location.hash || '').slice(1), 10);
   show(Number.isFinite(start) ? start - 1 : 0);
 </script>
