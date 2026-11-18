@@ -189,6 +189,16 @@
   .two li b { color: var(--text); }
   .stagebtn { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .cap { min-height: 5.2em; max-width: 1050px; }
+
+  .hand { display: grid; grid-template-columns: auto auto 1.3fr 1.2fr; gap: 10px 26px; align-items: center; width: min(92vw, 1100px); font-size: clamp(1.1rem, 2vw, 1.6rem); font-family: 'JetBrains Mono', monospace; text-align: left; }
+  .hand .hh { font-size: 0.6em; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .hand .hw { font-family: 'Space Grotesk', sans-serif; font-weight: 700; }
+  .hand .hs { display: flex; align-items: center; gap: 10px; } .hand .hs span { display: inline-block; height: 0.9em; min-width: 4px; max-width: 70%; background: var(--gold); border-radius: 4px; }
+  .nextw { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: center; font-size: clamp(1rem, 1.9vw, 1.5rem); }
+  .nextw .nwq { font-weight: 600; margin-right: 8px; }
+  .nextw .nw { padding: 6px 14px; border-radius: 12px; border: 1px solid var(--gold); background: rgba(242,177,53,var(--a)); font-weight: 600; }
+  .nextw .nw small { font-family: 'JetBrains Mono', monospace; font-weight: 400; margin-left: 6px; }
+  .two.big { max-width: 1150px; } .two.big .card p { font-size: clamp(1rem, 1.65vw, 1.35rem); line-height: 1.45; } .two.big .card .label { font-size: clamp(0.75rem, 1.1vw, 0.95rem); }
 </style>
 <div class="bar" id="bar"></div>
 <div class="brand">ISOM 839 // TRANSFORMERS + TABICL</div>
@@ -203,15 +213,13 @@
 </section>
 
 <section class="slide">
-  <div class="kicker">Part 1 · Why We Needed It · Click To Reveal</div>
+  <div class="kicker">Part 1 · Why We Needed It · Press The Buttons</div>
   <h2>The old way read <span class="grad">one word at a time</span></h2>
-  <div class="cards">
-    <div class="card build"><div class="label">Before 2017 · recurrent networks</div><div class="title">📞 The telephone game</div><p>Read word 1, pass a summary to word 2, pass it on to word 3… By word 50, the start of the sentence is <b>a faded memory</b>.</p></div>
-    <div class="card build"><div class="label">Problem 1</div><div class="title">🐌 Slow</div><p>Word 50 has to wait for words 1 to 49. You can't split the work across many chips.</p></div>
-    <div class="card build"><div class="label">Problem 2</div><div class="title">🧠 Forgetful</div><p>Long-distance links get lost: "The <b>keys</b> that I left on the table next to the door <b>are</b>…"</p></div>
-  </div>
-  <p class="take build">2017: eight researchers at Google publish <b>"Attention Is All You Need."</b> <span class="accent-gold">Their idea: let every word look at every other word, all at once.</span> They called it the transformer.</p>
-  <aside class="notes">The telephone game is the key image: information passed along a chain degrades. The transformer removes the chain. Everything sees everything directly, and all at the same time, so it also runs fast on GPUs.</aside>
+  <svg id="tgSvg" viewBox="0 0 1100 240" style="width:min(94vw,1200px);height:auto"></svg>
+  <div class="ctrl interactive"><button class="btn sm" id="tgOld">Before 2017: pass it along</button><button class="btn ghost sm" id="tgNew">Transformer: everyone sees everyone</button></div>
+  <p class="take" id="tgMsg" style="min-height:3.2em"></p>
+  <p class="sub">2017: eight researchers at Google publish <b>"Attention Is All You Need."</b> They named the new design the <b>transformer</b>.</p>
+  <aside class="notes">Press the first button: the old networks (recurrent networks) read like a telephone game. To write "are" instead of "is", the model must still remember "keys" from ten words back, and that memory fades as it is passed along. It is also slow, because word 12 waits for words 1 to 11. Press the second button: in a transformer, "are" looks straight at "keys" in one step, and all words are processed at the same time. The fading bars are an illustration of the idea, not measurements.</aside>
 </section>
 
 <section class="slide">
@@ -235,6 +243,21 @@
   <p class="take build">Like a meeting where everyone can hear everyone: <span class="accent-gold">you listen most to the people who answer your question.</span></p>
   <p class="sub build">Questions, tags and messages are all just lists of numbers, and <b>the network learns how to write them</b> during training. Several questions at once = "multi-head" attention.</p>
   <aside class="notes">Keep the real words (query, key, value) but teach the picture: question, name tag, message. Each word is a list of numbers; matching a question to a tag is a multiplication that gives a score; the scores become percentages. That is the whole mechanism.</aside>
+</section>
+
+<section class="slide">
+  <div class="kicker">Attention By Hand · Real Numbers · Click To Reveal</div>
+  <h2>Multiply, add, <span class="grad">share out</span></h2>
+  <p class="sub" style="max-width:1100px">Every tag is two numbers: <b>[ how "living" , how much a "place" ]</b>. The question from <b>"it"</b> (…too <b>tired</b>) is <b>[ 2 , 0 ]</b>: "I'm looking for something living."</p>
+  <div class="hand">
+    <div class="hh">word</div><div class="hh">name tag</div><div class="hh">match score = multiply and add</div><div class="hh">share of attention</div>
+    <div class="hw build">animal</div><div class="build">[ 2 , 0 ]</div><div class="build">2×2 + 0×0 = <b>4</b></div><div class="build hs"><span style="width:96%"></span><b>96%</b></div>
+    <div class="hw build">street</div><div class="build">[ 0 , 2 ]</div><div class="build">2×0 + 0×2 = <b>0</b></div><div class="build hs"><span style="width:2%"></span><b>2%</b></div>
+    <div class="hw build">because</div><div class="build">[ 0 , 0 ]</div><div class="build">2×0 + 0×0 = <b>0</b></div><div class="build hs"><span style="width:2%"></span><b>2%</b></div>
+  </div>
+  <p class="take build">New meaning of "it" = <span class="accent-gold">96% of animal's message</span> + 2% of street's + 2% of because's.</p>
+  <p class="sub build">Scores become shares with a formula called <b>softmax</b>: a bigger score gets a much bigger share, and the shares add up to 100%. Change the last word to "wide" and the question becomes [ 0 , 2 ]: now <b>street</b> gets the 96%. You'll run exactly this in the Colab.</p>
+  <aside class="notes">This is the whole calculation inside attention, with numbers small enough to do in your head. Match score = multiply the question by the tag, position by position, and add (a "dot product"). Softmax = e to the power of each score, divided by the total: e⁴ ≈ 54.6, e⁰ = 1, e⁰ = 1, so 54.6 / 56.6 ≈ 96%. Here the tags are written by hand; a real transformer learns them, and uses hundreds of numbers per word instead of two.</aside>
 </section>
 
 <section class="slide">
@@ -262,6 +285,8 @@
 <section class="slide">
   <div class="kicker">How It Learns · The Same Loop As The Studio</div>
   <h2>Hide a word. <span class="grad">Guess it.</span> A trillion times.</h2>
+  <div class="nextw"><span class="nwq">The cat sat on the <b>___</b></span>
+    <span class="nw" style="--a:.9">mat <small>46%</small></span><span class="nw" style="--a:.45">floor <small>21%</small></span><span class="nw" style="--a:.28">couch <small>12%</small></span><span class="nw" style="--a:.18">bed <small>8%</small></span><span class="nw" style="--a:.08">every other word <small>13%</small></span></div>
   <div class="steps">
     <div class="step"><div class="n">1</div><div class="t">Guess</div><p>"The cat sat on the ___" → the model gives a chance to every word.</p></div>
     <div class="step"><div class="n">2</div><div class="t">Measure the miss</div><p>The real word was "mat." How much chance did it get?</p></div>
@@ -269,7 +294,7 @@
     <div class="step"><div class="n">4</div><div class="t">Repeat</div><p>Across a large share of the text on the internet.</p></div>
   </div>
   <p class="take"><b>GPT</b> = <span class="accent-gold">G</span>enerative <span class="accent-gold">P</span>re-trained <span class="accent-gold">T</span>ransformer. Now you can read all three words.</p>
-  <p class="sub">To guess the next word well, it has to pick up grammar, facts, and some reasoning along the way. Nobody programs those in.</p>
+  <p class="sub">To guess the next word well, it has to pick up grammar, facts, and some reasoning along the way. Nobody programs those in. (The chances above are an illustration.)</p>
   <aside class="notes">Same four boxes as the Studio: guess, measure the miss, nudge, repeat. The only differences are scale (billions of knobs, enormous text) and the task (predict the next piece of text).</aside>
 </section>
 
@@ -289,7 +314,7 @@
 <section class="slide">
   <div class="kicker">Why It's Useful To Know · Four Things A Manager Can Use</div>
   <h2>Knowing the engine <span class="grad">explains the behavior</span></h2>
-  <div class="cards" style="max-width:1250px">
+  <div class="two big">
     <div class="card"><div class="label">1 · The context window</div><p>It can only attend to <b>what's in front of it</b>. No document in the prompt, no knowledge of your document. Give it the right context.</p></div>
     <div class="card"><div class="label">2 · Examples in the prompt work</div><p>Show three examples and it follows the pattern, with no retraining. That's <b>in-context learning</b>, and it's exactly TabICL's trick.</p></div>
     <div class="card"><div class="label">3 · Length costs money</div><p>Everything looks at everything. <b>Twice the text is about four times the comparisons.</b> That's why long prompts are slower and cost more.</p></div>
@@ -410,6 +435,8 @@ model.predict_proba(X_new)      # all the thinking happens here</pre>
   <aside class="notes">Close: the same attention idea reads sentences and spreadsheets. The Colab lets them race TabICL against XGBoost and a neural network on the same customers.</aside>
 </section>
 
+
+
 <script>
   const slides = [...document.querySelectorAll('.slide')];
   const hud = document.getElementById('hud'), bar = document.getElementById('bar');
@@ -439,6 +466,36 @@ model.predict_proba(X_new)      # all the thinking happens here</pre>
   const NS = 'http://www.w3.org/2000/svg';
   function el(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
   function txt(parent, x, y, str, fill, size, anchor, weight, fam) { const t = el('text', { x, y, fill, 'font-size': size || 14, 'text-anchor': anchor || 'middle', 'font-weight': weight || 400, 'font-family': fam || 'Space Grotesk, sans-serif' }, parent); t.textContent = str; return t; }
+
+  // ---------- telephone game vs transformer ----------
+  (function () {
+    const svg = document.getElementById('tgSvg');
+    const words = ['The', 'keys', 'that', 'I', 'left', 'on', 'the', 'table', 'by', 'the', 'door', 'are'];
+    const W = 1100 / words.length, Y = 150, BH = 44;
+    const cx = k => k * W + W / 2;
+    function draw(mode) {
+      svg.innerHTML = '';
+      el('defs', {}, svg).innerHTML = '<marker id="ta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#a8a196"/></marker>';
+      words.forEach((w, k) => {
+        const key = k === 1, last = k === 11;
+        if (mode === 'old') {
+          if (k >= 1) { const m = Math.pow(0.75, k - 1), h = 8 + m * 92; el('rect', { x: cx(k) - 16, y: Y - 14 - h, width: 32, height: h, rx: 5, fill: '#f2b135', opacity: 0.25 + 0.75 * m }, svg); txt(svg, cx(k), Y - 20 - h, Math.round(m * 100) + '%', '#ffd166', 13, 'middle', 700, 'JetBrains Mono, monospace'); }
+          if (k < 11) el('line', { x1: cx(k) + W / 2 - 9, y1: Y + BH / 2, x2: cx(k) + W / 2 + 8, y2: Y + BH / 2, stroke: '#a8a196', 'stroke-width': 2, 'marker-end': 'url(#ta)' }, svg);
+        } else if (!last) {
+          const x1 = cx(11), x2 = cx(k), h = 30 + (11 - k) * 9;
+          el('path', { d: 'M ' + x1 + ' ' + (Y - 4) + ' C ' + x1 + ' ' + (Y - h) + ', ' + x2 + ' ' + (Y - h) + ', ' + x2 + ' ' + (Y - 4), fill: 'none', stroke: '#f2b135', 'stroke-width': key ? 6 : 1.5, opacity: key ? 1 : 0.35 }, svg);
+        }
+        el('rect', { x: k * W + 9, y: Y, width: W - 18, height: BH, rx: 9, fill: key || last ? 'rgba(242,177,53,0.25)' : '#161412', stroke: key || last ? '#f2b135' : '#3a352d', 'stroke-width': key || last ? 2 : 1 }, svg);
+        txt(svg, cx(k), Y + 29, w, key || last ? '#ffd166' : '#f5f2ec', 19, 'middle', 600);
+      });
+      txt(svg, 550, Y + BH + 34, mode === 'old' ? 'bars: how much of "keys" is still remembered as the summary is passed along (an illustration)' : 'one direct link from "are" to every word; the thick one is the link it needs', '#a8a196', 15);
+      document.getElementById('tgMsg').innerHTML = mode === 'old'
+        ? '📞 A telephone game. To write "are" (not "is"), it must remember <b>"keys"</b> from 10 words back. <span class="accent-gold">The memory fades, and word 12 waits for words 1 to 11.</span>'
+        : '"are" looks <b>straight at "keys"</b>: one step, however far apart. <span class="accent-gold">And all the words are processed at the same time.</span>';
+      document.getElementById('tgOld').classList.toggle('ghost', mode !== 'old'); document.getElementById('tgNew').classList.toggle('ghost', mode !== 'new');
+    }
+    document.getElementById('tgOld').onclick = () => draw('old'); document.getElementById('tgNew').onclick = () => draw('new'); draw('old');
+  })();
 
   // ---------- "it" attention ----------
   (function () {
