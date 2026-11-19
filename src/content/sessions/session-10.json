@@ -174,11 +174,20 @@
     {
       "title": "Bonus Slides — Transformers and TabICL, in Plain English",
       "url": "/deep-learning-studio/transformers-tabicl.html",
-      "description": "15 slides in two parts. Part 1: what a transformer is, why we needed it, how attention works (a question, a name tag and a message), and four things a manager can use. Part 2: how TabICL is built in three stages (columns, rows, examples), how it was pretrained on made-up tables, and when to use it. Three live demos. Press N for notes.",
+      "description": "17 slides in two parts. Part 1: what a transformer is, why we needed it, how attention works (a question, a name tag and a message), and four things a manager can use. Part 2: how TabICL is built in three stages (columns, rows, examples), how it was pretrained on made-up tables, and when to use it. Four live demos. Press N for notes.",
       "icon": "presentation",
       "badge": "Bonus",
       "badgeType": "interactive",
       "linkText": "Open slides"
+    },
+    {
+      "title": "Bonus Colab — Attention by Hand, and a Baby TabICL",
+      "url": "https://colab.research.google.com/github/harslan/isom-839/blob/master/public/deep-learning-studio/DL_Studio_Go_Deeper_Attention_and_Baby_TabICL.ipynb",
+      "description": "The hands-on partner of the Transformers and TabICL slides. Part 1: compute attention in six lines (multiply, add, share out). Part 2: train a tiny transformer on 20,000 made-up tables, freeze it, and hand it tables it has never seen, including real wine data. You also find the one shape where it loses, and why. About 20 minutes.",
+      "icon": "code",
+      "badge": "Bonus",
+      "badgeType": "code",
+      "linkText": "Open in Colab"
     },
     {
       "title": "Powell: Sequential Decision Analytics and Modeling (Free Book)",

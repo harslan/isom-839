@@ -60,6 +60,13 @@ const warmup = [
     external: false,
   },
   {
+    title: 'Colab: Attention by hand, and a baby TabICL',
+    href: 'https://colab.research.google.com/github/harslan/isom-839/blob/master/public/deep-learning-studio/DL_Studio_Go_Deeper_Attention_and_Baby_TabICL.ipynb',
+    text: 'Compute attention in six lines. Then train a tiny transformer on 20,000 made-up tables and hand it tables it has never seen, with no retraining.',
+    cta: 'Open in Colab',
+    external: true,
+  },
+  {
     title: 'Slides: Is deep learning still relevant?',
     href: '/session-10/bonus-deep-learning.html',
     text: '12 slides on tabular foundation models (TabICL, TabPFN) and why deep learning "moved up a floor."',
@@ -175,7 +182,7 @@ const warmup = [
     <!-- warm-up from Session 10 -->
     <div class="mt-16">
       <div class="font-mono text-[0.7rem] text-text-muted tracking-[2px] uppercase mb-4">Go deeper · the frontier</div>
-      <div class="grid gap-6 md:grid-cols-3">
+      <div class="grid gap-6 md:grid-cols-2">
         {warmup.map((w) => (
           <a href={w.href} target={w.external ? '_blank' : undefined} rel={w.external ? 'noopener' : undefined} class="group block bg-bg-card border border-border-subtle rounded-2xl p-7 no-underline text-inherit transition-all duration-300 hover:border-accent-cyan/40 fade-in">
             <h3 class="text-lg font-semibold mb-1 transition-colors duration-300 group-hover:text-accent-cyan">{w.title}</h3>
